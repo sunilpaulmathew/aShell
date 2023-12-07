@@ -17,12 +17,12 @@ android {
     }
 
     namespace 'in.sunilpaulmathew.ashell'
-    compileSdk 33
+    compileSdk 34
 
     defaultConfig {
         applicationId "in.sunilpaulmathew.ashell"
         minSdk 24
-        targetSdk 33
+        targetSdk 34
         versionCode 8
         versionName "v0.8"
     }
@@ -37,10 +37,13 @@ android {
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
         }
     }
+    buildFeatures {
+        buildConfig = true
+    }
 }
 
 dependencies {
-    implementation 'com.google.android.material:material:1.8.0'
+    implementation 'com.google.android.material:material:1.10.0'
     implementation "dev.rikka.shizuku:api:12.1.0"
     implementation "dev.rikka.shizuku:provider:12.1.0"
 }
