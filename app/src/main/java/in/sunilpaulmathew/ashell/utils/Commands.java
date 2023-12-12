@@ -1,5 +1,7 @@
 package in.sunilpaulmathew.ashell.utils;
 
+import java.io.BufferedReader;
+import java.io.InputStreamReader;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -7,6 +9,8 @@ import java.util.List;
  * Created by sunilpaulmathew <sunil.kde@gmail.com> on November 05, 2022
  */
 public class Commands {
+
+    private static List<CommandItems> mPackages = null;
 
     public static List<CommandItems> commandList() {
         List<CommandItems> mCommands = new ArrayList<>();
@@ -132,6 +136,38 @@ public class Commands {
             }
         }
         return mCommands;
+    }
+
+    public static List<CommandItems> getPackageInfo(String command) {
+        List<CommandItems> mCommands = new ArrayList<>();
+        for (CommandItems packages: mPackages) {
+            if (packages.getTitle().startsWith(command)) {
+                mCommands.add(packages);
+            }
+        }
+        return mCommands;
+    }
+
+    public static void loadPackageInfo() {
+        mPackages = new ArrayList<>();
+
+        StringBuilder sb = new StringBuilder();
+        try {
+            Process mProcess = Runtime.getRuntime().exec("pm list packages");
+            BufferedReader mInput = new BufferedReader(new InputStreamReader(mProcess.getInputStream()));
+            String line;
+            while ((line = mInput.readLine()) != null) {
+                sb.append(line).append("\n");
+            }
+            mProcess.waitFor();
+        } catch (Exception ignored) {
+        }
+
+        for (String line : sb.toString().trim().split("\\r?\\n")) {
+            if (line.startsWith("package:")) {
+                mPackages.add(new CommandItems(line.replace("package:", ""), null, null));
+            }
+        }
     }
 
 }

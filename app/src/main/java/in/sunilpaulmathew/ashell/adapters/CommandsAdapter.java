@@ -1,5 +1,7 @@
 package in.sunilpaulmathew.ashell.adapters;
 
+import android.graphics.Typeface;
+import android.util.TypedValue;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -13,6 +15,7 @@ import java.util.List;
 
 import in.sunilpaulmathew.ashell.R;
 import in.sunilpaulmathew.ashell.utils.CommandItems;
+import in.sunilpaulmathew.ashell.utils.Utils;
 
 /*
  * Created by sunilpaulmathew <sunil.kde@gmail.com> on November 05, 2022
@@ -39,6 +42,10 @@ public class CommandsAdapter extends RecyclerView.Adapter<CommandsAdapter.ViewHo
         holder.mTitle.setText(this.data.get(position).getTitle());
         if (this.data.get(position).getSummary() != null) {
             holder.mSummary.setText(this.data.get(position).getSummary());
+        } else {
+            holder.mTitle.setTextSize(TypedValue.COMPLEX_UNIT_SP, 17);
+            holder.mTitle.setTypeface(null, Typeface.BOLD_ITALIC);
+            holder.mSummary.setVisibility(View.GONE);
         }
     }
 

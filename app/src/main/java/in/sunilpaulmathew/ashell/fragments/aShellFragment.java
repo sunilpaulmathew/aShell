@@ -1,5 +1,6 @@
 package in.sunilpaulmathew.ashell.fragments;
 
+import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.content.ContentValues;
 import android.content.Intent;
@@ -106,6 +107,7 @@ public class aShellFragment extends Fragment {
             @Override
             public void onTextChanged(CharSequence s, int start, int before, int count) {
             }
+            @SuppressLint("SetTextI18n")
             @Override
             public void afterTextChanged(Editable s) {
                 if (s.toString().contains("\n")) {
@@ -114,10 +116,10 @@ public class aShellFragment extends Fragment {
                     }
                     initializeShell(requireActivity());
                 } else {
-                    RecyclerView mRecyclerViewCommands = mRootView.findViewById(R.id.recycler_view_commands);
                     if (mShizukuShell != null && mShizukuShell.isBusy()) {
                         return;
                     }
+                    RecyclerView mRecyclerViewCommands = mRootView.findViewById(R.id.recycler_view_commands);
                     if (!s.toString().trim().isEmpty()) {
                         mSendButton.setImageDrawable(Utils.getDrawable(R.drawable.ic_send, requireActivity()));
                         mBookMark.setImageDrawable(Utils.getDrawable(Utils.isBookmarked(s.toString().trim(), requireActivity()) ? R.drawable.ic_starred : R.drawable.ic_star, requireActivity()));
@@ -134,18 +136,42 @@ public class aShellFragment extends Fragment {
                             mBookMarks.setVisibility(Utils.getBookmarks(requireActivity()).size() > 0 ? View.VISIBLE : View.GONE);
                         });
                         new Handler(Looper.getMainLooper()).post(() -> {
-                            CommandsAdapter mCommandsAdapter = new CommandsAdapter(Commands.getCommand(s.toString()));
-                            mRecyclerViewCommands.setLayoutManager(new LinearLayoutManager(requireActivity()));
-                            mRecyclerViewCommands.setAdapter(mCommandsAdapter);
-                            mRecyclerViewCommands.setVisibility(View.VISIBLE);
-                            mCommandsAdapter.setOnItemClickListener((command, v) -> {
-                                if (command.contains(" <")) {
-                                    mCommand.setText(command.split("<")[0]);
+                            CommandsAdapter mCommandsAdapter;
+                            if (s.toString().contains(".")) {
+                                String[] splitCommands =  {
+                                        s.toString().substring(0, lastIndexOf(s.toString(), ".")), s.toString().substring(lastIndexOf(s.toString(), "."))
+                                };
+
+                                String packageNamePrefix;
+                                if (splitCommands[0].contains(" ")) {
+                                    packageNamePrefix = splitPrefix(splitCommands[0], 1);
                                 } else {
-                                    mCommand.setText(command);
+                                    packageNamePrefix = splitCommands[0];
                                 }
-                                mCommand.setSelection(mCommand.getText().length());
-                            });
+
+                                mCommandsAdapter = new CommandsAdapter(Commands.getPackageInfo(packageNamePrefix + "."));
+                                mRecyclerViewCommands.setLayoutManager(new LinearLayoutManager(requireActivity()));
+                                mRecyclerViewCommands.setAdapter(mCommandsAdapter);
+                                mRecyclerViewCommands.setVisibility(View.VISIBLE);
+                                mCommandsAdapter.setOnItemClickListener((command, v) -> {
+                                    mCommand.setText(splitCommands[0].contains(" ") ? splitPrefix(splitCommands[0], 0) + " " + command : command);
+                                    mCommand.setSelection(mCommand.getText().length());
+                                    mRecyclerViewCommands.setVisibility(View.GONE);
+                                });
+                            } else {
+                                mCommandsAdapter = new CommandsAdapter(Commands.getCommand(s.toString()));
+                                mRecyclerViewCommands.setLayoutManager(new LinearLayoutManager(requireActivity()));
+                                mRecyclerViewCommands.setAdapter(mCommandsAdapter);
+                                mRecyclerViewCommands.setVisibility(View.VISIBLE);
+                                mCommandsAdapter.setOnItemClickListener((command, v) -> {
+                                    if (command.contains(" <")) {
+                                        mCommand.setText(command.split("<")[0]);
+                                    } else {
+                                        mCommand.setText(command);
+                                    }
+                                    mCommand.setSelection(mCommand.getText().length());
+                                });
+                            }
                         });
                     } else {
                         mBookMark.setVisibility(View.GONE);
@@ -367,10 +393,21 @@ public class aShellFragment extends Fragment {
         return mRootView;
     }
 
+    private int lastIndexOf(String s, String splitTxt) {
+        return s.lastIndexOf(splitTxt);
+    }
+
     private List<String> getRecentCommands() {
         List<String> mRecentCommands = new ArrayList<>(mHistory);
         Collections.reverse(mRecentCommands);
         return mRecentCommands;
+    }
+
+    private String splitPrefix(String s, int i) {
+        String[] splitPrefix = {
+                s.substring(0, lastIndexOf(s, " ")), s.substring(lastIndexOf(s, " "))
+        };
+        return splitPrefix[i].trim();
     }
 
     private void clearAll() {

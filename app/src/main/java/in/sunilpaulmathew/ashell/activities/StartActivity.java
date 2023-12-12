@@ -13,6 +13,8 @@ import android.app.Activity;
 import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
+import android.os.Handler;
+import android.os.Looper;
 import android.preference.PreferenceManager;
 import android.view.View;
 
@@ -23,7 +25,11 @@ import androidx.appcompat.widget.LinearLayoutCompat;
 import com.google.android.material.card.MaterialCardView;
 import com.google.android.material.textview.MaterialTextView;
 
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
+
 import in.sunilpaulmathew.ashell.R;
+import in.sunilpaulmathew.ashell.utils.Commands;
 import in.sunilpaulmathew.ashell.utils.Utils;
 import rikka.shizuku.Shizuku;
 
@@ -68,9 +74,16 @@ public class StartActivity extends AppCompatActivity {
     }
 
     private static void loadUI(Activity activity) {
-        Intent aShellActivity = new Intent(activity, aShellActivity.class);
-        activity.startActivity(aShellActivity);
-        activity.finish();
+        ExecutorService mExecutors = Executors.newSingleThreadExecutor();
+        mExecutors.execute(() -> {
+            Commands.loadPackageInfo();
+            new Handler(Looper.getMainLooper()).post(() -> {
+                Intent aShellActivity = new Intent(activity, aShellActivity.class);
+                activity.startActivity(aShellActivity);
+                activity.finish();
+            });
+            if (!mExecutors.isShutdown()) mExecutors.shutdown();
+        });
     }
 
 }
