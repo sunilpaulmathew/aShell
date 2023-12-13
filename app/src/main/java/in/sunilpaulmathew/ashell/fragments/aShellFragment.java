@@ -137,7 +137,7 @@ public class aShellFragment extends Fragment {
                         });
                         new Handler(Looper.getMainLooper()).post(() -> {
                             CommandsAdapter mCommandsAdapter;
-                            if (s.toString().contains(".")) {
+                            if (s.toString().contains(" ") && s.toString().contains(".")) {
                                 String[] splitCommands =  {
                                         s.toString().substring(0, lastIndexOf(s.toString(), ".")), s.toString().substring(lastIndexOf(s.toString(), "."))
                                 };
