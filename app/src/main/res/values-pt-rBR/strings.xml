@@ -18,7 +18,7 @@
     <string name="quit_app_message">Deseja sair do aShell?</string>
     <string name="request_permission">Solicitar Permissão</string>
     <string name="start">Iniciar</string>
-    <string name="shell_output_saved_message">A saída do último comando foi exportada para a pasta '%s'</string>
+    <string name="shell_output_saved_message">A saída do último comando foi exportada para a pasta \'%s\'</string>
     <string name="shizuku_about">Sobre o Shizuku</string>
     <string name="shizuku_access_denied_message">Acesso ao serviço Shizuku foi negado para o aShell. O aShell não funcionará sem um ambiente Shizuku adequado.</string>
     <string name="shizuku_unavailable_message">O Shizuku não está instalado ou configurado corretamente no seu dispositivo. O aShell não funcionará sem um ambiente Shizuku adequado. Clique aqui para saber mais sobre o Shizuku.</string>
