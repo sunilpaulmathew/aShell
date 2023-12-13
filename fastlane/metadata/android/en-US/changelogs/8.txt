@@ -1,4 +1,0 @@
-* Added option to bookmark commands.
-* Added copy to clipboard option in examples page.
-* Updated build tools & dependencies.
-* Miscellaneous changes.
