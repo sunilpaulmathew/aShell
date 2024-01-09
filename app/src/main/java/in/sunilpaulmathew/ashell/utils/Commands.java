@@ -150,23 +150,18 @@ public class Commands {
 
     public static void loadPackageInfo() {
         mPackages = new ArrayList<>();
-
-        StringBuilder sb = new StringBuilder();
+        
         try {
             Process mProcess = Runtime.getRuntime().exec("pm list packages");
             BufferedReader mInput = new BufferedReader(new InputStreamReader(mProcess.getInputStream()));
             String line;
             while ((line = mInput.readLine()) != null) {
-                sb.append(line).append("\n");
+                if (line.startsWith("package:")) {
+                    mPackages.add(new CommandItems(line.replace("package:", ""), null, null));
+                }
             }
             mProcess.waitFor();
         } catch (Exception ignored) {
-        }
-
-        for (String line : sb.toString().trim().split("\\r?\\n")) {
-            if (line.startsWith("package:")) {
-                mPackages.add(new CommandItems(line.replace("package:", ""), null, null));
-            }
         }
     }
 
