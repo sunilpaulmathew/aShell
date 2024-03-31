@@ -1,0 +1,27 @@
+<resources xmlns:tools="http://schemas.android.com/tools" tools:ignore="MissingTranslation">
+
+    <string name="about">Ó÷åôéêÜ ìå</string>
+    <string name="app_summary">Êáëþò Þñèáôå óôï aShell: ¸íá ôïðéêü êÝëõöïò ADB ãéá óõóêåõÝò Android ðïõ ôñïöïäïôïýíôáé áðü ôï Shizuku.</string>
+    <string name="app_working_message">aShell ëåéôïõñãåß áêüìá. ÐåñéìÝíåôå íá ôåëåéþóåé Þ óôáìáôÞóôå ÷åéñïêßíçôá (êÜíïíôáò êëéê óôï êïõìðß äéáêïðÞò) ãéá íá åêôåëÝóåôå ìéá íÝá åíôïëÞ</string>
+    <string name="bookmark_added_message">\'%s\' ðñïóèÝèçêå óå óåëéäïäåßêôç</string>
+    <string name="bookmark_removed_message">\'%s\' áöáéñÝèçêå áðü ôï óåëéäïäåßêôç</string>
+    <string name="cancel">Áêýñùóç</string>
+    <string name="clear_all_message">Êáèáñéóìüò üëùí óôçí ïèüíç?</string>
+    <string name="command_hint">ÅéóáãÜãåôå ôçí åíôïëÞ ADB åäþ</string>
+    <string name="command_title">aShell Ðëáßóéï Åíôïëþí</string>
+    <string name="copy">"ÁíôéãñáöÞ"</string>
+    <string name="dismiss">ÐáñÜâëåøç</string>
+    <string name="examples">Ðáñáäåßãìáôá</string>
+    <string name="press_back">ÐáôÞóôå îáíÜ ðßóù ãéá Ýîïäï</string>
+    <string name="process_destroy_message">aShell ëåéôïõñãåß áêüìá. ÈÝëåôå íá óôáìáôÞóåôå ôçí ôñÝ÷ïõóá äéáäéêáóßá?</string>
+    <string name="quit">Ôåñìáôéóìüò</string>
+    <string name="quit_app_message">ÈÝëåôå íá ôåñìáôßóåôå ôï aShell?</string>
+    <string name="request_permission">Áßôçìá ¢äåéáò</string>
+    <string name="start">¸íáñîç</string>
+    <string name="shell_output_saved_message">Ç Ýîïäïò ôçò ôåëåõôáßáò åíôïëÞò åîÜãåôáé óôïí öÜêåëï \'%s\'</string>
+    <string name="shizuku_about">Ó÷åôéêÜ ìå ôï Shizuku</string>
+    <string name="shizuku_access_denied_message">Ç ðñüóâáóç óôçí õðçñåóßá Shizuku äåí åðéôñÝðåôáé ãéá ôï aShell. Ôï aShell äåí èá ëåéôïõñãÞóåé ÷ùñßò Ýíá êáôÜëëçëï ðåñéâÜëëïí Shizuku.</string>
+    <string name="shizuku_unavailable_message">Ôï Shizuku äåí åßíáé åãêáôåóôçìÝíï Þ äåí Ý÷åé ñõèìéóôåß óùóôÜ óôç óõóêåõÞ óáò. Ôï aShell äåí èá ëåéôïõñãÞóåé ÷ùñßò Ýíá êáôÜëëçëï ðåñéâÜëëïí Shizuku. ÊÜíôå êëéê åäþ ãéá íá ìÜèåôå ðåñéóóüôåñá ãéá ôï Shizuku.</string>
+    <string name="su_warning_message">Ôï aShell äåí Ý÷åé ó÷åäéáóôåß ãéá ÷ñÞóåéò ðïõ ó÷åôßæïíôáé ìå ôï root. Ìáôáßùóç.</string>
+    <string name="yes">Íáé</string>
+</resources>
