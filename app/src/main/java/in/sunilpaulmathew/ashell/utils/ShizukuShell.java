@@ -23,7 +23,7 @@ public class ShizukuShell {
     }
 
     public boolean isBusy() {
-        return mOutput != null && mOutput.size() > 0 && !mOutput.get(mOutput.size() - 1).equals("aShell: Finish");
+        return mOutput != null && !mOutput.isEmpty() && !mOutput.get(mOutput.size() - 1).equals("aShell: Finish");
     }
 
     public void exec() {

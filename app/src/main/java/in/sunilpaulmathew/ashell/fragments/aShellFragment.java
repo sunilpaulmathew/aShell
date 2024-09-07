@@ -98,7 +98,7 @@ public class aShellFragment extends Fragment {
 
         mCommand.requestFocus();
 
-        mBookMarks.setVisibility(Utils.getBookmarks(requireActivity()).size() > 0 ? View.VISIBLE : View.GONE);
+        mBookMarks.setVisibility(!Utils.getBookmarks(requireActivity()).isEmpty() ? View.VISIBLE : View.GONE);
 
         mCommand.addTextChangedListener(new TextWatcher() {
             @Override
@@ -133,7 +133,7 @@ public class aShellFragment extends Fragment {
                                 Utils.snackBar(mRootView, getString(R.string.bookmark_added_message, s.toString().trim())).show();
                             }
                             mBookMark.setImageDrawable(Utils.getDrawable(Utils.isBookmarked(s.toString().trim(), requireActivity()) ? R.drawable.ic_starred : R.drawable.ic_star, requireActivity()));
-                            mBookMarks.setVisibility(Utils.getBookmarks(requireActivity()).size() > 0 ? View.VISIBLE : View.GONE);
+                            mBookMarks.setVisibility(!Utils.getBookmarks(requireActivity()).isEmpty() ? View.VISIBLE : View.GONE);
                         });
                         new Handler(Looper.getMainLooper()).post(() -> {
                             CommandsAdapter mCommandsAdapter;
@@ -359,7 +359,7 @@ public class aShellFragment extends Fragment {
 
         ScheduledExecutorService executor = Executors.newSingleThreadScheduledExecutor();
         executor.scheduleAtFixedRate(() -> {
-            if (mResult != null && mResult.size() > 0 && !mResult.get(mResult.size() - 1).equals("aShell: Finish")) {
+            if (mResult != null && !mResult.isEmpty() && !mResult.get(mResult.size() - 1).equals("aShell: Finish")) {
                 updateUI(mResult);
             }
         }, 0, 250, TimeUnit.MILLISECONDS);
@@ -429,10 +429,10 @@ public class aShellFragment extends Fragment {
         if (!mCommand.isFocused()) mCommand.requestFocus();
         mBookMarks.setVisibility(View.VISIBLE);
         mSettingsButton.setVisibility(View.VISIBLE);
-        if (mHistory != null && mHistory.size() > 0) {
+        if (mHistory != null && !mHistory.isEmpty()) {
             mHistoryButton.setVisibility(View.VISIBLE);
         }
-        if (mResult != null && mResult.size() > 0 && !mShizukuShell.isBusy()) {
+        if (mResult != null && !mResult.isEmpty() && !mShizukuShell.isBusy()) {
             mClearButton.setVisibility(View.VISIBLE);
             mSearchButton.setVisibility(View.VISIBLE);
         }
@@ -538,10 +538,10 @@ public class aShellFragment extends Fragment {
             }
             new Handler(Looper.getMainLooper()).post(() -> {
                 if (Shizuku.checkSelfPermission() == PackageManager.PERMISSION_GRANTED) {
-                    if (mHistory != null && mHistory.size() > 0 && mHistoryButton.getVisibility() != View.VISIBLE) {
+                    if (mHistory != null && !mHistory.isEmpty() && mHistoryButton.getVisibility() != View.VISIBLE) {
                         mHistoryButton.setVisibility(View.VISIBLE);
                     }
-                    if (mResult != null && mResult.size() > 0) {
+                    if (mResult != null && !mResult.isEmpty()) {
                         mClearButton.setVisibility(View.VISIBLE);
                         mSaveCard.setVisibility(View.VISIBLE);
                         mSearchButton.setVisibility(View.VISIBLE);

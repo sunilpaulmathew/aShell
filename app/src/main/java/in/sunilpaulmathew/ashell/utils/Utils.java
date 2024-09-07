@@ -83,7 +83,7 @@ public class Utils {
 
     public static List<String> getBookmarks(Context context) {
         List<String> mBookmarks = new ArrayList<>();
-        for (File file : Objects.requireNonNull(context.getExternalFilesDir("bookmarks").listFiles())) {
+        for (File file : Objects.requireNonNull(Objects.requireNonNull(context.getExternalFilesDir("bookmarks")).listFiles())) {
             if (!file.getName().equalsIgnoreCase("specialCommands")) {
                 mBookmarks.add(file.getName());
             }
@@ -109,9 +109,7 @@ public class Utils {
     }
 
     private static String read(File file) {
-        BufferedReader buf = null;
-        try {
-            buf = new BufferedReader(new FileReader(file));
+        try (BufferedReader buf = new BufferedReader(new FileReader(file))) {
 
             StringBuilder stringBuilder = new StringBuilder();
             String line;
@@ -121,12 +119,6 @@ public class Utils {
 
             return stringBuilder.toString().trim();
         } catch (IOException ignored) {
-        } finally {
-            try {
-                if (buf != null) buf.close();
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
         }
         return null;
     }
