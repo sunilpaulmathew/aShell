@@ -221,7 +221,7 @@ public class aShellFragment extends Fragment {
                     new MaterialAlertDialogBuilder(requireActivity())
                             .setIcon(R.mipmap.ic_launcher)
                             .setTitle(getString(R.string.app_name) + " " + BuildConfig.VERSION_NAME)
-                            .setMessage("Copyright: © 2023–2024, sunilpaulmathew\n\nCredits:\nRikkaApps: Shizuku")
+                            .setMessage("Copyright: © 2024–2025, sunilpaulmathew\n\nCredits:\nRikkaApps: Shizuku")
                             .setPositiveButton(getString(R.string.cancel), (dialogInterface, i) -> {
                             }).show();
                 }
