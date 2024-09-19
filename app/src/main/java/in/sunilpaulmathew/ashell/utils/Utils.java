@@ -5,9 +5,11 @@ import android.content.ClipData;
 import android.content.ClipboardManager;
 import android.content.Context;
 import android.content.Intent;
+import android.content.res.Configuration;
 import android.graphics.drawable.Drawable;
 import android.net.Uri;
 import android.os.Build;
+import android.preference.PreferenceManager;
 import android.view.View;
 import android.widget.Toast;
 
@@ -61,6 +63,15 @@ public class Utils {
             create(sb.toString(), new File(context.getExternalFilesDir("bookmarks"), "specialCommands"));
             return true;
         }
+    }
+
+    public static boolean getBoolean(String name, boolean defaults, Context context) {
+        return PreferenceManager.getDefaultSharedPreferences(context).getBoolean(name, defaults);
+    }
+
+    public static boolean isDarkTheme(Context context) {
+        int currentNightMode = context.getResources().getConfiguration().uiMode & Configuration.UI_MODE_NIGHT_MASK;
+        return currentNightMode == Configuration.UI_MODE_NIGHT_YES;
     }
 
     /*
@@ -163,6 +174,10 @@ public class Utils {
             context.startActivity(intent);
         } catch (ActivityNotFoundException ignored) {
         }
+    }
+
+    public static void saveBoolean(String name, boolean value, Context context) {
+        PreferenceManager.getDefaultSharedPreferences(context).edit().putBoolean(name, value).apply();
     }
 
 }

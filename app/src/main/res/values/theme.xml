@@ -1,0 +1,17 @@
+<resources>
+    <style name="AppTheme" parent="Theme.Material3.DynamicColors.DayNight.NoActionBar">
+        <item name="windowNoTitle">true</item>
+        <item name="colorSecondary">@color/colorBlue</item>
+        <item name="android:statusBarColor">@color/colorBlack</item>
+    </style>
+
+    <style name="AppTheme.Amoled" parent="Theme.Material3.DynamicColors.DayNight">
+        <item name="android:colorBackground">@color/colorBlack</item>
+        <item name="android:windowBackground">@color/colorBlack</item>
+        <item name="android:statusBarColor">@color/colorBlack</item>
+        <item name="colorPrimaryDark">@color/colorBlack</item>
+        <item name="colorSurface">@color/colorBlack</item>
+        <item name="windowActionBar">false</item>
+        <item name="windowNoTitle">true</item>
+    </style>
+</resources>

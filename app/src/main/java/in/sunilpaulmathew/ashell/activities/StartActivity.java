@@ -15,11 +15,9 @@ import android.graphics.Color;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Looper;
-import android.preference.PreferenceManager;
 import android.view.View;
 
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.appcompat.app.AppCompatDelegate;
 import androidx.appcompat.widget.LinearLayoutCompat;
 
 import com.google.android.material.card.MaterialCardView;
@@ -41,8 +39,6 @@ public class StartActivity extends AppCompatActivity {
     @SuppressLint("SetTextI18n")
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-        // Initialize App Theme
-        AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_FOLLOW_SYSTEM);
         super.onCreate(savedInstanceState);
         setContentView(in.sunilpaulmathew.ashell.R.layout.activity_start);
 
@@ -51,7 +47,7 @@ public class StartActivity extends AppCompatActivity {
         MaterialTextView mAboutText = findViewById(R.id.about_text);
 
         if (Shizuku.pingBinder()) {
-            if (PreferenceManager.getDefaultSharedPreferences(this).getBoolean("firstLaunch", true)) {
+            if (Utils.getBoolean("firstLaunch", true, this)) {
                 Shizuku.requestPermission(0);
                 mMainLayout.setVisibility(View.VISIBLE);
                 mAboutText.setText(getString(R.string.app_summary));
@@ -66,7 +62,7 @@ public class StartActivity extends AppCompatActivity {
         }
 
         mStartCard.setOnClickListener(v -> {
-            PreferenceManager.getDefaultSharedPreferences(this).edit().putBoolean("firstLaunch", false).apply();
+            Utils.saveBoolean("firstLaunch", false, this);
             loadUI(this);
         });
 

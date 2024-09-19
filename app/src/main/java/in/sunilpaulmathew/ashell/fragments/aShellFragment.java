@@ -12,7 +12,6 @@ import android.os.Bundle;
 import android.os.Environment;
 import android.os.Handler;
 import android.os.Looper;
-import android.preference.PreferenceManager;
 import android.provider.MediaStore;
 import android.text.Editable;
 import android.text.TextWatcher;
@@ -51,6 +50,7 @@ import java.util.concurrent.TimeUnit;
 import in.sunilpaulmathew.ashell.BuildConfig;
 import in.sunilpaulmathew.ashell.R;
 import in.sunilpaulmathew.ashell.activities.ExamplesActivity;
+import in.sunilpaulmathew.ashell.activities.aShellActivity;
 import in.sunilpaulmathew.ashell.adapters.CommandsAdapter;
 import in.sunilpaulmathew.ashell.adapters.ShellOutputAdapter;
 import in.sunilpaulmathew.ashell.utils.Commands;
@@ -199,15 +199,25 @@ public class aShellFragment extends Fragment {
             PopupMenu popupMenu = new PopupMenu(requireContext(), mSettingsButton);
             Menu menu = popupMenu.getMenu();
             menu.add(Menu.NONE, 0, Menu.NONE, R.string.shizuku_about);
-            menu.add(Menu.NONE, 1, Menu.NONE, R.string.examples);
-            menu.add(Menu.NONE, 2, Menu.NONE, R.string.about);
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.S && Utils.isDarkTheme(requireActivity()) && (mShizukuShell == null || !mShizukuShell.isBusy())) {
+                menu.add(Menu.NONE, 1, Menu.NONE, R.string.amoled_black).setCheckable(true)
+                        .setChecked(Utils.getBoolean("amoledTheme", false, requireActivity()));
+            }
+            menu.add(Menu.NONE, 2, Menu.NONE, R.string.examples);
+            menu.add(Menu.NONE, 3, Menu.NONE, R.string.about);
             popupMenu.setOnMenuItemClickListener(item -> {
                 if (item.getItemId() == 0) {
                     Utils.loadShizukuWeb(requireActivity());
                 } else if (item.getItemId() == 1) {
+                    Utils.saveBoolean("amoledTheme", !Utils.getBoolean("amoledTheme", false, requireActivity()), requireActivity());
+                    Intent mainActivity = new Intent(requireActivity(), aShellActivity.class);
+                    mainActivity.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                    startActivity(mainActivity);
+                    requireActivity().finish();
+                } else if (item.getItemId() == 2) {
                     Intent examples = new Intent(requireActivity(), ExamplesActivity.class);
                     startActivity(examples);
-                } else if (item.getItemId() == 2) {
+                } else if (item.getItemId() == 3) {
                     new MaterialAlertDialogBuilder(requireActivity())
                             .setIcon(R.mipmap.ic_launcher)
                             .setTitle(getString(R.string.app_name) + " " + BuildConfig.VERSION_NAME)
@@ -222,7 +232,7 @@ public class aShellFragment extends Fragment {
 
         mClearButton.setOnClickListener(v -> {
             if (mResult == null) return;
-            if (PreferenceManager.getDefaultSharedPreferences(requireActivity()).getBoolean("clearAllMessage", true)) {
+            if (Utils.getBoolean("clearAllMessage", true, requireActivity())) {
                 new MaterialAlertDialogBuilder(requireActivity())
                         .setIcon(R.mipmap.ic_launcher)
                         .setTitle(getString(R.string.app_name))
@@ -230,7 +240,7 @@ public class aShellFragment extends Fragment {
                         .setNegativeButton(getString(R.string.cancel), (dialogInterface, i) -> {
                         })
                         .setPositiveButton(getString(R.string.yes), (dialogInterface, i) -> {
-                            PreferenceManager.getDefaultSharedPreferences(requireActivity()).edit().putBoolean("clearAllMessage", false).apply();
+                            Utils.saveBoolean("clearAllMessage", false, requireActivity());
                             clearAll();
                         }).show();
             } else {
@@ -328,8 +338,8 @@ public class aShellFragment extends Fragment {
                     values.put(MediaStore.MediaColumns.MIME_TYPE, "text/plain");
                     values.put(MediaStore.MediaColumns.RELATIVE_PATH, Environment.DIRECTORY_DOWNLOADS);
                     Uri uri = requireActivity().getContentResolver().insert(MediaStore.Files.getContentUri("external"), values);
-                    OutputStream outputStream = requireActivity().getContentResolver().openOutputStream(uri);
-                    outputStream.write(sb.toString().getBytes());
+                    OutputStream outputStream = requireActivity().getContentResolver().openOutputStream(Objects.requireNonNull(uri));
+                    Objects.requireNonNull(outputStream).write(sb.toString().getBytes());
                     outputStream.close();
                 } catch (IOException ignored) {
                 }
