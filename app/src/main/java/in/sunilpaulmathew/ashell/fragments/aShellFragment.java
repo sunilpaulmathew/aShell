@@ -586,6 +586,7 @@ public class aShellFragment extends Fragment {
     }
 
     private void updateUI(List<String> data) {
+        if (data == null || data.isEmpty()) return;
         List<String> mData = new ArrayList<>();
         try {
             for (String result : data) {
