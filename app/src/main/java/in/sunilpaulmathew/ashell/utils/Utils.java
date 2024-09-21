@@ -69,6 +69,10 @@ public class Utils {
         return PreferenceManager.getDefaultSharedPreferences(context).getBoolean(name, defaults);
     }
 
+    public static boolean isAmoledBlackEnabled(Context context) {
+        return isDarkTheme(context) && Utils.getBoolean("amoledTheme", false, context);
+    }
+
     public static boolean isDarkTheme(Context context) {
         int currentNightMode = context.getResources().getConfiguration().uiMode & Configuration.UI_MODE_NIGHT_MASK;
         return currentNightMode == Configuration.UI_MODE_NIGHT_YES;

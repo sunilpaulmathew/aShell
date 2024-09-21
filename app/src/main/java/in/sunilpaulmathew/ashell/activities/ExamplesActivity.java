@@ -28,7 +28,7 @@ public class ExamplesActivity extends AppCompatActivity {
         LinearLayoutCompat mMain = findViewById(R.id.layout_main);
         RecyclerView mRecyclerView = findViewById(R.id.recycler_view);
 
-        if (Utils.getBoolean("amoledTheme", false, this)) {
+        if (Utils.isAmoledBlackEnabled(this)) {
             mMain.setBackgroundColor(Utils.getColor(R.color.colorBlack, this));
         }
 
