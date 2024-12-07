@@ -17,6 +17,7 @@
             android:layout_height="128dp"
             android:src="@mipmap/ic_launcher"
             android:layout_gravity="center"
+            android:layout_margin="10dp"
             android:background="@null" />
 
         <com.google.android.material.textview.MaterialTextView
