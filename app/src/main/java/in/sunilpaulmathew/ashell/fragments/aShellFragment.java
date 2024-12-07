@@ -67,7 +67,7 @@ public class aShellFragment extends Fragment {
 
     private AppCompatAutoCompleteTextView mCommand;
     private AppCompatImageButton mBottomArrow, mBookMark, mSendButton, mTopArrow;
-    private MaterialButton mBookMarks, mClearButton, mHistoryButton, mInfoButton, mSaveButton, mSearchButton, mSettingsButton;
+    private MaterialButton mBookMarksButton, mClearButton, mHistoryButton, mInfoButton, mSaveButton, mSearchButton, mSettingsButton;
     private TextInputEditText mSearchWord;
     private RecyclerView mRecyclerViewOutput;
     private ShizukuShell mShizukuShell = null;
@@ -93,7 +93,7 @@ public class aShellFragment extends Fragment {
         mSettingsButton = mRootView.findViewById(R.id.settings);
         mSearchButton = mRootView.findViewById(R.id.search);
         mBookMark = mRootView.findViewById(R.id.bookmark);
-        mBookMarks = mRootView.findViewById(R.id.bookmarks);
+        mBookMarksButton = mRootView.findViewById(R.id.bookmarks);
         mSendButton = mRootView.findViewById(R.id.send);
         mTopArrow = mRootView.findViewById(R.id.top);
         mRecyclerViewOutput = mRootView.findViewById(R.id.recycler_view_output);
@@ -101,7 +101,7 @@ public class aShellFragment extends Fragment {
 
         mCommand.requestFocus();
 
-        mBookMarks.setEnabled(!Utils.getBookmarks(requireActivity()).isEmpty());
+        mBookMarksButton.setEnabled(!Utils.getBookmarks(requireActivity()).isEmpty());
 
         mCommand.addTextChangedListener(new TextWatcher() {
             @Override
@@ -137,7 +137,7 @@ public class aShellFragment extends Fragment {
                                 Utils.snackBar(mRootView, getString(R.string.bookmark_added_message, s.toString().trim())).show();
                             }
                             mBookMark.setImageDrawable(Utils.getDrawable(Utils.isBookmarked(s.toString().trim(), requireActivity()) ? R.drawable.ic_starred : R.drawable.ic_star, requireActivity()));
-                            mBookMarks.setEnabled(!Utils.getBookmarks(requireActivity()).isEmpty());
+                            mBookMarksButton.setEnabled(!Utils.getBookmarks(requireActivity()).isEmpty());
                         });
                         new Handler(Looper.getMainLooper()).post(() -> {
                             CommandsAdapter mCommandsAdapter;
@@ -261,7 +261,7 @@ public class aShellFragment extends Fragment {
         mSearchButton.setOnClickListener(v -> {
             mHistoryButton.setVisibility(View.GONE);
             mClearButton.setVisibility(View.GONE);
-            mBookMarks.setVisibility(View.GONE);
+            mBookMarksButton.setVisibility(View.GONE);
             mInfoButton.setVisibility(View.GONE);
             mSettingsButton.setVisibility(View.GONE);
             mSearchButton.setVisibility(View.GONE);
@@ -294,7 +294,7 @@ public class aShellFragment extends Fragment {
             }
         });
 
-        mBookMarks.setOnClickListener(v -> {
+        mBookMarksButton.setOnClickListener(v -> {
             PopupMenu popupMenu = new PopupMenu(requireContext(), mCommand);
             Menu menu = popupMenu.getMenu();
             for (int i = 0; i < Utils.getBookmarks(requireActivity()).size(); i++) {
@@ -444,7 +444,7 @@ public class aShellFragment extends Fragment {
         mSearchWord.setText(null);
         mSearchWord.setVisibility(View.GONE);
         if (!mCommand.isFocused()) mCommand.requestFocus();
-        mBookMarks.setVisibility(View.VISIBLE);
+        mBookMarksButton.setVisibility(View.VISIBLE);
         mInfoButton.setVisibility(View.VISIBLE);
         mSettingsButton.setVisibility(View.VISIBLE);
         mHistoryButton.setVisibility(View.VISIBLE);
@@ -495,8 +495,7 @@ public class aShellFragment extends Fragment {
 
         if (finalCommand.equals("clear")) {
             if (mResult != null) {
-                mResult.clear();
-                updateUI(mResult);
+                clearAll();
             }
             return;
         }
@@ -527,6 +526,13 @@ public class aShellFragment extends Fragment {
         mSendButton.setImageDrawable(Utils.getDrawable(R.drawable.ic_stop, requireActivity()));
         mSendButton.setColorFilter(Utils.getColor(R.color.colorRed, requireActivity()));
 
+        mHistoryButton.setEnabled(false);
+        mBookMarksButton.setEnabled(false);
+        mClearButton.setEnabled(false);
+        mSearchButton.setEnabled(false);
+        mInfoButton.setEnabled(false);
+        mSettingsButton.setEnabled(false);
+
         String mTitleText = "<font color=\"" + Utils.getColorAccent(activity) + "\">shell@" + Utils.getDeviceName() + "</font># <i>" + finalCommand + "</i>";
 
         if (mResult == null) {
@@ -549,6 +555,9 @@ public class aShellFragment extends Fragment {
                     if (mHistory != null && !mHistory.isEmpty() && !mHistoryButton.isEnabled()) {
                         mHistoryButton.setEnabled(true);
                     }
+                    mInfoButton.setEnabled(true);
+                    mSettingsButton.setEnabled(true);
+                    mBookMarksButton.setEnabled(!Utils.getBookmarks(requireActivity()).isEmpty());
                     if (mResult != null && !mResult.isEmpty()) {
                         mClearButton.setEnabled(true);
                         mSaveButton.setVisibility(View.VISIBLE);
