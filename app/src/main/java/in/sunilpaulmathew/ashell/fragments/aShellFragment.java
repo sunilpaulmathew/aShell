@@ -215,12 +215,13 @@ public class aShellFragment extends Fragment {
         mSettingsButton.setOnClickListener(v -> {
             PopupMenu popupMenu = new PopupMenu(requireContext(), mSettingsButton);
             Menu menu = popupMenu.getMenu();
-            menu.add(Menu.NONE, 0, Menu.NONE, R.string.shizuku_about);
+            menu.add(Menu.NONE, 0, Menu.NONE, R.string.shizuku_about).setIcon(R.drawable.ic_info);
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.S && Utils.isDarkTheme(requireActivity()) && (mShizukuShell == null || !mShizukuShell.isBusy())) {
-                menu.add(Menu.NONE, 1, Menu.NONE, R.string.amoled_black).setCheckable(true)
+                menu.add(Menu.NONE, 1, Menu.NONE, R.string.amoled_black).setIcon(R.drawable.ic_theme).setCheckable(true)
                         .setChecked(Utils.getBoolean("amoledTheme", false, requireActivity()));
             }
-            menu.add(Menu.NONE, 2, Menu.NONE, R.string.examples);
+            menu.add(Menu.NONE, 2, Menu.NONE, R.string.examples).setIcon(R.drawable.ic_help);
+            popupMenu.setForceShowIcon(true);
             popupMenu.setOnMenuItemClickListener(item -> {
                 if (item.getItemId() == 0) {
                     Utils.loadShizukuWeb(requireActivity());

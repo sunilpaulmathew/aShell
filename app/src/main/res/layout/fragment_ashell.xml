@@ -166,11 +166,12 @@
 
                 <androidx.appcompat.widget.AppCompatImageButton
                     android:id="@+id/send"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
+                    android:layout_width="24dp"
+                    android:layout_height="24dp"
                     android:tint="?attr/colorPrimary"
                     android:src="@drawable/ic_help"
                     android:layout_gravity="center"
+                    android:scaleType="fitCenter"
                     android:layout_margin="10dp"
                     android:background="@null"
                     android:clickable="false" />
