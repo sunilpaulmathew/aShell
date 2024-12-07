@@ -1,6 +1,0 @@
-* Implemented Amoled black theme.
-* Improved package name suggestions.
-* Fixed potential crashes.
-* Imported Greek and Portuguese translations.
-* Updated build tools & dependencies.
-* Miscellaneous changes.
