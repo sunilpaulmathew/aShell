@@ -6,30 +6,17 @@
     android:layout_gravity="center"
     android:orientation="vertical" >
 
-    <androidx.appcompat.widget.LinearLayoutCompat
-        android:layout_height="50dp"
-        android:layout_width="match_parent"
-        android:gravity="top|center_vertical"
-        android:background="@color/colorBlack"
-        android:orientation="horizontal" >
-
-        <com.google.android.material.textview.MaterialTextView
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:layout_gravity="start"
-            android:gravity="center_vertical"
-            android:textColor="@color/colorBlue"
-            android:text="@string/examples"
-            android:padding="10dp"
-            android:textSize="23sp"
-            android:textStyle="bold" />
-    </androidx.appcompat.widget.LinearLayoutCompat>
+    <com.google.android.material.textview.MaterialTextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textColor="?attr/colorPrimary"
+        android:layout_gravity="center"
+        android:text="@string/examples"
+        style="@style/AppTheme.Title"
+        android:gravity="center" />
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/recycler_view"
         android:layout_height="wrap_content"
-        android:layout_width="wrap_content"
-        android:layout_marginBottom="10dp"
-        android:layout_marginTop="10dp" />
+        android:layout_width="wrap_content" />
 </androidx.appcompat.widget.LinearLayoutCompat>

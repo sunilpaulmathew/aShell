@@ -9,96 +9,104 @@
         android:layout_height="match_parent"
         android:orientation="vertical" >
 
-        <FrameLayout
-            android:layout_height="50dp"
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_height="wrap_content"
             android:layout_width="match_parent"
-            android:gravity="center"
-            android:background="@color/colorBlack"
-            android:orientation="horizontal" >
+            android:layout_marginStart="15dp"
+            android:layout_marginBottom="5dp"
+            android:orientation="horizontal"
+            android:layout_marginEnd="15dp"
+            android:layout_marginTop="5dp" >
 
-            <com.google.android.material.textview.MaterialTextView
-                android:layout_width="wrap_content"
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/history"
                 android:layout_height="wrap_content"
-                android:layout_gravity="start"
-                android:gravity="center_vertical"
-                android:textColor="@color/colorBlue"
-                android:text="@string/app_name"
-                android:padding="10dp"
-                android:textSize="23sp"
-                android:textStyle="bold" />
+                android:layout_width="wrap_content"
+                app:layout_constraintTop_toTopOf="parent"
+                style="?attr/materialIconButtonFilledTonalStyle"
+                app:layout_constraintStart_toStartOf="parent"
+                app:icon="@drawable/ic_history"
+                android:enabled="false" />
 
-            <androidx.appcompat.widget.AppCompatEditText
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/bookmarks"
+                android:layout_height="wrap_content"
+                android:layout_width="wrap_content"
+                style="?attr/materialIconButtonFilledTonalStyle"
+                app:layout_constraintStart_toEndOf="@id/history"
+                app:layout_constraintTop_toTopOf="@id/history"
+                app:layout_constraintEnd_toStartOf="@id/clear"
+                app:icon="@drawable/ic_bookmarks"
+                android:enabled="false" />
+
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/clear"
+                android:layout_height="wrap_content"
+                android:layout_width="wrap_content"
+                style="?attr/materialIconButtonFilledTonalStyle"
+                app:layout_constraintStart_toEndOf="@id/bookmarks"
+                app:layout_constraintTop_toTopOf="@id/history"
+                app:layout_constraintEnd_toStartOf="@id/search"
+                app:icon="@drawable/ic_refresh"
+                android:enabled="false" />
+
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/search"
+                android:layout_height="wrap_content"
+                android:layout_width="wrap_content"
+                app:layout_constraintStart_toEndOf="@id/clear"
+                app:layout_constraintEnd_toStartOf="@id/info"
+                style="?attr/materialIconButtonFilledTonalStyle"
+                app:layout_constraintTop_toTopOf="@id/history"
+                app:icon="@drawable/ic_search"
+                android:enabled="false" />
+
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/info"
+                android:layout_height="wrap_content"
+                android:layout_width="wrap_content"
+                style="?attr/materialIconButtonFilledTonalStyle"
+                app:layout_constraintTop_toTopOf="@id/history"
+                app:layout_constraintEnd_toStartOf="@id/settings"
+                app:layout_constraintStart_toEndOf="@id/search"
+                app:icon="@drawable/ic_info" />
+
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/settings"
+                android:layout_height="wrap_content"
+                android:layout_width="wrap_content"
+                app:layout_constraintTop_toTopOf="@id/history"
+                style="?attr/materialIconButtonFilledTonalStyle"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:icon="@drawable/ic_settings" />
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+        <com.google.android.material.card.MaterialCardView
+            android:id="@+id/search_card"
+            android:layout_height="wrap_content"
+            android:layout_width="match_parent"
+            app:strokeColor="?attr/colorPrimary"
+            app:cardCornerRadius="45dp"
+            android:layout_margin="5dp" >
+
+            <com.google.android.material.textfield.TextInputEditText
                 android:id="@+id/search_word"
+                android:layout_height="wrap_content"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:textColor="@color/colorBlue"
-                android:layout_gravity="center|start"
-                android:layout_marginStart="100dp"
-                android:layout_marginEnd="25dp"
-                android:textStyle="italic"
-                android:visibility="gone"
-                android:gravity="center" />
+                android:drawableStart="@drawable/ic_search"
+                android:layout_gravity="center"
+                android:gravity="start|center"
+                android:layout_margin="10dp"
+                android:background="@null"
+                android:visibility="gone" />
+        </com.google.android.material.card.MaterialCardView>
 
-            <androidx.appcompat.widget.LinearLayoutCompat
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:orientation="horizontal"
-                android:layout_gravity="end">
-
-                <androidx.appcompat.widget.AppCompatImageButton
-                    android:id="@+id/history"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:src="@drawable/ic_history"
-                    android:tint="@color/colorBlue"
-                    android:layout_gravity="center"
-                    android:layout_margin="5dp"
-                    android:background="@null"
-                    android:visibility="gone" />
-
-                <androidx.appcompat.widget.AppCompatImageButton
-                    android:id="@+id/search"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_margin="5dp"
-                    android:layout_gravity="end|center_vertical"
-                    android:src="@drawable/ic_search"
-                    android:tint="@color/colorBlue"
-                    android:background="@null"
-                    android:visibility="gone" />
-
-                <androidx.appcompat.widget.AppCompatImageButton
-                    android:id="@+id/clear"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="end|center_vertical"
-                    android:src="@drawable/ic_refresh"
-                    android:tint="@color/colorBlue"
-                    android:background="@null"
-                    android:visibility="gone" />
-
-                <androidx.appcompat.widget.AppCompatImageButton
-                    android:id="@+id/bookmarks"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="center|end"
-                    android:src="@drawable/ic_bookmarks"
-                    android:tint="@color/colorBlue"
-                    android:layout_margin="5dp"
-                    android:background="@null"
-                    android:visibility="gone" />
-
-                <androidx.appcompat.widget.AppCompatImageButton
-                    android:id="@+id/settings"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_margin="5dp"
-                    android:layout_gravity="end|center_vertical"
-                    android:src="@drawable/ic_dots"
-                    android:background="@null"
-                    android:tint="@color/colorBlue" />
-            </androidx.appcompat.widget.LinearLayoutCompat>
-        </FrameLayout>
+        <com.google.android.material.textview.MaterialTextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textColor="?attr/colorPrimary"
+            android:text="@string/app_name"
+            style="@style/AppTheme.Title" />
 
         <FrameLayout
             android:layout_width="match_parent"
@@ -109,7 +117,6 @@
                 android:layout_height="wrap_content"
                 android:layout_gravity="start|center"
                 android:src="@drawable/ic_numbers"
-                android:tint="@color/colorBlue"
                 android:background="@null"
                 android:clickable="false" />
 
@@ -117,7 +124,6 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
-                app:boxStrokeColor="@color/colorBlue"
                 android:hint="@string/command_title"
                 android:layout_marginStart="20dp"
                 android:layout_marginEnd="50dp"
@@ -128,7 +134,6 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_gravity="start|center"
-                    android:textColor="@color/colorBlue"
                     android:hint="@string/command_hint"
                     android:inputType="textMultiLine"
                     android:gravity="center_vertical"
@@ -146,7 +151,6 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center|end"
-                android:tint="@color/colorBlue"
                 android:layout_marginEnd="60dp"
                 android:background="@null"
                 android:visibility="gone"
@@ -156,7 +160,6 @@
                 android:id="@+id/send_card"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                app:cardBackgroundColor="@color/colorBlue"
                 android:layout_gravity="end|center"
                 android:layout_margin="5dp"
                 app:cardCornerRadius="20dp" >
@@ -165,7 +168,7 @@
                     android:id="@+id/send"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:tint="@color/colorWhite"
+                    android:tint="?attr/colorPrimary"
                     android:src="@drawable/ic_help"
                     android:layout_gravity="center"
                     android:layout_margin="10dp"
@@ -205,8 +208,8 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center|top"
+            android:tint="?attr/colorPrimary"
             android:src="@drawable/ic_arrow"
-            android:tint="@color/colorBlue"
             android:layout_marginTop="75dp"
             android:background="@null"
             android:visibility="gone" />
@@ -217,32 +220,25 @@
             android:layout_height="wrap_content"
             android:layout_gravity="center|bottom"
             android:layout_marginBottom="75dp"
+            android:tint="?attr/colorPrimary"
             android:src="@drawable/ic_arrow"
-            android:tint="@color/colorBlue"
             android:background="@null"
             android:visibility="gone"
             android:rotation="180" />
     </FrameLayout>
 
-    <com.google.android.material.card.MaterialCardView
-        android:id="@+id/save_card"
+    <com.google.android.material.button.MaterialButton
+        android:id="@+id/save_button"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        style="?attr/materialIconButtonFilledTonalStyle"
         android:layout_alignParentBottom="true"
-        app:cardBackgroundColor="@color/colorBlue"
         android:layout_alignParentEnd="true"
         android:layout_margin="25dp"
-        app:cardCornerRadius="25dp"
-        android:visibility="gone" >
-
-        <androidx.appcompat.widget.AppCompatImageButton
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="end|center_vertical"
-            android:tint="@color/colorWhite"
-            android:src="@drawable/ic_save"
-            android:layout_margin="10dp"
-            android:background="@null"
-            android:clickable="false" />
-    </com.google.android.material.card.MaterialCardView>
+        android:layout_gravity="center"
+        app:icon="@drawable/ic_save"
+        android:text="@string/save"
+        android:visibility="gone"
+        android:textSize="17sp"
+        app:iconGravity="start" />
 </RelativeLayout>

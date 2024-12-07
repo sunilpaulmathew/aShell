@@ -1,6 +1,5 @@
 <resources xmlns:tools="http://schemas.android.com/tools" tools:ignore="MissingTranslation">
 
-    <string name="about">"Sobre"</string>
     <string name="app_summary">"Bem-vindo ao aShell: Uma shell ADB local para dispositivos android com Shizuku."</string>
     <string name="app_working_message">"O aShell ainda está a funcionar. Aguarde que termine ou pare manualmente (clicando no botão de parar) para executar um novo comando"</string>
     <string name="bookmark_added_message">"'%s' está marcado como favorito"</string>

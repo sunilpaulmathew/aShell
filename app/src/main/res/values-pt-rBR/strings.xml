@@ -1,6 +1,5 @@
 <resources xmlns:tools="http://schemas.android.com/tools" tools:ignore="MissingTranslation">
 
-    <string name="about">Sobre</string>
     <string name="app_summary">Bem-vindo ao aShell: um shell ADB local para dispositivos Android com suporte ao Shizuku.</string>
     <string name="app_working_message">aShell está em execução. Aguarde até que termine ou pare manualmente (clicando no botão de parar) para executar um novo comando.</string>
     <string name="bookmark_added_message">\'%s\' foi adicionado aos favoritos</string>

@@ -1,0 +1,61 @@
+<androidx.core.widget.NestedScrollView
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_gravity="center"
+    android:gravity="center" >
+
+    <androidx.appcompat.widget.LinearLayoutCompat
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:orientation="vertical"
+        android:gravity="center" >
+
+        <androidx.appcompat.widget.AppCompatImageView
+            android:layout_width="128dp"
+            android:layout_height="128dp"
+            android:src="@mipmap/ic_launcher"
+            android:layout_gravity="center"
+            android:background="@null" />
+
+        <com.google.android.material.textview.MaterialTextView
+            android:id="@+id/title"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textColor="?attr/colorPrimary"
+            android:layout_gravity="center"
+            android:layout_margin="5dp"
+            android:clickable="false"
+            android:textStyle="bold"
+            android:textSize="25sp" />
+
+        <com.google.android.material.textview.MaterialTextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/copyright_text"
+            android:textStyle="bold|italic"
+            android:layout_gravity="center"
+            android:layout_margin="5dp"
+            android:clickable="false" />
+
+        <com.google.android.material.textview.MaterialTextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textColor="?attr/colorPrimary"
+            android:layout_marginBottom="5dp"
+            android:layout_gravity="center"
+            android:layout_marginTop="10dp"
+            android:text="@string/credits"
+            android:clickable="false"
+            android:textStyle="bold"
+            android:textSize="17sp" />
+
+        <com.google.android.material.textview.MaterialTextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="RikkaApps: Shizuku"
+            android:layout_gravity="center"
+            android:textStyle="italic" />
+    </androidx.appcompat.widget.LinearLayoutCompat>
+</androidx.core.widget.NestedScrollView>

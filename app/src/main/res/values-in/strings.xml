@@ -1,6 +1,5 @@
 <resources xmlns:tools="http://schemas.android.com/tools" tools:ignore="MissingTranslation">
 
-    <string name="about">"Tentang"</string>
     <string name="app_summary">"Selamat datang di aShell: Sebuah shell ADB lokal untuk perangkat-perangkat android terdukung Shizuku"</string>
     <string name="app_working_message">"aShell masih bekerja. Mohon menunggu hingga selesai atau menghentikannya (dengan mengklik tombol henti) untuk menjalankan perintah baru"</string>
     <string name="bookmark_added_message">"'%s' telah ditandai"</string>

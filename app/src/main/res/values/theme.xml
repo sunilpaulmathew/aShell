@@ -1,11 +1,10 @@
 <resources>
-    <style name="AppTheme" parent="Theme.Material3.DynamicColors.DayNight.NoActionBar">
+    <style name="AppTheme" parent="Theme.Material3.DynamicColors.DayNight">
         <item name="windowNoTitle">true</item>
-        <item name="colorSecondary">@color/colorBlue</item>
         <item name="android:statusBarColor">@color/colorBlack</item>
     </style>
 
-    <style name="AppTheme.Amoled" parent="Theme.Material3.DynamicColors.DayNight">
+    <style name="AppTheme.Amoled" parent="AppTheme">
         <item name="android:colorBackground">@color/colorBlack</item>
         <item name="android:windowBackground">@color/colorBlack</item>
         <item name="android:statusBarColor">@color/colorBlack</item>
@@ -13,5 +12,13 @@
         <item name="colorSurface">@color/colorBlack</item>
         <item name="windowActionBar">false</item>
         <item name="windowNoTitle">true</item>
+    </style>
+
+    <style name="AppTheme.Title" parent="AppTheme">
+        <item name="android:textSize">35sp</item>
+        <item name="android:gravity">start|center</item>
+        <item name="android:layout_gravity">start|center</item>
+        <item name="android:layout_marginStart">15dp</item>
+        <item name="android:textStyle">bold</item>
     </style>
 </resources>

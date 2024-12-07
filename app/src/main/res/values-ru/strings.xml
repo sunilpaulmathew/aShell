@@ -1,7 +1,6 @@
 <resources xmlns:tools="http://schemas.android.com/tools" tools:ignore="MissingTranslation">
     <!--Created by The Translator <https://play.google.com/store/apps/details?id=com.sunilpaulmathew.translator>-->
 
-    <string name="about">"Информация"</string>
     <string name="app_summary">"Добро пожаловать в aShell: локальную оболочку ADB для устройств Android на платформе Shizuku."</string>
     <string name="app_working_message">"aShell все еще выполняется. Подождите, пока он завершится, или остановите его вручную (нажав кнопку остановки), чтобы запустить новую команду."</string>
     <string name="cancel">"Отмена"</string>

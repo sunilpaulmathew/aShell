@@ -20,7 +20,7 @@ import android.view.View;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.LinearLayoutCompat;
 
-import com.google.android.material.card.MaterialCardView;
+import com.google.android.material.button.MaterialButton;
 import com.google.android.material.textview.MaterialTextView;
 
 import java.util.concurrent.ExecutorService;
@@ -43,7 +43,7 @@ public class StartActivity extends AppCompatActivity {
         setContentView(in.sunilpaulmathew.ashell.R.layout.activity_start);
 
         LinearLayoutCompat mMainLayout = findViewById(R.id.layout_main);
-        MaterialCardView mStartCard = findViewById(R.id.start_card);
+        MaterialButton mStartButton = findViewById(R.id.start_button);
         MaterialTextView mAboutText = findViewById(R.id.about_text);
 
         if (Shizuku.pingBinder()) {
@@ -58,10 +58,10 @@ public class StartActivity extends AppCompatActivity {
             mMainLayout.setVisibility(View.VISIBLE);
             mAboutText.setText(getString(R.string.shizuku_unavailable_message));
             mAboutText.setTextColor(Color.RED);
-            mStartCard.setVisibility(View.GONE);
+            mStartButton.setVisibility(View.GONE);
         }
 
-        mStartCard.setOnClickListener(v -> {
+        mStartButton.setOnClickListener(v -> {
             Utils.saveBoolean("firstLaunch", false, this);
             loadUI(this);
         });

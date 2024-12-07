@@ -6,6 +6,7 @@ import android.content.ClipboardManager;
 import android.content.Context;
 import android.content.Intent;
 import android.content.res.Configuration;
+import android.content.res.TypedArray;
 import android.graphics.drawable.Drawable;
 import android.net.Uri;
 import android.os.Build;
@@ -15,6 +16,7 @@ import android.widget.Toast;
 
 import androidx.core.content.ContextCompat;
 
+import com.google.android.material.color.DynamicColors;
 import com.google.android.material.snackbar.Snackbar;
 
 import java.io.BufferedReader;
@@ -23,8 +25,6 @@ import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Collections;
 import java.util.List;
 import java.util.Objects;
 
@@ -94,6 +94,23 @@ public class Utils {
 
     public static int getColor(int color, Context context) {
         return ContextCompat.getColor(context, color);
+    }
+
+    public static int getColorAccent(Context context) {
+        return getMaterial3Colors(getColor(R.color.colorBlue, context), context);
+    }
+
+    private static int getMaterial3Colors(int defaultColor, Context context) {
+        int color = defaultColor;
+        if (DynamicColors.isDynamicColorAvailable()) {
+            Context dynamicClrCtx = DynamicColors.wrapContextIfAvailable(context, com.google.android.material.R.style.MaterialAlertDialog_Material3);
+            TypedArray ta = dynamicClrCtx.obtainStyledAttributes(new int[] {
+                    com.google.android.material.R.attr.colorPrimary
+            });
+            color = ta.getColor(0, defaultColor);
+            ta.recycle();
+        }
+        return color;
     }
 
     public static List<String> getBookmarks(Context context) {
