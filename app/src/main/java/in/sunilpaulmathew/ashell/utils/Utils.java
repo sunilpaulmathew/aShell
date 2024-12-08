@@ -11,13 +11,11 @@ import android.graphics.drawable.Drawable;
 import android.net.Uri;
 import android.os.Build;
 import android.preference.PreferenceManager;
-import android.view.View;
 import android.widget.Toast;
 
 import androidx.core.content.ContextCompat;
 
 import com.google.android.material.color.DynamicColors;
-import com.google.android.material.snackbar.Snackbar;
 
 import java.io.BufferedReader;
 import java.io.File;
@@ -130,12 +128,6 @@ public class Utils {
         return mBookmarks;
     }
 
-    public static Snackbar snackBar(View view, String message) {
-        Snackbar snackbar = Snackbar.make(view, message, Snackbar.LENGTH_LONG);
-        snackbar.setAction(R.string.dismiss, v -> snackbar.dismiss());
-        return snackbar;
-    }
-
     public static String getDeviceName() {
         return Build.MODEL;
     }
@@ -153,6 +145,10 @@ public class Utils {
         } catch (IOException ignored) {
         }
         return null;
+    }
+
+    public static Toast toast(String message, Context context) {
+        return Toast.makeText(context, message, Toast.LENGTH_LONG);
     }
 
     public static void addToBookmark(String command, Context context) {

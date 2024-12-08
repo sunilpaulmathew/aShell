@@ -131,10 +131,10 @@ public class aShellFragment extends Fragment {
                         mBookMark.setOnClickListener(v -> {
                             if (Utils.isBookmarked(s.toString().trim(), requireActivity())) {
                                 Utils.deleteFromBookmark(s.toString().trim(), requireActivity());
-                                Utils.snackBar(mRootView, getString(R.string.bookmark_removed_message, s.toString().trim())).show();
+                                Utils.toast(getString(R.string.bookmark_removed_message, s.toString().trim()), requireActivity()).show();
                             } else {
                                 Utils.addToBookmark(s.toString().trim(), requireActivity());
-                                Utils.snackBar(mRootView, getString(R.string.bookmark_added_message, s.toString().trim())).show();
+                                Utils.toast(getString(R.string.bookmark_added_message, s.toString().trim()), requireActivity()).show();
                             }
                             mBookMark.setImageDrawable(Utils.getDrawable(Utils.isBookmarked(s.toString().trim(), requireActivity()) ? R.drawable.ic_starred : R.drawable.ic_star, requireActivity()));
                             mBookMarksButton.setEnabled(!Utils.getBookmarks(requireActivity()).isEmpty());
@@ -400,7 +400,7 @@ public class aShellFragment extends Fragment {
                     mExit = false;
                     requireActivity().finish();
                 } else {
-                    Utils.snackBar(mRootView, getString(R.string.press_back)).show();
+                    Utils.toast(getString(R.string.press_back), requireActivity()).show();
                     mExit = true;
                     mHandler.postDelayed(() -> mExit = false, 2000);
                 }
@@ -513,7 +513,7 @@ public class aShellFragment extends Fragment {
         }
 
         if (finalCommand.startsWith("su")) {
-            Utils.snackBar(activity.findViewById(android.R.id.content), getString(R.string.su_warning_message)).show();
+            Utils.toast(getString(R.string.su_warning_message), requireActivity()).show();
             return;
         }
 
