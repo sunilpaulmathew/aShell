@@ -1,4 +1,0 @@
-* More elegant app UI.
-* App now uses accent color of android system whenever possible.
-* Updated build tools & dependencies.
-* Miscellaneous changes.

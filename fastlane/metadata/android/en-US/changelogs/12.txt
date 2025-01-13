@@ -1,0 +1,3 @@
+* Allow picking texts shared by other apps.
+* Updated Hungarian translations.
+* Miscellaneous changes.
