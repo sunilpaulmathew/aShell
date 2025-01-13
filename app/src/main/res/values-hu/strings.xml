@@ -1,7 +1,7 @@
 <resources xmlns:tools="http://schemas.android.com/tools" tools:ignore="MissingTranslation">
 
     <string name="app_summary">"Üdvözöljük az aShellben: Egy helyi ADB héj, a Shizuku alapú android eszközökhöz."</string>
-    <string name="app_working_message">"Az aShell még mindig működik.  Kérjük várja meg amíg befejeződik, vagy manuálisan állítsa le (a leállítás gombra kattintva) egy új parancs futtatásához"</string>
+    <string name="app_working_message">"Az aShell még mindig működik. Kérjük várja meg amíg befejeződik, vagy manuálisan állítsa le (a leállítás gombra kattintva) egy új parancs futtatásához"</string>
     <string name="bookmark_added_message">"'%s' könyvjelzővel ellátva"</string>
     <string name="bookmark_removed_message">"'%s' eltávolítva a könyvjelzőkből"</string>
     <string name="cancel">"Mégse"</string>
@@ -23,4 +23,8 @@
     <string name="shizuku_unavailable_message">"A Shizuku nincs telepítve, vagy nincs megfelelően konfigurálva az eszközön. Az aShell nem fog működni megfelelő Shizuku környezet nélkül. Kattintson ide, ha többet szeretne megtudni a Shizukuról."</string>
     <string name="su_warning_message">"Az aShell nem root alapú felhasználásra készült. Megszakítás."</string>
     <string name="yes">"Igen"</string>
+    <string name="amoled_black">"Amoled fekete"</string>
+    <string name="copyright_text">"Szerzői jog: © 2024–2025, sunilpaulmathew"</string>
+    <string name="credits">"Elismerések"</string>
+    <string name="save">"Mentés"</string>
 </resources>
