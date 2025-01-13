@@ -3,6 +3,7 @@ package in.sunilpaulmathew.ashell.activities;
 import android.os.Bundle;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.fragment.app.Fragment;
 
 import in.sunilpaulmathew.ashell.R;
 import in.sunilpaulmathew.ashell.fragments.aShellFragment;
@@ -20,8 +21,17 @@ public class aShellActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_ashell);
 
+        String command = getIntent().getStringExtra("command");
+
+        Bundle bundle = new Bundle();
+        if (command != null) {
+            bundle.putString("command", command);
+        }
+        Fragment fragment = new aShellFragment();
+        fragment.setArguments(bundle);
+
         getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container,
-                new aShellFragment()).commit();
+                fragment).commit();
     }
 
 }

@@ -75,6 +75,16 @@ public class aShellFragment extends Fragment {
     private final Handler mHandler = new Handler();
     private int mPosition = 1;
     private List<String> mHistory = null, mResult = null;
+    private String mCommandShared = null;
+
+    @Override
+    public void onCreate(@Nullable Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        Bundle arguments = getArguments();
+        if (arguments == null) return;
+
+        mCommandShared = arguments.getString("command");
+    }
 
     @SuppressLint("SetTextI18n")
     @Nullable
@@ -100,6 +110,14 @@ public class aShellFragment extends Fragment {
         mRecyclerViewOutput.setLayoutManager(new LinearLayoutManager(requireActivity()));
 
         mCommand.requestFocus();
+
+        if (mCommandShared != null) {
+            mCommand.setText(mCommandShared);
+            mBookMark.setVisibility(View.VISIBLE);
+            mBookMark.setImageDrawable(Utils.getDrawable(Utils.isBookmarked(mCommandShared, requireActivity()) ? R.drawable.ic_starred : R.drawable.ic_star, requireActivity()));
+            mSendButton.setImageDrawable(Utils.getDrawable(R.drawable.ic_send, requireActivity()));
+            mBookMark.setOnClickListener(v -> bookMark(mCommandShared));
+        }
 
         mBookMarksButton.setEnabled(!Utils.getBookmarks(requireActivity()).isEmpty());
 
@@ -128,17 +146,7 @@ public class aShellFragment extends Fragment {
                         mSendButton.setColorFilter(Utils.getColor(R.color.colorWhite, requireActivity()));
                         mBookMark.setImageDrawable(Utils.getDrawable(Utils.isBookmarked(s.toString().trim(), requireActivity()) ? R.drawable.ic_starred : R.drawable.ic_star, requireActivity()));
                         mBookMark.setVisibility(View.VISIBLE);
-                        mBookMark.setOnClickListener(v -> {
-                            if (Utils.isBookmarked(s.toString().trim(), requireActivity())) {
-                                Utils.deleteFromBookmark(s.toString().trim(), requireActivity());
-                                Utils.toast(getString(R.string.bookmark_removed_message, s.toString().trim()), requireActivity()).show();
-                            } else {
-                                Utils.addToBookmark(s.toString().trim(), requireActivity());
-                                Utils.toast(getString(R.string.bookmark_added_message, s.toString().trim()), requireActivity()).show();
-                            }
-                            mBookMark.setImageDrawable(Utils.getDrawable(Utils.isBookmarked(s.toString().trim(), requireActivity()) ? R.drawable.ic_starred : R.drawable.ic_star, requireActivity()));
-                            mBookMarksButton.setEnabled(!Utils.getBookmarks(requireActivity()).isEmpty());
-                        });
+                        mBookMark.setOnClickListener(v -> bookMark(s.toString().trim()));
                         new Handler(Looper.getMainLooper()).post(() -> {
                             CommandsAdapter mCommandsAdapter;
                             if (s.toString().contains(" ") && s.toString().contains(".")) {
@@ -438,6 +446,18 @@ public class aShellFragment extends Fragment {
         mTopArrow.setVisibility(View.GONE);
         mBottomArrow.setVisibility(View.GONE);
         if (!mCommand.isFocused()) mCommand.requestFocus();
+    }
+
+    private void bookMark(String string) {
+        if (Utils.isBookmarked(string, requireActivity())) {
+            Utils.deleteFromBookmark(string, requireActivity());
+            Utils.toast(getString(R.string.bookmark_removed_message, string), requireActivity()).show();
+        } else {
+            Utils.addToBookmark(string, requireActivity());
+            Utils.toast(getString(R.string.bookmark_added_message, string), requireActivity()).show();
+        }
+        mBookMark.setImageDrawable(Utils.getDrawable(Utils.isBookmarked(string, requireActivity()) ? R.drawable.ic_starred : R.drawable.ic_star, requireActivity()));
+        mBookMarksButton.setEnabled(!Utils.getBookmarks(requireActivity()).isEmpty());
     }
 
     private void hideSearchBar() {

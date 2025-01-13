@@ -9,7 +9,6 @@
 package in.sunilpaulmathew.ashell.activities;
 
 import android.annotation.SuppressLint;
-import android.app.Activity;
 import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
@@ -36,6 +35,8 @@ import rikka.shizuku.Shizuku;
  */
 public class StartActivity extends AppCompatActivity {
 
+    private String mCommand = null;
+
     @SuppressLint("SetTextI18n")
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -52,7 +53,7 @@ public class StartActivity extends AppCompatActivity {
                 mMainLayout.setVisibility(View.VISIBLE);
                 mAboutText.setText(getString(R.string.app_summary));
             } else {
-                loadUI(this);
+                loadUI();
             }
         } else {
             mMainLayout.setVisibility(View.VISIBLE);
@@ -63,20 +64,24 @@ public class StartActivity extends AppCompatActivity {
 
         mStartButton.setOnClickListener(v -> {
             Utils.saveBoolean("firstLaunch", false, this);
-            loadUI(this);
+            loadUI();
         });
 
         mAboutText.setOnClickListener(v -> Utils.loadShizukuWeb(this));
     }
 
-    private static void loadUI(Activity activity) {
+    private void loadUI() {
         ExecutorService mExecutors = Executors.newSingleThreadExecutor();
         mExecutors.execute(() -> {
             Commands.loadPackageInfo();
+            mCommand = getIntent().getStringExtra("command");
             new Handler(Looper.getMainLooper()).post(() -> {
-                Intent aShellActivity = new Intent(activity, aShellActivity.class);
-                activity.startActivity(aShellActivity);
-                activity.finish();
+                Intent aShellActivity = new Intent(this, aShellActivity.class);
+                if (mCommand != null) {
+                    aShellActivity.putExtra("command", mCommand);
+                }
+                startActivity(aShellActivity);
+                finish();
             });
             if (!mExecutors.isShutdown()) mExecutors.shutdown();
         });

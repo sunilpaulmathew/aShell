@@ -21,4 +21,12 @@
         <item name="android:layout_marginStart">15dp</item>
         <item name="android:textStyle">bold</item>
     </style>
+
+    <style name="AppTheme.Transparent" parent="AppTheme" >
+        <item name="android:windowNoTitle">true</item>
+        <item name="android:windowBackground">@android:color/transparent</item>
+        <item name="android:background">@android:color/transparent</item>
+        <item name="android:colorBackgroundCacheHint">@null</item>
+        <item name="android:windowIsTranslucent">true</item>
+    </style>
 </resources>
