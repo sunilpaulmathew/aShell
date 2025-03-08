@@ -1,26 +1,32 @@
-<resources xmlns:tools="http://schemas.android.com/tools" tools:ignore="MissingTranslation">
+<resources xmlns:tools="http://schemas.android.com/tools" tools:ignore="MissingTranslation" >
+    <string name="app_name" translatable="false">aShell</string>
 
-    <string name="app_summary">Êáëþò Þñèáôå óôï aShell: ¸íá ôïðéêü êÝëõöïò ADB ãéá óõóêåõÝò Android ðïõ ôñïöïäïôïýíôáé áðü ôï Shizuku.</string>
-    <string name="app_working_message">aShell ëåéôïõñãåß áêüìá. ÐåñéìÝíåôå íá ôåëåéþóåé Þ óôáìáôÞóôå ÷åéñïêßíçôá (êÜíïíôáò êëéê óôï êïõìðß äéáêïðÞò) ãéá íá åêôåëÝóåôå ìéá íÝá åíôïëÞ</string>
-    <string name="bookmark_added_message">\'%s\' ðñïóèÝèçêå óå óåëéäïäåßêôç</string>
-    <string name="bookmark_removed_message">\'%s\' áöáéñÝèçêå áðü ôï óåëéäïäåßêôç</string>
-    <string name="cancel">Áêýñùóç</string>
-    <string name="clear_all_message">Êáèáñéóìüò üëùí óôçí ïèüíç?</string>
-    <string name="command_hint">ÅéóáãÜãåôå ôçí åíôïëÞ ADB åäþ</string>
-    <string name="command_title">aShell Ðëáßóéï Åíôïëþí</string>
-    <string name="copy">"ÁíôéãñáöÞ"</string>
-    <string name="dismiss">ÐáñÜâëåøç</string>
-    <string name="examples">Ðáñáäåßãìáôá</string>
-    <string name="press_back">ÐáôÞóôå îáíÜ ðßóù ãéá Ýîïäï</string>
-    <string name="process_destroy_message">aShell ëåéôïõñãåß áêüìá. ÈÝëåôå íá óôáìáôÞóåôå ôçí ôñÝ÷ïõóá äéáäéêáóßá?</string>
-    <string name="quit">Ôåñìáôéóìüò</string>
-    <string name="quit_app_message">ÈÝëåôå íá ôåñìáôßóåôå ôï aShell?</string>
-    <string name="request_permission">Áßôçìá ¢äåéáò</string>
-    <string name="start">¸íáñîç</string>
-    <string name="shell_output_saved_message">Ç Ýîïäïò ôçò ôåëåõôáßáò åíôïëÞò åîÜãåôáé óôïí öÜêåëï \'%s\'</string>
-    <string name="shizuku_about">Ó÷åôéêÜ ìå ôï Shizuku</string>
-    <string name="shizuku_access_denied_message">Ç ðñüóâáóç óôçí õðçñåóßá Shizuku äåí åðéôñÝðåôáé ãéá ôï aShell. Ôï aShell äåí èá ëåéôïõñãÞóåé ÷ùñßò Ýíá êáôÜëëçëï ðåñéâÜëëïí Shizuku.</string>
-    <string name="shizuku_unavailable_message">Ôï Shizuku äåí åßíáé åãêáôåóôçìÝíï Þ äåí Ý÷åé ñõèìéóôåß óùóôÜ óôç óõóêåõÞ óáò. Ôï aShell äåí èá ëåéôïõñãÞóåé ÷ùñßò Ýíá êáôÜëëçëï ðåñéâÜëëïí Shizuku. ÊÜíôå êëéê åäþ ãéá íá ìÜèåôå ðåñéóóüôåñá ãéá ôï Shizuku.</string>
-    <string name="su_warning_message">Ôï aShell äåí Ý÷åé ó÷åäéáóôåß ãéá ÷ñÞóåéò ðïõ ó÷åôßæïíôáé ìå ôï root. Ìáôáßùóç.</string>
-    <string name="yes">Íáé</string>
+    <string name="amoled_black">Μαύρο Amoled</string>
+    <string name="app_summary">Καλώς ήρθατε στο aShell: Ένα τοπικό κέλυφος ADB για συσκευές Android που τροφοδοτούνται από το Shizuku.</string>
+    <string name="app_working_message">aShell λειτουργεί ακόμα. Περιμένετε να τελειώσει ή σταματήστε χειροκίνητα (κάνοντας κλικ στο κουμπί διακοπής) για να εκτελέσετε μια νέα εντολή</string>
+    <string name="bookmark_added_message">\'%s\' προσθέθηκε σε σελιδοδείκτη</string>
+    <string name="bookmark_removed_message">\'%s\' αφαιρέθηκε από το σελιδοδείκτη</string>
+    <string name="cancel">Ακύρωση</string>
+    <string name="clear_all_message">Καθαρισμός όλων στην οθόνη?</string>
+    <string name="command_hint">Εισαγάγετε την εντολή ADB εδώ</string>
+    <string name="command_title">aShell Πλαίσιο Εντολών</string>
+    <string name="copy">"Αντιγραφή"</string>
+    <string name="copyright_text">Copyright: © 2025–2026, sunilpaulmathew</string>
+    <string name="credits">Εύσημα</string>
+    <string name="dismiss">Παράβλεψη</string>
+    <string name="examples">Παραδείγματα</string>
+    <string name="file_manager_error_toast">Αποτυχία λήψης δεδομένων από εξωτερικό διαχειριστή αρχείων. Ματαίωση.</string>
+    <string name="press_back">Πατήστε ξανά πίσω για έξοδο</string>
+    <string name="process_destroy_message">aShell λειτουργεί ακόμα. Θέλετε να σταματήσετε την τρέχουσα διαδικασία?</string>
+    <string name="quit">Τερματισμός</string>
+    <string name="quit_app_message">Θέλετε να τερματίσετε το aShell?</string>
+    <string name="request_permission">Αίτημα Άδειας</string>
+    <string name="save">Αποθήκευση</string>
+    <string name="shell_output_saved_message">Η έξοδος της τελευταίας εντολής εξάγεται στον φάκελο \'%s\'</string>
+    <string name="shizuku_about">Σχετικά με το Shizuku</string>
+    <string name="shizuku_access_denied_message">Η πρόσβαση στην υπηρεσία Shizuku δεν επιτρέπεται για το aShell. Το aShell δεν θα λειτουργήσει χωρίς ένα κατάλληλο περιβάλλον Shizuku.</string>
+    <string name="shizuku_unavailable_message">Το Shizuku δεν είναι εγκατεστημένο ή δεν έχει ρυθμιστεί σωστά στη συσκευή σας. Το aShell δεν θα λειτουργήσει χωρίς ένα κατάλληλο περιβάλλον Shizuku. Κάντε κλικ εδώ για να μάθετε περισσότερα για το Shizuku.</string>
+    <string name="start">Έναρξη</string>
+    <string name="su_warning_message">Το aShell δεν έχει σχεδιαστεί για χρήσεις που σχετίζονται με το root. Ματαίωση.</string>
+    <string name="yes">Ναι</string>
 </resources>
