@@ -309,12 +309,8 @@ public class aShellFragment extends Fragment {
                 menu.add(Menu.NONE, i, Menu.NONE, Utils.getBookmarks(requireActivity()).get(i));
             }
             popupMenu.setOnMenuItemClickListener(item -> {
-                for (int i = 0; i < Utils.getBookmarks(requireActivity()).size(); i++) {
-                    if (item.getItemId() == i) {
-                        mCommand.setText(Utils.getBookmarks(requireActivity()).get(i));
-                        mCommand.setSelection(mCommand.getText().length());
-                    }
-                }
+                mCommand.setText(Utils.getBookmarks(requireActivity()).get(item.getItemId()));
+                mCommand.setSelection(mCommand.getText().length());
                 return false;
             });
             popupMenu.show();
@@ -327,12 +323,8 @@ public class aShellFragment extends Fragment {
                 menu.add(Menu.NONE, i, Menu.NONE, getRecentCommands().get(i));
             }
             popupMenu.setOnMenuItemClickListener(item -> {
-                for (int i = 0; i < getRecentCommands().size(); i++) {
-                    if (item.getItemId() == i) {
-                        mCommand.setText(getRecentCommands().get(i));
-                        mCommand.setSelection(mCommand.getText().length());
-                    }
-                }
+                mCommand.setText(getRecentCommands().get(item.getItemId()));
+                mCommand.setSelection(mCommand.getText().length());
                 return false;
             });
             popupMenu.show();
