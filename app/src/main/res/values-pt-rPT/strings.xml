@@ -20,7 +20,7 @@
     <string name="shell_output_saved_message">"A saída do último comando é exportada para a pasta '%s'"</string>
     <string name="shizuku_about">"Sobre o Shizuku"</string>
     <string name="shizuku_access_denied_message">"O acesso ao serviço Shizuku é negado para o aShell. O aShell não funciona sem um ambiente Shizuku adequado."</string>
-    <string name="shizuku_unavailable_message">"O Shizuku não está instalado ou não está configurado corretamente no seu dispositivo. O aShell não funcionará sem um ambiente Shizuku adequado. Clique aqui para saber mais sobre o Shizuku."</string>
+    <string name="shizuku_unavailable_message">"O Shizuku não está instalado ou não está configurado corretamente no seu dispositivo. O aShell não funcionará sem um ambiente Shizuku adequado."</string>
     <string name="su_warning_message">"O aShell não foi projetado para utilizações relacionadas com acesso root. A abortar."</string>
     <string name="yes">"Sim"</string>
 </resources>

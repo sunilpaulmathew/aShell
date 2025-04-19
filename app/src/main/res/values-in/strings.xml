@@ -20,7 +20,7 @@
     <string name="shell_output_saved_message">"Keluaran perintah terakhir telah diekspor ke folder '%s'"</string>
     <string name="shizuku_about">"Tentang Shizuku"</string>
     <string name="shizuku_access_denied_message">"Akses aShell ke layanan Shizuku ditolak. aShell tidak dapat bekerja tanpa lingkungan Shizuku yang sesuai."</string>
-    <string name="shizuku_unavailable_message">"Shizuku tidak terpasang atau tidak terkonfigurasi dengan benar di perangkat anda. aShell tidak dapat bekerja tanpa lingkungan Shizuku yang sesuai. Klik di sini untuk mengetahui lebih lanjut tentang Shizuku."</string>
+    <string name="shizuku_unavailable_message">"Shizuku tidak terpasang atau tidak terkonfigurasi dengan benar di perangkat anda. aShell tidak dapat bekerja tanpa lingkungan Shizuku yang sesuai."</string>
     <string name="su_warning_message">"aShell tidak dirancang untuk penggunaan seputar root. Membatalkan."</string>
     <string name="yes">"Ya"</string>
 </resources>

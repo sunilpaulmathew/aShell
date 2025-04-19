@@ -1,0 +1,62 @@
+<com.google.android.material.card.MaterialCardView
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_gravity="center"
+    android:layout_margin="5sp"
+    app:cardCornerRadius="10sp" >
+
+        <androidx.appcompat.widget.LinearLayoutCompat
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:layout_gravity="center"
+            android:layout_margin="10sp"
+            android:gravity="center">
+
+                <com.google.android.material.textview.MaterialTextView
+                    android:id="@+id/title"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textColor="?attr/colorPrimary"
+                    android:layout_gravity="start|center"
+                    android:textStyle="bold|italic"
+                    android:gravity="start|center"
+                    android:clickable="false"
+                    android:textSize="18sp" />
+
+                <com.google.android.material.textview.MaterialTextView
+                    android:id="@+id/text"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:lineSpacingExtra="10sp"
+                    android:textStyle="bold|italic"
+                    android:gravity="start|center"
+                    android:layout_margin="10sp"
+                    android:clickable="false"
+                    android:textSize="15sp" />
+
+                <com.google.android.material.button.MaterialButton
+                    android:id="@+id/permission"
+                    android:layout_height="wrap_content"
+                    android:layout_width="wrap_content"
+                    android:text="@string/request_permission"
+                    android:layout_gravity="end|bottom"
+                    android:textStyle="bold|italic"
+                    android:gravity="center|end"
+                    android:textSize="15sp"
+                    app:iconGravity="end" />
+        </androidx.appcompat.widget.LinearLayoutCompat>
+
+        <androidx.appcompat.widget.AppCompatImageButton
+            android:id="@+id/button"
+            android:layout_height="wrap_content"
+            android:layout_width="wrap_content"
+            android:layout_gravity="end|bottom"
+            android:src="@drawable/ic_arrow"
+            android:background="@null"
+            android:clickable="false"
+            android:gravity="end" />
+</com.google.android.material.card.MaterialCardView>

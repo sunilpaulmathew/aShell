@@ -14,7 +14,7 @@ import com.google.android.material.textview.MaterialTextView;
 import java.util.List;
 
 import in.sunilpaulmathew.ashell.R;
-import in.sunilpaulmathew.ashell.utils.CommandItems;
+import in.sunilpaulmathew.ashell.serializable.CommandItems;
 
 /*
  * Created by sunilpaulmathew <sunil.kde@gmail.com> on November 05, 2022

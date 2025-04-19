@@ -1,4 +1,4 @@
-package in.sunilpaulmathew.ashell.utils;
+package in.sunilpaulmathew.ashell.serializable;
 
 import java.io.Serializable;
 

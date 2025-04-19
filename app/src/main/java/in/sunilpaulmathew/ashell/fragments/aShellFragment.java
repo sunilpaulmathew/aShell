@@ -135,7 +135,7 @@ public class aShellFragment extends Fragment {
                     if (!s.toString().endsWith("\n")) {
                         mCommand.setText(s.toString().replace("\n", ""));
                     }
-                    initializeShell(requireActivity());
+                    initializeShell();
                 } else {
                     if (mShizukuShell != null && mShizukuShell.isBusy()) {
                         return;
@@ -204,7 +204,7 @@ public class aShellFragment extends Fragment {
                 Intent examples = new Intent(requireActivity(), ExamplesActivity.class);
                 startActivity(examples);
             } else {
-                initializeShell(requireActivity());
+                initializeShell();
             }
         });
 
@@ -464,12 +464,24 @@ public class aShellFragment extends Fragment {
         mSearchButton.setVisibility(View.VISIBLE);
     }
 
-    private void initializeShell(Activity activity) {
+    private void initializeShell() {
+        if (!Shizuku.pingBinder()) {
+            new MaterialAlertDialogBuilder(requireActivity())
+                    .setIcon(R.mipmap.ic_launcher)
+                    .setTitle(getString(R.string.shizuku_unavailable_title))
+                    .setMessage(getString(R.string.shizuku_unavailable_message))
+                    .setNeutralButton(getString(R.string.cancel), (dialogInterface, i) -> {
+                    })
+                    .setPositiveButton(getString(R.string.shizuku_about), (dialogInterface, i) ->
+                            Utils.loadShizukuWeb(requireActivity()))
+                    .show();
+            return;
+        }
         if (mCommand.getText() == null || mCommand.getText().toString().trim().isEmpty()) {
             return;
         }
         if (mShizukuShell != null && mShizukuShell.isBusy()) {
-            new MaterialAlertDialogBuilder(activity)
+            new MaterialAlertDialogBuilder(requireActivity())
                     .setCancelable(false)
                     .setIcon(R.mipmap.ic_launcher)
                     .setTitle(getString(R.string.app_name))
@@ -478,7 +490,7 @@ public class aShellFragment extends Fragment {
                     }).show();
             return;
         }
-        runShellCommand(mCommand.getText().toString().replace("\n", ""), activity);
+        runShellCommand(mCommand.getText().toString().replace("\n", ""), requireActivity());
     }
 
     private void runShellCommand(String command, Activity activity) {
@@ -585,9 +597,9 @@ public class aShellFragment extends Fragment {
                     new MaterialAlertDialogBuilder(activity)
                             .setCancelable(false)
                             .setIcon(R.mipmap.ic_launcher)
-                            .setTitle(getString(R.string.app_name))
+                            .setTitle(getString(R.string.shizuku_access_denied_title))
                             .setMessage(getString(R.string.shizuku_access_denied_message))
-                            .setNegativeButton(getString(R.string.quit), (dialogInterface, i) -> activity.finish())
+                            .setNeutralButton(getString(R.string.quit), (dialogInterface, i) -> activity.finish())
                             .setPositiveButton(getString(R.string.request_permission), (dialogInterface, i) -> Shizuku.requestPermission(0)
                             ).show();
                 }

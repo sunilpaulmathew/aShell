@@ -48,7 +48,7 @@ public class CommandPickerActivity extends AppCompatActivity {
             }
 
             if (mString != null) {
-                Intent startActivity = new Intent(this, StartActivity.class);
+                Intent startActivity = new Intent(this, aShellActivity.class);
                 startActivity.putExtra("command", mString);
                 startActivity(startActivity);
             } else {

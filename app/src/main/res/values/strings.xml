@@ -2,8 +2,10 @@
     <string name="app_name" translatable="false">aShell</string>
 
     <string name="amoled_black">Amoled Black</string>
-    <string name="app_summary">Welcome to aShell: A local ADB shell for Shizuku powered android devices.</string>
+    <string name="app_summary">Effortlessly execute ADB commands on your Shizuku-enabled Android device.</string>
+    <string name="app_version">aShell %s</string>
     <string name="app_working_message">aShell is still working. Please wait for it to finish or manually stop (by clicking the stop button) to run a new command</string>
+    <string name="authorize_click_message">Click to authorize</string>
     <string name="bookmark_added_message">\'%s\' is bookmarked</string>
     <string name="bookmark_removed_message">\'%s\' has been removed from bookmark</string>
     <string name="cancel">Cancel</string>
@@ -11,11 +13,19 @@
     <string name="command_hint">Input ADB command here</string>
     <string name="command_title">aShell Command Box</string>
     <string name="copy">"Copy"</string>
-    <string name="copyright_text">Copyright: © 2025–2026, sunilpaulmathew</string>
+    <string name="copyright_text">Copyright: © 2022–2025, sunilpaulmathew</string>
     <string name="credits">Credits</string>
+    <string name="disclaimer">Disclaimer</string>
+    <string name="disclaimer_description">\uD83E\uDDE9 Shizuku Dependency: aShell requires a fully working Shizuku environment to function. Please ensure Shizuku is set up before using this app.\n\uD83D\uDC68\u200D\uD83D\uDCBB Basic Knowledge Required: Familiarity with ADB and Linux command-line basics is recommended for effective use.\n\uD83C\uDF10 Open Source: aShell is open-source and free to build. Contributions and translations are welcome via GitLab and POEditor.\n⚠️ No Liability: We are not liable for any issues, data loss, or damage that may occur while using this app.</string>
     <string name="dismiss">Dismiss</string>
     <string name="examples">Examples</string>
+    <string name="features_description">\uD83D\uDCDC Run ADB commands with ease—includes built-in examples and bookmarking.\n\uD83D\uDCCA Handles continuous commands like logcat or top, with search and save options for output.\n\uD83C\uDFA8 Sleek UI with auto dark/light theme for a smooth, modern experience.</string>
+    <string name="features_title">Features</string>
     <string name="file_manager_error_toast">Failed to get data from external file manager. Aborting.</string>
+    <string name="granted">Granted</string>
+    <string name="permissions_shizuku_description">🔐 moe.shizuku.manager.permission.API_V23: Permission required to use Shizuku’s privileged APIs</string>
+    <string name="permissions_storage_description">📂 WRITE_EXTERNAL_STORAGE: Needed to save the last command output to your device (optional)</string>
+    <string name="permissions_title">Permissions required</string>
     <string name="press_back">Press back again to exit</string>
     <string name="process_destroy_message">aShell is still working. Do you want to stop the current process?</string>
     <string name="quit">Quit</string>
@@ -25,7 +35,11 @@
     <string name="shell_output_saved_message">The output of last command is exported to \'%s\' folder</string>
     <string name="shizuku_about">About Shizuku</string>
     <string name="shizuku_access_denied_message">Access to Shizuku service is denied for aShell. aShell won\'t work without a proper Shizuku environment.</string>
-    <string name="shizuku_unavailable_message">Shizuku is not installed or not properly configured on your device. aShell won\'t work without a proper Shizuku environment. Click here to learn more about Shizuku.</string>
+    <string name="shizuku_access_denied_title">Shizuku access denied for aShell</string>
+    <string name="shizuku_access_granted_message">aShell got access to Shizuku service. Click \'Start\' to continue</string>
+    <string name="shizuku_learn">Learn Shizuku</string>
+    <string name="shizuku_unavailable_message">Shizuku is not installed or not properly configured on your device. aShell won\'t work without a proper Shizuku environment.</string>
+    <string name="shizuku_unavailable_title">Shizuku support not found</string>
     <string name="start">Start</string>
     <string name="su_warning_message">aShell is not designed for root-related uses. Aborting.</string>
     <string name="yes">Yes</string>

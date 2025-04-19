@@ -1,4 +1,4 @@
-# aShell - an ADB sell
+# aShell - Effortlessly execute ADB commands on your Shizuku-enabled Android device.
 
 <p style="text-align: center"><img src="https://gitlab.com/sunilpaulmathew/ashell/-/raw/master/fastlane/metadata/android/en-US/images/phoneScreenshots/4.png" alt="" width="250" height="450" /> <img src="https://gitlab.com/sunilpaulmathew/ashell/-/raw/master/fastlane/metadata/android/en-US/images/phoneScreenshots/1.png" alt="" width="250" height="450" /> <img src="https://gitlab.com/sunilpaulmathew/ashell/-/raw/master/fastlane/metadata/android/en-US/images/phoneScreenshots/2.png" alt="" width="250" height="450" /></p>
 
@@ -51,7 +51,7 @@ Some other ways to support the development includes, but not limited to
 
 ## License
 
-    Copyright (C) 2025-2026 sunilpaulmathew <sunil.kde@gmail.com>
+    Copyright (C) 2022-2025 sunilpaulmathew <sunil.kde@gmail.com>
 
     aShell is a free softwares: you can redistribute it and/or modify it
     under the terms of the GNU General Public License as published by the

@@ -18,7 +18,7 @@
     <string name="shell_output_saved_message">"Вывод последней команды экспортируется в папку \'%s\'"</string>
     <string name="shizuku_about">"О Shizuku"</string>
     <string name="shizuku_access_denied_message">"Доступ к Shizuku запрещен для aShell. aShell не может работать без разрешения Shizuku."</string>
-    <string name="shizuku_unavailable_message">"Приложение Shizuku не установлено или неправильно настроено на вашем устройстве. aShell не может работать без среды Shizuku. Нажмите здесь, чтобы узнать больше о Shizuku."</string>
+    <string name="shizuku_unavailable_message">"Приложение Shizuku не установлено или неправильно настроено на вашем устройстве. aShell не может работать без среды Shizuku."</string>
     <string name="su_warning_message">"aShell не предназначен для использования с правами root. Остановка."</string>
     <string name="yes">"Да"</string>
 </resources>
