@@ -38,6 +38,7 @@
     <string name="language_in" translatable="false">bahasa Indonesia</string>
     <string name="language_pt" translatable="false">Português (%s)</string>
     <string name="language_ru" translatable="false">русский</string>
+    <string name="language_zh" translatable="false">中文 (%s)</string>
     <string name="miscellaneous">Miscellaneous</string>
     <string name="permissions_shizuku_description">🔐 moe.shizuku.manager.permission.API_V23: Permission required to use Shizuku’s privileged APIs</string>
     <string name="permissions_storage_description">📂 WRITE_EXTERNAL_STORAGE: Needed to save the last command output to your device (optional)</string>

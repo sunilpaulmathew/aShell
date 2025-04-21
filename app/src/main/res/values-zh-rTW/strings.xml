@@ -1,0 +1,33 @@
+<resources xmlns:tools="http://schemas.android.com/tools" tools:ignore="MissingTranslation">
+
+    <string name="app_summary">"歡迎使用 aShell：為裝載 Shizuku 的 Android 裝置而生的 ADB 指令集。"</string>
+    <string name="app_theme">"應用主題"</string>
+    <string name="app_theme_amoled">"AMOLED 深色"</string>
+    <string name="app_theme_auto">"自動"</string>
+    <string name="app_theme_dark">"黑暗的"</string>
+    <string name="app_theme_light">"光"</string>
+    <string name="app_working_message">"aShell 仍在執行，請等待完成或手動終止以執行新命令。(按下「停止」)"</string>
+    <string name="bookmark_added_message">"「%s」已新增至書籤"</string>
+    <string name="bookmark_removed_message">"「%s」已從書籤移除"</string>
+    <string name="cancel">"取消"</string>
+    <string name="clear_all_message">"要清除畫面中的所有內容嗎？"</string>
+    <string name="command_hint">"請在此輸入 ADB 指令"</string>
+    <string name="command_title">"aShell 指令集"</string>
+    <string name="copy_clipboard">"複製"</string>
+    <string name="dismiss">"關閉"</string>
+    <string name="examples">"範本"</string>
+    <string name="press_back">"再按一次返回鍵即可關閉"</string>
+    <string name="process_destroy_message">"aShell 仍在執行。 您要停止目前作業嗎？"</string>
+    <string name="quit">"離開"</string>
+    <string name="quit_app_message">"您要離開 aShell 嗎？"</string>
+    <string name="request_permission">"權限要求"</string>
+    <string name="start">"開始"</string>
+    <string name="shell_output_saved_message">"已將最後輸出的指令儲存至「%s」資料夾"</string>
+    <string name="shizuku_access_denied_message">"aShell 已被拒絕存取 Shizuku 服務。 aShell 無法在沒有合適的 Shizuku 環境下運作。"</string>
+    <string name="shizuku_unavailable_message">"您的裝置尚未安裝或正確配置 Shizuku。 aShell 無法在沒有合適的 Shizuku 環境下運作。 輕觸這裡了解更多資訊。"</string>
+    <string name="su_warning_message">"aShell 並非為 Root 相關操作而設，作業已終止。"</string>
+    <string name="yes">"是"</string>
+    <string name="copyright_text">"版權所有：© 2025–2026, sunilpaulmathew"</string>
+    <string name="save">"儲存"</string>
+    <string name="translations">"翻譯"</string>
+</resources>
