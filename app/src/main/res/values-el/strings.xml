@@ -1,6 +1,6 @@
 <resources xmlns:tools="http://schemas.android.com/tools" tools:ignore="MissingTranslation" >
 
-    <string name="amoled_black">Μαύρο Amoled</string>
+    <string name="app_theme_amoled">Μαύρο Amoled</string>
     <string name="app_summary">Καλώς ήρθατε στο aShell: Ένα τοπικό κέλυφος ADB για συσκευές Android που τροφοδοτούνται από το Shizuku.</string>
     <string name="app_working_message">aShell λειτουργεί ακόμα. Περιμένετε να τελειώσει ή σταματήστε χειροκίνητα (κάνοντας κλικ στο κουμπί διακοπής) για να εκτελέσετε μια νέα εντολή</string>
     <string name="bookmark_added_message">\'%s\' προσθέθηκε σε σελιδοδείκτη</string>
@@ -9,9 +9,8 @@
     <string name="clear_all_message">Καθαρισμός όλων στην οθόνη?</string>
     <string name="command_hint">Εισαγάγετε την εντολή ADB εδώ</string>
     <string name="command_title">aShell Πλαίσιο Εντολών</string>
-    <string name="copy">"Αντιγραφή"</string>
+    <string name="copy_clipboard">"Αντιγραφή"</string>
     <string name="copyright_text">Copyright: © 2025–2026, sunilpaulmathew</string>
-    <string name="credits">Εύσημα</string>
     <string name="dismiss">Παράβλεψη</string>
     <string name="examples">Παραδείγματα</string>
     <string name="file_manager_error_toast">Αποτυχία λήψης δεδομένων από εξωτερικό διαχειριστή αρχείων. Ματαίωση.</string>
@@ -22,7 +21,6 @@
     <string name="request_permission">Αίτημα Άδειας</string>
     <string name="save">Αποθήκευση</string>
     <string name="shell_output_saved_message">Η έξοδος της τελευταίας εντολής εξάγεται στον φάκελο \'%s\'</string>
-    <string name="shizuku_about">Σχετικά με το Shizuku</string>
     <string name="shizuku_access_denied_message">Η πρόσβαση στην υπηρεσία Shizuku δεν επιτρέπεται για το aShell. Το aShell δεν θα λειτουργήσει χωρίς ένα κατάλληλο περιβάλλον Shizuku.</string>
     <string name="shizuku_unavailable_message">Το Shizuku δεν είναι εγκατεστημένο ή δεν έχει ρυθμιστεί σωστά στη συσκευή σας. Το aShell δεν θα λειτουργήσει χωρίς ένα κατάλληλο περιβάλλον Shizuku.</string>
     <string name="start">Έναρξη</string>

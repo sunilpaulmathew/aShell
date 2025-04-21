@@ -9,6 +9,12 @@ public class CommandItems implements Serializable {
 
     private final String mTitle, mSummary, mExample;
 
+    public CommandItems(String title, String summary) {
+        this.mTitle = title;
+        this.mSummary = summary;
+        this.mExample = null;
+    }
+
     public CommandItems(String title, String summary, String example) {
         this.mTitle = title;
         this.mSummary = summary;

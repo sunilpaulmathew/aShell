@@ -40,6 +40,9 @@
             </intent-filter>
         </activity>
 
+        <activity android:name=".activities.SettingsActivity"
+            android:exported="false" />
+
         <activity android:name=".activities.WelcomeActivity"
             android:exported="false" />
 

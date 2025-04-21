@@ -94,12 +94,12 @@ public class WelcomeActivity extends AppCompatActivity {
 
     private List<CommandItems> getData() {
         List<CommandItems> mData = new ArrayList<>();
-        mData.add(new CommandItems(getString(R.string.features_title), getString(R.string.features_description), null));
+        mData.add(new CommandItems(getString(R.string.features_title), getString(R.string.features_description)));
         mData.add(new CommandItems(getString(R.string.permissions_title), getString(R.string.permissions_shizuku_description) + ":" +
                 (!Shizuku.pingBinder() ?  " *" + getString(R.string.shizuku_unavailable_title) + "*" : Shizuku.checkSelfPermission() ==
                         PackageManager.PERMISSION_GRANTED ? " " + getString(R.string.granted) : " " + getString(R.string.authorize_click_message)) + "\n" +
-                (Build.VERSION.SDK_INT < Build.VERSION_CODES.Q ? getString(R.string.permissions_storage_description) : ""), null));
-        mData.add(new CommandItems(getString(R.string.disclaimer), getString(R.string.disclaimer_description), null));
+                (Build.VERSION.SDK_INT < Build.VERSION_CODES.Q ? getString(R.string.permissions_storage_description) : "")));
+        mData.add(new CommandItems(getString(R.string.disclaimer), getString(R.string.disclaimer_description)));
         return mData;
     }
 
@@ -123,7 +123,7 @@ public class WelcomeActivity extends AppCompatActivity {
                 .setMessage(getString(R.string.shizuku_unavailable_message))
                 .setNeutralButton(getString(R.string.quit), (dialogInterface, i) -> finish())
                 .setPositiveButton(getString(R.string.shizuku_learn), (dialogInterface, i) ->
-                        Utils.loadShizukuWeb(this)
+                        Utils.loadUrl("https://shizuku.rikka.app/", this)
                 );
     }
 

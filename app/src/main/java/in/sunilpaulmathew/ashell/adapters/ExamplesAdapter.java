@@ -61,10 +61,12 @@ public class ExamplesAdapter extends RecyclerView.Adapter<ExamplesAdapter.ViewHo
         public void onClick(View view) {
             if (data.get(getAdapterPosition()).getExample() != null) {
                 new MaterialAlertDialogBuilder(view.getContext())
+                        .setIcon(R.mipmap.ic_launcher)
+                        .setTitle(data.get(getAdapterPosition()).getTitle())
                         .setMessage(data.get(getAdapterPosition()).getExample())
                         .setNegativeButton(R.string.cancel, (dialogInterface, i) -> {
                         })
-                        .setPositiveButton(R.string.copy, (dialogInterface, i) ->
+                        .setPositiveButton(R.string.copy_clipboard, (dialogInterface, i) ->
                                 Utils.copyToClipboard(data.get(getAdapterPosition()).getExample(), view.getContext())
                         ).show();
             }

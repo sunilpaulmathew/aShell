@@ -5,17 +5,13 @@ import android.content.ClipData;
 import android.content.ClipboardManager;
 import android.content.Context;
 import android.content.Intent;
-import android.content.res.Configuration;
-import android.content.res.TypedArray;
 import android.graphics.drawable.Drawable;
 import android.net.Uri;
 import android.os.Build;
-import android.preference.PreferenceManager;
 import android.widget.Toast;
 
 import androidx.core.content.ContextCompat;
-
-import com.google.android.material.color.DynamicColors;
+import androidx.preference.PreferenceManager;
 
 import java.io.BufferedReader;
 import java.io.File;
@@ -25,8 +21,6 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
-
-import in.sunilpaulmathew.ashell.R;
 
 /*
  * Created by sunilpaulmathew <sunil.kde@gmail.com> on October 28, 2022
@@ -67,15 +61,6 @@ public class Utils {
         return PreferenceManager.getDefaultSharedPreferences(context).getBoolean(name, defaults);
     }
 
-    public static boolean isAmoledBlackEnabled(Context context) {
-        return isDarkTheme(context) && Utils.getBoolean("amoledTheme", false, context);
-    }
-
-    public static boolean isDarkTheme(Context context) {
-        int currentNightMode = context.getResources().getConfiguration().uiMode & Configuration.UI_MODE_NIGHT_MASK;
-        return currentNightMode == Configuration.UI_MODE_NIGHT_YES;
-    }
-
     /*
      * Adapted from android.os.FileUtils
      * Ref: https://cs.android.com/android/platform/superproject/+/master:frameworks/base/core/java/android/os/FileUtils.java;l=972?q=isValidFatFilenameChar
@@ -94,21 +79,8 @@ public class Utils {
         return ContextCompat.getColor(context, color);
     }
 
-    public static int getColorAccent(Context context) {
-        return getMaterial3Colors(getColor(R.color.colorBlue, context), context);
-    }
-
-    private static int getMaterial3Colors(int defaultColor, Context context) {
-        int color = defaultColor;
-        if (DynamicColors.isDynamicColorAvailable()) {
-            Context dynamicClrCtx = DynamicColors.wrapContextIfAvailable(context, com.google.android.material.R.style.MaterialAlertDialog_Material3);
-            TypedArray ta = dynamicClrCtx.obtainStyledAttributes(new int[] {
-                    com.google.android.material.R.attr.colorPrimary
-            });
-            color = ta.getColor(0, defaultColor);
-            ta.recycle();
-        }
-        return color;
+    public static int getInt(String name, int defaults, Context context) {
+        return PreferenceManager.getDefaultSharedPreferences(context).getInt(name, defaults);
     }
 
     public static List<String> getBookmarks(Context context) {
@@ -130,6 +102,10 @@ public class Utils {
 
     public static String getDeviceName() {
         return Build.MODEL;
+    }
+
+    public static String getString(String name, String defaults, Context context) {
+        return PreferenceManager.getDefaultSharedPreferences(context).getString(name, defaults);
     }
 
     private static String read(File file) {
@@ -184,17 +160,24 @@ public class Utils {
         }
     }
 
-    public static void loadShizukuWeb(Context context) {
+    public static void loadUrl(String url, Context context) {
         try {
             Intent intent = new Intent(Intent.ACTION_VIEW);
-            intent.setData(Uri.parse("https://shizuku.rikka.app/"));
+            intent.setData(Uri.parse(url));
             context.startActivity(intent);
-        } catch (ActivityNotFoundException ignored) {
-        }
+        } catch (ActivityNotFoundException ignored) {}
     }
 
     public static void saveBoolean(String name, boolean value, Context context) {
         PreferenceManager.getDefaultSharedPreferences(context).edit().putBoolean(name, value).apply();
+    }
+
+    public static void saveInt(String name, int value, Context context) {
+        PreferenceManager.getDefaultSharedPreferences(context).edit().putInt(name, value).apply();
+    }
+
+    public static void saveString(String name, String value, Context context) {
+        PreferenceManager.getDefaultSharedPreferences(context).edit().putString(name, value).apply();
     }
 
 }

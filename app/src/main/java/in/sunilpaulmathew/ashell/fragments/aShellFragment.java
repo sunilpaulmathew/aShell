@@ -52,11 +52,12 @@ import java.util.concurrent.TimeUnit;
 import in.sunilpaulmathew.ashell.BuildConfig;
 import in.sunilpaulmathew.ashell.R;
 import in.sunilpaulmathew.ashell.activities.ExamplesActivity;
-import in.sunilpaulmathew.ashell.activities.aShellActivity;
+import in.sunilpaulmathew.ashell.activities.SettingsActivity;
 import in.sunilpaulmathew.ashell.adapters.CommandsAdapter;
 import in.sunilpaulmathew.ashell.adapters.ShellOutputAdapter;
 import in.sunilpaulmathew.ashell.utils.Commands;
 import in.sunilpaulmathew.ashell.utils.ShizukuShell;
+import in.sunilpaulmathew.ashell.utils.Settings;
 import in.sunilpaulmathew.ashell.utils.Utils;
 import rikka.shizuku.Shizuku;
 
@@ -189,7 +190,7 @@ public class aShellFragment extends Fragment {
                         mBookMark.setVisibility(View.GONE);
                         mRecyclerViewCommands.setVisibility(View.GONE);
                         mSendButton.setImageDrawable(Utils.getDrawable(R.drawable.ic_help, requireActivity()));
-                        mSendButton.setColorFilter(Utils.getColorAccent(requireActivity()));
+                        mSendButton.setColorFilter(Settings.getColorAccent(requireActivity()));
                     }
                 }
             }
@@ -199,7 +200,7 @@ public class aShellFragment extends Fragment {
             if (mShizukuShell != null && mShizukuShell.isBusy()) {
                 mShizukuShell.destroy();
                 mSendButton.setImageDrawable(Utils.getDrawable(R.drawable.ic_help, requireActivity()));
-                mSendButton.setColorFilter(Utils.getColorAccent(requireActivity()));
+                mSendButton.setColorFilter(Settings.getColorAccent(requireActivity()));
             } else if (mCommand.getText() == null || mCommand.getText().toString().trim().isEmpty()) {
                 Intent examples = new Intent(requireActivity(), ExamplesActivity.class);
                 startActivity(examples);
@@ -219,31 +220,8 @@ public class aShellFragment extends Fragment {
         });
 
         mSettingsButton.setOnClickListener(v -> {
-            PopupMenu popupMenu = new PopupMenu(requireContext(), mSettingsButton);
-            Menu menu = popupMenu.getMenu();
-            menu.add(Menu.NONE, 0, Menu.NONE, R.string.shizuku_about).setIcon(R.drawable.ic_info_outlined);
-            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.S && Utils.isDarkTheme(requireActivity()) && (mShizukuShell == null || !mShizukuShell.isBusy())) {
-                menu.add(Menu.NONE, 1, Menu.NONE, R.string.amoled_black).setIcon(R.drawable.ic_amoled_theme).setCheckable(true)
-                        .setChecked(Utils.getBoolean("amoledTheme", false, requireActivity()));
-            }
-            menu.add(Menu.NONE, 2, Menu.NONE, R.string.examples).setIcon(R.drawable.ic_help);
-            popupMenu.setForceShowIcon(true);
-            popupMenu.setOnMenuItemClickListener(item -> {
-                if (item.getItemId() == 0) {
-                    Utils.loadShizukuWeb(requireActivity());
-                } else if (item.getItemId() == 1) {
-                    Utils.saveBoolean("amoledTheme", !Utils.getBoolean("amoledTheme", false, requireActivity()), requireActivity());
-                    Intent mainActivity = new Intent(requireActivity(), aShellActivity.class);
-                    mainActivity.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-                    startActivity(mainActivity);
-                    requireActivity().finish();
-                } else if (item.getItemId() == 2) {
-                    Intent examples = new Intent(requireActivity(), ExamplesActivity.class);
-                    startActivity(examples);
-                }
-                return false;
-            });
-            popupMenu.show();
+            Intent intent = new Intent(v.getContext(), SettingsActivity.class);
+            startActivity(intent);
         });
 
         mClearButton.setOnClickListener(v -> {
@@ -470,8 +448,8 @@ public class aShellFragment extends Fragment {
                     .setMessage(getString(R.string.shizuku_unavailable_message))
                     .setNeutralButton(getString(R.string.cancel), (dialogInterface, i) -> {
                     })
-                    .setPositiveButton(getString(R.string.shizuku_about), (dialogInterface, i) ->
-                            Utils.loadShizukuWeb(requireActivity()))
+                    .setPositiveButton(getString(R.string.shizuku_learn), (dialogInterface, i) ->
+                            Utils.loadUrl("https://shizuku.rikka.app/", requireActivity()))
                     .show();
             return;
         }
@@ -555,7 +533,7 @@ public class aShellFragment extends Fragment {
         mInfoButton.setEnabled(false);
         mSettingsButton.setEnabled(false);
 
-        String mTitleText = "<font color=\"" + Utils.getColorAccent(activity) + "\">shell@" + Utils.getDeviceName() + "</font># <i>" + finalCommand + "</i>";
+        String mTitleText = "<font color=\"" + Settings.getColorAccent(activity) + "\">shell@" + Utils.getDeviceName() + "</font># <i>" + finalCommand + "</i>";
 
         if (mResult == null) {
             mResult = new ArrayList<>();
@@ -603,7 +581,7 @@ public class aShellFragment extends Fragment {
                 }
                 if (mCommand.getText() == null || mCommand.getText().toString().trim().isEmpty()) {
                     mSendButton.setImageDrawable(Utils.getDrawable(R.drawable.ic_help, requireActivity()));
-                    mSendButton.setColorFilter(Utils.getColorAccent(requireActivity()));
+                    mSendButton.setColorFilter(Settings.getColorAccent(requireActivity()));
                 } else {
                     mSendButton.setImageDrawable(Utils.getDrawable(R.drawable.ic_send, requireActivity()));
                     mSendButton.setColorFilter(Utils.getColor(R.color.colorWhite, requireActivity()));

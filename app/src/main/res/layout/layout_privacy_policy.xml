@@ -1,0 +1,16 @@
+<androidx.appcompat.widget.LinearLayoutCompat
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical"
+    android:layout_gravity="center"
+    android:gravity="start|center"
+    android:padding="15dp">
+
+        <include layout="@layout/layout_about" />
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/recycler_view"
+            android:layout_height="wrap_content"
+            android:layout_width="match_parent" />
+</androidx.appcompat.widget.LinearLayoutCompat>

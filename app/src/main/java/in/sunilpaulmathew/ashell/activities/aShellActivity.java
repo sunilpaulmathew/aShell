@@ -14,6 +14,7 @@ import java.util.concurrent.Executors;
 import in.sunilpaulmathew.ashell.R;
 import in.sunilpaulmathew.ashell.fragments.aShellFragment;
 import in.sunilpaulmathew.ashell.utils.Commands;
+import in.sunilpaulmathew.ashell.utils.Settings;
 import in.sunilpaulmathew.ashell.utils.Utils;
 
 /*
@@ -25,9 +26,12 @@ public class aShellActivity extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-        // Initialize App Theme
-        setTheme(Utils.isAmoledBlackEnabled(this) ? R.style.AppTheme_Amoled : R.style.AppTheme);
         super.onCreate(savedInstanceState);
+
+        // Initialize App Theme & language
+        Settings.initializeAppTheme(this);
+        Settings.initializeAppLanguage(this);
+
         setContentView(R.layout.activity_ashell);
 
         if (!Utils.getBoolean("welcome_screen_viewed", false, this)) {
@@ -52,7 +56,7 @@ public class aShellActivity extends AppCompatActivity {
                 fragment.setArguments(bundle);
 
                 getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container,
-                        fragment).commit();
+                        fragment).commitAllowingStateLoss();
             });
             if (!mExecutors.isShutdown()) mExecutors.shutdown();
         });

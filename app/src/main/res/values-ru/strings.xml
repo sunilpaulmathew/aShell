@@ -2,6 +2,10 @@
     <!--Created by The Translator <https://play.google.com/store/apps/details?id=com.sunilpaulmathew.translator>-->
 
     <string name="app_summary">"Добро пожаловать в aShell: локальную оболочку ADB для устройств Android на платформе Shizuku."</string>
+    <string name="app_theme">"Тема приложения"</string>
+    <string name="app_theme_auto">"Авто"</string>
+    <string name="app_theme_dark">"Тёмная"</string>
+    <string name="app_theme_light">"Светлая"</string>
     <string name="app_working_message">"aShell все еще выполняется. Подождите, пока он завершится, или остановите его вручную (нажав кнопку остановки), чтобы запустить новую команду."</string>
     <string name="cancel">"Отмена"</string>
     <string name="clear_all_message">"Очистить все на этом экране?"</string>
@@ -16,9 +20,9 @@
     <string name="request_permission">"Запросить разрешение"</string>
     <string name="start">"Начать"</string>
     <string name="shell_output_saved_message">"Вывод последней команды экспортируется в папку \'%s\'"</string>
-    <string name="shizuku_about">"О Shizuku"</string>
     <string name="shizuku_access_denied_message">"Доступ к Shizuku запрещен для aShell. aShell не может работать без разрешения Shizuku."</string>
     <string name="shizuku_unavailable_message">"Приложение Shizuku не установлено или неправильно настроено на вашем устройстве. aShell не может работать без среды Shizuku."</string>
     <string name="su_warning_message">"aShell не предназначен для использования с правами root. Остановка."</string>
+    <string name="translations">"Переводы"</string>
     <string name="yes">"Да"</string>
 </resources>

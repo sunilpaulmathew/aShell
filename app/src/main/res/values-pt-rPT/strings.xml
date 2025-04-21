@@ -1,6 +1,10 @@
 <resources xmlns:tools="http://schemas.android.com/tools" tools:ignore="MissingTranslation">
 
     <string name="app_summary">"Bem-vindo ao aShell: Uma shell ADB local para dispositivos android com Shizuku."</string>
+    <string name="app_theme">"Tema da aplicação"</string>
+    <string name="app_theme_auto">"Automático"</string>
+    <string name="app_theme_dark">"Escuro"</string>
+    <string name="app_theme_light">"Claro"</string>
     <string name="app_working_message">"O aShell ainda está a funcionar. Aguarde que termine ou pare manualmente (clicando no botão de parar) para executar um novo comando"</string>
     <string name="bookmark_added_message">"'%s' está marcado como favorito"</string>
     <string name="bookmark_removed_message">"'%s' foi removido dos favoritos"</string>
@@ -8,7 +12,7 @@
     <string name="clear_all_message">"Limpar tudo o que está neste ecrã?"</string>
     <string name="command_hint">"Introduzir aqui o comando ADB"</string>
     <string name="command_title">"Caixa de comando do aShell"</string>
-    <string name="copy">"Copiar"</string>
+    <string name="copy_clipboard">"Copiar"</string>
     <string name="dismiss">"Ignorar"</string>
     <string name="examples">"Exemplos"</string>
     <string name="press_back">"Premir novamente para sair"</string>
@@ -18,9 +22,9 @@
     <string name="request_permission">"Solicitar autorização"</string>
     <string name="start">"Iniciar"</string>
     <string name="shell_output_saved_message">"A saída do último comando é exportada para a pasta '%s'"</string>
-    <string name="shizuku_about">"Sobre o Shizuku"</string>
     <string name="shizuku_access_denied_message">"O acesso ao serviço Shizuku é negado para o aShell. O aShell não funciona sem um ambiente Shizuku adequado."</string>
     <string name="shizuku_unavailable_message">"O Shizuku não está instalado ou não está configurado corretamente no seu dispositivo. O aShell não funcionará sem um ambiente Shizuku adequado."</string>
     <string name="su_warning_message">"O aShell não foi projetado para utilizações relacionadas com acesso root. A abortar."</string>
+    <string name="translations">"Traduções"</string>
     <string name="yes">"Sim"</string>
 </resources>
