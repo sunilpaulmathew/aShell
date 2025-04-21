@@ -79,6 +79,9 @@ public class WelcomeActivity extends AppCompatActivity {
                 Intent intent = new Intent(this, aShellActivity.class);
                 startActivity(intent);
             }
+            if (!Utils.getBoolean("welcome_screen_viewed", false, this)) {
+                Utils.saveBoolean("welcome_screen_viewed", true, this);
+            }
             finish();
         });
 
@@ -128,11 +131,11 @@ public class WelcomeActivity extends AppCompatActivity {
         boolean granted = grantResult == PackageManager.PERMISSION_GRANTED;
         if (granted) {
             Utils.toast(getString(R.string.shizuku_access_granted_message), this).show();
-            Utils.saveBoolean("welcome_screen_viewed", true, this);
             recreate();
         } else {
             accessDeniedDialog().show();
         }
+        Utils.saveBoolean("welcome_screen_viewed", granted, this);
     }
 
     private void checkPermission() {
