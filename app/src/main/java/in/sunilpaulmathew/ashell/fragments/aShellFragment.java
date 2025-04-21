@@ -215,9 +215,7 @@ public class aShellFragment extends Fragment {
             mAppTile.setText(v.getContext().getString(R.string.app_name) + " " + BuildConfig.VERSION_NAME);
 
             new MaterialAlertDialogBuilder(v.getContext())
-                    .setView(aboutLayout)
-                    .setPositiveButton(R.string.cancel, (dialogInterface, i) -> {
-                    }).show();
+                    .setView(aboutLayout).show();
         });
 
         mSettingsButton.setOnClickListener(v -> {
