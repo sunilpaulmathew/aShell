@@ -1,0 +1,6 @@
+* Added settings page with options to tweak app theme, language, etc.
+* Allow picking texts shared by other apps.
+* New welcome page on first app launch.
+* Added Chinese (TW) translations
+* Updated Greek translations.
+* Miscellaneous changes.

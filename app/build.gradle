@@ -30,8 +30,8 @@ android {
         applicationId "in.sunilpaulmathew.ashell"
         minSdk 24
         targetSdk 34
-        versionCode 12
-        versionName "v0.12"
+        versionCode 14
+        versionName "v0.14"
     }
 
     buildTypes {
@@ -54,6 +54,7 @@ android {
 
 dependencies {
     implementation libs.material
+    implementation libs.preference
     implementation libs.shizukuApi
     implementation libs.shizukuProvider
 }
