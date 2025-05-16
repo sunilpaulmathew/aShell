@@ -72,7 +72,7 @@ public class aShellFragment extends Fragment {
     private TextInputEditText mSearchWord;
     private RecyclerView mRecyclerViewOutput;
     private ShizukuShell mShizukuShell = null;
-    private boolean mExit;
+    private boolean mExit, mPermissionGranted = false;
     private final Handler mHandler = new Handler();
     private int mPosition = 1;
     private List<String> mHistory = null, mResult = null;
@@ -542,7 +542,8 @@ public class aShellFragment extends Fragment {
 
         ExecutorService mExecutors = Executors.newSingleThreadExecutor();
         mExecutors.execute(() -> {
-            if (Shizuku.checkSelfPermission() == PackageManager.PERMISSION_GRANTED) {
+            mPermissionGranted = Shizuku.checkSelfPermission() == PackageManager.PERMISSION_GRANTED;
+            if (mPermissionGranted) {
                 mPosition = mResult.size();
                 mShizukuShell = new ShizukuShell(mResult, finalCommand);
                 mShizukuShell.exec();
@@ -551,7 +552,7 @@ public class aShellFragment extends Fragment {
                 } catch (InterruptedException ignored) {}
             }
             new Handler(Looper.getMainLooper()).post(() -> {
-                if (Shizuku.checkSelfPermission() == PackageManager.PERMISSION_GRANTED) {
+                if (mPermissionGranted) {
                     if (mHistory != null && !mHistory.isEmpty() && !mHistoryButton.isEnabled()) {
                         mHistoryButton.setEnabled(true);
                     }
