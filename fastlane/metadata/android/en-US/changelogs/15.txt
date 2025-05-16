@@ -1,0 +1,4 @@
+* Improved Shizuku permission checking.
+* Added Chinese (Simplified) and Korean translations
+* Updated Chinese (TW) translations.
+* Miscellaneous changes.
