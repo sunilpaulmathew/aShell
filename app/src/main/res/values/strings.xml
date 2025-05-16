@@ -36,6 +36,7 @@
     <string name="language_en" translatable="false">English (%s)</string>
     <string name="language_hu" translatable="false">Magyar</string>
     <string name="language_in" translatable="false">bahasa Indonesia</string>
+    <string name="language_ko" translatable="false">한국어</string>
     <string name="language_pt" translatable="false">Português (%s)</string>
     <string name="language_ru" translatable="false">русский</string>
     <string name="language_zh" translatable="false">中文 (%s)</string>
