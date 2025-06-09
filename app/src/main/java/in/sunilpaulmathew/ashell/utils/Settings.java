@@ -65,11 +65,11 @@ public class Settings {
         String country = getCountry(context);
         switch (getLanguage(context)) {
             case "ja":
-                return 13;
+                return 14;
             case "ko":
-                return 12;
+                return 13;
             case "zh":
-                return country.equalsIgnoreCase("Hans") ? 11 : 10;
+                return country.equalsIgnoreCase("HK") ? 12 : country.equalsIgnoreCase("CN") ? 11 : 10;
             case "ru":
                 return 9;
             case "es":
@@ -145,7 +145,8 @@ public class Settings {
             case "ko":
                 return context.getString(R.string.language_ko);
             case "zh":
-                return country.equalsIgnoreCase("Hans") ? context.getString(R.string.language_zh, "Hans")
+                return country.equalsIgnoreCase("HK") ? context.getString(R.string.language_zh, "Hant")
+                        : country.equalsIgnoreCase("CN") ? context.getString(R.string.language_zh, "Hans")
                         : country.equalsIgnoreCase("TW") ? context.getString(R.string.language_zh, "TW")
                         : context.getString(R.string.app_theme_auto);
             default:
@@ -175,6 +176,7 @@ public class Settings {
                 context.getString(R.string.language_ru),
                 context.getString(R.string.language_zh, "TW"),
                 context.getString(R.string.language_zh, "Hans"),
+                context.getString(R.string.language_zh, "Hant"),
                 context.getString(R.string.language_ko),
                 context.getString(R.string.language_ja)
         };
@@ -304,20 +306,27 @@ public class Settings {
                         Utils.saveString("country", "TW", activity);
                         break;
                     case 11:
-                        if (Objects.equals(getLanguage(activity), "zh") && Objects.equals(getCountry(activity), "Hans")) {
+                        if (Objects.equals(getLanguage(activity), "zh") && Objects.equals(getCountry(activity), "CN")) {
                             return;
                         }
                         Utils.saveString("appLanguage", "zh", activity);
-                        Utils.saveString("country", "Hans", activity);
+                        Utils.saveString("country", "CN", activity);
                         break;
                     case 12:
+                        if (Objects.equals(getLanguage(activity), "zh") && Objects.equals(getCountry(activity), "HK")) {
+                            return;
+                        }
+                        Utils.saveString("appLanguage", "zh", activity);
+                        Utils.saveString("country", "HK", activity);
+                        break;
+                    case 13:
                         if (Objects.equals(getLanguage(activity), "ko") && Objects.equals(getCountry(activity), null)) {
                             return;
                         }
                         Utils.saveString("appLanguage", "ko", activity);
                         Utils.saveString("country", null, activity);
                         break;
-                    case 13:
+                    case 14:
                         if (Objects.equals(getLanguage(activity), "ja") && Objects.equals(getCountry(activity), null)) {
                             return;
                         }

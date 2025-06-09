@@ -1,4 +1,5 @@
 <resources xmlns:tools="http://schemas.android.com/tools" tools:ignore="MissingTranslation">
+    <!-- Chines simplified (zh-hans) -->
 
     <string name="app_summary">"欢迎使用 aShell：适用于 Shizuku 驱动的 Android 设备的本地 ADB shell。"</string>
     <string name="app_working_message">"aShell 还在工作中。请等待完成或手动停止（通过点击停止按钮）以运行新指令"</string>
