@@ -1,0 +1,3 @@
+* Added Chinese (Traditional), Japanese, and Spanish (Spain and Mexican) translations
+* Fixed Chinese locals in language switch.
+* Miscellaneous changes.
