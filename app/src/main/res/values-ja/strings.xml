@@ -1,0 +1,67 @@
+<resources xmlns:tools="http://schemas.android.com/tools" tools:ignore="MissingTranslation" >
+
+    <string name="app_summary">"aShellへようこそ: Shizukuを使用したAndroid端末用ローカルADBシェルです。"</string>
+    <string name="app_working_message">"aShellはまだ動作中です。終了するまでお待ちいただくか手動で停止（停止ボタンをクリックして）して新しいコマンドを実行してください"</string>
+    <string name="bookmark_added_message">"'%s'はブックマークされました"</string>
+    <string name="bookmark_removed_message">"'%s'はブックマークから削除されました"</string>
+    <string name="cancel">"キャンセル"</string>
+    <string name="clear_all_message">"画面に表示されている内容を削除しますか?"</string>
+    <string name="command_hint">"ここにADBコマンドを入力してください"</string>
+    <string name="command_title">"aShellコマンドボックス"</string>
+    <string name="dismiss">"却下"</string>
+    <string name="examples">"例"</string>
+    <string name="press_back">"もう一度タップして終了"</string>
+    <string name="process_destroy_message">"aShellは実行中です。現在のプロセスを終了しますか?"</string>
+    <string name="quit">"終了"</string>
+    <string name="quit_app_message">"aShellを終了しますか?"</string>
+    <string name="request_permission">"権限を要求する"</string>
+    <string name="start">"開始"</string>
+    <string name="shell_output_saved_message">"最後のコマンドのログは'%s'フォルダに保存されます"</string>
+    <string name="shizuku_access_denied_message">"Shizukuへのアクセスが拒否されました。Shizukuが適切に動作しない場合aShellは動作しません。"</string>
+    <string name="shizuku_unavailable_message">"お使いのデバイスにShizukuがインストールされていないか正しく設定されていません。aShellは適切なShizuku環境がないと動作しません。Shizukuについてはこちらをクリックしてください。"</string>
+    <string name="su_warning_message">"aShellはroot化端末の使用を想定していません。処理を中止します。"</string>
+    <string name="yes">"はい"</string>
+    <string name="copyright_text">"Copyright: © 2024–2025, sunilpaulmathew"</string>
+    <string name="save">"保存"</string>
+    <string name="app_theme">"アプリテーマ"</string>
+    <string name="app_theme_amoled">"モダンブラック"</string>
+    <string name="app_theme_amoled_description">"バッテリーを節約し洗練されたモダンな外観を実現します"</string>
+    <string name="app_theme_auto">"システムのデフォルトに従う"</string>
+    <string name="app_theme_dark">"ダーク"</string>
+    <string name="app_theme_light">"ライト"</string>
+    <string name="app_version">"aShell %s"</string>
+    <string name="authorize_click_message">"クリックして承認"</string>
+    <string name="copy_clipboard">"クリップボードにコピーされました"</string>
+    <string name="developer_contact">"開発者に連絡"</string>
+    <string name="developer_contact_description">"ヘルプやフィードバックが必要な場合は、開発者にお問い合わせください"</string>
+    <string name="disclaimer">"免責事項"</string>
+    <string name="disclaimer_description">"\uD83E\uDDE9 Shizukuへの依存：aShellは、完全に動作するShizuku環境を必要とします。このアプリを使用する前に、Shizukuがセットアップされていることを確認してください。
+        \uD83D\uDC68\u200D\uD83D\uDCBB 必須の基本知識：効果的に使用するには、ADBとLinuxコマンドラインの基礎知識が推奨されます。
+        \uD83C\uDF10 オープンソース：aShellはオープンソースであり、無料でビルドできます。GitLabおよびPOEditorを通じた貢献と翻訳を歓迎します。
+        ⚠️ 免責事項：このアプリの使用中に発生する可能性のある問題、データ損失、または損害について、当社は一切責任を負いません。"</string>
+    <string name="examples_description">"人気のADBコマンドを調べる"</string>
+    <string name="features_description">"\uD83D\uDCDC ADB コマンドを簡単に実行します　またコマンドの例とブックマークが含まれています。
+        \uD83D\uDCCA logcat や top などの連続コマンドを処理し出力の検索と保存のオプションを備えています。
+        \uD83C\uDFA8 自動ダーク/ライト テーマを備えた洗練された UI によりスムーズでモダンなエクスペリエンスが実現します。"</string>
+    <string name="features_title">"特徴"</string>
+    <string name="file_manager_error_toast">"内部ストレージからデータを取得できませんでした。処理を中止します。"</string>
+    <string name="general">"一般"</string>
+    <string name="granted">"付与された"</string>
+    <string name="language">"言語"</string>
+    <string name="miscellaneous">"Miscellaneous"</string>
+    <string name="permissions_shizuku_description">"🔐moe.shizuku.manager.permission.API_V23: Shizukuの特権APIを使用するために必要な権限"</string>
+    <string name="permissions_storage_description">"📂 WRITE_EXTERNAL_STORAGE: 最後のコマンドのログをデバイスに保存するために必要(オプション)"</string>
+    <string name="permissions_title">"必要な権限"</string>
+    <string name="privacy_policy">"プライバシーポリシー"</string>
+    <string name="privacy_policy_description">"プライバシーは重要です: 詳細はこちら"</string>
+    <string name="settings">"設定"</string>
+    <string name="shizuku_access_denied_title">"Shizukuへのアクセスが拒否されました"</string>
+    <string name="shizuku_access_granted_message">"Shizukuに接続されました'開始'を押して続行してください。"</string>
+    <string name="shizuku_learn">"Shizukuについて学ぶ"</string>
+    <string name="shizuku_learn_description">"Shizukuの詳細については: shizuku.rikka.app をご覧ください"</string>
+    <string name="shizuku_unavailable_title">"Shizukuが見つかりません"</string>
+    <string name="translations">"翻訳"</string>
+    <string name="translations_description">"アプリの翻訳に協力する"</string>
+    <string name="version">"権限を要求する"</string>
+    <string name="user_interface">"ユーザーインターフェース"</string>
+</resources>

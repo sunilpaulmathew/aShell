@@ -34,8 +34,10 @@
     <string name="language">Language</string>
     <string name="language_el" translatable="false">Ελληνικά</string>
     <string name="language_en" translatable="false">English (%s)</string>
+    <string name="language_es" translatable="false">Español (%s)</string>
     <string name="language_hu" translatable="false">Magyar</string>
     <string name="language_in" translatable="false">bahasa Indonesia</string>
+    <string name="language_ja" translatable="false">日本</string>
     <string name="language_ko" translatable="false">한국어</string>
     <string name="language_pt" translatable="false">Português (%s)</string>
     <string name="language_ru" translatable="false">русский</string>
