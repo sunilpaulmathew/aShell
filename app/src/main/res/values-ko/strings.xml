@@ -57,6 +57,5 @@
     <string name="shizuku_unavailable_title">"Shizuku 서비스를 찾을 수 없습니다"</string>
     <string name="translations">"번역"</string>
     <string name="translations_description">"앱 번역에 기여하기"</string>
-    <string name="version">"권한 요청"</string>
     <string name="user_interface">"사용자 환경"</string>
 </resources>

@@ -58,6 +58,5 @@
     <string name="shizuku_unavailable_title">"没有找到 Shizuku 支持"</string>
     <string name="translations">"翻译"</string>
     <string name="translations_description">"为本应用的翻译作出贡献"</string>
-    <string name="version">"请求权限"</string>
     <string name="user_interface">"用户界面"</string>
 </resources>

@@ -32,13 +32,16 @@
     <string name="general">General</string>
     <string name="granted">Granted</string>
     <string name="language">Language</string>
+    <string name="language_ar" translatable="false">العربية (%s)</string>
     <string name="language_el" translatable="false">Ελληνικά</string>
     <string name="language_en" translatable="false">English (%s)</string>
     <string name="language_es" translatable="false">Español (%s)</string>
+    <string name="language_fr" translatable="false">français (%s)</string>
     <string name="language_hu" translatable="false">Magyar</string>
     <string name="language_in" translatable="false">bahasa Indonesia</string>
     <string name="language_ja" translatable="false">日本</string>
     <string name="language_ko" translatable="false">한국어</string>
+    <string name="language_pl" translatable="false">Polski"</string>
     <string name="language_pt" translatable="false">Português (%s)</string>
     <string name="language_ru" translatable="false">русский</string>
     <string name="language_zh" translatable="false">中文 (%s)</string>
@@ -67,7 +70,6 @@
     <string name="su_warning_message">aShell is not designed for root-related uses. Aborting.</string>
     <string name="translations">Translations</string>
     <string name="translations_description">Contribute to the app\'s translation</string>
-    <string name="version">Request Permission</string>
     <string name="user_interface">User interface</string>
     <string name="yes">Yes</string>
 </resources>
