@@ -30,8 +30,8 @@ android {
         applicationId "in.sunilpaulmathew.ashell"
         minSdk 24
         targetSdk 35
-        versionCode 16
-        versionName "v0.16"
+        versionCode 17
+        versionName "v0.17"
     }
 
     buildTypes {
