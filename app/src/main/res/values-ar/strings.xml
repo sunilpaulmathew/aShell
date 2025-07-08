@@ -1,0 +1,66 @@
+<resources xmlns:tools="http://schemas.android.com/tools" tools:ignore="MissingTranslation" >
+
+    <string name="app_summary">"مرحبًا بك في aShell: طرفية ADB محلية لأجهزة Android المشغلة بواسطة Shizuku."</string>
+    <string name="app_working_message">"aShell لا يزال يعمل. يرجى انتظاره حتى ينتهي أو إيقافه يدويًا (بالنقر فوق زر الإيقاف) لتشغيل أمر جديد"</string>
+    <string name="bookmark_added_message">"'%s' أُضيف إلى قائمة الأوامر المحفوظة"</string>
+    <string name="bookmark_removed_message">"'%s' تمت إزالته من قائمة الأوامر المحفوظة"</string>
+    <string name="cancel">"إلغاء"</string>
+    <string name="clear_all_message">"هل تريد مسح كل شيء على هذه الشاشة؟"</string>
+    <string name="command_hint">"أدخل أمر ADB هنا"</string>
+    <string name="command_title">"صندوق أوامر aShell"</string>
+    <string name="dismiss">"رفض"</string>
+    <string name="examples">"أمثلة"</string>
+    <string name="press_back">"اضغط زر الرجوع مرة أخرى للخروج"</string>
+    <string name="process_destroy_message">"aShell لا يزال يعمل. هل تريد إيقاف العملية الحالية؟"</string>
+    <string name="quit">"أخرج"</string>
+    <string name="quit_app_message">"هل تريد الخروج من aShell؟"</string>
+    <string name="request_permission">"طلب الاذن"</string>
+    <string name="start">"ابدأ"</string>
+    <string name="shell_output_saved_message">"تم تصدير مخرجات الأمر الأخير إلى مجلد '%s'"</string>
+    <string name="shizuku_access_denied_message">"تم رفض الوصول إلى خدمة Shizuku لـ aShell. لن يعمل aShell بدون بيئة Shizuku صحيحة."</string>
+    <string name="shizuku_unavailable_message">"Shizuku غير مثبت أو غير معد بشكل صحيح على جهازك. لن يعمل aShell بدون بيئة Shizuku صحيحة. انقر هنا لمعرفة المزيد عن Shizuku."</string>
+    <string name="su_warning_message">"aShell غير مصمم للاستخدامات المرتبطة بالجذر. يتم الإيقاف."</string>
+    <string name="yes">"نعم"</string>
+    <string name="copyright_text">"حقوق الطبع والنشر: © 2024–2025، sunilpaulmathew"</string>
+    <string name="save">"أحفظ"</string>
+    <string name="app_theme">"مظهر التطبيق"</string>
+    <string name="app_theme_amoled">"أسود Amoled"</string>
+    <string name="app_theme_amoled_description">"يحافظ على عمر البطارية ويوفر مظهر أنيق وعصري"</string>
+    <string name="app_theme_auto">"تلقائي"</string>
+    <string name="app_theme_dark">"داكن"</string>
+    <string name="app_theme_light">"فاتح"</string>
+    <string name="app_version">"aShell %s"</string>
+    <string name="authorize_click_message">"انقر للتفويض"</string>
+    <string name="copy_clipboard">"نسخ إلى الحافظة"</string>
+    <string name="developer_contact">"الاتصال بالمطور"</string>
+    <string name="developer_contact_description">"هل تحتاج إلى مساعدة أو لديك ملاحظات؟ اتصل بالمطور"</string>
+    <string name="disclaimer">"إخلاء المسؤولية"</string>
+    <string name="disclaimer_description">"\uD83E\uDDE9 اعتماد Shizuku: يتطلب aShell بيئة Shizuku تعمل بالكامل لكي يعمل. يرجى التأكد من إعداد Shizuku قبل استخدام هذا التطبيق.
+        \uD83D\uDC68\u200D\uD83D\uDCBB المعرفة الأساسية المطلوبة: يوصى بمعرفة أساسيات ADB وسطر أوامر Linux لاستخدامه بفعالية.
+        \uD83C\uDF10 مفتوح المصدر: aShell هو تطبيق مفتوح المصدر ومجاني للبناء. نرحب بالمساهمات والترجمات عبر GitLab و POEditor.
+        ⚠️ إخلاء المسؤولية: نحن غير مسؤولين عن أي مشاكل أو فقدان للبيانات أو أضرار قد تحدث أثناء استخدام هذا التطبيق."</string>
+    <string name="examples_description">"تصفح أوامر ADB الشائعة"</string>
+    <string name="features_description">"\uD83D\uDCDC تشغيل أوامر ADB بسهولة — يتضمن أمثلة مدمجة وإمكانية حفظ الاأوامر.
+        \uD83D\uDCCA يتعامل مع الأوامر المستمرة مثل logcat أو top، مع خيارات بحث وحفظ للمخرجات.
+        \uD83C\uDFA8 واجهة مستخدم أنيقة مع مظهر داكن/فاتح تلقائي لتجربة سلسة وعصرية."</string>
+    <string name="features_title">"الميزات"</string>
+    <string name="file_manager_error_toast">"فشل الحصول على البيانات من مدير الملفات الخارجي. تم الإيقاف."</string>
+    <string name="general">"عام"</string>
+    <string name="granted">"مُنح"</string>
+    <string name="language">"اللغة"</string>
+    <string name="miscellaneous">"مفرقات"</string>
+    <string name="permissions_shizuku_description">"🔐 moe.shizuku.manager.permission.API_V23: اذن مطلوب لاستخدام واجهات برمجة التطبيقات الخاصة بـ Shizuku"</string>
+    <string name="permissions_storage_description">"📂 WRITE_EXTERNAL_STORAGE: مطلوب لتخزين آخر مخرجات الأوامر على جهازك (اختياري)"</string>
+    <string name="permissions_title">"الاذونات المطلوبة"</string>
+    <string name="privacy_policy">"سياسة الخصوصية"</string>
+    <string name="privacy_policy_description">"خصوصيتك مهمة: اعرف المزيد"</string>
+    <string name="settings">"الإعدادات"</string>
+    <string name="shizuku_access_denied_title">"رُفض الوصول إلى Shizuku لـ aShell"</string>
+    <string name="shizuku_access_granted_message">"حصل aShell على حق الوصول إلى خدمة Shizuku. انقر على 'ابدأ' للمتابعة"</string>
+    <string name="shizuku_learn">"تعلم Shizuku"</string>
+    <string name="shizuku_learn_description">"اعرف المزيد عن Shizuku على: shizuku.rikka.app"</string>
+    <string name="shizuku_unavailable_title">"لم يتم العثور على دعم Shizuku"</string>
+    <string name="translations">"الترجمات"</string>
+    <string name="translations_description">"ساهم في ترجمة التطبيق"</string>
+    <string name="user_interface">"واجهة المستخدم"</string>
+</resources>

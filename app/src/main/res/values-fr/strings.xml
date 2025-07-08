@@ -1,0 +1,66 @@
+<resources xmlns:tools="http://schemas.android.com/tools" tools:ignore="MissingTranslation" >
+
+    <string name="app_summary">"Bienvenue sur aShell : Un shell ADB local pour les appareils Android fonctionnant avec Shizuku."</string>
+    <string name="app_working_message">"aShell fonctionne toujours. Veuillez attendre qu'il se termine ou l'arrêter manuellement (en cliquant sur le bouton stop) pour lancer une nouvelle commande."</string>
+    <string name="bookmark_added_message">"'%s' a été ajouté aux favoris"</string>
+    <string name="bookmark_removed_message">"'%s' a été supprimé des favoris"</string>
+    <string name="cancel">"Annuler"</string>
+    <string name="clear_all_message">"Tout effacer sur cet écran ?"</string>
+    <string name="command_hint">"Entrer la commande ADB ici"</string>
+    <string name="command_title">"Console aShell"</string>
+    <string name="dismiss">"Ignorer"</string>
+    <string name="examples">"Éxamples"</string>
+    <string name="press_back">"Appuyez à nouveau sur la touche arrière pour sortir"</string>
+    <string name="process_destroy_message">"aShell est toujours en cours. Voulez-vous arrêter le processus en cours?"</string>
+    <string name="quit">"Arrêter"</string>
+    <string name="quit_app_message">"Voulez-vous quitter aShell ?"</string>
+    <string name="request_permission">"Demander l'autorisation"</string>
+    <string name="start">"Commencer"</string>
+    <string name="shell_output_saved_message">"La sortie de la dernière commande a été exportée dans le dossier '%s'."</string>
+    <string name="shizuku_access_denied_message">"L'accès au service Shizuku a été refusé pour aShell. aShell ne fonctionnera pas sans un environnement Shizuku approprié."</string>
+    <string name="shizuku_unavailable_message">"Shizuku n'est pas installé ou n'est pas correctement configuré sur votre appareil. aShell ne fonctionnera pas sans un environnement Shizuku approprié. Cliquer ici pour en savoir plus sur Shizuku."</string>
+    <string name="su_warning_message">"aShell n'est pas conçu pour tous les usages liés au mode root. Abandon."</string>
+    <string name="yes">"Oui"</string>
+    <string name="copyright_text">"Copyright : © 2024–2025, sunilpaulmathew"</string>
+    <string name="save">"Enregistrer"</string>
+    <string name="app_theme">"Thème de l'application"</string>
+    <string name="app_theme_amoled">"Amoled noir"</string>
+    <string name="app_theme_amoled_description">"Économise la batterie et offre un aspect élégant et moderne"</string>
+    <string name="app_theme_auto">"Automatique"</string>
+    <string name="app_theme_dark">"Noir"</string>
+    <string name="app_theme_light">"Blanc"</string>
+    <string name="app_version">"aShell %s"</string>
+    <string name="authorize_click_message">"Cliquer pour autoriser"</string>
+    <string name="copy_clipboard">"Copier dans le presse-papiers"</string>
+    <string name="developer_contact">"Contacter le développeur"</string>
+    <string name="developer_contact_description">"Besoin d'aide ou un avis à formuler ? Contacter le développeur"</string>
+    <string name="disclaimer">"Clause de non-responsabilité"</string>
+    <string name="disclaimer_description">"\uD83E\uDDE9 Dépendance Shizuku : aShell nécessite un environnement Shizuku pleinement opérationnel pour fonctionner. Veuillez vous assurer que Shizuku est configuré avant d'utiliser cette application.
+        \uD83D\uDC68\u200D\uD83D\uDCBB Connaissances de base requises : Il est recommandé d'être familier avec ADB et les bases de la ligne de commande Linux pour une utilisation efficace.
+        \uD83C\uDF10 Open Source : aShell est open-source et sa maintenance est gratuite. Les contributions et les traductions sont les bienvenues via GitLab et POEditor.
+        ⚠️ Aucune responsabilité : Nous ne sommes pas responsables des problèmes, pertes de données ou dommages pouvant survenir lors de l'utilisation de cette application."</string>
+    <string name="examples_description">"Explorer les commandes ADB les plus courantes"</string>
+    <string name="features_description">"\uD83D\uDCDC Exécute les commandes ADB avec facilité - comprend des exemples intégrés et des signets.
+        \uD83D\uDCCA Gère les commandes continues telles que logcat ou top, avec des options de recherche et d'enregistrement pour la sortie.
+        \uD83C\uDFA8 Interface utilisateur élégante avec un thème sombre/lumineux automatique pour une expérience fluide et moderne."</string>
+    <string name="features_title">"Caractéristiques"</string>
+    <string name="file_manager_error_toast">"Échec de la récupération des données du gestionnaire de fichiers externe. Abandon."</string>
+    <string name="general">"Général"</string>
+    <string name="granted">"Accordée"</string>
+    <string name="language">"Language"</string>
+    <string name="miscellaneous">"Divers"</string>
+    <string name="permissions_shizuku_description">"🔐 moe.shizuku.manager.permission.API_V23 : Permission requise pour utiliser les API de Shizuku"</string>
+    <string name="permissions_storage_description">"📂 WRITE_EXTERNAL_STORAGE : Nécessaire pour enregistrer la dernière sortie de console sur votre appareil (facultatif)."</string>
+    <string name="permissions_title">"Permissions requises"</string>
+    <string name="privacy_policy">"Politique de confidentialité"</string>
+    <string name="privacy_policy_description">"Votre vie privée est importante : En savoir plus"</string>
+    <string name="settings">"Réglages"</string>
+    <string name="shizuku_access_denied_title">"Shizuku : accès refusé pour aShell"</string>
+    <string name="shizuku_access_granted_message">"aShell a obtenu l'accès au service Shizuku. Cliquez sur 'Démarrer' pour continuer"</string>
+    <string name="shizuku_learn">"En apprendre plus sur shizuku"</string>
+    <string name="shizuku_learn_description">"Pour en savoir plus sur shizuku : shizuku.rikka.app"</string>
+    <string name="shizuku_unavailable_title">"L'environnement Shizuku n'a pas été détecté"</string>
+    <string name="translations">"Traductions"</string>
+    <string name="translations_description">"Contribuer à la traduction de l'application"</string>
+    <string name="user_interface">"Interface utilisateur"</string>
+</resources>
