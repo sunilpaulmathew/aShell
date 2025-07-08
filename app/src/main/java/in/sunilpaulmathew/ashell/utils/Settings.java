@@ -64,6 +64,12 @@ public class Settings {
     private static int getLanguagePosition(Context context) {
         String country = getCountry(context);
         switch (getLanguage(context)) {
+            case "ar":
+                return 17;
+            case "pl":
+                return 16;
+            case "fr":
+                return 15;
             case "ja":
                 return 14;
             case "ko":
@@ -125,6 +131,8 @@ public class Settings {
     public static String getLanguageDescription(Context context) {
         String country = getCountry(context);
         switch (getLanguage(context)) {
+            case "ar":
+                return context.getString(R.string.language_ar, "AR");
             case "en":
                 return country.equalsIgnoreCase("US") ? context.getString(R.string.language_en, "US")
                         : context.getString(R.string.app_theme_auto);
@@ -132,6 +140,10 @@ public class Settings {
                 return context.getString(R.string.language_el);
             case "es":
                 return context.getString(R.string.language_es, country.equalsIgnoreCase("MX") ? "MX" : "ES");
+            case "fr":
+                return context.getString(R.string.language_fr, "FR");
+            case "pl":
+                return context.getString(R.string.language_pl);
             case "pt":
                 return context.getString(R.string.language_pt, country.equalsIgnoreCase("BR") ? "BR" : "PT");
             case "ru":
@@ -178,7 +190,10 @@ public class Settings {
                 context.getString(R.string.language_zh, "Hans"),
                 context.getString(R.string.language_zh, "Hant"),
                 context.getString(R.string.language_ko),
-                context.getString(R.string.language_ja)
+                context.getString(R.string.language_ja),
+                context.getString(R.string.language_fr, "FR"),
+                context.getString(R.string.language_pl),
+                context.getString(R.string.language_ar, "AR")
         };
     }
 
@@ -331,6 +346,27 @@ public class Settings {
                             return;
                         }
                         Utils.saveString("appLanguage", "ja", activity);
+                        Utils.saveString("country", null, activity);
+                        break;
+                    case 15:
+                        if (Objects.equals(getLanguage(activity), "fr") && Objects.equals(getCountry(activity), null)) {
+                            return;
+                        }
+                        Utils.saveString("appLanguage", "fr", activity);
+                        Utils.saveString("country", null, activity);
+                        break;
+                    case 16:
+                        if (Objects.equals(getLanguage(activity), "pl") && Objects.equals(getCountry(activity), null)) {
+                            return;
+                        }
+                        Utils.saveString("appLanguage", "pl", activity);
+                        Utils.saveString("country", null, activity);
+                        break;
+                    case 17:
+                        if (Objects.equals(getLanguage(activity), "ar") && Objects.equals(getCountry(activity), null)) {
+                            return;
+                        }
+                        Utils.saveString("appLanguage", "ar", activity);
                         Utils.saveString("country", null, activity);
                         break;
                 }
