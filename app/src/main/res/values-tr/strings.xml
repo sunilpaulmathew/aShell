@@ -1,0 +1,66 @@
+<resources xmlns:tools="http://schemas.android.com/tools" tools:ignore="MissingTranslation">
+
+    <string name="app_summary">"Shizuku'nun etkin olduğu Android cihazınızda efor harcamadan ADB komutları yürütün."</string>
+    <string name="app_working_message">"aShell hala çalışıyor. Yeni komut yürütmek için lütfen bitmesini bekleyin veya kendiniz (durdur tuşuna basarak) durdurun."</string>
+    <string name="bookmark_added_message">"'%s' yer imlerine eklendi"</string>
+    <string name="bookmark_removed_message">"'%s' yer imlerinden çıkarıldı"</string>
+    <string name="cancel">"İptal"</string>
+    <string name="clear_all_message">"Ekrandaki herşey silinsin mi?"</string>
+    <string name="command_hint">"ADB komutunu buraya girin"</string>
+    <string name="command_title">"aShell Komut Kutusu"</string>
+    <string name="dismiss">"Görmezden gel"</string>
+    <string name="examples">"Örnekler"</string>
+    <string name="press_back">"Çıkmak için tekrar geri tuşuna basın"</string>
+    <string name="process_destroy_message">"aShell hala çalışıyor. Şuanki eylemi durdurmak ister misiniz?"</string>
+    <string name="quit">"Çık"</string>
+    <string name="quit_app_message">"aShell'den çıkmak istiyor musun?"</string>
+    <string name="request_permission">"İzin istemi"</string>
+    <string name="start">"Başlat"</string>
+    <string name="shell_output_saved_message">"Son komut çıktısı '%s' dosyasına aktarıldı"</string>
+    <string name="shizuku_access_denied_message">"aShell'in Shizuku servisine erişimi reddedildi. aShell düzgün bir Shizuku ortamı olmadan çalışamaz"</string>
+    <string name="shizuku_unavailable_message">"Shizuku, cihazınızda kurulu değil veya doğru bir şekilde konfigüre edilmedi. aShell düzgün bir Shizuku ortamı olmadan çalışamaz."</string>
+    <string name="su_warning_message">"aShell root ile ilgili kullanım için tasarlanmadı. Eylem iptal ediliyor."</string>
+    <string name="yes">"Evet"</string>
+    <string name="copyright_text">"Telif hakkı: © 2022–2025, sunilpaulmathew"</string>
+    <string name="save">"Kaydet"</string>
+    <string name="app_theme">"Uygulama teması"</string>
+    <string name="app_theme_amoled">"Amoled siyah"</string>
+    <string name="app_theme_amoled_description">"Batarya tasarrufu, şık ve modern bir görünüm"</string>
+    <string name="app_theme_auto">"Otomatik"</string>
+    <string name="app_theme_dark">"Koyu"</string>
+    <string name="app_theme_light">"Açık"</string>
+    <string name="app_version">"aShell %s"</string>
+    <string name="authorize_click_message">"Yetkilendirmek için tıkla"</string>
+    <string name="copy_clipboard">"Panoya kopyala"</string>
+    <string name="developer_contact">"Geliştirici ile iletişim kur"</string>
+    <string name="developer_contact_description">"Yardıma veya geri bildirime mi ihtiyacınız var? Geliştiriciyle iletişim kurun"</string>
+    <string name="disclaimer">"Sorumluluk reddi"</string>
+    <string name="disclaimer_description">"\uD83E\uDDE9 Shizuku İhtiyacı: aShell çalışmak için sorunsuz çalışan bir Shizuku ortamına ihtiyaç duyar. Kullanmadan önce lütfen Shizuku'nun kurulu olduğundan emin olun
+        \uD83D\uDC68\u200D\uD83D\uDCBB Temel Deneyim Gerekli: ADB ve Linux komut satırı temelleri hakkında bilgi sahibi olması kullanıcı için faydalıdır.
+        \uD83C\uDF10 Açık Kaynak: aShell açık kaynak bir yazılımdır ve ücretsiz olarak geliştirilip katkıda bulunulabilir. Katkı ve çevirileri GitLab ve POEditor de ağırlamaktan gurur duyarız.
+        ⚠️Sorunluluk Reddi: Oluşan herhangi bir sorun halinde sorumluluk bize ait değildir. Bu uygulamayı kullanırken dosya kaybı veya dosya hasarı meydana gelebilir."</string>
+    <string name="examples_description">"Popüler ADB komutlarını keşfet."</string>
+    <string name="features_description">"\uD83D\uDCDC ADB komutlarını kolaylıkla yürütebilirsin. Uygulamada hazır örnekler ve yer imlerine ekleme seçeneği mevcut.
+        \uD83D\uDCCA Logcat veya top gibi devamlı komutları, veri çıktısı için arama ve ayarları kaydetme ile yürütebilir.
+        \uD83C\uDFA8 Daha akıcı ve modern bir deneyim için otomatik koyu/açık moda sahip şık bir arayüz."</string>
+    <string name="features_title">"Özellikler"</string>
+    <string name="file_manager_error_toast">"Dosya yöneticisinden data(veri) alımı başarısız. İptal ediliyor"</string>
+    <string name="general">"Genel"</string>
+    <string name="granted">"İzin verildi"</string>
+    <string name="language">"Dil"</string>
+    <string name="miscellaneous">"Diğer"</string>
+    <string name="permissions_shizuku_description">"🔐 moe.shizuku.manager.permission.API_V23: Shizuku'nun ayrıcalıklı API'lerini kullanmak için gerekli izin"</string>
+    <string name="permissions_storage_description">"📂 WRITE_EXTERNAL_STORAGE: Son komut çıkışının cihaza kaydedilmesi için gerekli (isteğe bağlı)"</string>
+    <string name="permissions_title">"İzin gerekli"</string>
+    <string name="privacy_policy">"Gizlilik politikası"</string>
+    <string name="privacy_policy_description">"Gizliliğin önemli: Dahasını öğren"</string>
+    <string name="settings">"Ayarlar"</string>
+    <string name="shizuku_access_denied_title">"aShell için Shizuku erişimi reddedildi"</string>
+    <string name="shizuku_access_granted_message">"aShell Shizuku servisinden onayı aldı. Devam etmek için 'başlat' tuşuna bas"</string>
+    <string name="shizuku_learn">"Shizuku hakkında"</string>
+    <string name="shizuku_learn_description">"Shizuku hakkında dahası için: shizuku.rikka.app"</string>
+    <string name="shizuku_unavailable_title">"Shizuku desteği bulunamadı"</string>
+    <string name="translations">"Çeviriler"</string>
+    <string name="translations_description">"Bu uygulamanın tercümesine katkıda bulunun"</string>
+    <string name="user_interface">"Kullanıcı arayüzü"</string>
+</resources>
