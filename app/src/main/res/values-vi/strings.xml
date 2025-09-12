@@ -1,0 +1,61 @@
+<resources xmlns:tools="http://schemas.android.com/tools" tools:ignore="MissingTranslation">
+
+    <string name="app_summary">"Thực hiện lệnh ADB dễ dàng trên thiết bị Android hỗ trợ Shizuku của bạn."</string>
+    <string name="app_working_message">"aShell vẫn đang hoạt động. Vui lòng đợi nó hoàn tất hoặc dừng thủ công (bằng cách nhấp vào nút dừng) để chạy lệnh mới."</string>
+    <string name="bookmark_added_message">"'%s' đã được đánh dấu"</string>
+    <string name="bookmark_removed_message">"'%s' đã bị xóa khỏi dấu trang"</string>
+    <string name="cancel">"Hủy bỏ"</string>
+    <string name="clear_all_message">"Xóa mọi thứ trên màn hình này?"</string>
+    <string name="command_hint">"Nhập lệnh ADB ở đây"</string>
+    <string name="command_title">"Hộp lệnh aShell"</string>
+    <string name="dismiss">"Miễn nhiệm"</string>
+    <string name="examples">"Ví dụ"</string>
+    <string name="press_back">"Nhấn lại lần nữa để thoát"</string>
+    <string name="process_destroy_message">"aShell vẫn đang hoạt động. Bạn có muốn dừng tiến trình hiện tại không?"</string>
+    <string name="quit">"Từ bỏ"</string>
+    <string name="quit_app_message">"Bạn có muốn thoát khỏi aShell không?"</string>
+    <string name="request_permission">"Yêu cầu quyền"</string>
+    <string name="start">"Bắt đầu"</string>
+    <string name="shell_output_saved_message">"Đầu ra của lệnh cuối cùng được xuất vào thư mục '%s'"</string>
+    <string name="shizuku_access_denied_message">"Quyền truy cập vào dịch vụ Shizuku bị từ chối đối với aShell. aShell sẽ không hoạt động nếu không có môi trường Shizuku phù hợp."</string>
+    <string name="shizuku_unavailable_message">"Shizuku chưa được cài đặt hoặc chưa được cấu hình đúng trên thiết bị của bạn. aShell sẽ không hoạt động nếu không có môi trường Shizuku phù hợp."</string>
+    <string name="su_warning_message">"aShell không được thiết kế cho mục đích sử dụng liên quan đến root. Đang hủy bỏ."</string>
+    <string name="yes">"Đúng"</string>
+    <string name="copyright_text">"Bản quyền: © 2022–2025, sunilpaulmathew"</string>
+    <string name="save">"Lưu"</string>
+    <string name="app_theme">"Chủ đề ứng dụng"</string>
+    <string name="app_theme_amoled">"Chủ đề tối"</string>
+    <string name="app_theme_amoled_description">"Tiết kiệm pin và mang lại vẻ ngoài hiện đại, bóng bẩy"</string>
+    <string name="app_theme_auto">"Tự động"</string>
+    <string name="app_theme_dark">"Tối tăm"</string>
+    <string name="app_theme_light">"Sáng"</string>
+    <string name="app_version">"aShell %s"</string>
+    <string name="authorize_click_message">"Nhấp để ủy quyền"</string>
+    <string name="copy_clipboard">"Sao chép vào bảng tạm"</string>
+    <string name="developer_contact">"Liên hệ nhà phát triển"</string>
+    <string name="developer_contact_description">"Cần trợ giúp hoặc phản hồi? Liên hệ với nhà phát triển"</string>
+    <string name="disclaimer">"Tuyên bố miễn trừ trách nhiệm"</string>
+    <string name="disclaimer_description">"\uD83E\uDDE9 Phụ thuộc Shizuku: aShell yêu cầu môi trường Shizuku hoạt động đầy đủ để hoạt động. Vui lòng đảm bảo Shizuku đã được thiết lập trước khi sử dụng ứng dụng này. \uD83D\uDC68\u200D\uD83D\uDCBB Kiến thức cơ bản cần thiết: Nên làm quen với các kiến thức cơ bản về ADB và dòng lệnh Linux để sử dụng hiệu quả. \uD83C\uDF10 Mã nguồn mở: aShell là mã nguồn mở và miễn phí xây dựng. Mọi đóng góp và bản dịch đều được hoan nghênh thông qua GitLab và POEditor. ⚠️ Không chịu trách nhiệm: Chúng tôi không chịu trách nhiệm cho bất kỳ sự cố, mất dữ liệu hoặc thiệt hại nào có thể xảy ra trong quá trình sử dụng ứng dụng này."</string>
+    <string name="examples_description">"Khám phá các lệnh ADB phổ biến"</string>
+    <string name="features_description">"\uD83D\uDCDC Chạy lệnh ADB dễ dàng—bao gồm các ví dụ tích hợp và tính năng đánh dấu trang. \uD83D\uDCCA Xử lý các lệnh liên tục như logcat hoặc top, với các tùy chọn tìm kiếm và lưu để xuất. \uD83C\uDFA8 Giao diện người dùng đẹp mắt với chủ đề tối/sáng tự động mang đến trải nghiệm mượt mà, hiện đại."</string>
+    <string name="features_title">"Đặc trưng"</string>
+    <string name="file_manager_error_toast">"Không lấy được dữ liệu từ trình quản lý tệp bên ngoài. "</string>
+    <string name="general">"Tổng quan"</string>
+    <string name="granted">"Cho phép"</string>
+    <string name="language">"Ngôn ngữ"</string>
+    <string name="miscellaneous">"Hỗn hợp"</string>
+    <string name="permissions_shizuku_description">"🔐 moe.shizuku.manager.permission.API_V23: Cần có quyền để sử dụng các API đặc quyền của Shizuku"</string>
+    <string name="permissions_storage_description">"📂 WRITE_EXTERNAL_STORAGE: Cần thiết để lưu đầu ra lệnh cuối cùng vào thiết bị của bạn (tùy chọn)"</string>
+    <string name="permissions_title">"Cần có quyền"</string>
+    <string name="privacy_policy">"Chính sách bảo mật"</string>
+    <string name="privacy_policy_description">"Quyền riêng tư của bạn rất quan trọng: Tìm hiểu thêm"</string>
+    <string name="settings">"Cài đặt"</string>
+    <string name="shizuku_access_denied_title">"Shizuku bị từ chối quyền truy cập vào aShell"</string>
+    <string name="shizuku_access_granted_message">"aShell đã truy cập được vào dịch vụ Shizuku. Nhấp vào 'Bắt đầu' để tiếp tục"</string>
+    <string name="shizuku_learn">"Tìm hiểu Shizuku"</string>
+    <string name="shizuku_learn_description">"Tìm hiểu thêm về shizuku tại: shizuku.rikka.app"</string>
+    <string name="shizuku_unavailable_title">"Không tìm thấy hỗ trợ Shizuku"</string>
+    <string name="translations">"Bản dịch"</string>
+    <string name="translations_description">"Đóng góp vào bản dịch của ứng dụng"</string>
+    <string name="user_interface">"Giao diện người dùng"</string>
+</resources>
