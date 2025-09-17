@@ -24,11 +24,11 @@ public class Commands {
         mCommands.add(new CommandItems("cp <from> <to>", "Copy a file", "cp /system/build.prop /sdcard"));
         mCommands.add(new CommandItems("cp -r <from> <to>", "Copy a file or directory", "cp -r /system/app /sdcard"));
         mCommands.add(new CommandItems("dumpsys activity", "Print activity info"));
-        mCommands.add(new CommandItems("dumpsys battery", "Primt battery stats"));
+        mCommands.add(new CommandItems("dumpsys battery", "Print battery stats"));
         mCommands.add(new CommandItems("dumpsys battery set level <n>", "Change the level from 0 to 100", "dumpsys battery set level 95"));
         mCommands.add(new CommandItems("dumpsys battery set status <n>", "Change the level to unknown, charging, discharging, not charging or full", "dumpsys battery set status 0"));
         mCommands.add(new CommandItems("dumpsys battery reset", "Reset battery"));
-        mCommands.add(new CommandItems("dumpsys display", "Primt display stats"));
+        mCommands.add(new CommandItems("dumpsys display", "Print display stats"));
         mCommands.add(new CommandItems("dumpsys iphonesybinfo", "Get IMEI"));
         mCommands.add(new CommandItems("echo <message>", "Display message on screen", "echo Hallo World"));
         mCommands.add(new CommandItems("exit", "Exit the shell"));
