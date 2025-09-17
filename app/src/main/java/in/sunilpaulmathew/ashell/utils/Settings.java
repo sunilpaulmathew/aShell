@@ -64,6 +64,8 @@ public class Settings {
     private static int getLanguagePosition(Context context) {
         String country = getCountry(context);
         switch (getLanguage(context)) {
+            case "de":
+                return country.equalsIgnoreCase("BE") ? 19 : 18;
             case "ar":
                 return 17;
             case "pl":
@@ -133,6 +135,8 @@ public class Settings {
         switch (getLanguage(context)) {
             case "ar":
                 return context.getString(R.string.language_ar, "AR");
+            case "de":
+                return context.getString(R.string.language_de, country.equalsIgnoreCase("BE") ? "BE" : "DE");
             case "en":
                 return country.equalsIgnoreCase("US") ? context.getString(R.string.language_en, "US")
                         : context.getString(R.string.app_theme_auto);
@@ -193,7 +197,9 @@ public class Settings {
                 context.getString(R.string.language_ja),
                 context.getString(R.string.language_fr, "FR"),
                 context.getString(R.string.language_pl),
-                context.getString(R.string.language_ar, "AR")
+                context.getString(R.string.language_ar, "AR"),
+                context.getString(R.string.language_de, "DE"),
+                context.getString(R.string.language_de, "BE")
         };
     }
 
@@ -368,6 +374,20 @@ public class Settings {
                         }
                         Utils.saveString("appLanguage", "ar", activity);
                         Utils.saveString("country", null, activity);
+                        break;
+                    case 18:
+                        if (Objects.equals(getLanguage(activity), "de") && Objects.equals(getCountry(activity), "DE")) {
+                            return;
+                        }
+                        Utils.saveString("appLanguage", "de", activity);
+                        Utils.saveString("country", "DE", activity);
+                        break;
+                    case 19:
+                        if (Objects.equals(getLanguage(activity), "de") && Objects.equals(getCountry(activity), "BE")) {
+                            return;
+                        }
+                        Utils.saveString("appLanguage", "de", activity);
+                        Utils.saveString("country", "BE", activity);
                         break;
                 }
                 restartApp(activity);

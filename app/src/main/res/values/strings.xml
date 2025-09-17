@@ -33,6 +33,7 @@
     <string name="granted">Granted</string>
     <string name="language">Language</string>
     <string name="language_ar" translatable="false">العربية (%s)</string>
+    <string name="language_de" translatable="false">Deutsch (%s)</string>
     <string name="language_el" translatable="false">Ελληνικά</string>
     <string name="language_en" translatable="false">English (%s)</string>
     <string name="language_es" translatable="false">Español (%s)</string>
