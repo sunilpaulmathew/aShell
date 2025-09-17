@@ -1,13 +1,13 @@
 <resources xmlns:tools="http://schemas.android.com/tools" tools:ignore="MissingTranslation" >
 
-    <string name="app_summary">"Witaj w aShell: Lokalna powłoka ADB dla urządzeń z Androidem zasilanych przez Shizuku."</string>
-    <string name="app_working_message">"aShell wciąż pracuje. Poczekaj, aż się zakończy lub ręcznie zatrzymaj (klikając przycisk zatrzymania), aby uruchomić nowe polecenie"</string>
-    <string name="bookmark_added_message">"'%s' jest dodany do zakładek"</string>
-    <string name="bookmark_removed_message">"'%s' został usunięty z zakładki"</string>
+    <string name="app_summary">"Wygodnie uruchamiaj polecenia ADB na swoim urządzeniu z Shizuku"</string>
+    <string name="app_working_message">"aShell wciąż pracuje. Zaczekaj, aż skończy lub ręcznie zatrzymaj (naciskając przycisk stop), aby uruchomić nowe polecenie"</string>
+    <string name="bookmark_added_message">"'%s' został dodany do zakładek"</string>
+    <string name="bookmark_removed_message">"'%s' został usunięty z zakładek"</string>
     <string name="cancel">"Anuluj"</string>
-    <string name="clear_all_message">"Wyczyścić wszystko na tym ekranie?"</string>
-    <string name="command_hint">"Wprowadź tutaj polecenie ADB"</string>
-    <string name="command_title">"Polecenie aShell"</string>
+    <string name="clear_all_message">"Wyczyścić zawartość ekranu?"</string>
+    <string name="command_hint">"Wprowadź komendę ADB"</string>
+    <string name="command_title">"Pole poleceń aShell"</string>
     <string name="dismiss">"Odrzuć"</string>
     <string name="examples">"Przykłady"</string>
     <string name="press_back">"Naciśnij ponownie wstecz, aby wyjść"</string>
@@ -18,15 +18,15 @@
     <string name="start">"Start"</string>
     <string name="shell_output_saved_message">"Wyjście ostatniego polecenia zostało wyeksportowane do folderu '%s'"</string>
     <string name="shizuku_access_denied_message">"Dostęp do usługi Shizuku został odrzucony dla aShell. aShell nie będzie działać bez odpowiedniego środowiska Shizuku."</string>
-    <string name="shizuku_unavailable_message">"Shizuku nie jest zainstalowany lub nie jest poprawnie skonfigurowany na Twoim urządzeniu. aShell nie będzie działać bez odpowiedniego środowiska Shizuku. Kliknij tutaj, aby dowiedzieć się więcej o Shizuku."</string>
+    <string name="shizuku_unavailable_message">"Shizuku nie jest zainstalowane lub poprawnie skonfigurowane na Twoim urządzeniu. aShell nie może działać bez odpowiedniego środowiska Shizuku."</string>
     <string name="su_warning_message">"aShell nie jest przeznaczony do zastosowań związanych z rootem. Przerywam."</string>
     <string name="yes">"Tak"</string>
-    <string name="copyright_text">"Copyright: © 2024–2025, sunilpaulmathew"</string>
+    <string name="copyright_text">"©2022–2025 sunilpaulmathew, Wszelkie prawa zastrzeżone."</string>
     <string name="save">"Zapisz"</string>
     <string name="app_theme">"Motyw aplikacji"</string>
-    <string name="app_theme_amoled">"Czarny Amoled"</string>
+    <string name="app_theme_amoled">"Głęboka czerń"</string>
     <string name="app_theme_amoled_description">"Oszczędzaj baterię i oferuj elegancki, nowoczesny wygląd"</string>
-    <string name="app_theme_auto">"Auto"</string>
+    <string name="app_theme_auto">"Automatyczny"</string>
     <string name="app_theme_dark">"Ciemny"</string>
     <string name="app_theme_light">"Jasny"</string>
     <string name="app_version">"aShell %s"</string>
@@ -35,10 +35,10 @@
     <string name="developer_contact">"Kontakt z deweloperem"</string>
     <string name="developer_contact_description">"Potrzebujesz pomocy lub masz opinię? Skontaktuj się z deweloperem"</string>
     <string name="disclaimer">"Zastrzeżenia"</string>
-    <string name="disclaimer_description">"⚙️ Wymagane Shizuku: aShell wymaga w pełni działającego środowiska Shizuku do funkcjonowania. Upewnij się, że Shizuku jest skonfigurowane przed użyciem tej aplikacji.
-        👨‍💻 Wymagana podstawowa wiedza: Zalecana jest znajomość ADB i podstaw wiersza poleceń Linuksa w celu efektywnego użytkowania.
-        🌐 Open Source: aShell jest open-source i można go bezpłatnie zbudować. Wkład i tłumaczenia są mile widziane za pośrednictwem GitLab i POEditor.
-        ⚠️ Brak odpowiedzialności: Nie ponosimy odpowiedzialności za żadne problemy, utratę danych lub uszkodzenia, które mogą wystąpić podczas korzystania z tej aplikacji."</string>
+    <string name="disclaimer_description">"🧩 Wymóg Shizuku: aShell potrzebuje w pełni działającego środowiska Shizuku. Upewnij się, że jest skonfigurowane przed użyciem aplikacji.
+        👨‍💻 Podstawowa wiedza: Znajomość ADB i podstawowych komend Linuksa przyda się do efektywnego korzystania.
+        🌐 Open Source: aShell jest otwarto-źródłowe. Wkład w rozwój i tłumaczenia jest mile widziany poprzez GitLab i POEditor.
+        ⚠️ Brak odpowiedzialności: Nie ponosimy odpowiedzialności za problemy, utratę danych ani uszkodzenia powstałe podczas korzystania z aplikacji."</string>
     <string name="examples_description">"Przeglądaj popularne polecenia ADB"</string>
     <string name="features_description">"✅ Uruchamiaj polecenia ADB z łatwością — zawiera wbudowane przykłady i zakładki.
         ✅ Obsługuje ciągłe polecenia, takie jak logcat lub top, z opcjami wyszukiwania i zapisywania wyników.
@@ -49,18 +49,18 @@
     <string name="granted">"Udzielono"</string>
     <string name="language">"Język"</string>
     <string name="miscellaneous">"Różne"</string>
-    <string name="permissions_shizuku_description">"🔐 moe.shizuku.manager.permission.API_V23: Wymagane uprawnienie do korzystania z uprzywilejowanych interfejsów API Shizuku"</string>
+    <string name="permissions_shizuku_description">"🔐 moe.shizuku.manager.permission.API_V23: Wymagane uprawnienie do korzystania z interfejsu API Shizuku"</string>
     <string name="permissions_storage_description">"📂 WRITE_EXTERNAL_STORAGE: Potrzebne do zapisania wyniku ostatniego polecenia na urządzeniu (opcjonalne)"</string>
     <string name="permissions_title">"Wymagane uprawnienia"</string>
     <string name="privacy_policy">"Polityka prywatności"</string>
-    <string name="privacy_policy_description">"Twoja prywatność jest ważna: Dowiedz się więcej"</string>
+    <string name="privacy_policy_description">"Twoja prywatność ma znaczenie: Dowiedz się więcej"</string>
     <string name="settings">"Ustawienia"</string>
     <string name="shizuku_access_denied_title">"Odmowa dostępu Shizuku dla aShell"</string>
-    <string name="shizuku_access_granted_message">"aShell uzyskał dostęp do usługi Shizuku. Kliknij 'Start', aby kontynuować"</string>
-    <string name="shizuku_learn">"Dowiedz się więcej o shizuku"</string>
-    <string name="shizuku_learn_description">"Dowiedz się więcej o shizuku na: shizuku.rikka.app"</string>
-    <string name="shizuku_unavailable_title">"Brak wsparcia dla Shizuku"</string>
-    <string name="translations">"Tłumaczenia"</string>
-    <string name="translations_description">"Przyczynij się do tłumaczenia aplikacji"</string>
-    <string name="user_interface">"Interfejs użytkownika"</string>
+    <string name="shizuku_access_granted_message">"aShell uzyskało dostęp do Shizuku. Naciśnij \"Start\", aby kontynuować"</string>
+    <string name="shizuku_learn">"Dowiedz się więcej o Shizuku"</string>
+    <string name="shizuku_learn_description">"Dowiedz się więcej o Shizuku na: shizuku.rikka.app"</string>
+    <string name="shizuku_unavailable_title">"Shizuku niedostępne"</string>
+    <string name="translations">"Tłumaczenie"</string>
+    <string name="translations_description">"Pomóż w tłumaczeniu aplikacji"</string>
+    <string name="user_interface">"Interfejs"</string>
 </resources>

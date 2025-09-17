@@ -5,7 +5,7 @@
     <string name="bookmark_added_message">"'%s' yer imlerine eklendi"</string>
     <string name="bookmark_removed_message">"'%s' yer imlerinden çıkarıldı"</string>
     <string name="cancel">"İptal"</string>
-    <string name="clear_all_message">"Ekrandaki herşey silinsin mi?"</string>
+    <string name="clear_all_message">"Ekrandaki her şey silinsin mi?"</string>
     <string name="command_hint">"ADB komutunu buraya girin"</string>
     <string name="command_title">"aShell Komut Kutusu"</string>
     <string name="dismiss">"Görmezden gel"</string>
