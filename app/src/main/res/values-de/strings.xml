@@ -1,0 +1,66 @@
+<resources xmlns:tools="http://schemas.android.com/tools" tools:ignore="MissingTranslation">
+
+    <string name="app_summary">"Führen Sie mühelos ADB-Befehle auf Ihrem Shizuku-fähigen Android-Gerät aus."</string>
+    <string name="app_working_message">"aShell ist noch am arbeiten. Bitte warten oder manuell stoppen (durch Klick auf den Stop-Button), um einen neuen Befehl einzugeben"</string>
+    <string name="bookmark_added_message">"'%s' wurde als Lesezeichen gespeichert"</string>
+    <string name="bookmark_removed_message">"'%s' wurde aus den Lesezeichen entfernt"</string>
+    <string name="cancel">"Abbruch"</string>
+    <string name="clear_all_message">"Den kompletten Verlauf löschen?"</string>
+    <string name="command_hint">"ADB-Befehl hier eingeben"</string>
+    <string name="command_title">"aShell Befehlseingabe"</string>
+    <string name="dismiss">"Verwerfen"</string>
+    <string name="examples">"Beispiele"</string>
+    <string name="press_back">"Drücken Sie erneut auf zurück, um die App zu schließen"</string>
+    <string name="process_destroy_message">"aShell arbeitet noch. Möchten Sie diesen Prozeß beenden?"</string>
+    <string name="quit">"Beenden"</string>
+    <string name="quit_app_message">"Möchten Sie aShell beenden?"</string>
+    <string name="request_permission">"Berechtigung abfragen"</string>
+    <string name="start">"Start"</string>
+    <string name="shell_output_saved_message">"Das Ergebnis der letzten Eingabe wurde in '%s' gesichert."</string>
+    <string name="shizuku_access_denied_message">"Der Zugang zum Shizuku-Service wurde für aShell verweigert. aShell funktioniert nicht ohne eine ordnungsgemäße Shizuku-Umgebung."</string>
+    <string name="shizuku_unavailable_message">"Shizuku ist nicht ordnungsgemäß auf Ihrem Gerät installiert oder nicht ordnungsgemäß konfiguriert. aShell funktioniert nicht ohne eine ordnungsgemäße Shizuku-Umgebung."</string>
+    <string name="su_warning_message">"aShell ist nicht für Root-bezogene Anwendungen konzipiert. Abbruch."</string>
+    <string name="yes">"Ja"</string>
+    <string name="copyright_text">"Urheberrecht: © 2022–2025, sunilpaulmathew"</string>
+    <string name="save">"Speichern"</string>
+    <string name="app_theme">"App-Design"</string>
+    <string name="app_theme_amoled">"Amoled schwarz"</string>
+    <string name="app_theme_amoled_description">"Sparen Sie Batterie und bieten Sie ein elegantes, modernes Aussehen"</string>
+    <string name="app_theme_auto">"Auto"</string>
+    <string name="app_theme_dark">"Dunkel"</string>
+    <string name="app_theme_light">"Licht"</string>
+    <string name="app_version">"eine Shell %s"</string>
+    <string name="authorize_click_message">"Klicken Sie hier, um zu autorisieren"</string>
+    <string name="copy_clipboard">"In die Zwischenablage kopieren"</string>
+    <string name="developer_contact">"Entwickler kontaktieren"</string>
+    <string name="developer_contact_description">"Brauchen Sie Hilfe oder haben Sie Feedback? Kontaktieren Sie den Entwickler"</string>
+    <string name="disclaimer">"Haftungsausschluss"</string>
+    <string name="disclaimer_description">"\uD83E\uDDE9 Shizuku-Abhängigkeit: aShell benötigt eine voll funktionsfähige Shizuku-Umgebung. Bitte stellen Sie sicher, dass Shizuku vor der Nutzung dieser App eingerichtet ist.
+        \uD83D\uDC68\u200D\uD83D\uDCBB Erforderliche Grundkenntnisse: Kenntnisse der ADB- und Linux-Befehlszeilen-Grundlagen werden für eine effektive Nutzung empfohlen.
+        \uD83C\uDF10 Open Source: aShell ist Open Source und kann kostenlos erstellt werden. Beiträge und Übersetzungen sind über GitLab und POEditor willkommen.
+        ⚠️ Keine Haftung: Wir übernehmen keine Haftung für Probleme, Datenverluste oder Schäden, die bei der Nutzung dieser App auftreten können."</string>
+    <string name="examples_description">"Entdecken Sie beliebte ADB-Befehle"</string>
+    <string name="features_description">"\uD83D\uDCDC Einfache Ausführung von ADB-Befehlen – inklusive integrierter Beispiele und Lesezeichen.
+        \uD83D\uDCCA Verarbeitet fortlaufende Befehle wie logcat oder top, mit Such- und Speicheroptionen für die Ausgabe.
+        \uD83C\uDFA8 Elegante Benutzeroberfläche mit automatischer Hell-Dunkel-Konvertierung für ein reibungsloses, modernes Erlebnis."</string>
+    <string name="features_title">"Merkmale"</string>
+    <string name="file_manager_error_toast">"Daten konnten nicht vom externen Dateimanager abgerufen werden. Abbruch."</string>
+    <string name="general">"Allgemein"</string>
+    <string name="granted">"Gewährt"</string>
+    <string name="language">"Sprache"</string>
+    <string name="miscellaneous">"Verschiedenes"</string>
+    <string name="permissions_shizuku_description">"🔐 moe.shizuku.manager.permission.API_V23: Für die Verwendung der privilegierten APIs von Shizuku ist eine Berechtigung erforderlich"</string>
+    <string name="permissions_storage_description">"📂 WRITE_EXTERNAL_STORAGE: Wird benötigt, um die letzte Befehlsausgabe auf Ihrem Gerät zu speichern (optional)"</string>
+    <string name="permissions_title">"Erforderliche Berechtigungen"</string>
+    <string name="privacy_policy">"Datenschutzrichtlinie"</string>
+    <string name="privacy_policy_description">"Ihre Privatsphäre ist wichtig: Erfahren Sie mehr"</string>
+    <string name="settings">"Einstellungen"</string>
+    <string name="shizuku_access_denied_title">"Shizuku-Zugriff für aShell verweigert"</string>
+    <string name="shizuku_access_granted_message">"aShell hat Zugriff auf den Shizuku-Dienst. Klicken Sie auf „Start“, um fortzufahren"</string>
+    <string name="shizuku_learn">"Shizuku lernen"</string>
+    <string name="shizuku_learn_description">"Erfahren Sie mehr über Shizuku unter: shizuku.rikka.app"</string>
+    <string name="shizuku_unavailable_title">"Shizuku-Support nicht gefunden"</string>
+    <string name="translations">"Übersetzungen"</string>
+    <string name="translations_description">"Tragen Sie zur Übersetzung der App bei"</string>
+    <string name="user_interface">"Benutzeroberfläche"</string>
+</resources>

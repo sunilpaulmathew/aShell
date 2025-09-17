@@ -1,0 +1,66 @@
+<resources xmlns:tools="http://schemas.android.com/tools" tools:ignore="MissingTranslation">
+
+    <string name="app_summary">"Führen Sie mühelos ADB-Befehle auf Ihrem Shizuku-fähigen Android-Gerät aus."</string>
+    <string name="app_working_message">"aShell arbeitet noch. Bitte warten Sie, bis es fertig ist, oder beenden Sie es manuell (durch Klicken auf die Stopp-Schaltfläche), um einen neuen Befehl auszuführen"</string>
+    <string name="bookmark_added_message">"„%s“ ist mit einem Lesezeichen versehen"</string>
+    <string name="bookmark_removed_message">"„%s“ wurde aus dem Lesezeichen entfernt"</string>
+    <string name="cancel">"Stornieren"</string>
+    <string name="clear_all_message">"Alles auf diesem Bildschirm löschen?"</string>
+    <string name="command_hint">"Geben Sie hier den ADB-Befehl ein"</string>
+    <string name="command_title">"aShell-Befehlsfeld"</string>
+    <string name="dismiss">"Zurückweisen"</string>
+    <string name="examples">"Beispiele"</string>
+    <string name="press_back">"Drücken Sie erneut „Zurück“, um den Vorgang zu beenden"</string>
+    <string name="process_destroy_message">"aShell arbeitet noch. Möchten Sie den aktuellen Prozess stoppen?"</string>
+    <string name="quit">"Aufhören"</string>
+    <string name="quit_app_message">"Möchten Sie aShell beenden?"</string>
+    <string name="request_permission">"Erlaubnis anfordern"</string>
+    <string name="start">"Start"</string>
+    <string name="shell_output_saved_message">"Die Ausgabe des letzten Befehls wird in den Ordner „%s“ exportiert"</string>
+    <string name="shizuku_access_denied_message">"Der Zugriff auf den Shizuku-Dienst wird für aShell verweigert. aShell funktioniert ohne eine geeignete Shizuku-Umgebung nicht."</string>
+    <string name="shizuku_unavailable_message">"Shizuku ist auf Ihrem Gerät nicht installiert oder nicht richtig konfiguriert. aShell funktioniert ohne eine geeignete Shizuku-Umgebung nicht."</string>
+    <string name="su_warning_message">"aShell ist nicht für Root-bezogene Anwendungen konzipiert. Abbruch."</string>
+    <string name="yes">"Ja"</string>
+    <string name="copyright_text">"Urheberrecht: © 2022–2025, sunilpaulmathew"</string>
+    <string name="save">"Speichern"</string>
+    <string name="app_theme">"App-Design"</string>
+    <string name="app_theme_amoled">"Amoled schwarz"</string>
+    <string name="app_theme_amoled_description">"Sparen Sie Batterie und bieten Sie ein elegantes, modernes Aussehen"</string>
+    <string name="app_theme_auto">"Auto"</string>
+    <string name="app_theme_dark">"Dunkel"</string>
+    <string name="app_theme_light">"Licht"</string>
+    <string name="app_version">"eine Shell %s"</string>
+    <string name="authorize_click_message">"Klicken Sie hier, um zu autorisieren"</string>
+    <string name="copy_clipboard">"In die Zwischenablage kopieren"</string>
+    <string name="developer_contact">"Entwickler kontaktieren"</string>
+    <string name="developer_contact_description">"Benötigen Sie Hilfe oder haben Sie Feedback? Kontaktieren Sie den Entwickler"</string>
+    <string name="disclaimer">"Haftungsausschluss"</string>
+    <string name="disclaimer_description">"\uD83E\uDDE9 Shizuku-Abhängigkeit: aShell benötigt eine voll funktionsfähige Shizuku-Umgebung. Bitte stellen Sie sicher, dass Shizuku vor der Verwendung dieser App eingerichtet ist.
+        \uD83D\uDC68\u200D\uD83D\uDCBB Erforderliche Grundkenntnisse: Für eine effektive Nutzung werden Kenntnisse der ADB- und Linux-Befehlszeilen-Grundlagen empfohlen.
+        \uD83C\uDF10 Open Source: aShell ist Open Source und kann kostenlos erstellt werden. Beiträge und Übersetzungen sind über GitLab und POEditor willkommen.
+        ⚠️ Keine Haftung: Wir haften nicht für Probleme, Datenverluste oder Schäden, die bei der Nutzung dieser App auftreten können."</string>
+    <string name="examples_description">"Entdecken Sie beliebte ADB-Befehle"</string>
+    <string name="features_description">"\uD83D\uDCDC Einfaches Ausführen von ADB-Befehlen – inklusive integrierter Beispiele und Lesezeichen.
+        \uD83D\uDCCA Verarbeitet fortlaufende Befehle wie logcat oder top, mit Such- und Speicheroptionen für die Ausgabe.
+        \uD83C\uDFA8 Elegante Benutzeroberfläche mit automatischer Hell-Dunkel-Konvertierung für ein reibungsloses, modernes Erlebnis."</string>
+    <string name="features_title">"Merkmale"</string>
+    <string name="file_manager_error_toast">"Daten konnten nicht vom externen Dateimanager abgerufen werden. Abbruch."</string>
+    <string name="general">"Allgemein"</string>
+    <string name="granted">"Gewährt"</string>
+    <string name="language">"Sprache"</string>
+    <string name="miscellaneous">"Verschiedenes"</string>
+    <string name="permissions_shizuku_description">"🔐 moe.shizuku.manager.permission.API_V23: Für die Verwendung der privilegierten APIs von Shizuku ist eine Berechtigung erforderlich"</string>
+    <string name="permissions_storage_description">"📂 WRITE_EXTERNAL_STORAGE: Erforderlich, um die letzte Befehlsausgabe auf Ihrem Gerät zu speichern (optional)"</string>
+    <string name="permissions_title">"Erforderliche Berechtigungen"</string>
+    <string name="privacy_policy">"Datenschutzrichtlinie"</string>
+    <string name="privacy_policy_description">"Ihre Privatsphäre ist wichtig: Erfahren Sie mehr"</string>
+    <string name="settings">"Einstellungen"</string>
+    <string name="shizuku_access_denied_title">"Shizuku-Zugriff für aShell verweigert"</string>
+    <string name="shizuku_access_granted_message">"aShell hat Zugriff auf den Shizuku-Dienst. Klicken Sie auf „Start“, um fortzufahren"</string>
+    <string name="shizuku_learn">"Shizuku lernen"</string>
+    <string name="shizuku_learn_description">"Erfahren Sie mehr über Shizuku unter: shizuku.rikka.app"</string>
+    <string name="shizuku_unavailable_title">"Shizuku-Support nicht gefunden"</string>
+    <string name="translations">"Übersetzungen"</string>
+    <string name="translations_description">"Tragen Sie zur Übersetzung der App bei"</string>
+    <string name="user_interface">"Benutzeroberfläche"</string>
+</resources>
