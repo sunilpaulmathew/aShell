@@ -1,68 +1,106 @@
 package in.sunilpaulmathew.ashell.utils;
 
-import java.io.BufferedReader;
-import java.io.InputStreamReader;
+import android.content.ComponentName;
+import android.content.ServiceConnection;
+import android.os.IBinder;
+import android.os.RemoteException;
+
 import java.util.List;
 
+import in.sunilpaulmathew.ashell.BuildConfig;
+import in.sunilpaulmathew.ashell.services.ShellService;
 import rikka.shizuku.Shizuku;
-import rikka.shizuku.ShizukuRemoteProcess;
+import sunilpaulmathew.ashell.IShellCallback;
+import sunilpaulmathew.ashell.IShellService;
 
 /*
  * Created by sunilpaulmathew <sunil.kde@gmail.com> on November 12, 2022
  */
 public class ShizukuShell {
 
+    public enum ShellStatus {
+        IDLE,
+        RUNNING
+    }
+
+    private static IShellService mShellService;
     private static List<String> mOutput;
-    private static ShizukuRemoteProcess mProcess = null;
     private static String mCommand;
-    private static String mDir = "/";
+    private volatile ShellStatus mCurrentStatus = ShellStatus.IDLE;
 
     public ShizukuShell(List<String> output, String command) {
         mOutput = output;
         mCommand = command;
     }
 
-    public boolean isBusy() {
-        return mOutput != null && !mOutput.isEmpty() && !mOutput.get(mOutput.size() - 1).equals("aShell: Finish");
+    public void ensureUserService() {
+        if (mShellService != null) {
+            return;
+        }
+
+        Shizuku.UserServiceArgs mUserServiceArgs = new Shizuku.UserServiceArgs(
+                new ComponentName(BuildConfig.APPLICATION_ID, ShellService.class.getName()))
+                .daemon(false)
+                .processNameSuffix("shizuku_shell")
+                .debuggable(BuildConfig.DEBUG)
+                .version(BuildConfig.VERSION_CODE);
+
+        Shizuku.bindUserService(mUserServiceArgs, mServiceConnection);
     }
 
-    public void exec() {
+    public boolean isBusy() {
+        return mShellService != null && mCurrentStatus == ShellStatus.RUNNING;
+    }
+
+    public ShellStatus getCurrentStatus() {
+        return mCurrentStatus;
+    }
+
+    private final ServiceConnection mServiceConnection = new ServiceConnection() {
+
+        @Override
+        public void onServiceConnected(ComponentName componentName, IBinder iBinder) {
+            if (iBinder == null || !iBinder.pingBinder()) {
+                return;
+            }
+
+            mShellService = IShellService.Stub.asInterface(iBinder);
+        }
+
+        @Override
+        public void onServiceDisconnected(ComponentName componentName) {
+        }
+    };
+
+    public void destroy() {
         try {
-            mProcess = Shizuku.newProcess(new String[] {"sh", "-c", mCommand}, null, mDir);
-            BufferedReader mInput = new BufferedReader(new InputStreamReader(mProcess.getInputStream()));
-            BufferedReader mError = new BufferedReader(new InputStreamReader(mProcess.getErrorStream()));
-            String line;
-            while ((line = mInput.readLine()) != null) {
-                mOutput.add(line);
-            }
-            while ((line = mError.readLine()) != null) {
-                mOutput.add("<font color=#FF0000>" + line + "</font>");
-            }
-
-            // Handle current directory
-            if (mCommand.startsWith("cd ") && !mOutput.get(mOutput.size() - 1).endsWith("</font>")) {
-                String[] array = mCommand.split("\\s+");
-                String dir;
-                if (array[array.length - 1].equals("/")) {
-                    dir = "/";
-                } else if (array[array.length - 1].startsWith("/")) {
-                    dir = array[array.length - 1];
-                } else {
-                    dir = mDir + array[array.length - 1];
-                }
-                if (!dir.endsWith("/")) {
-                    dir = dir + "/";
-                }
-                mDir = dir;
-            }
-
-            mProcess.waitFor();
-        } catch (Exception ignored) {
+            mShellService.destroyProcess();
+        } catch (RemoteException ignored) {
         }
     }
 
-    public void destroy() {
-        if (mProcess != null) mProcess.destroy();
+    public void exec() {
+        if (mShellService == null) {
+            ensureUserService();
+            return;
+        }
+
+        mCurrentStatus = ShellStatus.RUNNING;
+
+        try {
+            mShellService.runCommand(mCommand, new IShellCallback.Stub() {
+                @Override
+                public void onLine(String line) {
+                    mOutput.add(line);
+                }
+
+                @Override
+                public void onFinished(int exitCode) {
+                    mCurrentStatus = ShellStatus.IDLE;
+                }
+            });
+        } catch (RemoteException ignored) {
+        }
     }
 
 }

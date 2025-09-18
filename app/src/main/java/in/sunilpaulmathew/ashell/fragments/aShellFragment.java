@@ -1,5 +1,7 @@
 package in.sunilpaulmathew.ashell.fragments;
 
+import static android.view.View.GONE;
+
 import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.content.ContentValues;
@@ -41,13 +43,14 @@ import java.io.IOException;
 import java.io.OutputStream;
 import java.util.ArrayList;
 import java.util.Collections;
-import java.util.ConcurrentModificationException;
 import java.util.List;
 import java.util.Objects;
+import java.util.concurrent.CopyOnWriteArrayList;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 import java.util.concurrent.ScheduledExecutorService;
 import java.util.concurrent.TimeUnit;
+import java.util.concurrent.atomic.AtomicInteger;
 
 import in.sunilpaulmathew.ashell.BuildConfig;
 import in.sunilpaulmathew.ashell.R;
@@ -120,6 +123,10 @@ public class aShellFragment extends Fragment {
             mBookMark.setOnClickListener(v -> bookMark(mCommandShared));
         }
 
+        if (Shizuku.pingBinder() && Shizuku.getVersion() >= 11 && !Shizuku.isPreV11() && Shizuku.checkSelfPermission() == PackageManager.PERMISSION_GRANTED) {
+            new ShizukuShell(mResult, null).ensureUserService();
+        }
+
         mBookMarksButton.setEnabled(!Utils.getBookmarks(requireActivity()).isEmpty());
 
         mCommand.addTextChangedListener(new TextWatcher() {
@@ -169,7 +176,7 @@ public class aShellFragment extends Fragment {
                                 mCommandsAdapter.setOnItemClickListener((command, v) -> {
                                     mCommand.setText(splitCommands[0].contains(" ") ? splitPrefix(splitCommands[0], 0) + " " + command : command);
                                     mCommand.setSelection(mCommand.getText().length());
-                                    mRecyclerViewCommands.setVisibility(View.GONE);
+                                    mRecyclerViewCommands.setVisibility(GONE);
                                 });
                             } else {
                                 mCommandsAdapter = new CommandsAdapter(Commands.getCommand(s.toString()));
@@ -187,10 +194,10 @@ public class aShellFragment extends Fragment {
                             }
                         });
                     } else {
-                        mBookMark.setVisibility(View.GONE);
-                        mRecyclerViewCommands.setVisibility(View.GONE);
                         mSendButton.setImageDrawable(Utils.getDrawable(R.drawable.ic_help, requireActivity()));
                         mSendButton.setColorFilter(Settings.getColorAccent(requireActivity()));
+                        mBookMark.setVisibility(GONE);
+                        mRecyclerViewCommands.setVisibility(GONE);
                     }
                 }
             }
@@ -199,8 +206,6 @@ public class aShellFragment extends Fragment {
         mSendCard.setOnClickListener(v -> {
             if (mShizukuShell != null && mShizukuShell.isBusy()) {
                 mShizukuShell.destroy();
-                mSendButton.setImageDrawable(Utils.getDrawable(R.drawable.ic_help, requireActivity()));
-                mSendButton.setColorFilter(Settings.getColorAccent(requireActivity()));
             } else if (mCommand.getText() == null || mCommand.getText().toString().trim().isEmpty()) {
                 Intent examples = new Intent(requireActivity(), ExamplesActivity.class);
                 startActivity(examples);
@@ -229,8 +234,7 @@ public class aShellFragment extends Fragment {
             if (Utils.getBoolean("clearAllMessage", true, requireActivity())) {
                 new MaterialAlertDialogBuilder(requireActivity())
                         .setIcon(R.mipmap.ic_launcher)
-                        .setTitle(getString(R.string.app_name))
-                        .setMessage(getString(R.string.clear_all_message))
+                        .setTitle(getString(R.string.clear_all_message))
                         .setNegativeButton(getString(R.string.cancel), (dialogInterface, i) -> {
                         })
                         .setPositiveButton(getString(R.string.yes), (dialogInterface, i) -> {
@@ -243,12 +247,12 @@ public class aShellFragment extends Fragment {
         });
 
         mSearchButton.setOnClickListener(v -> {
-            mHistoryButton.setVisibility(View.GONE);
-            mClearButton.setVisibility(View.GONE);
-            mBookMarksButton.setVisibility(View.GONE);
-            mInfoButton.setVisibility(View.GONE);
-            mSettingsButton.setVisibility(View.GONE);
-            mSearchButton.setVisibility(View.GONE);
+            mHistoryButton.setVisibility(GONE);
+            mClearButton.setVisibility(GONE);
+            mBookMarksButton.setVisibility(GONE);
+            mInfoButton.setVisibility(GONE);
+            mSettingsButton.setVisibility(GONE);
+            mSearchButton.setVisibility(GONE);
             mSearchWord.setVisibility(View.VISIBLE);
             mSearchWord.requestFocus();
             mCommand.setText(null);
@@ -267,7 +271,7 @@ public class aShellFragment extends Fragment {
                 if (s == null || s.toString().trim().isEmpty()) {
                     updateUI(mResult);
                 } else {
-                    List<String> mResultSorted = new ArrayList<>();
+                    List<String> mResultSorted = new CopyOnWriteArrayList<>();
                     for (int i = mPosition; i < mResult.size(); i++) {
                         if (mResult.get(i).toLowerCase().contains(s.toString().toLowerCase())) {
                             mResultSorted.add(mResult.get(i));
@@ -339,8 +343,7 @@ public class aShellFragment extends Fragment {
             }
             new MaterialAlertDialogBuilder(requireActivity())
                     .setIcon(R.mipmap.ic_launcher)
-                    .setTitle(getString(R.string.app_name))
-                    .setMessage(getString(R.string.shell_output_saved_message, Environment.DIRECTORY_DOWNLOADS))
+                    .setTitle(getString(R.string.shell_output_saved_message, Environment.DIRECTORY_DOWNLOADS))
                     .setPositiveButton(getString(R.string.cancel), (dialogInterface, i) -> {
                     }).show();
         });
@@ -351,9 +354,11 @@ public class aShellFragment extends Fragment {
                 mRecyclerViewOutput.getAdapter()).getItemCount() - 1));
 
         ScheduledExecutorService executor = Executors.newSingleThreadScheduledExecutor();
-        executor.scheduleAtFixedRate(() -> {
-            if (mResult != null && !mResult.isEmpty() && !mResult.get(mResult.size() - 1).equals("aShell: Finish")) {
-                updateUI(mResult);
+        AtomicInteger lastShownSize = new AtomicInteger(0);
+        executor.scheduleWithFixedDelay(() -> {
+            if (mResult != null && mResult.size() != lastShownSize.get()) {
+                lastShownSize.set(mResult.size());
+                new Handler(Looper.getMainLooper()).post(() -> updateUI(mResult));
             }
         }, 0, 250, TimeUnit.MILLISECONDS);
 
@@ -366,7 +371,6 @@ public class aShellFragment extends Fragment {
                     new MaterialAlertDialogBuilder(requireActivity())
                             .setCancelable(false)
                             .setIcon(R.mipmap.ic_launcher)
-                            .setTitle(getString(R.string.app_name))
                             .setMessage(getString(R.string.process_destroy_message))
                             .setNegativeButton(getString(R.string.cancel), (dialogInterface, i) -> {
                             })
@@ -403,19 +407,6 @@ public class aShellFragment extends Fragment {
         return splitPrefix[i].trim();
     }
 
-    private void clearAll() {
-        if (mShizukuShell != null) mShizukuShell.destroy();
-        mResult = null;
-        mRecyclerViewOutput.setAdapter(null);
-        mSearchButton.setEnabled(false);
-        mSaveButton.setVisibility(View.GONE);
-        mClearButton.setEnabled(false);
-        mCommand.setHint(getString(R.string.command_hint));
-        mTopArrow.setVisibility(View.GONE);
-        mBottomArrow.setVisibility(View.GONE);
-        if (!mCommand.isFocused()) mCommand.requestFocus();
-    }
-
     private void bookMark(String string) {
         if (Utils.isBookmarked(string, requireActivity())) {
             Utils.deleteFromBookmark(string, requireActivity());
@@ -428,9 +419,21 @@ public class aShellFragment extends Fragment {
         mBookMarksButton.setEnabled(!Utils.getBookmarks(requireActivity()).isEmpty());
     }
 
+    private void clearAll() {
+        mResult.clear();
+        mRecyclerViewOutput.setAdapter(null);
+        mSearchButton.setEnabled(false);
+        mSaveButton.setVisibility(GONE);
+        mClearButton.setEnabled(false);
+        mCommand.setHint(getString(R.string.command_hint));
+        mTopArrow.setVisibility(GONE);
+        mBottomArrow.setVisibility(GONE);
+        if (!mCommand.isFocused()) mCommand.requestFocus();
+    }
+
     private void hideSearchBar() {
         mSearchWord.setText(null);
-        mSearchWord.setVisibility(View.GONE);
+        mSearchWord.setVisibility(GONE);
         if (!mCommand.isFocused()) mCommand.requestFocus();
         mBookMarksButton.setVisibility(View.VISIBLE);
         mInfoButton.setVisibility(View.VISIBLE);
@@ -476,12 +479,12 @@ public class aShellFragment extends Fragment {
         mCommand.clearFocus();
         if (mSearchWord.getVisibility() == View.VISIBLE) {
             mSearchWord.setText(null);
-            mSearchWord.setVisibility(View.GONE);
+            mSearchWord.setVisibility(GONE);
         }
 
         if (mTopArrow.getVisibility() == View.VISIBLE) {
-            mTopArrow.setVisibility(View.GONE);
-            mBottomArrow.setVisibility(View.GONE);
+            mTopArrow.setVisibility(GONE);
+            mBottomArrow.setVisibility(GONE);
         }
 
         String finalCommand;
@@ -504,8 +507,7 @@ public class aShellFragment extends Fragment {
             new MaterialAlertDialogBuilder(activity)
                     .setCancelable(false)
                     .setIcon(R.mipmap.ic_launcher)
-                    .setTitle(getString(R.string.app_name))
-                    .setMessage(getString(R.string.quit_app_message))
+                    .setTitle(getString(R.string.quit_app_message))
                     .setNegativeButton(getString(R.string.cancel), (dialogInterface, i) -> {
                     })
                     .setPositiveButton(getString(R.string.quit), (dialogInterface, i) -> activity.finish()).show();
@@ -522,9 +524,7 @@ public class aShellFragment extends Fragment {
         }
         mHistory.add(finalCommand);
 
-        mSaveButton.setVisibility(View.GONE);
-        mSendButton.setImageDrawable(Utils.getDrawable(R.drawable.ic_stop, requireActivity()));
-        mSendButton.setColorFilter(Utils.getColor(R.color.colorRed, requireActivity()));
+        mSaveButton.setVisibility(GONE);
 
         mHistoryButton.setEnabled(false);
         mBookMarksButton.setEnabled(false);
@@ -536,84 +536,90 @@ public class aShellFragment extends Fragment {
         String mTitleText = "<font color=\"" + Settings.getColorAccent(activity) + "\">shell@" + Utils.getDeviceName() + "</font># <i>" + finalCommand + "</i>";
 
         if (mResult == null) {
-            mResult = new ArrayList<>();
+            mResult = new CopyOnWriteArrayList<>();
         }
         mResult.add(mTitleText);
 
-        ExecutorService mExecutors = Executors.newSingleThreadExecutor();
-        mExecutors.execute(() -> {
-            mPermissionGranted = Shizuku.checkSelfPermission() == PackageManager.PERMISSION_GRANTED;
-            if (mPermissionGranted) {
-                mPosition = mResult.size();
-                mShizukuShell = new ShizukuShell(mResult, finalCommand);
-                mShizukuShell.exec();
-                try {
-                    TimeUnit.MILLISECONDS.sleep(250);
-                } catch (InterruptedException ignored) {}
-            }
-            new Handler(Looper.getMainLooper()).post(() -> {
+        try (ExecutorService mExecutors = Executors.newSingleThreadExecutor()) {
+            mExecutors.execute(() -> {
+                mPermissionGranted = Shizuku.checkSelfPermission() == PackageManager.PERMISSION_GRANTED;
                 if (mPermissionGranted) {
-                    if (mHistory != null && !mHistory.isEmpty() && !mHistoryButton.isEnabled()) {
-                        mHistoryButton.setEnabled(true);
+                    mPosition = mResult.size();
+                    mShizukuShell = new ShizukuShell(mResult, finalCommand);
+                    mShizukuShell.exec();
+                    try {
+                        TimeUnit.MILLISECONDS.sleep(250);
+                    } catch (InterruptedException ignored) {
                     }
-                    mInfoButton.setEnabled(true);
-                    mSettingsButton.setEnabled(true);
-                    mBookMarksButton.setEnabled(!Utils.getBookmarks(requireActivity()).isEmpty());
-                    if (mResult != null && !mResult.isEmpty()) {
-                        mClearButton.setEnabled(true);
-                        mSaveButton.setVisibility(View.VISIBLE);
-                        mSearchButton.setEnabled(true);
-                        if (mResult.size() > 25) {
-                            mTopArrow.setVisibility(View.VISIBLE);
-                            mBottomArrow.setVisibility(View.VISIBLE);
+                }
+                new Handler(Looper.getMainLooper()).post(() -> {
+                    if (mPermissionGranted) {
+                        if (mHistory != null && !mHistory.isEmpty() && !mHistoryButton.isEnabled()) {
+                            mHistoryButton.setEnabled(true);
                         }
-                        mResult.add("<i></i>");
-                        mResult.add("aShell: Finish");
+                        mInfoButton.setEnabled(true);
+                        mSettingsButton.setEnabled(true);
+                        mBookMarksButton.setEnabled(!Utils.getBookmarks(requireActivity()).isEmpty());
+                        if (mResult != null && !mResult.isEmpty()) {
+                            mClearButton.setEnabled(true);
+                            mSaveButton.setVisibility(View.VISIBLE);
+                            mSearchButton.setEnabled(true);
+                            if (mResult.size() > 25) {
+                                mTopArrow.setVisibility(View.VISIBLE);
+                                mBottomArrow.setVisibility(View.VISIBLE);
+                            }
+                            mResult.add("<i></i>");
+                        }
+                    } else {
+                        new MaterialAlertDialogBuilder(activity)
+                                .setCancelable(false)
+                                .setIcon(R.mipmap.ic_launcher)
+                                .setTitle(getString(R.string.shizuku_access_denied_title))
+                                .setMessage(getString(R.string.shizuku_access_denied_message))
+                                .setNeutralButton(getString(R.string.quit), (dialogInterface, i) -> activity.finish())
+                                .setPositiveButton(getString(R.string.request_permission), (dialogInterface, i) -> Shizuku.requestPermission(0)
+                                ).show();
                     }
-                } else {
-                    new MaterialAlertDialogBuilder(activity)
-                            .setCancelable(false)
-                            .setIcon(R.mipmap.ic_launcher)
-                            .setTitle(getString(R.string.shizuku_access_denied_title))
-                            .setMessage(getString(R.string.shizuku_access_denied_message))
-                            .setNeutralButton(getString(R.string.quit), (dialogInterface, i) -> activity.finish())
-                            .setPositiveButton(getString(R.string.request_permission), (dialogInterface, i) -> Shizuku.requestPermission(0)
-                            ).show();
-                }
-                if (mCommand.getText() == null || mCommand.getText().toString().trim().isEmpty()) {
-                    mSendButton.setImageDrawable(Utils.getDrawable(R.drawable.ic_help, requireActivity()));
-                    mSendButton.setColorFilter(Settings.getColorAccent(requireActivity()));
-                } else {
-                    mSendButton.setImageDrawable(Utils.getDrawable(R.drawable.ic_send, requireActivity()));
-                    mSendButton.setColorFilter(Utils.getColor(R.color.colorWhite, requireActivity()));
-                }
-                activity.setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_UNSPECIFIED);
-                if (!mCommand.isFocused()) mCommand.requestFocus();
+                    activity.setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_UNSPECIFIED);
+                    if (!mCommand.isFocused()) mCommand.requestFocus();
+                });
+                if (!mExecutors.isShutdown()) mExecutors.shutdown();
             });
-            if (!mExecutors.isShutdown()) mExecutors.shutdown();
-        });
+        }
     }
 
     private void updateUI(List<String> data) {
         if (data == null || data.isEmpty()) return;
-        List<String> mData = new ArrayList<>();
-        try {
-            for (String result : data) {
-                if (!result.trim().isEmpty() && !result.equals("aShell: Finish")) {
-                    mData.add(result);
-                }
-            }
-        } catch (ConcurrentModificationException ignored) {
-        }
-        ExecutorService mExecutors = Executors.newSingleThreadExecutor();
-        mExecutors.execute(() -> {
-            ShellOutputAdapter mShellOutputAdapter = new ShellOutputAdapter(mData);
-            new Handler(Looper.getMainLooper()).post(() -> {
-                mRecyclerViewOutput.setAdapter(mShellOutputAdapter);
-                mRecyclerViewOutput.scrollToPosition(mData.size() - 1);
+
+        try (ExecutorService mExecutors = Executors.newSingleThreadExecutor()) {
+            mExecutors.execute(() -> {
+                ShellOutputAdapter mShellOutputAdapter = new ShellOutputAdapter(mResult);
+                new Handler(Looper.getMainLooper()).post(() -> {
+                    mRecyclerViewOutput.setAdapter(mShellOutputAdapter);
+                    mRecyclerViewOutput.scrollToPosition(mResult.size() - 1);
+
+                    if (mShizukuShell != null) {
+                        ShizukuShell.ShellStatus status = mShizukuShell.getCurrentStatus();
+                        switch (status) {
+                            case IDLE:
+                                if (mCommand.getText() == null || mCommand.getText().toString().trim().isEmpty()) {
+                                    mSendButton.setImageDrawable(Utils.getDrawable(R.drawable.ic_help, requireActivity()));
+                                    mSendButton.setColorFilter(Settings.getColorAccent(requireActivity()));
+                                } else {
+                                    mSendButton.setImageDrawable(Utils.getDrawable(R.drawable.ic_send, requireActivity()));
+                                    mSendButton.setColorFilter(Utils.getColor(R.color.colorWhite, requireActivity()));
+                                }
+                                break;
+                            case RUNNING:
+                                mSendButton.setImageDrawable(Utils.getDrawable(R.drawable.ic_stop, requireActivity()));
+                                mSendButton.setColorFilter(Utils.getColor(R.color.colorRed, requireActivity()));
+                                break;
+                        }
+                    }
+                });
+                if (!mExecutors.isShutdown()) mExecutors.shutdown();
             });
-            if (!mExecutors.isShutdown()) mExecutors.shutdown();
-        });
+        }
     }
 
     @Override
