@@ -49,7 +49,7 @@ public class Settings {
         if (DynamicColors.isDynamicColorAvailable()) {
             Context dynamicClrCtx = DynamicColors.wrapContextIfAvailable(context, com.google.android.material.R.style.MaterialAlertDialog_Material3);
             TypedArray ta = dynamicClrCtx.obtainStyledAttributes(new int[] {
-                    com.google.android.material.R.attr.colorPrimary
+                    androidx.appcompat.R.attr.colorPrimary
             });
             color = ta.getColor(0, defaultColor);
             ta.recycle();
