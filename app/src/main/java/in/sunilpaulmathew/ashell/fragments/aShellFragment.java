@@ -595,8 +595,10 @@ public class aShellFragment extends Fragment {
             mExecutors.execute(() -> {
                 ShellOutputAdapter mShellOutputAdapter = new ShellOutputAdapter(mResult);
                 new Handler(Looper.getMainLooper()).post(() -> {
-                    mRecyclerViewOutput.setAdapter(mShellOutputAdapter);
-                    mRecyclerViewOutput.scrollToPosition(mResult.size() - 1);
+                    if (isAdded()) {
+                        mRecyclerViewOutput.setAdapter(mShellOutputAdapter);
+                        mRecyclerViewOutput.scrollToPosition(mResult.size() - 1);
+                    }
 
                     if (mShizukuShell != null) {
                         ShizukuShell.ShellStatus status = mShizukuShell.getCurrentStatus();
