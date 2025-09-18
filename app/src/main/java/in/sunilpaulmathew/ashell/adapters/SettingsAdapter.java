@@ -115,7 +115,7 @@ public class SettingsAdapter extends RecyclerView.Adapter<SettingsAdapter.ViewHo
         @SuppressLint("StringFormatMatches")
         @Override
         public void onClick(View view) {
-            int position = data.get(getAdapterPosition()).getPosition();
+            int position = data.get(getBindingAdapterPosition()).getPosition();
             if (position == 1) {
                 Settings.setAppTheme(view.getContext());
             } else if (position == 2) {

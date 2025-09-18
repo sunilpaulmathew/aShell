@@ -80,7 +80,7 @@ public class WelcomeAdapter extends RecyclerView.Adapter<WelcomeAdapter.ViewHold
 
         @Override
         public void onClick(View view) {
-            if (getAdapterPosition() == 1 && Shizuku.pingBinder() && Shizuku.checkSelfPermission() != PackageManager.PERMISSION_GRANTED) {
+            if (getBindingAdapterPosition() == 1 && Shizuku.pingBinder() && Shizuku.checkSelfPermission() != PackageManager.PERMISSION_GRANTED) {
                 mClickListener.onItemClick();
             } else {
                 if (mText.getMaxLines() == 1) {
