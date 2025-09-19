@@ -41,7 +41,11 @@ public class ShellService extends IShellService.Stub {
                 String line;
                 boolean hasError = false;
                 while ((line = reader.readLine()) != null) {
-                    callback.onLine(line);
+                    if (command.startsWith("logcat")) {
+                        callback.onLine(getLogcatLines(line));
+                    } else {
+                        callback.onLine(line);
+                    }
                 }
 
                 while ((line = error.readLine()) != null) {
@@ -63,6 +67,29 @@ public class ShellService extends IShellService.Stub {
                 } catch (RemoteException ignored) {}
             }
         }).start();
+    }
+
+    private static String getLogcatLines(String outputLine) {
+        if (outputLine == null) return "";
+
+        // Escape HTML special characters
+        String safe = outputLine.replace("&", "&amp;")
+                .replace("<", "&lt;")
+                .replace(">", "&gt;");
+
+        if (safe.contains(" E ")) {
+            return "<font color='#F44336'>" + safe + "</font>";
+        } else if (safe.contains(" W ")) {
+            return "<font color='#FF9800'>" + safe + "</font>";
+        } else if (safe.contains(" I ")) {
+            return "<font color='#2196F3'>" + safe + "</font>";
+        } else if (safe.contains(" D ")) {
+            return "<font color='#9E9E9E'>" + safe + "</font>";
+        } else if (safe.contains(" V ")) {
+            return "<font color='#BDBDBD'>" + safe + "</font>";
+        } else {
+            return safe; // fallback: use default TextView color
+        }
     }
 
     private static String getDir(String command) {

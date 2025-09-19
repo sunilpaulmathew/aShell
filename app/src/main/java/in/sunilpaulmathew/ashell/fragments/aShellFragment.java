@@ -485,11 +485,11 @@ public class aShellFragment extends Fragment {
 
         String finalCommand;
         if (command.startsWith("adb shell ")) {
-            finalCommand = command.replace("adb shell ", "");
+            finalCommand = command.replace("adb shell ", "").trim();
         } else if (command.startsWith("adb -d shell ")) {
-            finalCommand = command.replace("adb -d shell ", "");
+            finalCommand = command.replace("adb -d shell ", "").trim();
         } else {
-            finalCommand = command;
+            finalCommand = command.trim();
         }
 
         if (finalCommand.equals("clear")) {
