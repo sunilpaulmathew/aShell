@@ -1,0 +1,9 @@
+* Switched to a new background service for shell commands (Shizuku userservice).
+* Improved the main UI for a smoother experience.
+* Now shows enhanced output for commands like logcat.
+* Fixed occasional crashes in some screens.
+* Added German (Germany & Belgium), Vietnamese, and Turkish translations.
+* General fixes to improve app stability.
+* Updated build tools and app dependencies.
+* Improved background workflows in the app..
+* Miscellaneous changes.

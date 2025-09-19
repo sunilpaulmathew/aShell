@@ -1,3 +1,0 @@
-* Added French, Polish, and Arabic translations
-* Updated build tools (now targets SDK 35).
-* Miscellaneous changes.
