@@ -1,8 +1,8 @@
-<RelativeLayout
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
+<androidx.coordinatorlayout.widget.CoordinatorLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto" >
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_height="match_parent"
+    android:layout_width="match_parent" >
 
     <androidx.appcompat.widget.LinearLayoutCompat
         android:layout_width="match_parent"
@@ -123,7 +123,7 @@
             <com.google.android.material.textfield.TextInputLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+                style="@style/Widget.MaterialComponents.CardView"
                 android:hint="@string/command_title"
                 android:layout_marginStart="20dp"
                 android:layout_marginEnd="50dp"
@@ -156,26 +156,14 @@
                 android:visibility="gone"
                 android:alpha="0.5" />
 
-            <com.google.android.material.card.MaterialCardView
-                android:id="@+id/send_card"
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/send"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                style="?attr/materialIconButtonFilledTonalStyle"
                 android:layout_gravity="end|center"
-                android:layout_margin="5dp"
-                app:cardCornerRadius="20dp" >
-
-                <androidx.appcompat.widget.AppCompatImageButton
-                    android:id="@+id/send"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:tint="?attr/colorPrimary"
-                    android:src="@drawable/ic_help"
-                    android:layout_gravity="center"
-                    android:scaleType="fitCenter"
-                    android:layout_margin="10dp"
-                    android:background="@null"
-                    android:clickable="false" />
-            </com.google.android.material.card.MaterialCardView>
+                app:iconTint="?attr/colorPrimary"
+                app:icon="@drawable/ic_help" />
         </FrameLayout>
 
         <androidx.recyclerview.widget.RecyclerView
@@ -184,47 +172,53 @@
             android:layout_width="match_parent"
             android:visibility="gone" />
 
+        <HorizontalScrollView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:scrollbars="horizontal"
+            android:fillViewport="true" >
+
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/recycler_view_output"
             android:layout_height="wrap_content"
-            android:layout_width="match_parent"
+            android:layout_width="wrap_content"
             android:layout_marginBottom="5dp"
             android:layout_marginStart="15dp"
             android:layout_marginEnd="15dp"
             android:scrollbars="vertical" />
+        </HorizontalScrollView>
     </androidx.appcompat.widget.LinearLayoutCompat>
 
     <FrameLayout
         android:layout_width="wrap_content"
         android:layout_height="match_parent"
-        android:layout_alignParentEnd="true"
-        android:layout_marginBottom="100dp"
-        android:layout_marginTop="100dp"
+        android:layout_marginBottom="85dp"
+        android:layout_marginTop="175dp"
         android:orientation="vertical"
-        android:background="@null"
-        android:alpha="0.5" >
+        android:layout_gravity="end"
+        android:background="@null" >
 
-        <androidx.appcompat.widget.AppCompatImageButton
+        <com.google.android.material.button.MaterialButton
             android:id="@+id/top"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            style="?attr/materialIconButtonFilledTonalStyle"
             android:layout_gravity="center|top"
-            android:tint="?attr/colorPrimary"
-            android:src="@drawable/ic_arrow"
-            android:layout_marginTop="75dp"
-            android:background="@null"
-            android:visibility="gone" />
+            app:iconTint="?attr/colorPrimary"
+            app:icon="@drawable/ic_arrow"
+            android:visibility="gone"
+            android:gravity="center" />
 
-        <androidx.appcompat.widget.AppCompatImageButton
+        <com.google.android.material.button.MaterialButton
             android:id="@+id/bottom"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            style="?attr/materialIconButtonFilledTonalStyle"
             android:layout_gravity="center|bottom"
-            android:layout_marginBottom="75dp"
-            android:tint="?attr/colorPrimary"
-            android:src="@drawable/ic_arrow"
-            android:background="@null"
+            app:iconTint="?attr/colorPrimary"
+            app:icon="@drawable/ic_arrow"
             android:visibility="gone"
+            android:gravity="center"
             android:rotation="180" />
     </FrameLayout>
 
@@ -232,14 +226,16 @@
         android:id="@+id/save_button"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        style="?attr/materialIconButtonFilledTonalStyle"
-        android:layout_alignParentBottom="true"
-        android:layout_alignParentEnd="true"
+        android:layout_gravity="bottom|end"
         android:layout_margin="25dp"
-        android:layout_gravity="center"
         app:icon="@drawable/ic_save"
+        app:iconGravity="textStart"
         android:text="@string/save"
         android:visibility="gone"
+        android:textStyle="bold"
+        android:gravity="center"
         android:textSize="17sp"
-        app:iconGravity="start" />
-</RelativeLayout>
+        app:iconPadding="10sp"
+        android:padding="15sp"
+        app:iconSize="24sp"/>
+</androidx.coordinatorlayout.widget.CoordinatorLayout>

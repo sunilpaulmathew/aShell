@@ -53,19 +53,7 @@ public class ShellService extends IShellService.Stub {
 
                 // Handle current directory
                 if (command.startsWith("cd ") && !hasError) {
-                    String[] array = command.split("\\s+");
-                    String dir;
-                    if (array[array.length - 1].equals("/")) {
-                        dir = "/";
-                    } else if (array[array.length - 1].startsWith("/")) {
-                        dir = array[array.length - 1];
-                    } else {
-                        dir = mDir + array[array.length - 1];
-                    }
-                    if (!dir.endsWith("/")) {
-                        dir = dir + "/";
-                    }
-                    mDir = dir;
+                    mDir = getDir(command);
                 }
 
                 callback.onFinished(exit);
@@ -75,6 +63,22 @@ public class ShellService extends IShellService.Stub {
                 } catch (RemoteException ignored) {}
             }
         }).start();
+    }
+
+    private static String getDir(String command) {
+        String[] array = command.split("\\s+");
+        String dir;
+        if (array[array.length - 1].equals("/")) {
+            dir = "/";
+        } else if (array[array.length - 1].startsWith("/")) {
+            dir = array[array.length - 1];
+        } else {
+            dir = mDir + array[array.length - 1];
+        }
+        if (!dir.endsWith("/")) {
+            dir = dir + "/";
+        }
+        return dir;
     }
 
 }

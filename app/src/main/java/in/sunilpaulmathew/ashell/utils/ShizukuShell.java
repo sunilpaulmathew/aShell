@@ -27,6 +27,11 @@ public class ShizukuShell {
     private static List<String> mOutput;
     private static String mCommand;
     private volatile ShellStatus mCurrentStatus = ShellStatus.IDLE;
+    private StatusListener mStatusListener;
+
+    public interface StatusListener {
+        void onStatusChanged(ShellStatus status);
+    }
 
     public ShizukuShell(List<String> output, String command) {
         mOutput = output;
@@ -34,49 +39,56 @@ public class ShizukuShell {
     }
 
     public void ensureUserService() {
-        if (mShellService != null) {
-            return;
-        }
+        if (mShellService != null) return;
 
-        Shizuku.UserServiceArgs mUserServiceArgs = new Shizuku.UserServiceArgs(
+        Shizuku.UserServiceArgs args = new Shizuku.UserServiceArgs(
                 new ComponentName(BuildConfig.APPLICATION_ID, ShellService.class.getName()))
                 .daemon(false)
                 .processNameSuffix("shizuku_shell")
                 .debuggable(BuildConfig.DEBUG)
                 .version(BuildConfig.VERSION_CODE);
 
-        Shizuku.bindUserService(mUserServiceArgs, mServiceConnection);
+        Shizuku.bindUserService(args, mServiceConnection);
     }
 
     public boolean isBusy() {
         return mShellService != null && mCurrentStatus == ShellStatus.RUNNING;
     }
 
-    public ShellStatus getCurrentStatus() {
-        return mCurrentStatus;
+    public void setStatusListener(StatusListener listener) {
+        this.mStatusListener = listener;
+        if (listener != null) {
+            listener.onStatusChanged(mCurrentStatus); // Notify immediately of current status
+        }
+    }
+
+    private void updateStatus(ShellStatus status) {
+        mCurrentStatus = status;
+        if (mStatusListener != null) {
+            mStatusListener.onStatusChanged(status);
+        }
     }
 
     private final ServiceConnection mServiceConnection = new ServiceConnection() {
-
         @Override
         public void onServiceConnected(ComponentName componentName, IBinder iBinder) {
-            if (iBinder == null || !iBinder.pingBinder()) {
-                return;
-            }
+            if (iBinder == null || !iBinder.pingBinder()) return;
 
             mShellService = IShellService.Stub.asInterface(iBinder);
         }
 
         @Override
         public void onServiceDisconnected(ComponentName componentName) {
+            mShellService = null;
         }
     };
 
     public void destroy() {
         try {
-            mShellService.destroyProcess();
+            if (mShellService != null) mShellService.destroyProcess();
         } catch (RemoteException ignored) {
         }
+        updateStatus(ShellStatus.IDLE);
     }
 
     public void exec() {
@@ -85,7 +97,7 @@ public class ShizukuShell {
             return;
         }
 
-        mCurrentStatus = ShellStatus.RUNNING;
+        updateStatus(ShellStatus.RUNNING);
 
         try {
             mShellService.runCommand(mCommand, new IShellCallback.Stub() {
@@ -96,10 +108,11 @@ public class ShizukuShell {
 
                 @Override
                 public void onFinished(int exitCode) {
-                    mCurrentStatus = ShellStatus.IDLE;
+                    updateStatus(ShellStatus.IDLE);
                 }
             });
         } catch (RemoteException ignored) {
+            updateStatus(ShellStatus.IDLE);
         }
     }
 
