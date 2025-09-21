@@ -19,10 +19,19 @@ public class Commands {
         mCommands.add(new CommandItems("am force-stop <package>", "Completely stop a given package", "am force-stop com.android.package"));
         mCommands.add(new CommandItems("am kill <package>", "Kill all background processes associated with a given package", "am kill com.android.package"));
         mCommands.add(new CommandItems("am kill-all", "Kill all processes that are safe to kill (cached, etc)"));
+        mCommands.add(new CommandItems("am start -n <package>/<activity>", "Launch an app’s activity directly by component name", "am start -n com.android.package/com.android.package.exampleActivity"));
+        mCommands.add(new CommandItems("appops get <package>", "Show ops for a package", "appops get com.android.package"));
+        mCommands.add(new CommandItems("appops set <package> <Operation> <Mode>", "Change an app’s permission mode (Modes: allow, ignore, deny, default)", "appops set com.android.package OPERATION_NAME deny"));
         mCommands.add(new CommandItems("cat <file_path>", "Display the contents of a text file", "cat /system/build.prop"));
+        mCommands.add(new CommandItems("cmd appops get <package>", "Show ops for a package", "cmd appops get com.android.package"));
+        mCommands.add(new CommandItems("cmd appops set <package> <Operation> <Mode>", "Change an app’s permission mode (Modes: allow, ignore, deny, default)", "cmd appops set com.android.package OPERATION_NAME deny"));
+        mCommands.add(new CommandItems("cmd package resolve-activity --brief <package>", "Resolve the default launchable activity for the given package", "cmd package resolve-activity --brief com.android.package"));
+        mCommands.add(new CommandItems("cmd package install-existing <package>", "Reinstall (enable) a package that is present on the system but uninstalled for the user", "cmd package install-existing com.android.package"));
+        mCommands.add(new CommandItems("cmd role add-role-holder android.app.role.SMS <package>", "Assign the SMS role to an app, making it the default SMS handler", "cmd role add-role-holder android.app.role.SMS com.android.package"));
         mCommands.add(new CommandItems("clear", "Clear terminal screen"));
         mCommands.add(new CommandItems("cp <from> <to>", "Copy a file", "cp /system/build.prop /sdcard"));
         mCommands.add(new CommandItems("cp -r <from> <to>", "Copy a file or directory", "cp -r /system/app /sdcard"));
+        mCommands.add(new CommandItems("dpm set-device-owner <package>/<receiver>", "Set the given app as device owner (requires a fresh device or factory reset)","dpm set-device-owner com.android.package/com.android.package.exampleDeviceAdminReceiver"));
         mCommands.add(new CommandItems("dumpsys activity", "Print activity info"));
         mCommands.add(new CommandItems("dumpsys battery", "Print battery stats"));
         mCommands.add(new CommandItems("dumpsys battery set level <n>", "Change the level from 0 to 100", "dumpsys battery set level 95"));
@@ -118,6 +127,8 @@ public class Commands {
         mCommands.add(new CommandItems("rm <file_path>", "Delete a file", "rm /sdcard/example.txt"));
         mCommands.add(new CommandItems("rm -r <file_path>", "Delete a file or directory", "rm -r /sdcard/abc"));
         mCommands.add(new CommandItems("service list", "List all services"));
+        mCommands.add(new CommandItems("settings get secure default_input_method", "Get the package name of the current default keyboard"));
+        mCommands.add(new CommandItems("settings put secure enabled_accessibility_services <package>/<service>","Enable an accessibility service for a given package", "settings put secure enabled_accessibility_services com.android.package/com.android.package.exampleAccessibilityService"));
         mCommands.add(new CommandItems("sleep <second>", "Delay for a specified time", "sleep 5"));
         mCommands.add(new CommandItems("sync", "Synchronize data on disk with memory"));
         mCommands.add(new CommandItems("top", "List processes running on the system"));
