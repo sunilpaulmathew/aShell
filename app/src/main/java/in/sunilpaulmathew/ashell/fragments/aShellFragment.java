@@ -157,7 +157,7 @@ public class aShellFragment extends Fragment {
                         mBookMark.setOnClickListener(v -> bookMark(s.toString().trim()));
                         new Handler(Looper.getMainLooper()).post(() -> {
                             CommandsAdapter mCommandsAdapter;
-                            if (s.toString().contains(" ") && s.toString().contains(".")) {
+                            if (s.toString().matches(".*\\b(pm|am|appops|cmd)\\b.*") && s.toString().contains(".")) {
                                 String[] splitCommands =  {
                                         s.toString().substring(0, lastIndexOf(s.toString(), ".")), s.toString().substring(lastIndexOf(s.toString(), "."))
                                 };
