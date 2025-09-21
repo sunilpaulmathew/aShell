@@ -6,6 +6,12 @@ include_in_header: true
 
 <h2 style="color: blue">🆕 What's New</h2>
 
+### ✨ 14. [v0.21](https://play.google.com/store/apps/details?id=in.sunilpaulmathew.ashell) *(Sept 21, 2025)*
+- Main: Improved and tightened permission checks.
+- Command Input: Show package name suggestions only for relevant commands.
+- Commands: Added support for cmd, dpm, settings, and other new commands.
+- Miscellaneous changes.
+
 ### ✨ 13. [v0.20](https://gitlab.com/sunilpaulmathew/ashell/-/releases/v0.20) *(Sept 19, 2025)*
 - Switched to a new background service for shell commands (Shizuku userservice).
 - Improved the main UI for a smoother experience.
@@ -14,8 +20,8 @@ include_in_header: true
 - Added German (Germany & Belgium), Vietnamese, and Turkish translations.
 - General fixes to improve app stability.
 - Updated build tools and app dependencies.
-- Improved background workflows in the app..
-- Miscellaneous changes..
+- Improved background workflows in the app.
+- Miscellaneous changes.
 
 ### ✨ 12. [v0.17](https://gitlab.com/sunilpaulmathew/ashell/-/releases/v0.17) *(July 08, 2025)*
 - Added French, Polish, and Arabic translations
