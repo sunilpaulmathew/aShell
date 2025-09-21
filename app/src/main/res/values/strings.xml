@@ -63,8 +63,10 @@
     <string name="shizuku_access_denied_message">Access to Shizuku service is denied for aShell. aShell won\'t work without a proper Shizuku environment.</string>
     <string name="shizuku_access_denied_title">Shizuku access denied for aShell</string>
     <string name="shizuku_access_granted_message">aShell got access to Shizuku service. Click \'Start\' to continue</string>
-    <string name="shizuku_learn">Learn shizuku</string>
+    <string name="shizuku_app_open_message">To enable Shizuku on this device for aShell:\n\n1. Open the Shizuku app\n2. Go to Authorized applications\n3. Enable access for aShell</string>
+    <string name="shizuku_learn">Learn Shizuku</string>
     <string name="shizuku_learn_description">Learn more about shizuku at: shizuku.rikka.app</string>
+    <string name="shizuku_open">Open Shizuku</string>
     <string name="shizuku_unavailable_message">Shizuku is not installed or not properly configured on your device. aShell won\'t work without a proper Shizuku environment.</string>
     <string name="shizuku_unavailable_title">Shizuku support not found</string>
     <string name="start">Start</string>

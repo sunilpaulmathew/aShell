@@ -57,6 +57,8 @@ import in.sunilpaulmathew.ashell.activities.ExamplesActivity;
 import in.sunilpaulmathew.ashell.activities.SettingsActivity;
 import in.sunilpaulmathew.ashell.adapters.CommandsAdapter;
 import in.sunilpaulmathew.ashell.adapters.ShellOutputAdapter;
+import in.sunilpaulmathew.ashell.dialogs.AccessDeniedDialog;
+import in.sunilpaulmathew.ashell.dialogs.AccessUnavilableDialog;
 import in.sunilpaulmathew.ashell.utils.Commands;
 import in.sunilpaulmathew.ashell.utils.ShizukuShell;
 import in.sunilpaulmathew.ashell.utils.Settings;
@@ -76,6 +78,7 @@ public class aShellFragment extends Fragment {
     private ShizukuShell mShizukuShell = null;
     private boolean mExit, mPermissionGranted = false;
     private final Handler mHandler = new Handler();
+    private final Shizuku.OnRequestPermissionResultListener REQUEST_PERMISSION_RESULT_LISTENER = this::onRequestPermissionsResult;
     private int mPosition = 1;
     private List<String> mHistory = null, mResult = null;
     private String mCommandShared = null;
@@ -121,8 +124,8 @@ public class aShellFragment extends Fragment {
             mBookMark.setOnClickListener(v -> bookMark(mCommandShared));
         }
 
-        if (Shizuku.pingBinder() && Shizuku.getVersion() >= 11 && !Shizuku.isPreV11() && Shizuku.checkSelfPermission() == PackageManager.PERMISSION_GRANTED) {
-            new ShizukuShell(mResult, null).ensureUserService();
+        if (Shizuku.pingBinder() && Shizuku.getVersion() >= 11) {
+            checkPermission();
         }
 
         mBookMarksButton.setEnabled(!Utils.getBookmarks(requireActivity()).isEmpty());
@@ -442,15 +445,7 @@ public class aShellFragment extends Fragment {
 
     private void initializeShell() {
         if (!Shizuku.pingBinder()) {
-            new MaterialAlertDialogBuilder(requireActivity())
-                    .setIcon(R.mipmap.ic_launcher)
-                    .setTitle(getString(R.string.shizuku_unavailable_title))
-                    .setMessage(getString(R.string.shizuku_unavailable_message))
-                    .setNeutralButton(getString(R.string.cancel), (dialogInterface, i) -> {
-                    })
-                    .setPositiveButton(getString(R.string.shizuku_learn), (dialogInterface, i) ->
-                            Utils.loadUrl("https://shizuku.rikka.app/", requireActivity()))
-                    .show();
+            new AccessUnavilableDialog(requireActivity()).show();
             return;
         }
         if (mCommand.getText() == null || mCommand.getText().toString().trim().isEmpty()) {
@@ -584,14 +579,7 @@ public class aShellFragment extends Fragment {
                             mResult.add("<i></i>");
                         }
                     } else {
-                        new MaterialAlertDialogBuilder(requireActivity())
-                                .setCancelable(false)
-                                .setIcon(R.mipmap.ic_launcher)
-                                .setTitle(getString(R.string.shizuku_access_denied_title))
-                                .setMessage(getString(R.string.shizuku_access_denied_message))
-                                .setNeutralButton(getString(R.string.quit), (dialogInterface, i) -> requireActivity().finish())
-                                .setPositiveButton(getString(R.string.request_permission), (dialogInterface, i) -> Shizuku.requestPermission(0)
-                                ).show();
+                        checkPermission();
                     }
                     if (!mCommand.isFocused()) mCommand.requestFocus();
                 });
@@ -617,9 +605,39 @@ public class aShellFragment extends Fragment {
         }
     }
 
+    private void checkPermission() {
+        if (Shizuku.isPreV11()) {
+            Utils.toast("Pre-v11 is unsupported", requireActivity()).show();
+            return;
+        }
+
+        if (Shizuku.checkSelfPermission() == PackageManager.PERMISSION_GRANTED) {
+            new ShizukuShell(mResult, null).ensureUserService();
+        } else if (Shizuku.shouldShowRequestPermissionRationale()) {
+            new AccessDeniedDialog(requireActivity()).show();
+        } else {
+            // Request permission
+            Shizuku.addRequestPermissionResultListener(REQUEST_PERMISSION_RESULT_LISTENER);
+            Shizuku.requestPermission(0);
+        }
+    }
+
+    private void onRequestPermissionsResult(int requestCode, int grantResult) {
+        if (requestCode == 0 && grantResult == PackageManager.PERMISSION_GRANTED) {
+            mResult.add("aShell got access to Shizuku service");
+            new ShizukuShell(mResult, null).ensureUserService();
+        } else {
+            if (mResult != null) {
+                mResult.add(getString(R.string.shizuku_access_denied_title));
+            }
+        }
+        Shizuku.removeRequestPermissionResultListener(REQUEST_PERMISSION_RESULT_LISTENER);
+    }
+
     @Override
     public void onDestroy() {
         super.onDestroy();
+        Shizuku.removeRequestPermissionResultListener(REQUEST_PERMISSION_RESULT_LISTENER);
         if (mShizukuShell != null) mShizukuShell.destroy();
     }
 
