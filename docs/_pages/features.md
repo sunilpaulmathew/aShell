@@ -16,9 +16,16 @@ include_in_header: true
 
 ---
 
+<h2 style="color: blue">✅ Requirements</h2>
+
+- 🛠 A fully working Shizuku environment.
+- 💻 Knowledge about basic ADB/Linux commands.
+
+---
+
 <h2 style="color: blue">🔗 Additional Resources</h2>
 
-- 🔗 Source Code: https://gitlab.com/sunilpaulmathew/ashell
-- 🐞 Issue Tracker: https://gitlab.com/sunilpaulmathew/ashell/-/issues
-- 🌍 Translations: https://poeditor.com/join/project/20PSoEAgfX
-- ➡️ Learn Shizuku: https://shizuku.rikka.app/
+- 🔗 [Source Code](https://gitlab.com/sunilpaulmathew/ashell)
+- 🐞 [Issue Tracker](https://gitlab.com/sunilpaulmathew/ashell/-/issues)
+- 🌍 [Translations](https://poeditor.com/join/project/20PSoEAgfX)
+- ➡️ [Learn Shizuku](https://shizuku.rikka.app/)
