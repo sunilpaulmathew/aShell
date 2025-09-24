@@ -6,6 +6,9 @@ include_in_header: true
 
 <h2 style="color: blue">🆕 What's New</h2>
 
+### ✨ 15. [v0.22](https://gitlab.com/sunilpaulmathew/ashell/-/releases/v0.22) *(Sept 24 2025)*
+- Fixed aShell failed to execute commands in release builds.
+
 ### ✨ 14. [v0.21](https://play.google.com/store/apps/details?id=in.sunilpaulmathew.ashell) *(Sept 21, 2025)*
 - Main: Improved and tightened permission checks.
 - Command Input: Show package name suggestions only for relevant commands.
