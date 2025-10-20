@@ -1,16 +1,33 @@
 <androidx.appcompat.widget.LinearLayoutCompat
-    android:layout_width="wrap_content"
-    android:layout_height="wrap_content"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:android="http://schemas.android.com/apk/res/android"
-    android:orientation="vertical"
     android:layout_gravity="center"
-    android:gravity="start|center"
-    android:padding="15dp">
+    android:orientation="vertical" >
 
         <include layout="@layout/layout_about" />
 
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/recycler_view"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:nestedScrollingEnabled="true"
+            android:paddingHorizontal="8dp"
+            android:paddingVertical="8dp"
+            android:layout_weight="1" />
+
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/cancel"
             android:layout_height="wrap_content"
-            android:layout_width="match_parent" />
+            android:layout_width="wrap_content"
+            android:layout_gravity="end|bottom"
+            style="@style/Widget.Material3.Button.TonalButton"
+            android:textStyle="bold|italic"
+            app:icon="@drawable/ic_cancel"
+            android:text="@string/cancel"
+            android:gravity="center|end"
+            android:layout_margin="10sp"
+            app:iconGravity="textStart"
+            android:textSize="15sp" />
 </androidx.appcompat.widget.LinearLayoutCompat>

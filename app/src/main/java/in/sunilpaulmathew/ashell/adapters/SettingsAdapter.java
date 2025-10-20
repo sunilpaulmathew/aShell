@@ -10,18 +10,16 @@ import android.view.ViewGroup;
 import androidx.annotation.NonNull;
 import androidx.appcompat.widget.AppCompatImageButton;
 import androidx.appcompat.widget.LinearLayoutCompat;
-import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.google.android.material.checkbox.MaterialCheckBox;
-import com.google.android.material.dialog.MaterialAlertDialogBuilder;
 import com.google.android.material.textview.MaterialTextView;
 
 import java.util.List;
 
-import in.sunilpaulmathew.ashell.BuildConfig;
 import in.sunilpaulmathew.ashell.R;
 import in.sunilpaulmathew.ashell.activities.ExamplesActivity;
+import in.sunilpaulmathew.ashell.dialogs.PolicyDialog;
 import in.sunilpaulmathew.ashell.serializable.SettingsItems;
 import in.sunilpaulmathew.ashell.utils.Settings;
 import in.sunilpaulmathew.ashell.utils.Utils;
@@ -133,18 +131,7 @@ public class SettingsAdapter extends RecyclerView.Adapter<SettingsAdapter.ViewHo
             } else if (position == 6) {
                 Utils.loadUrl("https://poeditor.com/join/project/20PSoEAgfX", view.getContext());
             } else if (position == 7) {
-                LayoutInflater layoutInflater = LayoutInflater.from(view.getContext());
-                View policyLayout = layoutInflater.inflate(R.layout.layout_privacy_policy, null);
-                MaterialTextView version = policyLayout.findViewById(R.id.title);
-                RecyclerView recyclerView = policyLayout.findViewById(R.id.recycler_view);
-                version.setText(view.getContext().getString(R.string.app_version, BuildConfig.VERSION_NAME));
-                recyclerView.setItemAnimator(null);
-                recyclerView.setLayoutManager(new LinearLayoutManager(view.getContext()));
-                recyclerView.setAdapter(new PolicyAdapter(Settings.getPolicyData()));
-                new MaterialAlertDialogBuilder(view.getContext())
-                        .setView(policyLayout)
-                        .setPositiveButton(R.string.cancel, (dialog, id) -> {
-                        }).show();
+                new PolicyDialog(view.getContext());
             } else if (position == 8) {
                 Utils.loadUrl("mailto:smartpack.org@gmail.com", view.getContext());
             }
