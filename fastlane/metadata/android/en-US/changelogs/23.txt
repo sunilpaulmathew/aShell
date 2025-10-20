@@ -1,0 +1,8 @@
+* Fixed small layout issues on the main screen.
+* Improved initializing Shizuku service.
+* Views: Added slight animation effect.
+* Improved examples and policy dialog.
+* Fixed occasional crashes in some screens.
+* Added Italian and Partial Czech translations.
+* Updated Korean and Chinese (TW) translations.
+* Miscellaneous changes.

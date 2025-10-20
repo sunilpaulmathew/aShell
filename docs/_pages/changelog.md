@@ -6,6 +6,16 @@ include_in_header: true
 
 <h2 style="color: blue">🆕 What's New</h2>
 
+### ✨ 16. [v0.23](https://gitlab.com/sunilpaulmathew/ashell/-/releases/v0.23) *(Oct 21 2025)*
+- Fixed small layout issues on the main screen.
+- Improved initializing Shizuku service.
+- Views: Added slight animation effect.
+- Improved examples and policy dialog.
+- Fixed occasional crashes in some screens.
+- Added Italian and Partial Czech translations.
+- Updated Korean and Chinese (TW) translations.
+- Miscellaneous changes.
+
 ### ✨ 15. [v0.22](https://gitlab.com/sunilpaulmathew/ashell/-/releases/v0.22) *(Sept 24 2025)*
 - Fixed aShell failed to execute commands in release builds.
 
