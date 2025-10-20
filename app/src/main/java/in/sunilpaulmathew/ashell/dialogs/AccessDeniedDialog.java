@@ -15,16 +15,17 @@ public class AccessDeniedDialog extends MaterialAlertDialogBuilder {
 
     public AccessDeniedDialog(Activity activity) {
         super(activity);
+
         setCancelable(false);
-                setIcon(R.mipmap.ic_launcher);
-                setTitle(activity.getString(R.string.shizuku_access_denied_title));
-                setMessage(activity.getString(R.string.shizuku_access_denied_message) + "\n\n" + activity.getString(R.string.shizuku_app_open_message));
-                setNeutralButton(R.string.quit, (dialogInterface, i) -> activity.finish());
-                setPositiveButton(R.string.shizuku_open, (dialogInterface, i) -> {
-                    PackageManager pm = activity.getPackageManager();
-                    Intent launchIntent = pm.getLaunchIntentForPackage("moe.shizuku.privileged.api");
-                    activity.startActivity(launchIntent);
-                });
+        setIcon(R.mipmap.ic_launcher);
+        setTitle(activity.getString(R.string.shizuku_access_denied_title));
+        setMessage(activity.getString(R.string.shizuku_access_denied_message) + "\n\n" + activity.getString(R.string.shizuku_app_open_message));
+        setNeutralButton(R.string.quit, (dialogInterface, i) -> activity.finish());
+        setPositiveButton(R.string.shizuku_open, (dialogInterface, i) -> {
+            PackageManager pm = activity.getPackageManager();
+            Intent launchIntent = pm.getLaunchIntentForPackage("moe.shizuku.privileged.api");
+            activity.startActivity(launchIntent);
+        });
     }
 
 }

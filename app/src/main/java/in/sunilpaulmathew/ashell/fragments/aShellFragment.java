@@ -45,7 +45,6 @@ import java.util.Collections;
 import java.util.List;
 import java.util.Objects;
 import java.util.concurrent.CopyOnWriteArrayList;
-import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 import java.util.concurrent.ScheduledExecutorService;
 import java.util.concurrent.TimeUnit;
@@ -59,6 +58,7 @@ import in.sunilpaulmathew.ashell.adapters.CommandsAdapter;
 import in.sunilpaulmathew.ashell.adapters.ShellOutputAdapter;
 import in.sunilpaulmathew.ashell.dialogs.AccessDeniedDialog;
 import in.sunilpaulmathew.ashell.dialogs.AccessUnavilableDialog;
+import in.sunilpaulmathew.ashell.utils.Async;
 import in.sunilpaulmathew.ashell.utils.Commands;
 import in.sunilpaulmathew.ashell.utils.ShizukuShell;
 import in.sunilpaulmathew.ashell.utils.Settings;
@@ -269,7 +269,7 @@ public class aShellFragment extends Fragment {
             @Override
             public void afterTextChanged(Editable s) {
                 if (s == null || s.toString().trim().isEmpty()) {
-                    updateUI(mResult);
+                    updateUI(mResult).execute();
                 } else {
                     List<String> mResultSorted = new CopyOnWriteArrayList<>();
                     for (int i = mPosition; i < mResult.size(); i++) {
@@ -277,7 +277,7 @@ public class aShellFragment extends Fragment {
                             mResultSorted.add(mResult.get(i));
                         }
                     }
-                    updateUI(mResultSorted);
+                    updateUI(mResultSorted).execute();
                 }
             }
         });
@@ -358,7 +358,7 @@ public class aShellFragment extends Fragment {
         executor.scheduleWithFixedDelay(() -> {
             if (mResult != null && mResult.size() != lastShownSize.get()) {
                 lastShownSize.set(mResult.size());
-                new Handler(Looper.getMainLooper()).post(() -> updateUI(mResult));
+                new Handler(Looper.getMainLooper()).post(() -> updateUI(mResult).execute());
             }
         }, 0, 250, TimeUnit.MILLISECONDS);
 
@@ -528,11 +528,18 @@ public class aShellFragment extends Fragment {
 
         if (mResult == null) {
             mResult = new CopyOnWriteArrayList<>();
+        } else {
+            mResult.add("<i></i>");
         }
         mResult.add(mTitleText);
 
-        try (ExecutorService mExecutors = Executors.newSingleThreadExecutor()) {
-            mExecutors.execute(() -> {
+        new Async() {
+            @Override
+            public void onPreExecute() {
+            }
+
+            @Override
+            public void doInBackground() {
                 mPermissionGranted = Shizuku.checkSelfPermission() == PackageManager.PERMISSION_GRANTED;
                 if (mPermissionGranted) {
                     mPosition = mResult.size();
@@ -555,54 +562,57 @@ public class aShellFragment extends Fragment {
                         }
                     }));
                     mShizukuShell.exec();
-                    try {
-                        TimeUnit.MILLISECONDS.sleep(250);
-                    } catch (InterruptedException ignored) {
-                    }
                 }
-                new Handler(Looper.getMainLooper()).post(() -> {
-                    if (mPermissionGranted) {
-                        if (mHistory != null && !mHistory.isEmpty() && !mHistoryButton.isEnabled()) {
-                            mHistoryButton.setEnabled(true);
-                        }
-                        mInfoButton.setEnabled(true);
-                        mSettingsButton.setEnabled(true);
-                        mBookMarksButton.setEnabled(!Utils.getBookmarks(requireActivity()).isEmpty());
-                        if (mResult != null && !mResult.isEmpty()) {
-                            mClearButton.setEnabled(true);
-                            mSaveButton.setVisibility(VISIBLE);
-                            mSearchButton.setEnabled(true);
-                            if (mResult.size() > 25) {
-                                mTopArrow.setVisibility(VISIBLE);
-                                mBottomArrow.setVisibility(VISIBLE);
-                            }
-                            mResult.add("<i></i>");
-                        }
-                    } else {
-                        checkPermission();
+            }
+
+            @Override
+            public void onPostExecute() {
+                if (mPermissionGranted) {
+                    if (mHistory != null && !mHistory.isEmpty() && !mHistoryButton.isEnabled()) {
+                        mHistoryButton.setEnabled(true);
                     }
-                    if (!mCommand.isFocused()) mCommand.requestFocus();
-                });
-                if (!mExecutors.isShutdown()) mExecutors.shutdown();
-            });
-        }
+                    mInfoButton.setEnabled(true);
+                    mSettingsButton.setEnabled(true);
+                    mBookMarksButton.setEnabled(!Utils.getBookmarks(requireActivity()).isEmpty());
+                    if (mResult != null && !mResult.isEmpty()) {
+                        mClearButton.setEnabled(true);
+                        mSaveButton.setVisibility(VISIBLE);
+                        mSearchButton.setEnabled(true);
+                        if (mResult.size() > 25) {
+                            mTopArrow.setVisibility(VISIBLE);
+                            mBottomArrow.setVisibility(VISIBLE);
+                        }
+                    }
+                } else {
+                    checkPermission();
+                }
+            }
+        }.execute();
     }
 
-    private void updateUI(List<String> data) {
-        if (data == null || data.isEmpty()) return;
+    private Async updateUI(List<String> data) {
+        return new Async() {
+            private ShellOutputAdapter mShellOutputAdapter;
+            @Override
+            public void onPreExecute() {
+            }
 
-        try (ExecutorService mExecutors = Executors.newSingleThreadExecutor()) {
-            mExecutors.execute(() -> {
-                ShellOutputAdapter mShellOutputAdapter = new ShellOutputAdapter(mResult);
-                new Handler(Looper.getMainLooper()).post(() -> {
-                    if (isAdded()) {
+            @Override
+            public void doInBackground() {
+                if (data == null || data.isEmpty()) return;
+                mShellOutputAdapter = new ShellOutputAdapter(mResult);
+            }
+
+            @Override
+            public void onPostExecute() {
+                if (isAdded()) {
+                    if (data != null && !data.isEmpty()) {
                         mRecyclerViewOutput.setAdapter(mShellOutputAdapter);
                         mRecyclerViewOutput.scrollToPosition(mResult.size() - 1);
                     }
-                });
-                if (!mExecutors.isShutdown()) mExecutors.shutdown();
-            });
-        }
+                }
+            }
+        };
     }
 
     private void checkPermission() {

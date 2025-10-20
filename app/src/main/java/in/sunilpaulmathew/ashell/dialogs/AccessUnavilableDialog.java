@@ -14,14 +14,15 @@ public class AccessUnavilableDialog extends MaterialAlertDialogBuilder {
 
     public AccessUnavilableDialog(Activity activity) {
         super(activity);
+
         setCancelable(false);
-                setIcon(R.mipmap.ic_launcher);
-                setTitle(activity.getString(R.string.shizuku_unavailable_title));
-                setMessage(activity.getString(R.string.shizuku_unavailable_message));
-                setNeutralButton(R.string.quit, (dialogInterface, i) -> activity.finish());
-                setPositiveButton(R.string.shizuku_learn, (dialogInterface, i) ->
-                        Utils.loadUrl("https://shizuku.rikka.app/", activity)
-                );
+        setIcon(R.mipmap.ic_launcher);
+        setTitle(activity.getString(R.string.shizuku_unavailable_title));
+        setMessage(activity.getString(R.string.shizuku_unavailable_message));
+        setNeutralButton(R.string.quit, (dialogInterface, i) -> activity.finish());
+        setPositiveButton(R.string.shizuku_learn, (dialogInterface, i) ->
+                Utils.loadUrl("https://shizuku.rikka.app/", activity)
+        );
     }
 
 }
