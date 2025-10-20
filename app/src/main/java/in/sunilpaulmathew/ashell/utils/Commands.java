@@ -163,19 +163,16 @@ public class Commands {
 
     public static void loadPackageInfo() {
         mPackages = new ArrayList<>();
-        
+
         try {
-            Process mProcess = Runtime.getRuntime().exec("pm list packages");
-            BufferedReader mInput = new BufferedReader(new InputStreamReader(mProcess.getInputStream()));
-            String line;
-            while ((line = mInput.readLine()) != null) {
-                if (line.startsWith("package:")) {
-                    mPackages.add(new CommandItems(line.replace("package:", ""), null));
+            String packages = ShizukuShell.runCommand("pm list packages");
+            for (String line : packages.trim().split("\\r?\\n")) {
+                if (line != null && !line.trim().isEmpty() && line.trim().startsWith("package:")) {
+                    String[] parts = line.split(":", 2);
+                    mPackages.add(new CommandItems(parts[1], null));
                 }
             }
-            mProcess.waitFor();
-        } catch (Exception ignored) {
-        }
+        } catch (Exception ignored) {}
     }
 
 }

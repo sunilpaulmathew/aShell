@@ -23,6 +23,35 @@ public class ShellService extends IShellService.Stub {
     }
 
     @Override
+    public String runShellCommand(String command) {
+        StringBuilder output = new StringBuilder();
+        try {
+            mProcess = Runtime.getRuntime().exec(command, null, null);
+            BufferedReader mInput = new BufferedReader(new InputStreamReader(mProcess.getInputStream()));
+            BufferedReader mError = new BufferedReader(new InputStreamReader(mProcess.getErrorStream()));
+
+            mProcess.waitFor();
+
+            String line;
+            while ((line = mInput.readLine()) != null) {
+                output.append(line).append("\n");
+            }
+            while ((line = mError.readLine()) != null) {
+                output.append(line).append("\n");
+            }
+
+        }
+        catch (Exception ignored) {
+        }
+        finally {
+            if (mProcess != null)
+                mProcess.destroy();
+        }
+
+        return output.toString();
+    }
+
+    @Override
     public void runCommand(String command, IShellCallback callback) {
         new Thread(() -> {
             try {

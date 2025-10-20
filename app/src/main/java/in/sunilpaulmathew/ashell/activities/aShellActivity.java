@@ -1,6 +1,7 @@
 package in.sunilpaulmathew.ashell.activities;
 
 import android.content.Intent;
+import android.content.pm.PackageManager;
 import android.os.Bundle;
 
 import androidx.appcompat.app.AppCompatActivity;
@@ -11,7 +12,9 @@ import in.sunilpaulmathew.ashell.fragments.aShellFragment;
 import in.sunilpaulmathew.ashell.utils.Async;
 import in.sunilpaulmathew.ashell.utils.Commands;
 import in.sunilpaulmathew.ashell.utils.Settings;
+import in.sunilpaulmathew.ashell.utils.ShizukuShell;
 import in.sunilpaulmathew.ashell.utils.Utils;
+import rikka.shizuku.Shizuku;
 
 /*
  * Created by sunilpaulmathew <sunil.kde@gmail.com> on October 28, 2022
@@ -46,7 +49,9 @@ public class aShellActivity extends AppCompatActivity {
 
             @Override
             public void doInBackground() {
-                Commands.loadPackageInfo();
+                if (Shizuku.pingBinder() && Shizuku.getVersion() >= 11 && Shizuku.checkSelfPermission() == PackageManager.PERMISSION_GRANTED) {
+                    ShizukuShell.ensureUserService(Commands::loadPackageInfo);
+                }
                 mCommand = getIntent().getStringExtra("command");
             }
 

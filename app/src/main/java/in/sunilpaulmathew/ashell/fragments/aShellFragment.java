@@ -56,10 +56,10 @@ import in.sunilpaulmathew.ashell.activities.ExamplesActivity;
 import in.sunilpaulmathew.ashell.activities.SettingsActivity;
 import in.sunilpaulmathew.ashell.adapters.CommandsAdapter;
 import in.sunilpaulmathew.ashell.adapters.ShellOutputAdapter;
-import in.sunilpaulmathew.ashell.dialogs.AccessDeniedDialog;
 import in.sunilpaulmathew.ashell.dialogs.AccessUnavilableDialog;
 import in.sunilpaulmathew.ashell.utils.Async;
 import in.sunilpaulmathew.ashell.utils.Commands;
+import in.sunilpaulmathew.ashell.utils.ShizukuPermissionChecker;
 import in.sunilpaulmathew.ashell.utils.ShizukuShell;
 import in.sunilpaulmathew.ashell.utils.Settings;
 import in.sunilpaulmathew.ashell.utils.Utils;
@@ -122,10 +122,6 @@ public class aShellFragment extends Fragment {
             mBookMark.setImageDrawable(Utils.getDrawable(Utils.isBookmarked(mCommandShared, requireActivity()) ? R.drawable.ic_starred : R.drawable.ic_star, requireActivity()));
             mSendButton.setIcon(Utils.getDrawable(R.drawable.ic_send, requireActivity()));
             mBookMark.setOnClickListener(v -> bookMark(mCommandShared));
-        }
-
-        if (Shizuku.pingBinder() && Shizuku.getVersion() >= 11) {
-            checkPermission();
         }
 
         mBookMarksButton.setEnabled(!Utils.getBookmarks(requireActivity()).isEmpty());
@@ -584,7 +580,19 @@ public class aShellFragment extends Fragment {
                         }
                     }
                 } else {
-                    checkPermission();
+                    new ShizukuPermissionChecker(requireActivity()) {
+                        @Override
+                        public void onRequestingPermission() {
+                            // Request permission
+                            Shizuku.addRequestPermissionResultListener(REQUEST_PERMISSION_RESULT_LISTENER);
+                            Shizuku.requestPermission(0);
+                        }
+
+                        @Override
+                        public void onFinished() {
+                            Commands.loadPackageInfo();
+                        }
+                    };
                 }
             }
         }.execute();
@@ -615,31 +623,14 @@ public class aShellFragment extends Fragment {
         };
     }
 
-    private void checkPermission() {
-        if (Shizuku.isPreV11()) {
-            Utils.toast("Pre-v11 is unsupported", requireActivity()).show();
-            return;
-        }
-
-        if (Shizuku.checkSelfPermission() == PackageManager.PERMISSION_GRANTED) {
-            new ShizukuShell(mResult, null).ensureUserService();
-        } else if (Shizuku.shouldShowRequestPermissionRationale()) {
-            new AccessDeniedDialog(requireActivity()).show();
-        } else {
-            // Request permission
-            Shizuku.addRequestPermissionResultListener(REQUEST_PERMISSION_RESULT_LISTENER);
-            Shizuku.requestPermission(0);
-        }
-    }
-
     private void onRequestPermissionsResult(int requestCode, int grantResult) {
         if (requestCode == 0 && grantResult == PackageManager.PERMISSION_GRANTED) {
             mResult.add("aShell got access to Shizuku service");
-            new ShizukuShell(mResult, null).ensureUserService();
+            ShizukuShell.ensureUserService(() -> {
+                Commands.loadPackageInfo();
+            });
         } else {
-            if (mResult != null) {
-                mResult.add(getString(R.string.shizuku_access_denied_title));
-            }
+            mResult.add(getString(R.string.shizuku_access_denied_title));
         }
         Shizuku.removeRequestPermissionResultListener(REQUEST_PERMISSION_RESULT_LISTENER);
     }

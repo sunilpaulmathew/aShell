@@ -2,7 +2,9 @@ package in.sunilpaulmathew.ashell.utils;
 
 import android.content.ComponentName;
 import android.content.ServiceConnection;
+import android.os.Handler;
 import android.os.IBinder;
+import android.os.Looper;
 import android.os.RemoteException;
 
 import java.util.List;
@@ -38,50 +40,19 @@ public class ShizukuShell {
         mCommand = command;
     }
 
-    public void ensureUserService() {
-        if (mShellService != null) return;
-
-        Shizuku.UserServiceArgs args = new Shizuku.UserServiceArgs(
-                new ComponentName(BuildConfig.APPLICATION_ID, ShellService.class.getName()))
-                .daemon(false)
-                .processNameSuffix("shizuku_shell")
-                .debuggable(BuildConfig.DEBUG)
-                .version(BuildConfig.VERSION_CODE);
-
-        Shizuku.bindUserService(args, mServiceConnection);
-    }
-
     public boolean isBusy() {
         return mShellService != null && mCurrentStatus == ShellStatus.RUNNING;
     }
 
-    public void setStatusListener(StatusListener listener) {
-        this.mStatusListener = listener;
-        if (listener != null) {
-            listener.onStatusChanged(mCurrentStatus); // Notify immediately of current status
+    public static String runCommand(String command) {
+        if (mShellService != null) {
+            try {
+                return mShellService.runShellCommand(command);
+            } catch (RemoteException ignored) {
+            }
         }
+        return "";
     }
-
-    private void updateStatus(ShellStatus status) {
-        mCurrentStatus = status;
-        if (mStatusListener != null) {
-            mStatusListener.onStatusChanged(status);
-        }
-    }
-
-    private final ServiceConnection mServiceConnection = new ServiceConnection() {
-        @Override
-        public void onServiceConnected(ComponentName componentName, IBinder iBinder) {
-            if (iBinder == null || !iBinder.pingBinder()) return;
-
-            mShellService = IShellService.Stub.asInterface(iBinder);
-        }
-
-        @Override
-        public void onServiceDisconnected(ComponentName componentName) {
-            mShellService = null;
-        }
-    };
 
     public void destroy() {
         try {
@@ -91,9 +62,41 @@ public class ShizukuShell {
         updateStatus(ShellStatus.IDLE);
     }
 
+    public static void ensureUserService(Runnable runnable) {
+        if (mShellService != null && runnable != null) {
+            runnable.run();
+            return;
+        }
+
+        Shizuku.UserServiceArgs args = new Shizuku.UserServiceArgs(
+                new ComponentName(BuildConfig.APPLICATION_ID, ShellService.class.getName()))
+                .daemon(false)
+                .processNameSuffix("shizuku_shell")
+                .debuggable(BuildConfig.DEBUG)
+                .version(BuildConfig.VERSION_CODE);
+
+        Shizuku.bindUserService(args, new ServiceConnection() {
+            @Override
+            public void onServiceConnected(ComponentName name, IBinder binder) {
+                if (binder == null || !binder.pingBinder()) return;
+
+                mShellService = IShellService.Stub.asInterface(binder);
+
+                if (runnable != null) {
+                    new Handler(Looper.getMainLooper()).post(runnable);
+                }
+            }
+
+            @Override
+            public void onServiceDisconnected(ComponentName name) {
+                mShellService = null;
+            }
+        });
+    }
+
     public void exec() {
         if (mShellService == null) {
-            ensureUserService();
+            ensureUserService(null);
             return;
         }
 
@@ -113,6 +116,20 @@ public class ShizukuShell {
             });
         } catch (RemoteException ignored) {
             updateStatus(ShellStatus.IDLE);
+        }
+    }
+
+    public void setStatusListener(StatusListener listener) {
+        this.mStatusListener = listener;
+        if (listener != null) {
+            listener.onStatusChanged(mCurrentStatus); // Notify immediately of current status
+        }
+    }
+
+    private void updateStatus(ShellStatus status) {
+        mCurrentStatus = status;
+        if (mStatusListener != null) {
+            mStatusListener.onStatusChanged(status);
         }
     }
 
