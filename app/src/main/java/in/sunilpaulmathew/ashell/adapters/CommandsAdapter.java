@@ -14,7 +14,7 @@ import com.google.android.material.textview.MaterialTextView;
 import java.util.List;
 
 import in.sunilpaulmathew.ashell.R;
-import in.sunilpaulmathew.ashell.serializable.CommandItems;
+import in.sunilpaulmathew.ashell.serializable.CommandEntry;
 import in.sunilpaulmathew.ashell.utils.Settings;
 
 /*
@@ -22,18 +22,18 @@ import in.sunilpaulmathew.ashell.utils.Settings;
  */
 public class CommandsAdapter extends RecyclerView.Adapter<CommandsAdapter.ViewHolder> {
 
-    private final List<CommandItems> data;
+    private final List<CommandEntry> data;
 
     private static ClickListener mClickListener;
 
-    public CommandsAdapter(List<CommandItems> data) {
+    public CommandsAdapter(List<CommandEntry> data) {
         this.data = data;
     }
 
     @NonNull
     @Override
     public CommandsAdapter.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-        View rowItem = LayoutInflater.from(parent.getContext()).inflate(R.layout.rv_commands, parent, false);
+        View rowItem = LayoutInflater.from(parent.getContext()).inflate(R.layout.recycler_view_commands, parent, false);
         return new CommandsAdapter.ViewHolder(rowItem);
     }
 

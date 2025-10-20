@@ -13,7 +13,7 @@ import java.util.List;
 
 import in.sunilpaulmathew.ashell.R;
 import in.sunilpaulmathew.ashell.dialogs.ExamplesDialog;
-import in.sunilpaulmathew.ashell.serializable.CommandItems;
+import in.sunilpaulmathew.ashell.serializable.CommandEntry;
 import in.sunilpaulmathew.ashell.utils.Settings;
 
 /*
@@ -21,16 +21,16 @@ import in.sunilpaulmathew.ashell.utils.Settings;
  */
 public class ExamplesAdapter extends RecyclerView.Adapter<ExamplesAdapter.ViewHolder> {
 
-    private final List<CommandItems> data;
+    private final List<CommandEntry> data;
 
-    public ExamplesAdapter(List<CommandItems> data) {
+    public ExamplesAdapter(List<CommandEntry> data) {
         this.data = data;
     }
 
     @NonNull
     @Override
     public ExamplesAdapter.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-        View rowItem = LayoutInflater.from(parent.getContext()).inflate(R.layout.rv_examples, parent, false);
+        View rowItem = LayoutInflater.from(parent.getContext()).inflate(R.layout.recycler_view_examples, parent, false);
         return new ExamplesAdapter.ViewHolder(rowItem);
     }
 

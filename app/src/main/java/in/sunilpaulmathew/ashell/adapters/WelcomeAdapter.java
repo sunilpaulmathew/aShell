@@ -15,7 +15,7 @@ import com.google.android.material.textview.MaterialTextView;
 import java.util.List;
 
 import in.sunilpaulmathew.ashell.R;
-import in.sunilpaulmathew.ashell.serializable.CommandItems;
+import in.sunilpaulmathew.ashell.serializable.CommandEntry;
 import in.sunilpaulmathew.ashell.utils.Settings;
 import rikka.shizuku.Shizuku;
 
@@ -24,10 +24,10 @@ import rikka.shizuku.Shizuku;
  */
 public class WelcomeAdapter extends RecyclerView.Adapter<WelcomeAdapter.ViewHolder> {
 
-    private final List<CommandItems> data;
+    private final List<CommandEntry> data;
     private static ClickListener mClickListener;
 
-    public WelcomeAdapter(List<CommandItems> data) {
+    public WelcomeAdapter(List<CommandEntry> data) {
         this.data = data;
     }
 

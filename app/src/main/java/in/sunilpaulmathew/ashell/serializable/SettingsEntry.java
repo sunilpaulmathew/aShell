@@ -5,14 +5,14 @@ import java.io.Serializable;
 /*
  * Created by sunilpaulmathew <sunil.kde@gmail.com> on April 21, 2022
  */
-public class SettingsItems implements Serializable {
+public class SettingsEntry implements Serializable {
 
     private final boolean mEnabled, mSwitch;
     private final int mIcon, mPosition;
     private final String mTitle;
     private String mDescription;
 
-    public SettingsItems(String title) {
+    public SettingsEntry(String title) {
         this.mPosition = 0;
         this.mIcon = Integer.MIN_VALUE;
         this.mTitle = title;
@@ -21,7 +21,7 @@ public class SettingsItems implements Serializable {
         this.mEnabled = false;
     }
 
-    public SettingsItems(int position, int icon, String title, String description) {
+    public SettingsEntry(int position, int icon, String title, String description) {
         this.mPosition = position;
         this.mIcon = icon;
         this.mTitle = title;
@@ -30,7 +30,7 @@ public class SettingsItems implements Serializable {
         this.mEnabled = false;
     }
 
-    public SettingsItems(int position, int icon, String title, String description, boolean isSwitch, boolean enabled) {
+    public SettingsEntry(int position, int icon, String title, String description, boolean isSwitch, boolean enabled) {
         this.mPosition = position;
         this.mIcon = icon;
         this.mTitle = title;

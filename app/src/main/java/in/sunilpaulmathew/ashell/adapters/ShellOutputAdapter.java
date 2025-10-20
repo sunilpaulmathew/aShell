@@ -29,7 +29,7 @@ public class ShellOutputAdapter extends RecyclerView.Adapter<ShellOutputAdapter.
     @NonNull
     @Override
     public ShellOutputAdapter.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-        View rowItem = LayoutInflater.from(parent.getContext()).inflate(R.layout.rv_shell_output, parent, false);
+        View rowItem = LayoutInflater.from(parent.getContext()).inflate(R.layout.recycler_view_shell_output, parent, false);
         return new ShellOutputAdapter.ViewHolder(rowItem);
     }
 

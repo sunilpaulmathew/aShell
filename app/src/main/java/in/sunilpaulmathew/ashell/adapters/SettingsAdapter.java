@@ -22,7 +22,7 @@ import in.sunilpaulmathew.ashell.R;
 import in.sunilpaulmathew.ashell.activities.ExamplesActivity;
 import in.sunilpaulmathew.ashell.dialogs.PolicyDialog;
 import in.sunilpaulmathew.ashell.dialogs.SingleChoiceDialog;
-import in.sunilpaulmathew.ashell.serializable.SettingsItems;
+import in.sunilpaulmathew.ashell.serializable.SettingsEntry;
 import in.sunilpaulmathew.ashell.utils.Settings;
 import in.sunilpaulmathew.ashell.utils.Utils;
 
@@ -32,9 +32,9 @@ import in.sunilpaulmathew.ashell.utils.Utils;
 public class SettingsAdapter extends RecyclerView.Adapter<SettingsAdapter.ViewHolder> {
 
     private final Activity activity;
-    private final List<SettingsItems> data;
+    private final List<SettingsEntry> data;
 
-    public SettingsAdapter(List<SettingsItems> data, Activity activity) {
+    public SettingsAdapter(List<SettingsEntry> data, Activity activity) {
         this.data = data;
         this.activity = activity;
     }

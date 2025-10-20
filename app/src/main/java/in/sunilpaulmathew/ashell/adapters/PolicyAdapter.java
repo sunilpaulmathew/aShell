@@ -12,7 +12,7 @@ import com.google.android.material.textview.MaterialTextView;
 import java.util.List;
 
 import in.sunilpaulmathew.ashell.R;
-import in.sunilpaulmathew.ashell.serializable.CommandItems;
+import in.sunilpaulmathew.ashell.serializable.CommandEntry;
 import in.sunilpaulmathew.ashell.utils.Settings;
 
 /*
@@ -20,9 +20,9 @@ import in.sunilpaulmathew.ashell.utils.Settings;
  */
 public class PolicyAdapter extends RecyclerView.Adapter<PolicyAdapter.ViewHolder> {
 
-    private final List<CommandItems> data;
+    private final List<CommandEntry> data;
 
-    public PolicyAdapter(List<CommandItems> data) {
+    public PolicyAdapter(List<CommandEntry> data) {
         this.data = data;
     }
 

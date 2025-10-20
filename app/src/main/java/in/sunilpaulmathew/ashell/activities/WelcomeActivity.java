@@ -25,7 +25,7 @@ import in.sunilpaulmathew.ashell.R;
 import in.sunilpaulmathew.ashell.adapters.WelcomeAdapter;
 import in.sunilpaulmathew.ashell.dialogs.AccessDeniedDialog;
 import in.sunilpaulmathew.ashell.dialogs.AccessUnavilableDialog;
-import in.sunilpaulmathew.ashell.serializable.CommandItems;
+import in.sunilpaulmathew.ashell.serializable.CommandEntry;
 import in.sunilpaulmathew.ashell.utils.Utils;
 import rikka.shizuku.Shizuku;
 
@@ -97,14 +97,14 @@ public class WelcomeActivity extends AppCompatActivity {
         });
     }
 
-    private List<CommandItems> getData() {
-        List<CommandItems> mData = new ArrayList<>();
-        mData.add(new CommandItems(getString(R.string.features_title), getString(R.string.features_description)));
-        mData.add(new CommandItems(getString(R.string.permissions_title), getString(R.string.permissions_shizuku_description) + ":" +
+    private List<CommandEntry> getData() {
+        List<CommandEntry> mData = new ArrayList<>();
+        mData.add(new CommandEntry(getString(R.string.features_title), getString(R.string.features_description)));
+        mData.add(new CommandEntry(getString(R.string.permissions_title), getString(R.string.permissions_shizuku_description) + ":" +
                 (!Shizuku.pingBinder() ?  " *" + getString(R.string.shizuku_unavailable_title) + "*" : Shizuku.checkSelfPermission() ==
                         PackageManager.PERMISSION_GRANTED ? " " + getString(R.string.granted) : " " + getString(R.string.authorize_click_message)) + "\n" +
                 (Build.VERSION.SDK_INT < Build.VERSION_CODES.Q ? getString(R.string.permissions_storage_description) : "")));
-        mData.add(new CommandItems(getString(R.string.disclaimer), getString(R.string.disclaimer_description)));
+        mData.add(new CommandEntry(getString(R.string.disclaimer), getString(R.string.disclaimer_description)));
         return mData;
     }
 
