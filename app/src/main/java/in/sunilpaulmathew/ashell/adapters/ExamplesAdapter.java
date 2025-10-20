@@ -7,15 +7,14 @@ import android.view.ViewGroup;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.google.android.material.dialog.MaterialAlertDialogBuilder;
 import com.google.android.material.textview.MaterialTextView;
 
 import java.util.List;
 
 import in.sunilpaulmathew.ashell.R;
+import in.sunilpaulmathew.ashell.dialogs.ExamplesDialog;
 import in.sunilpaulmathew.ashell.serializable.CommandItems;
 import in.sunilpaulmathew.ashell.utils.Settings;
-import in.sunilpaulmathew.ashell.utils.Utils;
 
 /*
  * Created by sunilpaulmathew <sunil.kde@gmail.com> on November 08, 2022
@@ -63,15 +62,7 @@ public class ExamplesAdapter extends RecyclerView.Adapter<ExamplesAdapter.ViewHo
         @Override
         public void onClick(View view) {
             if (data.get(getBindingAdapterPosition()).getExample() != null) {
-                new MaterialAlertDialogBuilder(view.getContext())
-                        .setIcon(R.mipmap.ic_launcher)
-                        .setTitle(data.get(getBindingAdapterPosition()).getTitle())
-                        .setMessage(data.get(getBindingAdapterPosition()).getExample())
-                        .setNegativeButton(R.string.cancel, (dialogInterface, i) -> {
-                        })
-                        .setPositiveButton(R.string.copy_clipboard, (dialogInterface, i) ->
-                                Utils.copyToClipboard(data.get(getBindingAdapterPosition()).getExample(), view.getContext())
-                        ).show();
+                new ExamplesDialog(data.get(getBindingAdapterPosition()).getTitle(), data.get(getBindingAdapterPosition()).getExample(), view.getContext());
             }
         }
     }
