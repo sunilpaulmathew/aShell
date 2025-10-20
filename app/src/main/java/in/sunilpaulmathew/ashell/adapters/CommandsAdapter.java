@@ -15,6 +15,7 @@ import java.util.List;
 
 import in.sunilpaulmathew.ashell.R;
 import in.sunilpaulmathew.ashell.serializable.CommandItems;
+import in.sunilpaulmathew.ashell.utils.Settings;
 
 /*
  * Created by sunilpaulmathew <sunil.kde@gmail.com> on November 05, 2022
@@ -46,6 +47,8 @@ public class CommandsAdapter extends RecyclerView.Adapter<CommandsAdapter.ViewHo
             holder.mTitle.setTypeface(null, Typeface.BOLD_ITALIC);
             holder.mSummary.setVisibility(View.GONE);
         }
+
+        Settings.setSlideInAnimation(holder.itemView, position);
     }
 
     @Override

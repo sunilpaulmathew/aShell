@@ -14,6 +14,7 @@ import java.util.List;
 
 import in.sunilpaulmathew.ashell.R;
 import in.sunilpaulmathew.ashell.serializable.CommandItems;
+import in.sunilpaulmathew.ashell.utils.Settings;
 import in.sunilpaulmathew.ashell.utils.Utils;
 
 /*
@@ -40,6 +41,8 @@ public class ExamplesAdapter extends RecyclerView.Adapter<ExamplesAdapter.ViewHo
         if (this.data.get(position).getSummary() != null) {
             holder.mSummary.setText(this.data.get(position).getSummary());
         }
+
+        Settings.setSlideInAnimation(holder.itemView, position);
     }
 
     @Override

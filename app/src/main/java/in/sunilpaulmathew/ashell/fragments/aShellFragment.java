@@ -112,6 +112,7 @@ public class aShellFragment extends Fragment {
         mSendButton = mRootView.findViewById(R.id.send);
         mTopArrow = mRootView.findViewById(R.id.top);
         mRecyclerViewOutput = mRootView.findViewById(R.id.recycler_view_output);
+        mRecyclerViewOutput.setItemAnimator(null);
         mRecyclerViewOutput.setLayoutManager(new LinearLayoutManager(requireActivity()));
 
         mCommand.requestFocus();
@@ -166,6 +167,7 @@ public class aShellFragment extends Fragment {
                                 }
 
                                 mCommandsAdapter = new CommandsAdapter(Commands.getPackageInfo(packageNamePrefix + "."));
+                                mRecyclerViewCommands.setItemAnimator(null);
                                 mRecyclerViewCommands.setLayoutManager(new LinearLayoutManager(requireActivity()));
                                 mRecyclerViewCommands.setAdapter(mCommandsAdapter);
                                 mRecyclerViewCommands.setVisibility(VISIBLE);
@@ -176,6 +178,7 @@ public class aShellFragment extends Fragment {
                                 });
                             } else {
                                 mCommandsAdapter = new CommandsAdapter(Commands.getCommand(s.toString()));
+                                mRecyclerViewCommands.setItemAnimator(null);
                                 mRecyclerViewCommands.setLayoutManager(new LinearLayoutManager(requireActivity()));
                                 mRecyclerViewCommands.setAdapter(mCommandsAdapter);
                                 mRecyclerViewCommands.setVisibility(VISIBLE);

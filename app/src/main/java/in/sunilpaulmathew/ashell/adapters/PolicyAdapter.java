@@ -13,6 +13,7 @@ import java.util.List;
 
 import in.sunilpaulmathew.ashell.R;
 import in.sunilpaulmathew.ashell.serializable.CommandItems;
+import in.sunilpaulmathew.ashell.utils.Settings;
 
 /*
  * Created by sunilpaulmathew <sunil.kde@gmail.com> on April 21, 2022
@@ -37,6 +38,8 @@ public class PolicyAdapter extends RecyclerView.Adapter<PolicyAdapter.ViewHolder
         holder.mTitle.setText(data.get(position).getTitle());
         holder.mText.setText(data.get(position).getSummary());
         holder.mText.setTextColor(holder.mText.getHintTextColors());
+
+        Settings.setSlideInAnimation(holder.itemView, position);
     }
 
     @Override

@@ -7,6 +7,8 @@ import android.content.res.Configuration;
 import android.content.res.Resources;
 import android.content.res.TypedArray;
 import android.util.DisplayMetrics;
+import android.view.View;
+import android.view.animation.DecelerateInterpolator;
 
 import androidx.appcompat.app.AppCompatDelegate;
 
@@ -420,6 +422,25 @@ public class Settings {
                 }
             }
         }.show();
+    }
+
+    public static void setSlideInAnimation(final View viewToAnimate, int position) {
+        // Only animate items appearing for the first time
+        if (position > -1) {
+            viewToAnimate.setTranslationY(50f);
+            viewToAnimate.setAlpha(0f);
+
+            viewToAnimate.animate()
+                    .translationY(0f)
+                    .alpha(1f)
+                    .setDuration(150)
+                    .setInterpolator(new DecelerateInterpolator())
+                    .start();
+        } else {
+            // Reset properties to ensure recycled views are displayed correctly
+            viewToAnimate.setTranslationY(0f);
+            viewToAnimate.setAlpha(1f);
+        }
     }
 
 }

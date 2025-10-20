@@ -37,6 +37,7 @@ public class SettingsActivity extends AppCompatActivity {
         MaterialTextView mCopyright = findViewById(R.id.copyright);
         RecyclerView mRecyclerView = findViewById(R.id.recycler_view);
 
+        mRecyclerView.setItemAnimator(null);
         mRecyclerView.setLayoutManager(new LinearLayoutManager(this));
 
         mAppInfo.setText(getString(R.string.app_version, BuildConfig.VERSION_NAME));

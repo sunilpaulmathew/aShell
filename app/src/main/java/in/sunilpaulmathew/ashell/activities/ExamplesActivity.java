@@ -42,6 +42,7 @@ public class ExamplesActivity extends AppCompatActivity {
         mRecyclerView.setLayoutManager(new LinearLayoutManager(this));
         GridLayoutManager mLayoutManager = new GridLayoutManager(this, getResources().getConfiguration()
                 .orientation == Configuration.ORIENTATION_LANDSCAPE ? 2 : 1);
+        mRecyclerView.setItemAnimator(null);
         mRecyclerView.setLayoutManager(mLayoutManager);
         mRecyclerView.setAdapter(new ExamplesAdapter(Commands.getCommand("")));
         mRecyclerView.setVisibility(View.VISIBLE);

@@ -13,6 +13,7 @@ import com.google.android.material.textview.MaterialTextView;
 import java.util.List;
 
 import in.sunilpaulmathew.ashell.R;
+import in.sunilpaulmathew.ashell.utils.Settings;
 
 /*
  * Created by sunilpaulmathew <sunil.kde@gmail.com> on November 09, 2022
@@ -35,6 +36,8 @@ public class ShellOutputAdapter extends RecyclerView.Adapter<ShellOutputAdapter.
     @Override
     public void onBindViewHolder(@NonNull ShellOutputAdapter.ViewHolder holder, int position) {
         holder.mOutput.setText(Html.fromHtml(this.data.get(position), Html.FROM_HTML_MODE_LEGACY));
+
+        Settings.setSlideInAnimation(holder.itemView, position);
     }
 
     @Override

@@ -48,6 +48,7 @@ public class WelcomeActivity extends AppCompatActivity {
         mVersionInfo.setText(getString(R.string.app_version, BuildConfig.VERSION_NAME));
 
         RecyclerView mRecyclerView = findViewById(R.id.recycler_view);
+        mRecyclerView.setItemAnimator(null);
         mRecyclerView.setLayoutManager(new LinearLayoutManager(this));
         WelcomeAdapter mAdapter = new WelcomeAdapter(getData());
         mRecyclerView.setAdapter(mAdapter);

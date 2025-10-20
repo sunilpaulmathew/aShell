@@ -88,6 +88,8 @@ public class SettingsAdapter extends RecyclerView.Adapter<SettingsAdapter.ViewHo
                 Settings.restartApp(activity);
             }
         });
+
+        Settings.setSlideInAnimation(holder.itemView, position);
     }
 
     @Override
@@ -136,6 +138,7 @@ public class SettingsAdapter extends RecyclerView.Adapter<SettingsAdapter.ViewHo
                 MaterialTextView version = policyLayout.findViewById(R.id.title);
                 RecyclerView recyclerView = policyLayout.findViewById(R.id.recycler_view);
                 version.setText(view.getContext().getString(R.string.app_version, BuildConfig.VERSION_NAME));
+                recyclerView.setItemAnimator(null);
                 recyclerView.setLayoutManager(new LinearLayoutManager(view.getContext()));
                 recyclerView.setAdapter(new PolicyAdapter(Settings.getPolicyData()));
                 new MaterialAlertDialogBuilder(view.getContext())

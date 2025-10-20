@@ -16,6 +16,7 @@ import java.util.List;
 
 import in.sunilpaulmathew.ashell.R;
 import in.sunilpaulmathew.ashell.serializable.CommandItems;
+import in.sunilpaulmathew.ashell.utils.Settings;
 import rikka.shizuku.Shizuku;
 
 /*
@@ -56,6 +57,8 @@ public class WelcomeAdapter extends RecyclerView.Adapter<WelcomeAdapter.ViewHold
                 mClickListener.onItemClick();
             }
         });
+
+        Settings.setSlideInAnimation(holder.itemView, position);
     }
 
     @Override
