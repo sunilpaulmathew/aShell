@@ -1,0 +1,40 @@
+<resources xmlns:tools="http://schemas.android.com/tools" tools:ignore="MissingTranslation">
+
+    <string name="app_summary">"Snadno spouštějte příkazy ADB na svém Android zařízení se spuštěnou službou Shizuku."</string>
+    <string name="app_working_message">"aShell pořád pracuje. Prosím počkejte než dokončí, nebo ho ručně zastavte (kliknutím na tlačítko stop) pro spuštění nového příkazu."</string>
+    <string name="bookmark_added_message">"K '%s' byla přidána záložka"</string>
+    <string name="bookmark_removed_message">"Od '%s' byla odebrána záložka."</string>
+    <string name="cancel">"Zrušit"</string>
+    <string name="clear_all_message">"Smazat vše na této obrazovce?"</string>
+    <string name="command_hint">"Vložte ADB příkaz zde"</string>
+    <string name="command_title">"aShell příkazový řádek"</string>
+    <string name="dismiss">"OK"</string>
+    <string name="examples">"Příklady"</string>
+    <string name="press_back">"Zmáčknete zpět znovu pro ukončení"</string>
+    <string name="process_destroy_message">"aShell ještě pracuje. Chcete tento proces zastavit?"</string>
+    <string name="quit">"Odejít"</string>
+    <string name="quit_app_message">"Chcete opustit aShell?"</string>
+    <string name="request_permission">"Zeptat se na oprávnění"</string>
+    <string name="start">"Začít"</string>
+    <string name="shell_output_saved_message">"Výstup posledního příkazu byl uložen do složky '%s'"</string>
+    <string name="shizuku_access_denied_message">"Přístup k Shizuku je zamítnut pro aShell. aShell nefunguje bez funkčního Shizuku prostředí."</string>
+    <string name="shizuku_unavailable_message">"Shizuku není nainstalováno nebo správně nastaveno na vašem zařízení. aShell nefunguje bez funkčního Shizuku prostředí."</string>
+    <string name="su_warning_message">"aShell není dělaný pro uživatele zabývající se rootem. Ruším."</string>
+    <string name="yes">"Ano"</string>
+    <string name="copyright_text">"Copyright: © 2022–2025, sunilpaulmathew"</string>
+    <string name="save">"Uložit"</string>
+    <string name="app_theme">"Téma aplikace"</string>
+    <string name="app_theme_amoled">"Amoled černá"</string>
+    <string name="app_theme_amoled_description">"Spoří baterku a přináší elegantní, moderní vzhled"</string>
+    <string name="app_theme_auto">"Automaticky"</string>
+    <string name="app_theme_dark">"Tmavý"</string>
+    <string name="app_theme_light">"Světlý"</string>
+    <string name="app_version">"aShell %s"</string>
+    <string name="authorize_click_message">"Stiskněte pro autorizaci"</string>
+    <string name="copy_clipboard">"Zkopírovat do schránky"</string>
+    <string name="developer_contact">"Kontaktovat vývojáře"</string>
+    <string name="developer_contact_description">"Potřebujete pomoc nebo máte zpětnou vazbu? Kontaktujte vývojáře"</string>
+    <string name="disclaimer">"Upozornění"</string>
+    <string name="examples_description">"Projděte si populární ADB příkazy"</string>
+    <string name="features_title">"Funkce"</string>
+</resources>

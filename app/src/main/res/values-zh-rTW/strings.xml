@@ -12,14 +12,14 @@
     <string name="dismiss">"關閉"</string>
     <string name="examples">"範例"</string>
     <string name="press_back">"再按一次返回鍵即可關閉"</string>
-    <string name="process_destroy_message">"aShell 仍在執行。 您要停止目前作業嗎？"</string>
+    <string name="process_destroy_message">"aShell 仍在執行。您要停止目前作業嗎？"</string>
     <string name="quit">"離開"</string>
     <string name="quit_app_message">"您要離開 aShell 嗎？"</string>
     <string name="request_permission">"權限要求"</string>
     <string name="start">"開始"</string>
     <string name="shell_output_saved_message">"已將最後輸出的指令儲存至「%s」資料夾"</string>
-    <string name="shizuku_access_denied_message">"aShell 已被拒絕存取 Shizuku 服務。 aShell 無法在沒有合適的 Shizuku 環境下運作。"</string>
-    <string name="shizuku_unavailable_message">"您的裝置尚未安裝或正確配置 Shizuku。 aShell 無法在沒有合適的 Shizuku 環境下運作。 輕觸這裡了解更多資訊。"</string>
+    <string name="shizuku_access_denied_message">"aShell 已被拒絕存取 Shizuku 服務。aShell 無法在沒有合適的 Shizuku 環境下運作。"</string>
+    <string name="shizuku_unavailable_message">"您的裝置尚未安裝或正確配置 Shizuku。aShell 無法在沒有合適的 Shizuku 環境下運作。輕觸這裡了解更多資訊。"</string>
     <string name="su_warning_message">"aShell 並非為 Root 相關操作而設，作業已終止。"</string>
     <string name="yes">"是"</string>
     <string name="copyright_text">"版權所有：© 2024–2025, sunilpaulmathew"</string>
@@ -36,9 +36,14 @@
     <string name="developer_contact">"聯絡開發人員"</string>
     <string name="developer_contact_description">"需要協助或提供意見嗎？請聯絡我們"</string>
     <string name="disclaimer">"免責聲明"</string>
-    <string name="disclaimer_description">"\uD83E\uDDE9 Shizuku 架構：aShell 需要完整的 Shizuku 環境才能運作，使用前請先確認您已配置完成。 \uD83D\uDC68\u200D\uD83D\uDCBB 基本概念：建議事先了解 ADB 與 Linux 命令相關知識以有效運用。 \uD83C\uDF10 開放原始碼：aShell 資源公開並可免費開發，歡迎透過 GitLab 和 POEditor 提供協助或翻譯。 ⚠️ 免責聲明：我們不會對使用本應用程式所造成的錯誤、資料遺失或裝置損壞承擔任何責任。"</string>
+    <string name="disclaimer_description">"\uD83E\uDDE9 Shizuku 架構：aShell 需要完整的 Shizuku 環境才能運作，使用前請先確認您已配置完成。
+        \uD83D\uDC68\u200D\uD83D\uDCBB 基本概念：建議事先了解 ADB 與 Linux 命令相關知識以有效運用。
+        \uD83C\uDF10 開放原始碼：aShell 資源公開並可免費開發，歡迎透過 GitLab 和 POEditor 提供協助或翻譯。
+        ⚠️ 免責聲明：我們不會對使用本應用程式所造成的錯誤、資料遺失或裝置損壞承擔任何責任。"</string>
     <string name="examples_description">"瀏覽常用 ADB 指令"</string>
-    <string name="features_description">"\uD83D\uDCDC 輕鬆執行 ADB 指令 — 內建範例與書籤管理。 \uD83D\uDCCA 處理 logcat、top 等連續指令，搜尋與儲存輸出內容。 \uD83C\uDFA8 現代介面與流暢體驗，支援自動切換深色 / 淺色。"</string>
+    <string name="features_description">"\uD83D\uDCDC 輕鬆執行 ADB 指令 — 內建範例與書籤管理。
+        \uD83D\uDCCA 處理 logcat、top 等連續指令，搜尋與儲存輸出內容。
+        \uD83C\uDFA8 現代介面與流暢體驗，支援自動切換深色 / 淺色。"</string>
     <string name="features_title">"特色"</string>
     <string name="file_manager_error_toast">"以外部檔案管理員擷取資料失敗，作業已終止。"</string>
     <string name="general">"一般"</string>
@@ -59,4 +64,10 @@
     <string name="translations">"翻譯"</string>
     <string name="translations_description">"協助翻譯應用程式"</string>
     <string name="user_interface">"介面"</string>
+    <string name="shizuku_app_open_message">"在這個裝置上啟用 Shizuku 以供 aShell 使用：
+
+        1. 開啟 Shizuku 應用程式
+        2. 前往「已授權的應用程式」
+        3. 啟用 aShell 的存取權限"</string>
+    <string name="shizuku_open">"開啟 Shizuku"</string>
 </resources>
