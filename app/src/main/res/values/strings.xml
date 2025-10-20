@@ -33,6 +33,7 @@
     <string name="granted">Granted</string>
     <string name="language">Language</string>
     <string name="language_ar" translatable="false">العربية (%s)</string>
+    <string name="language_cs" translatable="false">čeština</string>
     <string name="language_de" translatable="false">Deutsch (%s)</string>
     <string name="language_el" translatable="false">Ελληνικά</string>
     <string name="language_en" translatable="false">English (%s)</string>
@@ -40,6 +41,7 @@
     <string name="language_fr" translatable="false">français (%s)</string>
     <string name="language_hu" translatable="false">Magyar</string>
     <string name="language_in" translatable="false">bahasa Indonesia</string>
+    <string name="language_it" translatable="false">Italiano</string>
     <string name="language_ja" translatable="false">日本</string>
     <string name="language_ko" translatable="false">한국어</string>
     <string name="language_pl" translatable="false">Polski"</string>
