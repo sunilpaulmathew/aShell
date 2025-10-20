@@ -8,6 +8,7 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import androidx.annotation.NonNull;
+import androidx.appcompat.app.AppCompatDelegate;
 import androidx.appcompat.widget.AppCompatImageButton;
 import androidx.appcompat.widget.LinearLayoutCompat;
 import androidx.recyclerview.widget.RecyclerView;
@@ -20,6 +21,7 @@ import java.util.List;
 import in.sunilpaulmathew.ashell.R;
 import in.sunilpaulmathew.ashell.activities.ExamplesActivity;
 import in.sunilpaulmathew.ashell.dialogs.PolicyDialog;
+import in.sunilpaulmathew.ashell.dialogs.SingleChoiceDialog;
 import in.sunilpaulmathew.ashell.serializable.SettingsItems;
 import in.sunilpaulmathew.ashell.utils.Settings;
 import in.sunilpaulmathew.ashell.utils.Utils;
@@ -117,7 +119,32 @@ public class SettingsAdapter extends RecyclerView.Adapter<SettingsAdapter.ViewHo
         public void onClick(View view) {
             int position = data.get(getBindingAdapterPosition()).getPosition();
             if (position == 1) {
-                Settings.setAppTheme(view.getContext());
+                new SingleChoiceDialog(R.drawable.ic_theme, view.getContext().getString(R.string.app_theme),
+                        Settings.getAppThemeMenu(view.getContext()), Settings.getAppThemePosition(view.getContext()), view.getContext()) {
+
+                    @Override
+                    public void onItemSelected(int position) {
+                        if (position == Settings.getAppThemePosition(view.getContext())) {
+                            return;
+                        }
+                        switch (position) {
+                            case 2:
+                                Utils.saveInt("appTheme", 2, view.getContext());
+                                AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO);
+                                break;
+                            case 1:
+                                Utils.saveInt("appTheme", 1, view.getContext());
+                                AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_YES);
+                                break;
+                            default:
+                                Utils.saveInt("appTheme", 0, view.getContext());
+                                AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_FOLLOW_SYSTEM);
+                                break;
+                        }
+                        data.get(getBindingAdapterPosition()).setDescription(Settings.getAppTheme(view.getContext()));
+                        notifyItemChanged(getBindingAdapterPosition());
+                    }
+                }.show();
             } else if (position == 2) {
                 Utils.saveBoolean("amoledTheme", !Utils.getBoolean("amoledTheme", false, view.getContext()), view.getContext());
                 Settings.restartApp(activity);

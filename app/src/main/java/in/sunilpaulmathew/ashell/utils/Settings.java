@@ -59,7 +59,7 @@ public class Settings {
         return color;
     }
 
-    private static int getAppThemePosition(Context context) {
+    public static int getAppThemePosition(Context context) {
         return Utils.getInt("appTheme", 0, context);
     }
 
@@ -180,7 +180,7 @@ public class Settings {
         }
     }
 
-    private static String[] getAppThemeMenu(Context context) {
+    public static String[] getAppThemeMenu(Context context) {
         return new String[] {
                 context.getString(R.string.app_theme_auto),
                 context.getString(R.string.app_theme_dark),
@@ -417,33 +417,6 @@ public class Settings {
                         break;
                 }
                 restartApp(activity);
-            }
-        }.show();
-    }
-
-    public static void setAppTheme(Context context) {
-        new SingleChoiceDialog(R.drawable.ic_theme, context.getString(R.string.app_theme),
-                getAppThemeMenu(context), getAppThemePosition(context), context) {
-
-            @Override
-            public void onItemSelected(int position) {
-                if (position == Utils.getInt("appTheme", 0, context)) {
-                    return;
-                }
-                switch (position) {
-                    case 2:
-                        Utils.saveInt("appTheme", 2, context);
-                        AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO);
-                        break;
-                    case 1:
-                        Utils.saveInt("appTheme", 1, context);
-                        AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_YES);
-                        break;
-                    default:
-                        Utils.saveInt("appTheme", 0, context);
-                        AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_FOLLOW_SYSTEM);
-                        break;
-                }
             }
         }.show();
     }

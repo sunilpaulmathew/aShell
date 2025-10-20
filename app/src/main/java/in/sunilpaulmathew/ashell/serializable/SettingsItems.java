@@ -9,7 +9,8 @@ public class SettingsItems implements Serializable {
 
     private final boolean mEnabled, mSwitch;
     private final int mIcon, mPosition;
-    private final String mTitle, mDescription;
+    private final String mTitle;
+    private String mDescription;
 
     public SettingsItems(String title) {
         this.mPosition = 0;
@@ -60,6 +61,10 @@ public class SettingsItems implements Serializable {
 
     public String getDescription() {
         return mDescription;
+    }
+
+    public void setDescription(String description) {
+        this.mDescription = description;
     }
 
 }
