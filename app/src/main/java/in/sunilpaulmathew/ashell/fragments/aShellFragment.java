@@ -3,7 +3,6 @@ package in.sunilpaulmathew.ashell.fragments;
 import static android.view.View.GONE;
 import static android.view.View.VISIBLE;
 
-import android.annotation.SuppressLint;
 import android.content.ContentValues;
 import android.content.Intent;
 import android.content.pm.PackageManager;
@@ -35,7 +34,6 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.google.android.material.button.MaterialButton;
 import com.google.android.material.dialog.MaterialAlertDialogBuilder;
 import com.google.android.material.textfield.TextInputEditText;
-import com.google.android.material.textview.MaterialTextView;
 
 import java.io.File;
 import java.io.IOException;
@@ -50,12 +48,12 @@ import java.util.concurrent.ScheduledExecutorService;
 import java.util.concurrent.TimeUnit;
 import java.util.concurrent.atomic.AtomicInteger;
 
-import in.sunilpaulmathew.ashell.BuildConfig;
 import in.sunilpaulmathew.ashell.R;
 import in.sunilpaulmathew.ashell.activities.ExamplesActivity;
 import in.sunilpaulmathew.ashell.activities.SettingsActivity;
 import in.sunilpaulmathew.ashell.adapters.CommandsAdapter;
 import in.sunilpaulmathew.ashell.adapters.ShellOutputAdapter;
+import in.sunilpaulmathew.ashell.dialogs.AboutDialog;
 import in.sunilpaulmathew.ashell.dialogs.AccessUnavilableDialog;
 import in.sunilpaulmathew.ashell.utils.Async;
 import in.sunilpaulmathew.ashell.utils.Commands;
@@ -92,7 +90,6 @@ public class aShellFragment extends Fragment {
         mCommandShared = arguments.getString("command");
     }
 
-    @SuppressLint("SetTextI18n")
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
@@ -134,7 +131,6 @@ public class aShellFragment extends Fragment {
             @Override
             public void onTextChanged(CharSequence s, int start, int before, int count) {
             }
-            @SuppressLint("SetTextI18n")
             @Override
             public void afterTextChanged(Editable s) {
                 if (s.toString().contains("\n")) {
@@ -213,15 +209,7 @@ public class aShellFragment extends Fragment {
             }
         });
 
-        mInfoButton.setOnClickListener(v -> {
-            LayoutInflater mLayoutInflator = LayoutInflater.from(v.getContext());
-            View aboutLayout = mLayoutInflator.inflate(R.layout.layout_about, null);
-            MaterialTextView mAppTile = aboutLayout.findViewById(R.id.title);
-            mAppTile.setText(v.getContext().getString(R.string.app_name) + " " + BuildConfig.VERSION_NAME);
-
-            new MaterialAlertDialogBuilder(v.getContext())
-                    .setView(aboutLayout).show();
-        });
+        mInfoButton.setOnClickListener(v -> new AboutDialog(requireActivity()));
 
         mSettingsButton.setOnClickListener(v -> {
             Intent intent = new Intent(v.getContext(), SettingsActivity.class);
@@ -629,9 +617,7 @@ public class aShellFragment extends Fragment {
     private void onRequestPermissionsResult(int requestCode, int grantResult) {
         if (requestCode == 0 && grantResult == PackageManager.PERMISSION_GRANTED) {
             mResult.add("aShell got access to Shizuku service");
-            ShizukuShell.ensureUserService(() -> {
-                Commands.loadPackageInfo();
-            });
+            ShizukuShell.ensureUserService(Commands::loadPackageInfo);
         } else {
             mResult.add(getString(R.string.shizuku_access_denied_title));
         }
