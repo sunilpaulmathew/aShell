@@ -47,6 +47,8 @@
     <string name="language_pl" translatable="false">Polski"</string>
     <string name="language_pt" translatable="false">Português (%s)</string>
     <string name="language_ru" translatable="false">русский</string>
+    <string name="language_th" translatable="false">แบบไทย</string>
+    <string name="language_tr" translatable="false">Türkçe</string>
     <string name="language_zh" translatable="false">中文 (%s)</string>
     <string name="miscellaneous">Miscellaneous</string>
     <string name="permissions_shizuku_description">🔐 moe.shizuku.manager.permission.API_V23: Permission required to use Shizuku’s privileged APIs</string>
