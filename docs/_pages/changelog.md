@@ -6,6 +6,11 @@ include_in_header: true
 
 <h2 style="color: blue">🆕 What's New</h2>
 
+### ✨ 18. [v0.25](https://gitlab.com/sunilpaulmathew/ashell/-/releases/v0.25) *(Mar 30 2026)*
+- Updated build tools.
+- Added Thai and updated other translations.
+- Miscellaneous changes.
+
 ### ✨ 17. [v0.24](https://gitlab.com/sunilpaulmathew/ashell/-/releases/v0.24) *(Jan 04 2026)*
 - Fixed crashes on certain cases due to no Shizuku access.
 - Improved accessibility for TalkBack users, thanks to [Aryan Choudhary](https://github.com/aryanchoudharypro).
