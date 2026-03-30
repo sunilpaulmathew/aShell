@@ -1,29 +1,72 @@
 <resources xmlns:tools="http://schemas.android.com/tools" tools:ignore="MissingTranslation">
 
-    <string name="app_summary">Bem-vindo ao aShell: um shell ADB local para dispositivos Android com suporte ao Shizuku.</string>
-    <string name="app_theme">"Tema do App"</string>
+    <string name="app_summary">"Execute comandos ADB sem esforço no seu dispositivo Android habilitado para Shizuku."</string>
+    <string name="app_working_message">"O aShell ainda está funcionando. Aguarde a conclusão ou pare manualmente (clicando no botão parar) para executar um novo comando."</string>
+    <string name="bookmark_added_message">"'%s' foi favoritado"</string>
+    <string name="bookmark_removed_message">"'%s' foi removido de favorito"</string>
+    <string name="cancel">"Cancelar"</string>
+    <string name="clear_all_message">"Limpar tudo que está nessa tela?"</string>
+    <string name="command_hint">"Coloque o comando ADB aqui"</string>
+    <string name="command_title">"Caixa de mensagem aShell"</string>
+    <string name="dismiss">"Descartar"</string>
+    <string name="examples">"Exemplos"</string>
+    <string name="press_back">"Pressione novamente para sair"</string>
+    <string name="process_destroy_message">"O aShell ainda está funcionando. Deseja interromper o processo atual?"</string>
+    <string name="quit">"Sair"</string>
+    <string name="quit_app_message">"Você quer sair do aShell?"</string>
+    <string name="request_permission">"Solicitar Permissão"</string>
+    <string name="start">"Começar"</string>
+    <string name="shell_output_saved_message">"A saída do último comando é exportada para a pasta '%s'"</string>
+    <string name="shizuku_access_denied_message">"O acesso ao Shizuku foi negado para o aShell. O aShell não vai funcionar sem um ambiente Shizuku adequado."</string>
+    <string name="shizuku_unavailable_message">"Shizuku não está instalado ou não está configurado no seu dispositivo. aShell não irá funcionar sem o ambiente Shizuku."</string>
+    <string name="su_warning_message">"O aShell não foi projetado para usos relacionados ao root. Abortando."</string>
+    <string name="yes">"Sim"</string>
+    <string name="copyright_text">"Direitos autorais: © 2022–2025, sunilpaulmathew"</string>
+    <string name="save">"Salvar"</string>
+    <string name="app_theme">"Tema do aplicativo"</string>
+    <string name="app_theme_amoled">"Preto AMOLED"</string>
+    <string name="app_theme_amoled_description">"Economize bateria e ofereça um visual elegante e moderno."</string>
+    <string name="app_theme_auto">"Automático"</string>
     <string name="app_theme_dark">"Escuro"</string>
-    <string name="app_theme_light">"Claro"</string>
-    <string name="app_working_message">aShell está em execução. Aguarde até que termine ou pare manualmente (clicando no botão de parar) para executar um novo comando.</string>
-    <string name="bookmark_added_message">\'%s\' foi adicionado aos favoritos</string>
-    <string name="bookmark_removed_message">\'%s\' foi removido dos favoritos</string>
-    <string name="cancel">Cancelar</string>
-    <string name="clear_all_message">Limpar tudo nesta tela?</string>
-    <string name="command_hint">Digite o comando ADB aqui</string>
-    <string name="command_title">Caixa de Comando aShell</string>
-    <string name="copy_clipboard">Copiar</string>
-    <string name="dismiss">Dispensar</string>
-    <string name="examples">Exemplos</string>
-    <string name="press_back">Pressione voltar novamente para sair</string>
-    <string name="process_destroy_message">aShell está em execução. Deseja parar o processo atual?</string>
-    <string name="quit">Sair</string>
-    <string name="quit_app_message">Deseja sair do aShell?</string>
-    <string name="request_permission">Solicitar Permissão</string>
-    <string name="start">Iniciar</string>
-    <string name="shell_output_saved_message">A saída do último comando foi exportada para a pasta \'%s\'</string>
-    <string name="shizuku_access_denied_message">Acesso ao serviço Shizuku foi negado para o aShell. O aShell não funcionará sem um ambiente Shizuku adequado.</string>
-    <string name="shizuku_unavailable_message">O Shizuku não está instalado ou configurado corretamente no seu dispositivo. O aShell não funcionará sem um ambiente Shizuku adequado.</string>
-    <string name="su_warning_message">O aShell não é projetado para usos relacionados ao root. Abortando.</string>
+    <string name="app_theme_light">"Luz"</string>
+    <string name="app_version">"aShell %s"</string>
+    <string name="authorize_click_message">"Clique para autorizar"</string>
+    <string name="copy_clipboard">"Copiar para a área de transferência"</string>
+    <string name="developer_contact">"Contate o desenvolvedor"</string>
+    <string name="developer_contact_description">"Precisa de ajuda ou tem algum comentário? Entre em contato com o desenvolvedor."</string>
+    <string name="disclaimer">"Aviso Legal"</string>
+    <string name="disclaimer_description">"Dependência do Shizuku: o aShell requer um ambiente Shizuku totalmente funcional para operar. Certifique-se de que o Shizuku esteja configurado antes de usar este aplicativo.
+        Conhecimento básico Requisitos: Recomenda-se familiaridade com ADB e os conceitos básicos da linha de comando do Linux para um uso eficaz.
+        Código aberto: o aShell é de código aberto e gratuito para compilar. Contribuições e traduções são bem-vindas via GitLab e PoEditor.
+        ⚠️ Isenção de responsabilidade: Não nos responsabilizamos por quaisquer problemas, perda de dados ou danos que possam ocorrer durante o uso deste aplicativo."</string>
+    <string name="examples_description">"Explore os comandos ADB mais populares"</string>
+    <string name="features_description">"\uD83D\uDCDC Execute comandos ADB com facilidade — inclui exemplos integrados e marcadores.
+        \uD83D\uDCCA Lida com comandos contínuos como logcat ou top, com opções de pesquisa e salvamento da saída.
+        \uD83C\uDFA8 Interface elegante com tema escuro/claro automático para uma experiência moderna e fluida."</string>
+    <string name="features_title">"Características"</string>
+    <string name="file_manager_error_toast">"Falha ao obter dados do gerenciador de arquivos externo. Abortando."</string>
+    <string name="general">"Em geral"</string>
+    <string name="granted">"Garantido"</string>
+    <string name="language">"Linguagem"</string>
+    <string name="miscellaneous">"Variado"</string>
+    <string name="permissions_shizuku_description">"🔐 moe.shizuku.manager.permission.API_V23: Permissão necessária para usar APIs privilegiadas de Shizuku"</string>
+    <string name="permissions_storage_description">"📂 WRITE_EXTERNAL_STORAGE: Necessário para salvar a última saída do comando no seu dispositivo (opcional)"</string>
+    <string name="permissions_title">"É necessário obter autorização."</string>
+    <string name="privacy_policy">"Política de Privacidade"</string>
+    <string name="privacy_policy_description">"Sua privacidade é importante: Saiba mais"</string>
+    <string name="settings">"Configurações"</string>
+    <string name="shizuku_access_denied_title">"Acesso Shizuku negado para aShell"</string>
+    <string name="shizuku_access_granted_message">"aShell obteve acesso ao serviço Shizuku. Clique em \"iniciar\" para continuar."</string>
+    <string name="shizuku_learn">"Aprenda Shizuku"</string>
+    <string name="shizuku_learn_description">"Saiba mais sobre Shizuku em: shizuku.rikka.app"</string>
+    <string name="shizuku_unavailable_title">"Suporte para Shizuku não encontrado"</string>
     <string name="translations">"Traduções"</string>
-    <string name="yes">Sim</string>
+    <string name="translations_description">"Contribua para a tradução do aplicativo."</string>
+    <string name="user_interface">"Interface do usuário"</string>
+    <string name="shizuku_app_open_message">"Para habilitar o Shizuku neste dispositivo para o aShell:
+
+        1. Abra o aplicativo Shizuku
+        2. Acesse Aplicativos autorizados
+        3. Habilite o acesso para o aShell"</string>
+    <string name="shizuku_open">"Abrir Shizuku"</string>
 </resources>

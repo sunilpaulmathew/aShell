@@ -5,7 +5,7 @@
     <string name="bookmark_added_message">"'%s' yer imlerine eklendi"</string>
     <string name="bookmark_removed_message">"'%s' yer imlerinden çıkarıldı"</string>
     <string name="cancel">"İptal"</string>
-    <string name="clear_all_message">"Ekrandaki her şey silinsin mi?"</string>
+    <string name="clear_all_message">"Ekrandaki herşey silinsin mi?"</string>
     <string name="command_hint">"ADB komutunu buraya girin"</string>
     <string name="command_title">"aShell Komut Kutusu"</string>
     <string name="dismiss">"Görmezden gel"</string>
@@ -21,7 +21,7 @@
     <string name="shizuku_unavailable_message">"Shizuku, cihazınızda kurulu değil veya doğru bir şekilde konfigüre edilmedi. aShell düzgün bir Shizuku ortamı olmadan çalışamaz."</string>
     <string name="su_warning_message">"aShell root ile ilgili kullanım için tasarlanmadı. Eylem iptal ediliyor."</string>
     <string name="yes">"Evet"</string>
-    <string name="copyright_text">"Telif hakkı: © 2022–2026, sunilpaulmathew"</string>
+    <string name="copyright_text">"Telif hakkı: © 2022–2025, sunilpaulmathew"</string>
     <string name="save">"Kaydet"</string>
     <string name="app_theme">"Uygulama teması"</string>
     <string name="app_theme_amoled">"Amoled siyah"</string>
@@ -63,4 +63,10 @@
     <string name="translations">"Çeviriler"</string>
     <string name="translations_description">"Bu uygulamanın tercümesine katkıda bulunun"</string>
     <string name="user_interface">"Kullanıcı arayüzü"</string>
+    <string name="shizuku_app_open_message">"Bu cihazda aShell için Shizukuyu etkinleştirirken:
+
+        1. Shizuku uygulamasını açın
+        2. Yetkilendirilmiş uygulamara gidin
+        3. aShell için erişimi açın"</string>
+    <string name="shizuku_open">"Shizkuyu açın"</string>
 </resources>
