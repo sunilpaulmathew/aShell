@@ -1,0 +1,72 @@
+<resources xmlns:tools="http://schemas.android.com/tools" tools:ignore="MissingTranslation">
+
+    <string name="app_summary">"mamew_noop"</string>
+    <string name="app_working_message">"see"</string>
+    <string name="bookmark_added_message">"'%s' ถูกคั่นหน้าไว้"</string>
+    <string name="bookmark_removed_message">"'%s' ถูกลบออกจากบุ๊กมาร์กแล้ว"</string>
+    <string name="cancel">"ยกเลิก"</string>
+    <string name="clear_all_message">"ล้างข้อมูลทั้งหมดในหน้าจอนี้?"</string>
+    <string name="command_hint">"ป้อนคำสั่ง ADB ที่นี่"</string>
+    <string name="command_title">"กล่องคำสั่งเชลล์"</string>
+    <string name="dismiss">"อนุญาตให้ออกไป"</string>
+    <string name="examples">"ตัวอย่าง"</string>
+    <string name="press_back">"กดปุ่มย้อนกลับอีกครั้งเพื่อออก"</string>
+    <string name="process_destroy_message">"โปรแกรม aShell ยังคงทำงานอยู่ คุณต้องการหยุดกระบวนการปัจจุบันหรือไม่"</string>
+    <string name="quit">"ล้มเลิก"</string>
+    <string name="quit_app_message">"คุณต้องการออกจาก aShell หรือไม่?"</string>
+    <string name="request_permission">"ขออนุญาต"</string>
+    <string name="start">"เริ่ม"</string>
+    <string name="shell_output_saved_message">"ผลลัพธ์ของคำสั่งล่าสุดจะถูกส่งออกไปยังโฟลเดอร์ '%s'"</string>
+    <string name="shizuku_access_denied_message">"ระบบไม่อนุญาตให้เข้าถึงบริการ Shizuku สำหรับ aShell aShell จะไม่สามารถทำงานได้หากไม่มีสภาพแวดล้อม Shizuku ที่เหมาะสม"</string>
+    <string name="shizuku_unavailable_message">"Shizuku ไม่ได้ติดตั้งหรือไม่ได้ตั้งค่าอย่างถูกต้องบนอุปกรณ์ของคุณ aShell จะไม่ทำงานหากไม่มีสภาพแวดล้อม Shizuku ที่เหมาะสม"</string>
+    <string name="su_warning_message">"aShell ไม่ได้ออกแบบมาสำหรับการใช้งานที่เกี่ยวข้องกับสิทธิ์ระดับรูท ยกเลิกการทำงาน"</string>
+    <string name="yes">"ใช่"</string>
+    <string name="copyright_text">"ลิขสิทธิ์: © 2022–2025, sunilpaulmathew"</string>
+    <string name="save">"บันทึก"</string>
+    <string name="app_theme">"ธีมแอป"</string>
+    <string name="app_theme_amoled">"อาโมเล่สีดำ"</string>
+    <string name="app_theme_amoled_description">"ประหยัดแบตเตอรี่และมอบรูปลักษณ์ที่ทันสมัยและเรียบหรู"</string>
+    <string name="app_theme_auto">"อัตโนมัติ"</string>
+    <string name="app_theme_dark">"มืด"</string>
+    <string name="app_theme_light">"แสงสว่าง"</string>
+    <string name="app_version">"เชลล์ %s"</string>
+    <string name="authorize_click_message">"คลิกเพื่ออนุญาต"</string>
+    <string name="copy_clipboard">"คัดลอกไปยังคลิปบอร์ด"</string>
+    <string name="developer_contact">"ติดต่อผู้พัฒนา"</string>
+    <string name="developer_contact_description">"ต้องการความช่วยเหลือหรือมีข้อเสนอแนะ? ติดต่อผู้พัฒนาได้เลย"</string>
+    <string name="disclaimer">"ข้อสงวนสิทธิ์"</string>
+    <string name="disclaimer_description">"⚠️ การพึ่งพา Shizuku: aShell ต้องการสภาพแวดล้อม Shizuku ที่ใช้งานได้อย่างสมบูรณ์จึงจะทำงานได้ โปรดตรวจสอบให้แน่ใจว่าได้ตั้งค่า Shizuku ก่อนใช้งานแอปนี้
+        ⚠️ ความรู้พื้นฐานที่จำเป็น: แนะนำให้มีความคุ้นเคยกับ ADB และพื้นฐานคำสั่งบรรทัดคำสั่งของ Linux เพื่อการใช้งานที่มีประสิทธิภาพ
+        ⚠️ โอเพนซอร์ส: aShell เป็นโอเพนซอร์สและสร้างได้ฟรี ยินดีรับการมีส่วนร่วมและการแปลผ่าน GitLab และ POEditor
+        ⚠️ ไม่มีภาระผูกพัน: เราไม่รับผิดชอบต่อปัญหา การสูญเสียข้อมูล หรือความเสียหายใดๆ ที่อาจเกิดขึ้นขณะใช้งานแอปนี้"</string>
+    <string name="examples_description">"สำรวจคำสั่ง ADB ยอดนิยม"</string>
+    <string name="features_description">"\uD83D\uDCDC เรียกใช้คำสั่ง ADB ได้อย่างง่ายดาย—รวมถึงตัวอย่างในตัวและฟังก์ชันคั่นหน้า
+        \uD83D\uDCCA จัดการคำสั่งต่อเนื่อง เช่น logcat หรือ top พร้อมตัวเลือกการค้นหาและบันทึกผลลัพธ์
+        \uD83C\uDFA8 อินเทอร์เฟซผู้ใช้ที่ทันสมัยพร้อมธีมมืด/สว่างอัตโนมัติเพื่อประสบการณ์การใช้งานที่ราบรื่นและทันสมัย"</string>
+    <string name="features_title">"คุณสมบัติ"</string>
+    <string name="file_manager_error_toast">"ไม่สามารถดึงข้อมูลจากโปรแกรมจัดการไฟล์ภายนอกได้ จึงยกเลิกการทำงาน"</string>
+    <string name="general">"ทั่วไป"</string>
+    <string name="granted">"ได้รับ"</string>
+    <string name="language">"ภาษา"</string>
+    <string name="miscellaneous">"เบ็ดเตล็ด"</string>
+    <string name="permissions_shizuku_description">"🔐 moe.shizuku.manager.permission.API_V23: ต้องได้รับอนุญาตเพื่อใช้ API ที่ได้รับสิทธิพิเศษของ Shizuku"</string>
+    <string name="permissions_storage_description">"📂 WRITE_EXTERNAL_STORAGE: จำเป็นสำหรับการบันทึกผลลัพธ์คำสั่งล่าสุดลงในอุปกรณ์ของคุณ (ไม่บังคับ)"</string>
+    <string name="permissions_title">"ต้องได้รับอนุญาตก่อน"</string>
+    <string name="privacy_policy">"นโยบายความเป็นส่วนตัว"</string>
+    <string name="privacy_policy_description">"ความเป็นส่วนตัวของคุณเป็นสิ่งสำคัญ: เรียนรู้เพิ่มเติม"</string>
+    <string name="settings">"การตั้งค่า"</string>
+    <string name="shizuku_access_denied_title">"Shizuku ถูกปฏิเสธการเข้าถึงสำหรับ aShell"</string>
+    <string name="shizuku_access_granted_message">"aShell เข้าถึงบริการ Shizuku ได้แล้ว คลิก 'เริ่ม' เพื่อดำเนินการต่อ"</string>
+    <string name="shizuku_learn">"เรียนรู้ชิซึคุ"</string>
+    <string name="shizuku_learn_description">"เรียนรู้เพิ่มเติมเกี่ยวกับชิซึคุได้ที่: shizuku.rikka.app"</string>
+    <string name="shizuku_unavailable_title">"ไม่พบการสนับสนุน Shizuku"</string>
+    <string name="translations">"การแปล"</string>
+    <string name="translations_description">"ร่วมแปลแอปพลิเคชันนี้"</string>
+    <string name="user_interface">"ส่วนติดต่อผู้ใช้"</string>
+    <string name="shizuku_app_open_message">"เพื่อเปิดใช้งาน Shizuku บนอุปกรณ์นี้สำหรับ aShell:
+
+        1. เปิดแอป Shizuku
+        2. ไปที่แอปพลิเคชันที่ได้รับอนุญาต
+        3. เปิดใช้งานการเข้าถึงสำหรับ aShell"</string>
+    <string name="shizuku_open">"เปิดชิซึกุ"</string>
+</resources>
