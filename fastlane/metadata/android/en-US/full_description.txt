@@ -2,7 +2,7 @@
 
 <b>Requirements</b>
 
-- A fully working [Shizuku](https://shizuku.rikka.app/) (a completely opn-source project) environment. If you are not aware about Shizuku or don't want to use it, please do not bother installing this app. It simply won't work.
+- A fully working [Shizuku](https://shizuku.rikka.app/) (a completely open-source project) environment. If you are not aware about Shizuku or don't want to use it, please do not bother installing this app. It simply won't work.
 - Basic knowledge about adb/Linux command-line.
 
 <b>Features</b>
