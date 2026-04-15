@@ -1,3 +1,0 @@
-* Updated build tools.
-* Added Thai and updated other translations.
-* Miscellaneous changes.
