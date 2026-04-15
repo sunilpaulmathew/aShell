@@ -1,12 +1,9 @@
 <resources xmlns:tools="http://schemas.android.com/tools" tools:ignore="MissingTranslation">
-    <!--Created by The Translator <https://play.google.com/store/apps/details?id=com.sunilpaulmathew.translator>-->
-
+    
     <string name="app_summary">"Добро пожаловать в aShell: локальную оболочку ADB для устройств Android на платформе Shizuku."</string>
-    <string name="app_theme">"Тема приложения"</string>
-    <string name="app_theme_auto">"Авто"</string>
-    <string name="app_theme_dark">"Тёмная"</string>
-    <string name="app_theme_light">"Светлая"</string>
     <string name="app_working_message">"aShell все еще выполняется. Подождите, пока он завершится, или остановите его вручную (нажав кнопку остановки), чтобы запустить новую команду."</string>
+    <string name="bookmark_added_message">"'%s' добавлено в закладки"</string>
+    <string name="bookmark_removed_message">"'%s' убран из закладок"</string>
     <string name="cancel">"Отмена"</string>
     <string name="clear_all_message">"Очистить все на этом экране?"</string>
     <string name="command_hint">"Введите команду ADB здесь"</string>
@@ -21,8 +18,54 @@
     <string name="start">"Начать"</string>
     <string name="shell_output_saved_message">"Вывод последней команды экспортируется в папку \'%s\'"</string>
     <string name="shizuku_access_denied_message">"Доступ к Shizuku запрещен для aShell. aShell не может работать без разрешения Shizuku."</string>
-    <string name="shizuku_unavailable_message">"Приложение Shizuku не установлено или неправильно настроено на вашем устройстве. aShell не может работать без среды Shizuku."</string>
+    <string name="shizuku_unavailable_message">"Приложение Shizuku не установлено или неправильно настроено на вашем устройстве. aShell не может работать без среды Shizuku. Нажмите здесь, чтобы узнать больше о Shizuku."</string>
     <string name="su_warning_message">"aShell не предназначен для использования с правами root. Остановка."</string>
-    <string name="translations">"Переводы"</string>
     <string name="yes">"Да"</string>
+    <string name="copyright_text">"Copyright: © 2022–2025, sunilpaulmathew"</string>
+    <string name="save">"Сохранить"</string>
+    <string name="app_theme">"Тема приложения"</string>
+    <string name="app_theme_amoled">"AMOLED тема"</string>
+    <string name="app_theme_amoled_description">"Экономия батареи и современный вид"</string>
+    <string name="app_theme_auto">"Авто"</string>
+    <string name="app_theme_dark">"Тёмная"</string>
+    <string name="app_theme_light">"Светлая"</string>
+    <string name="authorize_click_message">"Нажми для авторизации"</string>
+    <string name="copy_clipboard">"Скопировать"</string>
+    <string name="developer_contact">"Связь с разработчиком"</string>
+    <string name="developer_contact_description">"Нужна помощь? Напиши разработчику"</string>
+    <string name="disclaimer">"Дисклеймер"</string>
+    <string name="disclaimer_description">"\uD83E\uDDE9 Зависимость от Shizuku: для работы aShell требуется полностью функционирующая среда Shizuku. Перед использованием этого приложения убедитесь, что Shizuku настроен.
+        \uD83D\uDC68\u200D\uD83D\uDCBB Необходимые базовые знания: для эффективного использования рекомендуется знание ADB и основ работы с командной строкой Linux.
+        \uD83C\uDF10 Open Source: aShell — это программное обеспечение с открытым исходным кодом, и его сборка бесплатна. Приветствуются любые предложения по улучшению и переводу через GitLab и POEditor.
+        ⚠️ Отказ от ответственности: Мы не несем ответственности за любые проблемы, потерю данных или ущерб, которые могут возникнуть при использовании этого приложения."</string>
+    <string name="examples_description">"Популярные ADB команды"</string>
+    <string name="features_description">"\uD83D\uDCDC Выполняйте команды ADB с легкостью — приложение включает встроенные примеры и функцию закладок.
+        \uD83D\uDCCA Обрабатывает непрерывные команды, такие как logcat или top, с возможностью поиска и сохранения результатов.
+        \uD83C\uDFA8 Элегантный пользовательский интерфейс с автоматическим переключением темной и светлой темы для комфортной и современной работы."</string>
+    <string name="features_title">"Функции"</string>
+    <string name="file_manager_error_toast">"Не удалось получить данные из внешнего файлового менеджера. Отмена."</string>
+    <string name="general">"Главное"</string>
+    <string name="granted">"Общий"</string>
+    <string name="language">"Язык"</string>
+    <string name="miscellaneous">"Прочее"</string>
+    <string name="permissions_shizuku_description">"🔐 moe.shizuku.manager.permission.API_V23: Для использования API Shizuku требуются соответствующие разрешения."</string>
+    <string name="permissions_storage_description">"📂 WRITE_EXTERNAL_STORAGE: Необходимо сохранить вывод последней команды на ваше устройство (необязательно)"</string>
+    <string name="permissions_title">"Требуются разрешения"</string>
+    <string name="privacy_policy">"Политика конфиденциальности"</string>
+    <string name="privacy_policy_description">"Ваша конфиденциальность важна: Узнайте больше"</string>
+    <string name="settings">"Настройки"</string>
+    <string name="shizuku_access_denied_title">"Доступ к Shizuku для aShell запрещен"</string>
+    <string name="shizuku_access_granted_message">"aShell получила доступ к сервису Shizuku. Нажмите 'Start', чтобы продолжить"</string>
+    <string name="shizuku_learn">"О Shizuku"</string>
+    <string name="shizuku_learn_description">"Узнать больше о Shizuku: shizuku.rikka.app"</string>
+    <string name="shizuku_unavailable_title">"Поддержка Shizuku не обнаружена"</string>
+    <string name="translations">"Переводы"</string>
+    <string name="translations_description">"Примите участие в переводе"</string>
+    <string name="user_interface">"Пользовательский интерфейс"</string>
+    <string name="shizuku_app_open_message">"Чтобы включить Shizuku для aShell:
+
+        1. Открой Shizuku
+        2. Зайди в Поддерживаемые приложения
+        3. Включи доступ для aShell"</string>
+    <string name="shizuku_open">"Открыть Shizuku"</string>
 </resources>
