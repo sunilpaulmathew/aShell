@@ -10,6 +10,9 @@ import androidx.activity.OnBackPressedCallback;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.graphics.Insets;
+import androidx.core.view.ViewCompat;
+import androidx.core.view.WindowInsetsCompat;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -46,6 +49,20 @@ public class WelcomeActivity extends AppCompatActivity {
         MaterialButton mStart = findViewById(R.id.start);
         MaterialTextView mVersionInfo = findViewById(R.id.version_info);
         mVersionInfo.setText(getString(R.string.app_version, BuildConfig.VERSION_NAME));
+        View root = findViewById(R.id.layout_main);
+
+        ViewCompat.setOnApplyWindowInsetsListener(root, (view, insets) -> {
+            Insets systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars());
+
+            view.setPadding(
+                    systemBars.left,
+                    systemBars.top,
+                    systemBars.right,
+                    systemBars.bottom
+            );
+
+            return insets;
+        });
 
         RecyclerView mRecyclerView = findViewById(R.id.recycler_view);
         mRecyclerView.setItemAnimator(null);

@@ -9,6 +9,9 @@ import android.view.View;
 import androidx.activity.OnBackPressedCallback;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.LinearLayoutCompat;
+import androidx.core.graphics.Insets;
+import androidx.core.view.ViewCompat;
+import androidx.core.view.WindowInsetsCompat;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -34,6 +37,19 @@ public class ExamplesActivity extends AppCompatActivity {
         LinearLayoutCompat mMain = findViewById(R.id.layout_main);
         MaterialAutoCompleteTextView mSearchWord = findViewById(R.id.search_word);
         RecyclerView mRecyclerView = findViewById(R.id.recycler_view);
+
+        ViewCompat.setOnApplyWindowInsetsListener(mMain, (view, insets) -> {
+            Insets systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars());
+
+            view.setPadding(
+                    systemBars.left,
+                    systemBars.top,
+                    systemBars.right,
+                    systemBars.bottom
+            );
+
+            return insets;
+        });
 
         if (Settings.isAmoledBlackEnabled(this)) {
             mMain.setBackgroundColor(Utils.getColor(R.color.colorBlack, this));
