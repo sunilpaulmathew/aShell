@@ -24,12 +24,12 @@ android {
     }
 
     namespace 'in.sunilpaulmathew.ashell'
-    compileSdkVersion 36
+    compileSdkVersion 37
 
     defaultConfig {
         applicationId "in.sunilpaulmathew.ashell"
         minSdk 24
-        targetSdk 36
+        targetSdk 37
         versionCode 26
         versionName "v0.26"
     }
