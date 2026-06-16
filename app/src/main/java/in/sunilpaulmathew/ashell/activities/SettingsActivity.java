@@ -4,14 +4,9 @@ import android.content.Intent;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
-import android.view.View;
 
 import androidx.annotation.Nullable;
-import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.LinearLayoutCompat;
-import androidx.core.graphics.Insets;
-import androidx.core.view.ViewCompat;
-import androidx.core.view.WindowInsetsCompat;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -29,32 +24,17 @@ import in.sunilpaulmathew.ashell.utils.Settings;
 /*
  * Created by sunilpaulmathew <sunil.kde@gmail.com> on April 21, 2022
  */
-public class SettingsActivity extends AppCompatActivity {
+public class SettingsActivity extends BaseActivity {
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_settings);
+        setContentView(R.layout.activity_settings, R.id.layout_main);
 
         LinearLayoutCompat mTitleLayout = findViewById(R.id.title_layout);
         MaterialTextView mAppInfo = findViewById(R.id.app_info);
         MaterialTextView mCopyright = findViewById(R.id.copyright);
         RecyclerView mRecyclerView = findViewById(R.id.recycler_view);
-
-        View root = findViewById(R.id.layout_main);
-
-        ViewCompat.setOnApplyWindowInsetsListener(root, (view, insets) -> {
-            Insets systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars());
-
-            view.setPadding(
-                    systemBars.left,
-                    systemBars.top,
-                    systemBars.right,
-                    systemBars.bottom
-            );
-
-            return insets;
-        });
 
         mRecyclerView.setItemAnimator(null);
         mRecyclerView.setLayoutManager(new LinearLayoutManager(this));

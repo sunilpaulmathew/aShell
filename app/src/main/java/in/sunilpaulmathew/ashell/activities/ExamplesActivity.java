@@ -7,11 +7,7 @@ import android.text.TextWatcher;
 import android.view.View;
 
 import androidx.activity.OnBackPressedCallback;
-import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.LinearLayoutCompat;
-import androidx.core.graphics.Insets;
-import androidx.core.view.ViewCompat;
-import androidx.core.view.WindowInsetsCompat;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -27,29 +23,16 @@ import in.sunilpaulmathew.ashell.utils.Utils;
 /*
  * Created by sunilpaulmathew <sunil.kde@gmail.com> on November 05, 2022
  */
-public class ExamplesActivity extends AppCompatActivity {
+public class ExamplesActivity extends BaseActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_examples);
+        setContentView(R.layout.activity_examples, R.id.layout_main);
 
         LinearLayoutCompat mMain = findViewById(R.id.layout_main);
         MaterialAutoCompleteTextView mSearchWord = findViewById(R.id.search_word);
         RecyclerView mRecyclerView = findViewById(R.id.recycler_view);
-
-        ViewCompat.setOnApplyWindowInsetsListener(mMain, (view, insets) -> {
-            Insets systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars());
-
-            view.setPadding(
-                    systemBars.left,
-                    systemBars.top,
-                    systemBars.right,
-                    systemBars.bottom
-            );
-
-            return insets;
-        });
 
         if (Settings.isAmoledBlackEnabled(this)) {
             mMain.setBackgroundColor(Utils.getColor(R.color.colorBlack, this));

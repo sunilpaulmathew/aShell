@@ -3,12 +3,7 @@ package in.sunilpaulmathew.ashell.activities;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.os.Bundle;
-import android.view.View;
 
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.core.graphics.Insets;
-import androidx.core.view.ViewCompat;
-import androidx.core.view.WindowInsetsCompat;
 import androidx.fragment.app.Fragment;
 
 import in.sunilpaulmathew.ashell.R;
@@ -23,7 +18,7 @@ import rikka.shizuku.Shizuku;
 /*
  * Created by sunilpaulmathew <sunil.kde@gmail.com> on October 28, 2022
  */
-public class aShellActivity extends AppCompatActivity {
+public class aShellActivity extends BaseActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -33,22 +28,7 @@ public class aShellActivity extends AppCompatActivity {
         Settings.initializeAppTheme(this);
         Settings.initializeAppLanguage(this);
 
-        setContentView(R.layout.activity_ashell);
-
-        View root = findViewById(R.id.fragment_container);
-
-        ViewCompat.setOnApplyWindowInsetsListener(root, (view, insets) -> {
-            Insets systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars());
-
-            view.setPadding(
-                    systemBars.left,
-                    systemBars.top,
-                    systemBars.right,
-                    systemBars.bottom
-            );
-
-            return insets;
-        });
+        setContentView(R.layout.activity_ashell, R.id.fragment_container);
 
         if (!Utils.getBoolean("welcome_screen_viewed", false, this)) {
             Intent intent = new Intent(this, WelcomeActivity.class);
