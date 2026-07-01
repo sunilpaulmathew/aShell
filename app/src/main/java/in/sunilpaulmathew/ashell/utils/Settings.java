@@ -73,6 +73,8 @@ public class Settings {
     private static int getLanguagePosition(Context context) {
         String country = getCountry(context);
         switch (getLanguage(context)) {
+            case "uk":
+                return 24;
             case "tr":
                 return 23;
             case "th":
@@ -98,7 +100,7 @@ public class Settings {
             case "ru":
                 return 9;
             case "es":
-                return country.equalsIgnoreCase("MX") ? 8 : 7;
+                return country.equalsIgnoreCase("AR") ? 25 : country.equalsIgnoreCase("MX") ? 8 : 7;
             case "pt":
                 return country.equalsIgnoreCase("BR") ? 5 : 6;
             case "in":
@@ -160,7 +162,8 @@ public class Settings {
             case "el":
                 return context.getString(R.string.language_el);
             case "es":
-                return context.getString(R.string.language_es, country.equalsIgnoreCase("MX") ? "MX" : "ES");
+                return context.getString(R.string.language_es, country.equalsIgnoreCase("AR") ? "AR"
+                        : country.equalsIgnoreCase("MX") ? "MX" : "ES");
             case "fr":
                 return context.getString(R.string.language_fr, "FR");
             case "pl":
@@ -185,6 +188,8 @@ public class Settings {
                 return context.getString(R.string.language_th);
             case "tr":
                 return context.getString(R.string.language_tr);
+            case "uk":
+                return context.getString(R.string.language_uk);
             case "zh":
                 return country.equalsIgnoreCase("HK") ? context.getString(R.string.language_zh, "Hant")
                         : country.equalsIgnoreCase("CN") ? context.getString(R.string.language_zh, "Hans")
@@ -228,7 +233,9 @@ public class Settings {
                 context.getString(R.string.language_cs),
                 context.getString(R.string.language_it),
                 context.getString(R.string.language_th),
-                context.getString(R.string.language_tr)
+                context.getString(R.string.language_tr),
+                context.getString(R.string.language_uk),
+                context.getString(R.string.language_es, "AR")
         };
     }
 
@@ -463,6 +470,20 @@ public class Settings {
                         }
                         Utils.saveString("appLanguage", "tr", activity);
                         Utils.saveString("country", null, activity);
+                        break;
+                    case 24:
+                        if (Objects.equals(getLanguage(activity), "uk") && Objects.equals(getCountry(activity), null)) {
+                            return;
+                        }
+                        Utils.saveString("appLanguage", "uk", activity);
+                        Utils.saveString("country", null, activity);
+                        break;
+                    case 25:
+                        if (Objects.equals(getLanguage(activity), "es") && Objects.equals(getCountry(activity), "AR")) {
+                            return;
+                        }
+                        Utils.saveString("appLanguage", "es", activity);
+                        Utils.saveString("country", "AR", activity);
                         break;
                 }
                 restartApp(activity);
