@@ -1,0 +1,72 @@
+<resources xmlns:tools="http://schemas.android.com/tools" tools:ignore="MissingTranslation">
+
+    <string name="app_summary">"Легко виконуйте команди ADB на своєму пристрої Android із підтримкою Shizuku."</string>
+    <string name="app_working_message">"aShell все ще працює. Будь ласка, зачекайте його завершення або зупиніть його вручну (натиснувши кнопку зупинки), щоб виконати нову команду."</string>
+    <string name="bookmark_added_message">"«%s» додано до закладок"</string>
+    <string name="bookmark_removed_message">"«%s» видалено із закладки"</string>
+    <string name="cancel">"Скасувати"</string>
+    <string name="clear_all_message">"Очистити все на цьому екрані?"</string>
+    <string name="command_hint">"Введіть тут команду ADB"</string>
+    <string name="command_title">"Командний рядок оболонки aShell"</string>
+    <string name="dismiss">"Відхилити"</string>
+    <string name="examples">"Приклади"</string>
+    <string name="press_back">"Натисніть кнопку «Назад» ще раз, щоб вийти"</string>
+    <string name="process_destroy_message">"aShell все ще працює. Ви хочете зупинити поточний процес?"</string>
+    <string name="quit">"Вийти"</string>
+    <string name="quit_app_message">"Ви хочете вийти з aShell?"</string>
+    <string name="request_permission">"Запит дозволу"</string>
+    <string name="start">"Початок"</string>
+    <string name="shell_output_saved_message">"Вивід останньої команди експортується до папки '%s'"</string>
+    <string name="shizuku_access_denied_message">"Доступ до сервісу Shizuku для aShell заборонено. aShell не працюватиме без належного середовища Shizuku."</string>
+    <string name="shizuku_unavailable_message">"Shizuku не встановлено або неправильно налаштовано на вашому пристрої. aShell не працюватиме без належного середовища Shizuku."</string>
+    <string name="su_warning_message">"aShell не призначений для використання з root-правами. Переривання."</string>
+    <string name="yes">"Так"</string>
+    <string name="copyright_text">"Авторське право: © 2022–2025, sunilpaulmathew"</string>
+    <string name="save">"Зберегти"</string>
+    <string name="app_theme">"Тема програми"</string>
+    <string name="app_theme_amoled">"Чорний амолед"</string>
+    <string name="app_theme_amoled_description">"Збережіть заряд батареї та забезпечте елегантний, сучасний вигляд"</string>
+    <string name="app_theme_auto">"Авто"</string>
+    <string name="app_theme_dark">"Темний"</string>
+    <string name="app_theme_light">"Світло"</string>
+    <string name="app_version">"Оболонка %s"</string>
+    <string name="authorize_click_message">"Натисніть, щоб авторизувати"</string>
+    <string name="copy_clipboard">"Копіювати в буфер обміну"</string>
+    <string name="developer_contact">"Зв'язатися з розробником"</string>
+    <string name="developer_contact_description">"Потрібна допомога або маєте відгук? Зверніться до розробника"</string>
+    <string name="disclaimer">"Застереження"</string>
+    <string name="disclaimer_description">"\uD83E\uDDE9 Залежність від Shizuku: Для роботи aShell потрібне повністю робоче середовище Shizuku. Будь ласка, переконайтеся, що Shizuku налаштовано перед використанням цієї програми.
+        \uD83D\uDC68\u200D\uD83D\uDCBB Необхідні базові знання: Для ефективного використання рекомендується знайомство з ADB та основами командного рядка Linux.
+        \uD83C\uDF10 Відкритий код: aShell має відкритий код та безкоштовний для створення. Внески та переклади вітаються через GitLab та POEditor.
+        ⚠️ Без відповідальності: Ми не несемо відповідальності за будь-які проблеми, втрату даних або пошкодження, які можуть виникнути під час використання цієї програми."</string>
+    <string name="examples_description">"Ознайомтеся з популярними командами ADB"</string>
+    <string name="features_description">"\uD83D\uDCDC Легко запускайте команди ADB — вбудовані приклади та закладки.
+        \uD83D\uDCCA Обробляє безперервні команди, такі як logcat або top, з опціями пошуку та збереження для виводу.
+        \uD83C\uDFA8 Елегантний інтерфейс користувача з автоматичною темною/світлою темою для плавного та сучасного досвіду."</string>
+    <string name="features_title">"Особливості"</string>
+    <string name="file_manager_error_toast">"Не вдалося отримати дані із зовнішнього файлового менеджера. Переривання."</string>
+    <string name="general">"Загальне"</string>
+    <string name="granted">"Надано"</string>
+    <string name="language">"Мова"</string>
+    <string name="miscellaneous">"Різне"</string>
+    <string name="permissions_shizuku_description">"🔐 moe.shizuku.manager.permission.API_V23: для використання привілейованих API Shizuku потрібен дозвіл"</string>
+    <string name="permissions_storage_description">"📂 WRITE_EXTERNAL_STORAGE: Потрібно для збереження останнього виводу команди на вашому пристрої (необов'язково)"</string>
+    <string name="permissions_title">"Потрібні дозволи"</string>
+    <string name="privacy_policy">"Політика конфіденційності"</string>
+    <string name="privacy_policy_description">"Ваша конфіденційність має значення: Дізнайтеся більше"</string>
+    <string name="settings">"Налаштування"</string>
+    <string name="shizuku_access_denied_title">"Доступ до Shizuku для aShell заборонено"</string>
+    <string name="shizuku_access_granted_message">"aShell отримав доступ до сервісу Shizuku. Натисніть «Пуск», щоб продовжити."</string>
+    <string name="shizuku_learn">"Вивчіть Сідзуку"</string>
+    <string name="shizuku_learn_description">"Дізнайтеся більше про шізуку за адресою: shizuku.rikka.app"</string>
+    <string name="shizuku_unavailable_title">"Підтримка Shizuku не знайдена"</string>
+    <string name="translations">"Переклади"</string>
+    <string name="translations_description">"Зробіть свій внесок у переклад програми"</string>
+    <string name="user_interface">"Інтерфейс користувача"</string>
+    <string name="shizuku_app_open_message">"Щоб увімкнути Shizuku на цьому пристрої для aShell:
+
+        1. Відкрийте застосунок Shizuku
+        2. Перейдіть до розділу «Авторизовані програми»
+        3. Увімкніть доступ для aShell"</string>
+    <string name="shizuku_open">"Відкрити Shizuku"</string>
+</resources>
