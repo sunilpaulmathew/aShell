@@ -26,6 +26,7 @@ Or get the APK from the [Releases Section](https://gitlab.com/sunilpaulmathew/as
 
 ## Features
 * An elegantly designed user interface.
+* Now comes with an in-built file manager to access privileged file system.
 * Included a bundle of examples about common ADB commands.
 * Handles continuously running commands, such as logcat, top, etc.
 * Search for specific text from the last command output.

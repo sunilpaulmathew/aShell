@@ -9,6 +9,7 @@
 
 - An elegantly designed user interface.
 - Included a bundle of examples about common adb commands.
+- Now comes with an in-built file manager to access privileged file system.
 - Handles continuously running commands, such as logcat, top, etc.
 - Search for specific text from the last command output.
 - Option to save last command output as a text file.
