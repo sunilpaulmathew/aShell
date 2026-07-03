@@ -8,6 +8,7 @@ import android.content.Intent;
 import android.graphics.drawable.Drawable;
 import android.net.Uri;
 import android.os.Build;
+import android.os.Environment;
 import android.widget.Toast;
 
 import androidx.core.content.ContextCompat;
@@ -15,12 +16,17 @@ import androidx.preference.PreferenceManager;
 
 import java.io.BufferedReader;
 import java.io.File;
+import java.io.FileOutputStream;
 import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
+import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Locale;
 import java.util.Objects;
+
+import in.sunilpaulmathew.ashell.R;
 
 /*
  * Created by sunilpaulmathew <sunil.kde@gmail.com> on October 28, 2022
@@ -75,6 +81,15 @@ public class Utils {
         return ContextCompat.getDrawable(context, drawable);
     }
 
+    public static File getExportPath(Context context) {
+        File file = new File(Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOWNLOADS),
+                context.getString(R.string.app_name));
+        if (!file.exists()) {
+            file.mkdirs();
+        }
+        return file;
+    }
+
     public static int getColor(int color, Context context) {
         return ContextCompat.getColor(context, color);
     }
@@ -102,6 +117,20 @@ public class Utils {
 
     public static String getDeviceName() {
         return Build.MODEL;
+    }
+
+    public static String longToFormattedSize(long size) {
+        if (size < 1024) return size + " B";
+        final String[] units = {
+                "KB", "MB", "GB", "TB", "PB", "EB"
+        };
+        int index = -1;
+        double sizeInDouble = size;
+        while (sizeInDouble >= 1024 && index < units.length - 1) {
+            sizeInDouble /= 1024;
+            index++;
+        }
+        return String.format(Locale.getDefault(),"%.2f %s", sizeInDouble, units[index]);
     }
 
     public static String getString(String name, String defaults, Context context) {
@@ -141,6 +170,22 @@ public class Utils {
                 sb.append(command).append("\n");
             }
             create(sb.toString(), new File(context.getExternalFilesDir("bookmarks"), "specialCommands"));
+        }
+    }
+
+    public static boolean copy(InputStream inputStream, File dest) {
+        try (FileOutputStream outputStream = new FileOutputStream(dest, false)) {
+
+            byte[] buf = new byte[1024 * 1024];
+            int len;
+            while ((len = Objects.requireNonNull(inputStream).read(buf)) > 0) {
+                outputStream.write(buf, 0, len);
+            }
+
+            inputStream.close();
+            return true;
+        } catch (IOException ignored) {
+            return false;
         }
     }
 

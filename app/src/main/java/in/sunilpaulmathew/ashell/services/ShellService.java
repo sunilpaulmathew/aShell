@@ -43,10 +43,6 @@ public class ShellService extends IShellService.Stub {
         }
         catch (Exception ignored) {
         }
-        finally {
-            if (mProcess != null)
-                mProcess.destroy();
-        }
 
         return output.toString();
     }

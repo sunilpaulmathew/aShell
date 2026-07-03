@@ -16,7 +16,7 @@
         tools:targetApi="31" >
 
         <activity android:name=".activities.aShellActivity"
-            android:configChanges="orientation|screenSize|screenLayout|keyboardHidden"
+            android:configChanges="screenSize|screenLayout|keyboardHidden"
             android:exported="true" >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -24,9 +24,6 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-
-        <activity android:name=".activities.ExamplesActivity"
-            android:exported="false" />
 
         <activity
             android:name=".activities.CommandPickerActivity"

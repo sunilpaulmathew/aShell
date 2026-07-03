@@ -32,7 +32,7 @@ public class TitleAdapter extends RecyclerView.Adapter<TitleAdapter.ViewHolder> 
     @NonNull
     @Override
     public TitleAdapter.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-        View rowItem = LayoutInflater.from(parent.getContext()).inflate(R.layout.recycle_view_title, parent, false);
+        View rowItem = LayoutInflater.from(parent.getContext()).inflate(R.layout.recycler_view_title, parent, false);
         return new ViewHolder(rowItem);
     }
 

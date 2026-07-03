@@ -15,10 +15,11 @@
     </style>
 
     <style name="AppTheme.Title" parent="AppTheme">
-        <item name="android:textSize">35sp</item>
+        <item name="android:textSize">25sp</item>
         <item name="android:gravity">start|center</item>
         <item name="android:layout_gravity">start|center</item>
-        <item name="android:layout_marginStart">15dp</item>
+        <item name="android:layout_marginHorizontal">15dp</item>
+        <item name="android:layout_marginVertical">5dp</item>
         <item name="android:textStyle">bold</item>
     </style>
 
@@ -28,6 +29,12 @@
         <item name="android:background">@android:color/transparent</item>
         <item name="android:colorBackgroundCacheHint">@null</item>
         <item name="android:windowIsTranslucent">true</item>
+    </style>
+
+    <style name="AppTheme.TabLayout" parent="TextAppearance.Design.Tab">
+        <item name="android:textSize">20sp</item>
+        <item name="android:textAllCaps">false</item>
+        <item name="textAllCaps">false</item>
     </style>
 
     <style name="Divider" >

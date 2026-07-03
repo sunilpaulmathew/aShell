@@ -23,11 +23,12 @@
             android:layout_width="wrap_content"
             android:layout_gravity="end|bottom"
             style="@style/Widget.Material3.Button.TonalButton"
+            android:layout_marginHorizontal="10dp"
+            android:layout_marginVertical="5dp"
             android:textStyle="bold|italic"
             app:icon="@drawable/ic_cancel"
             android:text="@string/cancel"
             android:gravity="center|end"
-            android:layout_margin="10sp"
             app:iconGravity="textStart"
             android:textSize="15sp" />
 </androidx.appcompat.widget.LinearLayoutCompat>

@@ -1,68 +1,53 @@
-<androidx.appcompat.widget.LinearLayoutCompat
-    android:layout_width="match_parent"
-    android:layout_height="wrap_content"
+<androidx.constraintlayout.widget.ConstraintLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:orientation="vertical"
-    android:padding="10dp">
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:padding="8dp">
+
+        <androidx.appcompat.widget.AppCompatImageButton
+            android:id="@+id/icon"
+            android:layout_width="30dp"
+            android:layout_height="30dp"
+            android:importantForAccessibility="no"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            android:scaleType="fitCenter"
+            android:background="@null"
+            android:clickable="false" />
 
         <androidx.appcompat.widget.LinearLayoutCompat
-            android:layout_width="match_parent"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:orientation="horizontal"
-            android:layout_gravity="center"
-            android:weightSum="1" >
+            android:layout_marginHorizontal="10dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toStartOf="@id/checkbox"
+            app:layout_constraintStart_toEndOf="@id/icon"
+            app:layout_constraintTop_toTopOf="parent"
+            android:orientation="vertical" >
 
-                <androidx.appcompat.widget.AppCompatImageButton
-                    android:id="@+id/icon"
-                    android:layout_width="0dp"
-                    android:layout_height="30dp"
-                    android:layout_gravity="center"
-                    android:layout_weight="0.1"
-                    android:importantForAccessibility="no"
-                    android:clickable="false"
-                    android:background="@null" />
-
-                <androidx.appcompat.widget.LinearLayoutCompat
-                    android:layout_width="0dp"
+                <com.google.android.material.textview.MaterialTextView
+                    android:id="@+id/title"
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    app:layout_constraintEnd_toStartOf="@id/checkbox"
-                    app:layout_constraintTop_toTopOf="@id/checkbox"
-                    android:layout_gravity="center"
-                    android:orientation="vertical"
-                    android:layout_weight="0.8" >
+                    android:textSize="17sp"
+                    android:textStyle="bold" />
 
-                        <com.google.android.material.textview.MaterialTextView
-                            android:id="@+id/title"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_gravity="start"
-                            android:textStyle="bold"
-                            android:textSize="17sp" />
-
-                        <com.google.android.material.textview.MaterialTextView
-                            android:id="@+id/description"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_gravity="start"
-                            android:textStyle="italic"
-                            android:visibility="gone" />
-                </androidx.appcompat.widget.LinearLayoutCompat>
-
-                <com.google.android.material.checkbox.MaterialCheckBox
-                    android:id="@+id/checkbox"
-                    android:layout_width="0dp"
+                <com.google.android.material.textview.MaterialTextView
+                    android:id="@+id/description"
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    app:layout_constraintTop_toTopOf="@id/icon"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    android:layout_gravity="center"
-                    android:layout_weight="0.1"
-                    android:background="@null" />
+                    android:textStyle="italic"
+                    android:visibility="gone" />
         </androidx.appcompat.widget.LinearLayoutCompat>
 
-        <View
-            android:id="@+id/divider"
-            android:layout_marginTop="5dp"
-            android:visibility="gone"
-            style="@style/Divider"/>
-</androidx.appcompat.widget.LinearLayoutCompat>
+        <com.google.android.material.checkbox.MaterialCheckBox
+            android:id="@+id/checkbox"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            android:background="@null" />
+</androidx.constraintlayout.widget.ConstraintLayout>

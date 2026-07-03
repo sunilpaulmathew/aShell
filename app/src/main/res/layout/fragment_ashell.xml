@@ -9,82 +9,75 @@
         android:layout_height="match_parent"
         android:orientation="vertical" >
 
-        <androidx.constraintlayout.widget.ConstraintLayout
+        <com.google.android.material.button.MaterialButton
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            style="@style/Widget.Material3.Button.OutlinedButton"
+            android:gravity="start|center_vertical"
+            android:layout_marginHorizontal="10dp"
+            android:layout_marginVertical="5dp"
+            app:icon="@drawable/ic_shell"
+            android:text="@string/shell"
+            app:iconGravity="textStart"
+            android:paddingStart="0dp"
+            android:ellipsize="start"
+            android:paddingEnd="0dp"
+            android:textStyle="bold"
+            android:textSize="25sp"
+            android:insetTop="0dp"
+            app:strokeWidth="0dp"
+            android:maxLines="1"
+            app:iconSize="28dp" />
+
+        <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
-            android:layout_marginStart="15dp"
-            android:layout_marginBottom="5dp"
-            android:orientation="horizontal"
-            android:layout_marginEnd="15dp"
-            android:layout_marginTop="5dp" >
+            android:layout_height="wrap_content"
+            android:layout_marginHorizontal="10dp"
+            android:layout_marginVertical="5dp" >
 
             <com.google.android.material.button.MaterialButton
                 android:id="@+id/history"
-                android:layout_height="wrap_content"
                 android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
                 app:layout_constraintTop_toTopOf="parent"
-                style="?attr/materialIconButtonFilledTonalStyle"
                 app:layout_constraintStart_toStartOf="parent"
+                style="?attr/materialIconButtonFilledTonalStyle"
+                app:layout_constraintEnd_toStartOf="@id/bookmarks"
                 app:icon="@drawable/ic_history"
-                android:contentDescription="History"
                 android:enabled="false" />
 
             <com.google.android.material.button.MaterialButton
                 android:id="@+id/bookmarks"
-                android:layout_height="wrap_content"
                 android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
                 style="?attr/materialIconButtonFilledTonalStyle"
-                app:layout_constraintStart_toEndOf="@id/history"
                 app:layout_constraintTop_toTopOf="@id/history"
+                app:layout_constraintStart_toEndOf="@id/history"
                 app:layout_constraintEnd_toStartOf="@id/clear"
                 app:icon="@drawable/ic_bookmarks"
-                android:contentDescription="Bookmarks"
                 android:enabled="false" />
 
             <com.google.android.material.button.MaterialButton
                 android:id="@+id/clear"
-                android:layout_height="wrap_content"
                 android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
                 style="?attr/materialIconButtonFilledTonalStyle"
-                app:layout_constraintStart_toEndOf="@id/bookmarks"
                 app:layout_constraintTop_toTopOf="@id/history"
+                app:layout_constraintStart_toEndOf="@id/bookmarks"
                 app:layout_constraintEnd_toStartOf="@id/search"
                 app:icon="@drawable/ic_refresh"
-                android:contentDescription="Clear output"
                 android:enabled="false" />
 
             <com.google.android.material.button.MaterialButton
                 android:id="@+id/search"
-                android:layout_height="wrap_content"
                 android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                style="?attr/materialIconButtonFilledTonalStyle"
+                app:layout_constraintTop_toTopOf="@id/history"
                 app:layout_constraintStart_toEndOf="@id/clear"
-                app:layout_constraintEnd_toStartOf="@id/info"
-                style="?attr/materialIconButtonFilledTonalStyle"
-                app:layout_constraintTop_toTopOf="@id/history"
-                app:icon="@drawable/ic_search"
-                android:contentDescription="Search output"
-                android:enabled="false" />
-
-            <com.google.android.material.button.MaterialButton
-                android:id="@+id/info"
-                android:layout_height="wrap_content"
-                android:layout_width="wrap_content"
-                style="?attr/materialIconButtonFilledTonalStyle"
-                app:layout_constraintTop_toTopOf="@id/history"
-                app:layout_constraintEnd_toStartOf="@id/settings"
-                app:layout_constraintStart_toEndOf="@id/search"
-                android:contentDescription="Info"
-                app:icon="@drawable/ic_info" />
-
-            <com.google.android.material.button.MaterialButton
-                android:id="@+id/settings"
-                android:layout_height="wrap_content"
-                android:layout_width="wrap_content"
-                app:layout_constraintTop_toTopOf="@id/history"
-                style="?attr/materialIconButtonFilledTonalStyle"
                 app:layout_constraintEnd_toEndOf="parent"
-                android:contentDescription="@string/settings"
-                app:icon="@drawable/ic_settings" />
+                app:icon="@drawable/ic_search"
+                android:enabled="false" />
         </androidx.constraintlayout.widget.ConstraintLayout>
 
         <com.google.android.material.card.MaterialCardView
@@ -104,18 +97,8 @@
                 android:gravity="start|center"
                 android:layout_margin="10dp"
                 android:background="@null"
-                android:hint="Search output"
-                android:contentDescription="Search output"
                 android:visibility="gone" />
         </com.google.android.material.card.MaterialCardView>
-
-        <com.google.android.material.textview.MaterialTextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:textColor="?attr/colorPrimary"
-            android:text="@string/app_name"
-            android:importantForAccessibility="yes"
-            style="@style/AppTheme.Title" />
 
         <FrameLayout
             android:layout_width="match_parent"
@@ -139,13 +122,12 @@
                 android:layout_marginEnd="50dp"
                 android:padding="5dp" >
 
-                <androidx.appcompat.widget.AppCompatAutoCompleteTextView
+                <com.google.android.material.textfield.TextInputEditText
                     android:id="@+id/shell_command"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_gravity="start|center"
                     android:hint="@string/command_hint"
-                    android:contentDescription="Enter ADB command here"
                     android:inputType="textMultiLine"
                     android:gravity="center_vertical"
                     android:imeOptions="actionSend"
@@ -153,8 +135,7 @@
                     android:paddingBottom="10dp"
                     android:paddingStart="10dp"
                     android:paddingEnd="30dp"
-                    android:paddingTop="10dp"
-                    android:maxLines="1" />
+                    android:paddingTop="10dp" />
             </com.google.android.material.textfield.TextInputLayout>
 
             <androidx.appcompat.widget.AppCompatImageButton
@@ -165,7 +146,6 @@
                 android:layout_marginEnd="60dp"
                 android:background="@null"
                 android:visibility="gone"
-                android:contentDescription="Bookmark command"
                 android:alpha="0.5" />
 
             <com.google.android.material.button.MaterialButton
@@ -175,7 +155,6 @@
                 style="?attr/materialIconButtonFilledTonalStyle"
                 android:layout_gravity="end|center"
                 app:iconTint="?attr/colorPrimary"
-                android:contentDescription="Run command"
                 app:icon="@drawable/ic_help" />
         </FrameLayout>
 
@@ -198,8 +177,7 @@
                 android:id="@+id/recycler_view_output"
                 android:layout_height="wrap_content"
                 android:layout_width="wrap_content"
-                android:scrollbars="vertical"
-                android:contentDescription="Command output area" />
+                android:scrollbars="vertical" />
         </HorizontalScrollView>
     </androidx.appcompat.widget.LinearLayoutCompat>
 
@@ -220,9 +198,9 @@
             android:layout_gravity="center|top"
             app:iconTint="?attr/colorPrimary"
             app:icon="@drawable/ic_arrow"
+            app:iconGravity="textStart"
             android:visibility="gone"
-            android:gravity="center"
-            android:contentDescription="Scroll to top" />
+            android:gravity="center" />
 
         <com.google.android.material.button.MaterialButton
             android:id="@+id/bottom"
@@ -230,28 +208,26 @@
             android:layout_height="wrap_content"
             style="?attr/materialIconButtonFilledTonalStyle"
             android:layout_gravity="center|bottom"
+            app:icon="@drawable/ic_arrow_down"
             app:iconTint="?attr/colorPrimary"
-            app:icon="@drawable/ic_arrow"
+            app:iconGravity="textEnd"
             android:visibility="gone"
-            android:gravity="center"
-            android:rotation="180"
-            android:contentDescription="Scroll to bottom" />
+            android:gravity="center"/>
     </FrameLayout>
 
     <com.google.android.material.button.MaterialButton
         android:id="@+id/save_button"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        style="@style/Widget.Material3.CardView.Outlined"
+        app:layout_constraintEnd_toEndOf="parent"
+        android:layout_marginHorizontal="75dp"
+        android:layout_marginVertical="125dp"
         android:layout_gravity="bottom|end"
-        android:layout_margin="25dp"
         app:icon="@drawable/ic_save"
-        app:iconGravity="textStart"
         android:text="@string/save"
         android:visibility="gone"
         android:textStyle="bold"
-        android:gravity="center"
         android:textSize="17sp"
-        app:iconPadding="10sp"
-        android:padding="15sp"
-        app:iconSize="24sp"/>
+        app:iconSize="24sp" />
 </androidx.coordinatorlayout.widget.CoordinatorLayout>

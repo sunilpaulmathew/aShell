@@ -5,7 +5,6 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import androidx.annotation.NonNull;
-import androidx.appcompat.widget.AppCompatImageButton;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.google.android.material.textview.MaterialTextView;
@@ -13,35 +12,30 @@ import com.google.android.material.textview.MaterialTextView;
 import java.util.List;
 
 import in.sunilpaulmathew.ashell.R;
-import in.sunilpaulmathew.ashell.utils.Utils;
+import in.sunilpaulmathew.ashell.serializable.FilesEntry;
 
 /*
  * Created by sunilpaulmathew <sunil.kde@gmail.com> on June 07, 2026
  */
 public class FoldersAdapter extends RecyclerView.Adapter<FoldersAdapter.ViewHolder> {
 
-    private final List<String> data;
-    private final String parentPath;
+    private final List<FilesEntry> data;
     private static ClickListener mClickListener;
 
-    public FoldersAdapter(List<String> data, String parentPath) {
+    public FoldersAdapter(List<FilesEntry> data) {
         this.data = data;
-        this.parentPath = parentPath;
     }
 
     @NonNull
     @Override
     public FoldersAdapter.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-        View rowItem = LayoutInflater.from(parent.getContext()).inflate(R.layout.recycle_view_folders, parent, false);
+        View rowItem = LayoutInflater.from(parent.getContext()).inflate(R.layout.recycler_view_folders, parent, false);
         return new ViewHolder(rowItem);
     }
 
     @Override
     public void onBindViewHolder(@NonNull FoldersAdapter.ViewHolder holder, int position) {
-        holder.fileName.setText(data.get(position));
-        holder.menuButton.setOnClickListener(v -> {
-            Utils.toast("Coming soon...", v.getContext()).show();
-        });
+        holder.fileName.setText(data.get(position).getName());
     }
 
     @Override
@@ -51,17 +45,12 @@ public class FoldersAdapter extends RecyclerView.Adapter<FoldersAdapter.ViewHold
 
     public class ViewHolder extends RecyclerView.ViewHolder {
 
-        private final AppCompatImageButton menuButton;
         private final MaterialTextView fileName;
         public ViewHolder(View view) {
             super(view);
-            this.menuButton = view.findViewById(R.id.menu);
             this.fileName = view.findViewById(R.id.name);
 
-
-            view.setOnClickListener(v -> {
-                mClickListener.onItemClick(parentPath + "/" + data.get(getBindingAdapterPosition()));
-            });
+            view.setOnClickListener(v -> mClickListener.onItemClick(data.get(getBindingAdapterPosition()).getAbsolutePath()));
         }
     }
 
@@ -70,7 +59,7 @@ public class FoldersAdapter extends RecyclerView.Adapter<FoldersAdapter.ViewHold
     }
 
     public interface ClickListener {
-        void onItemClick(String string);
+        void onItemClick(String filePath);
     }
 
 }

@@ -1,5 +1,5 @@
-<!-- drawable/folder.xml -->
+<!-- drawable/folder_open_outline.xml -->
 <vector xmlns:android="http://schemas.android.com/apk/res/android"
     android:height="24dp" android:width="24dp" android:viewportWidth="24" android:viewportHeight="24">
-    <path android:fillColor="?attr/colorControlNormal" android:pathData="M10,4H4C2.89,4 2,4.89 2,6V18A2,2 0 0,0 4,20H20A2,2 0 0,0 22,18V8C22,6.89 21.1,6 20,6H12L10,4Z" />
+    <path android:fillColor="?attr/colorControlNormal" android:pathData="M6.1,10L4,18V8H21A2,2 0 0,0 19,6H12L10,4H4A2,2 0 0,0 2,6V18A2,2 0 0,0 4,20H19C19.9,20 20.7,19.4 20.9,18.5L23.2,10H6.1M19,18H6L7.6,12H20.6L19,18Z" />
 </vector>

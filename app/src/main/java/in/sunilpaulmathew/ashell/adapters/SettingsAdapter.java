@@ -3,6 +3,7 @@ package in.sunilpaulmathew.ashell.adapters;
 import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.content.Intent;
+import android.net.Uri;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -18,8 +19,9 @@ import com.google.android.material.textview.MaterialTextView;
 
 import java.util.List;
 
+import in.sunilpaulmathew.ashell.BuildConfig;
 import in.sunilpaulmathew.ashell.R;
-import in.sunilpaulmathew.ashell.activities.ExamplesActivity;
+import in.sunilpaulmathew.ashell.dialogs.ExamplesDialog;
 import in.sunilpaulmathew.ashell.dialogs.PolicyDialog;
 import in.sunilpaulmathew.ashell.dialogs.SingleChoiceDialog;
 import in.sunilpaulmathew.ashell.serializable.SettingsEntry;
@@ -73,7 +75,6 @@ public class SettingsAdapter extends RecyclerView.Adapter<SettingsAdapter.ViewHo
         }
 
         if (data.get(position).getPosition() == 0) {
-            holder.mDivider.setVisibility(View.VISIBLE);
             holder.mTitle.setLayoutParams(new LinearLayoutCompat.LayoutParams(LinearLayoutCompat.LayoutParams.MATCH_PARENT,
                     ViewGroup.LayoutParams.WRAP_CONTENT));
             holder.mTitle.setTextAlignment(View.TEXT_ALIGNMENT_CENTER);
@@ -81,7 +82,6 @@ public class SettingsAdapter extends RecyclerView.Adapter<SettingsAdapter.ViewHo
         } else {
             holder.mTitle.setTextAlignment(View.TEXT_ALIGNMENT_TEXT_START);
             holder.mTitle.setTextColor(Settings.getColorText(holder.mTitle.getContext()));
-            holder.mDivider.setVisibility(View.GONE);
         }
 
         holder.mCheckBox.setOnClickListener(v -> {
@@ -104,7 +104,6 @@ public class SettingsAdapter extends RecyclerView.Adapter<SettingsAdapter.ViewHo
         private final AppCompatImageButton mIcon;
         private final MaterialCheckBox mCheckBox;
         private final MaterialTextView mTitle, mDescription;
-        private final View mDivider;
 
         public ViewHolder(View view) {
             super(view);
@@ -113,7 +112,6 @@ public class SettingsAdapter extends RecyclerView.Adapter<SettingsAdapter.ViewHo
             this.mTitle = view.findViewById(R.id.title);
             this.mDescription = view.findViewById(R.id.description);
             this.mCheckBox = view.findViewById(R.id.checkbox);
-            this.mDivider = view.findViewById(R.id.divider);
         }
 
         @SuppressLint("StringFormatMatches")
@@ -121,15 +119,21 @@ public class SettingsAdapter extends RecyclerView.Adapter<SettingsAdapter.ViewHo
         public void onClick(View view) {
             int position = data.get(getBindingAdapterPosition()).getPosition();
             if (position == 1) {
+                Intent settings = new Intent(android.provider.Settings.ACTION_APPLICATION_DETAILS_SETTINGS);
+                settings.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                Uri uri = Uri.fromParts("package", BuildConfig.APPLICATION_ID, null);
+                settings.setData(uri);
+                view.getContext().startActivity(settings);
+            } else if (position == 2) {
                 new SingleChoiceDialog(R.drawable.ic_theme, view.getContext().getString(R.string.app_theme),
                         Settings.getAppThemeMenu(view.getContext()), Settings.getAppThemePosition(view.getContext()), view.getContext()) {
 
                     @Override
-                    public void onItemSelected(int position) {
-                        if (position == Settings.getAppThemePosition(view.getContext())) {
+                    public void onItemSelected(int itemPosition) {
+                        if (itemPosition == Settings.getAppThemePosition(view.getContext())) {
                             return;
                         }
-                        switch (position) {
+                        switch (itemPosition) {
                             case 2:
                                 Utils.saveInt("appTheme", 2, view.getContext());
                                 AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO);
@@ -147,21 +151,25 @@ public class SettingsAdapter extends RecyclerView.Adapter<SettingsAdapter.ViewHo
                         notifyItemChanged(getBindingAdapterPosition());
                     }
                 }.show();
-            } else if (position == 2) {
+            } else if (position == 3) {
                 Utils.saveBoolean("amoledTheme", !Utils.getBoolean("amoledTheme", false, view.getContext()), view.getContext());
                 Settings.restartApp(activity);
-            } else if (position == 3) {
-                Settings.setAppLanguage(activity);
             } else if (position == 4) {
-                Intent examples = new Intent(view.getContext(), ExamplesActivity.class);
-                view.getContext().startActivity(examples);
+                Settings.setAppLanguage(activity);
             } else if (position == 5) {
-                Utils.loadUrl("https://shizuku.rikka.app/", view.getContext());
+                new ExamplesDialog(true, activity) {
+                    @Override
+                    public void onCommandSelected(String command) {
+                        // To-do
+                    }
+                };
             } else if (position == 6) {
-                Utils.loadUrl("https://poeditor.com/join/project/20PSoEAgfX", view.getContext());
+                Utils.loadUrl("https://shizuku.rikka.app/", view.getContext());
             } else if (position == 7) {
-                new PolicyDialog(view.getContext());
+                Utils.loadUrl("https://poeditor.com/join/project/20PSoEAgfX", view.getContext());
             } else if (position == 8) {
+                new PolicyDialog(view.getContext());
+            } else if (position == 9) {
                 Utils.loadUrl("mailto:smartpack.org@gmail.com", view.getContext());
             }
         }

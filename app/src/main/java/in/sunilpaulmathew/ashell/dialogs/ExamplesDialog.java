@@ -1,53 +1,91 @@
 package in.sunilpaulmathew.ashell.dialogs;
 
-import android.content.Context;
-import android.content.res.ColorStateList;
-import android.graphics.Color;
-import android.util.TypedValue;
-import android.view.Gravity;
-import android.view.ViewGroup;
-import android.widget.LinearLayout;
+import android.app.Activity;
+import android.content.Intent;
+import android.content.res.Configuration;
+import android.text.Editable;
+import android.text.TextWatcher;
+import android.view.View;
 
-import androidx.appcompat.widget.LinearLayoutCompat;
+import androidx.recyclerview.widget.GridLayoutManager;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
+import com.google.android.material.bottomsheet.BottomSheetDialog;
 import com.google.android.material.button.MaterialButton;
-import com.google.android.material.dialog.MaterialAlertDialogBuilder;
+import com.google.android.material.textfield.MaterialAutoCompleteTextView;
 
 import in.sunilpaulmathew.ashell.R;
-import in.sunilpaulmathew.ashell.utils.Settings;
-import in.sunilpaulmathew.ashell.utils.Utils;
+import in.sunilpaulmathew.ashell.adapters.ExamplesAdapter;
+import in.sunilpaulmathew.ashell.utils.Commands;
 
 /*
- * Created by sunilpaulmathew <sunil.kde@gmail.com> on Oct. 18, 2025
+ * Created by sunilpaulmathew <sunil.kde@gmail.com> on November 05, 2022
  */
-public class ExamplesDialog extends MaterialAlertDialogBuilder {
+public abstract class ExamplesDialog extends BottomSheetDialog {
 
-    public ExamplesDialog(String title, String example, Context context) {
-        super(context);
+    public ExamplesDialog(boolean settings, Activity activity) {
+        super(activity);
 
-        LinearLayoutCompat layout = new LinearLayoutCompat(context);
-        layout.setPadding(15, 15, 15, 15);
-        final MaterialButton button = new MaterialButton(context);
-        button.setGravity(Gravity.START);
-        button.setTextSize(TypedValue.COMPLEX_UNIT_SP, 17);
-        button.setIconGravity(MaterialButton.ICON_GRAVITY_TEXT_END);
-        button.setBackgroundColor(Color.TRANSPARENT);
-        button.setIconTint(ColorStateList.valueOf(Settings.getColorAccent(context)));
-        button.setTextColor(Settings.getColorAccent(context));
-        button.setIcon(Utils.getDrawable(R.drawable.ic_copy, context));
-        button.setLayoutParams(new LinearLayout.LayoutParams(
-                ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT));
-        button.setText(example);
-        button.setContentDescription("Copy example to clipboard");
-        layout.addView(button);
-        button.setOnClickListener(v -> Utils.copyToClipboard(example, context));
+        View root = View.inflate(activity, R.layout.layout_examples, null);
+        MaterialButton mCancel = root.findViewById(R.id.cancel);
+        MaterialAutoCompleteTextView mSearchWord = root.findViewById(R.id.search_word);
+        RecyclerView mRecyclerView = root.findViewById(R.id.recycler_view);
 
-        setIcon(R.mipmap.ic_launcher);
-        setTitle(title);
-        setView(layout);
-        setPositiveButton(R.string.cancel, (dialogInterface, i) -> {
+        mRecyclerView.setLayoutManager(new LinearLayoutManager(activity));
+        GridLayoutManager mLayoutManager = new GridLayoutManager(activity, activity.getResources().getConfiguration()
+                .orientation == Configuration.ORIENTATION_LANDSCAPE ? 2 : 1);
+        mRecyclerView.setItemAnimator(null);
+        mRecyclerView.setLayoutManager(mLayoutManager);
+        mRecyclerView.setAdapter(new ExamplesAdapter(Commands.getCommand(""), command -> {
+            if (command != null) {
+                if (settings) {
+                    Intent intent = new Intent();
+                    intent.putExtra("command", command);
+                    activity.setResult(Activity.RESULT_OK, intent);
+                    activity.finish();
+                } else {
+                    onCommandSelected(command);
+                }
+                dismiss();
+            }
+        }));
+
+        mRecyclerView.setVisibility(View.VISIBLE);
+
+        mSearchWord.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+            }
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+            }
+
+            @Override
+            public void afterTextChanged(Editable s) {
+                mRecyclerView.setAdapter(new ExamplesAdapter(Commands.getCommand(s.toString().trim()), command -> {
+                    if (command != null) {
+                        if (settings) {
+                            Intent intent = new Intent();
+                            intent.putExtra("command", command);
+                            activity.setResult(Activity.RESULT_OK, intent);
+                            activity.finish();
+                        } else {
+                            onCommandSelected(command);
+                        }
+                        dismiss();
+                    }
+                }));
+            }
         });
+
+        mCancel.setOnClickListener(v -> dismiss());
+
+        setContentView(root);
         show();
     }
+
+    public abstract void onCommandSelected(String command);
 
 }
