@@ -1,3 +1,0 @@
-* Updated build tools to target latest SDK.
-* Updated translations.
-* Miscellaneous changes.

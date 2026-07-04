@@ -1,6 +1,6 @@
 [versions]
 agp = "9.2.1"
-material = "1.13.0"
+material = "1.14.0"
 preference = "1.2.1"
 shizuku = "13.1.5"
 

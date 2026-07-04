@@ -160,7 +160,6 @@ public class SettingsAdapter extends RecyclerView.Adapter<SettingsAdapter.ViewHo
                 new ExamplesDialog(true, activity) {
                     @Override
                     public void onCommandSelected(String command) {
-                        // To-do
                     }
                 };
             } else if (position == 6) {

@@ -1,0 +1,5 @@
+* Main UI: Switched the main interface to a custom bottom navigation view for improved navigation and a more tailored user experience.
+* Localization: Added support for Ukrainian and Spanish (Argentina) languages.
+* Localization: Imported the latest translation updates from POEditor.
+* Build: Updated build tools to target latest SDK.
+* Maintenance: Miscellaneous changes.
