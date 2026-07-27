@@ -1,7 +1,6 @@
 package in.sunilpaulmathew.ashell.dialogs;
 
 import android.app.Activity;
-import android.content.Intent;
 import android.content.res.Configuration;
 import android.text.Editable;
 import android.text.TextWatcher;
@@ -24,7 +23,7 @@ import in.sunilpaulmathew.ashell.utils.Commands;
  */
 public abstract class ExamplesDialog extends BottomSheetDialog {
 
-    public ExamplesDialog(boolean settings, Activity activity) {
+    public ExamplesDialog(Activity activity) {
         super(activity);
 
         View root = View.inflate(activity, R.layout.layout_examples, null);
@@ -39,14 +38,7 @@ public abstract class ExamplesDialog extends BottomSheetDialog {
         mRecyclerView.setLayoutManager(mLayoutManager);
         mRecyclerView.setAdapter(new ExamplesAdapter(Commands.getCommand(""), command -> {
             if (command != null) {
-                if (settings) {
-                    Intent intent = new Intent();
-                    intent.putExtra("command", command);
-                    activity.setResult(Activity.RESULT_OK, intent);
-                    activity.finish();
-                } else {
-                    onCommandSelected(command);
-                }
+                onCommandSelected(command);
                 dismiss();
             }
         }));
@@ -66,14 +58,7 @@ public abstract class ExamplesDialog extends BottomSheetDialog {
             public void afterTextChanged(Editable s) {
                 mRecyclerView.setAdapter(new ExamplesAdapter(Commands.getCommand(s.toString().trim()), command -> {
                     if (command != null) {
-                        if (settings) {
-                            Intent intent = new Intent();
-                            intent.putExtra("command", command);
-                            activity.setResult(Activity.RESULT_OK, intent);
-                            activity.finish();
-                        } else {
-                            onCommandSelected(command);
-                        }
+                        onCommandSelected(command);
                         dismiss();
                     }
                 }));

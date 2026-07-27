@@ -21,6 +21,7 @@ import java.util.List;
 
 import in.sunilpaulmathew.ashell.BuildConfig;
 import in.sunilpaulmathew.ashell.R;
+import in.sunilpaulmathew.ashell.activities.aShellActivity;
 import in.sunilpaulmathew.ashell.dialogs.ExamplesDialog;
 import in.sunilpaulmathew.ashell.dialogs.PolicyDialog;
 import in.sunilpaulmathew.ashell.dialogs.SingleChoiceDialog;
@@ -85,7 +86,7 @@ public class SettingsAdapter extends RecyclerView.Adapter<SettingsAdapter.ViewHo
         }
 
         holder.mCheckBox.setOnClickListener(v -> {
-            if (data.get(position).getPosition() == 2) {
+            if (data.get(position).getPosition() == 3) {
                 Utils.saveBoolean("amoledTheme", !Utils.getBoolean("amoledTheme", false, holder.mCheckBox.getContext()), holder.mCheckBox.getContext());
                 Settings.restartApp(activity);
             }
@@ -157,9 +158,10 @@ public class SettingsAdapter extends RecyclerView.Adapter<SettingsAdapter.ViewHo
             } else if (position == 4) {
                 Settings.setAppLanguage(activity);
             } else if (position == 5) {
-                new ExamplesDialog(true, activity) {
+                new ExamplesDialog(activity) {
                     @Override
                     public void onCommandSelected(String command) {
+                        ((aShellActivity) activity).navigateToFragment(0, command);
                     }
                 };
             } else if (position == 6) {

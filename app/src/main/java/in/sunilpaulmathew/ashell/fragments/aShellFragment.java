@@ -194,7 +194,7 @@ public class aShellFragment extends BaseFragment {
             if (mShizukuShell != null && mShizukuShell.isBusy()) {
                 mShizukuShell.destroy();
             } else if (mCommand.getText() == null || mCommand.getText().toString().trim().isEmpty()) {
-                new ExamplesDialog(false, requireActivity()) {
+                new ExamplesDialog(requireActivity()) {
                     @Override
                     public void onCommandSelected(String command) {
                         setCommand(command);
@@ -361,9 +361,6 @@ public class aShellFragment extends BaseFragment {
                 new Handler(Looper.getMainLooper()).post(() -> updateUI(mResult).execute());
             }
         }, 0, 250, TimeUnit.MILLISECONDS);
-
-        Settings.hideNavLayout(mRecyclerViewOutput, requireActivity());
-
         mOnBackPressedCallback = new OnBackPressedCallback(true) {
             @Override
             public void handleOnBackPressed() {
@@ -604,14 +601,40 @@ public class aShellFragment extends BaseFragment {
     }
 
     private void requestFocus() {
-        if (mCommand == null) return;
-        if (!mCommand.hasFocus()) mCommand.requestFocus();
-        mCommand.postDelayed(() -> {
-            InputMethodManager imm = (InputMethodManager) requireActivity().getSystemService(Context.INPUT_METHOD_SERVICE);
-            if (imm != null && getView() != null) {
-                imm.showSoftInput(mCommand,InputMethodManager.SHOW_IMPLICIT);
+        if (mCommand != null) {
+            mCommand.post(() -> {
+                if (isAdded() && isVisible()) {
+                    mCommand.requestFocus();
+
+                    InputMethodManager imm = (InputMethodManager) requireActivity()
+                            .getSystemService(Context.INPUT_METHOD_SERVICE);
+                    if (imm != null) {
+                        imm.showSoftInput(mCommand, InputMethodManager.SHOW_IMPLICIT);
+                    }
+                }
+            });
+        }
+    }
+
+    private void clearFocus() {
+        if (mCommand != null) {
+            mCommand.clearFocus();
+        }
+
+        if (isAdded()) {
+            View view = requireActivity().getCurrentFocus();
+            if (view == null && getView() != null) {
+                view = getView();
             }
-        }, 200);
+
+            if (view != null) {
+                InputMethodManager imm = (InputMethodManager) requireActivity()
+                        .getSystemService(Context.INPUT_METHOD_SERVICE);
+                if (imm != null) {
+                    imm.hideSoftInputFromWindow(view.getWindowToken(), 0);
+                }
+            }
+        }
     }
 
     public void updateCommand(String newCommand) {
@@ -664,19 +687,29 @@ public class aShellFragment extends BaseFragment {
     }
 
     @Override
+    public void onDestroy() {
+        super.onDestroy();
+
+        if (mShizukuShell != null) mShizukuShell.destroy();
+
+    }
+
+    @Override
     public void onHiddenChanged(boolean hidden) {
         super.onHiddenChanged(hidden);
 
         if (!hidden) {
             requestFocus();
+        } else {
+            clearFocus();
         }
     }
 
     @Override
-    public void onDestroy() {
-        super.onDestroy();
+    public void onPause() {
+        super.onPause();
 
-        if (mShizukuShell != null) mShizukuShell.destroy();
+        clearFocus();
     }
 
     @Override

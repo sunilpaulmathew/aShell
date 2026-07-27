@@ -7,20 +7,15 @@ import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.content.res.Configuration;
 import android.os.Bundle;
-import android.os.Handler;
-import android.os.Looper;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
 import androidx.activity.OnBackPressedCallback;
 import androidx.annotation.Nullable;
-import androidx.core.widget.NestedScrollView;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
-
-import com.google.android.material.button.MaterialButton;
 
 import java.util.Collections;
 import java.util.List;
@@ -47,7 +42,6 @@ public class FilesFragment extends BaseFragment {
 
     private FilesAdapter mFilesAdapter;
     private FoldersAdapter mFoldersAdapter;
-    private MaterialButton mTitle;
     private RecyclerView mRecyclerViewFiles, mRecyclerViewFolders, mRecyclerViewTitle;
     private TitleAdapter mTitleAdapter;
     private final List<String> mTitles = new CopyOnWriteArrayList<>();
@@ -58,8 +52,6 @@ public class FilesFragment extends BaseFragment {
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View mRootView = inflater.inflate(R.layout.fragment_files, container, false);
 
-        mTitle = mRootView.findViewById(R.id.title);
-        NestedScrollView mSrollView = mRootView.findViewById(R.id.scroll_view);
         mRecyclerViewTitle = mRootView.findViewById(R.id.recycler_view_title);
         mRecyclerViewFiles = mRootView.findViewById(R.id.recycler_view_files);
         mRecyclerViewFolders = mRootView.findViewById(R.id.recycler_view_folders);
@@ -74,21 +66,11 @@ public class FilesFragment extends BaseFragment {
             new AccessUnavilableDialog(requireActivity()).show();
         }
 
-        Handler handler = new Handler(Looper.getMainLooper());
-        Runnable runnable = () -> requireActivity().findViewById(R.id.bottom_menu_card).setVisibility(VISIBLE);
-        mSrollView.setOnScrollChangeListener((NestedScrollView.OnScrollChangeListener) (v, scrollX, scrollY, oldScrollX, oldScrollY) -> {
-            if (scrollY != oldScrollY) {
-                requireActivity().findViewById(R.id.bottom_menu_card).setVisibility(GONE);
-                handler.removeCallbacks(runnable);
-                handler.postDelayed(runnable, 500);
-            }
-        });
-
-        mOnBackPressedCallback = new OnBackPressedCallback(true) {
+        mOnBackPressedCallback = new OnBackPressedCallback(false) {
             @Override
             public void handleOnBackPressed() {
                 if (Objects.equals(mPath, "/")) {
-                    ((aShellActivity) requireActivity()).navigateToDefaultFragment();
+                    ((aShellActivity) requireActivity()).navigateToFragment(0, null);
                 } else {
                     loadUI(String.join("/", mTitles.subList(1, mTitles.size() - 1))).execute();
                 }
@@ -179,7 +161,6 @@ public class FilesFragment extends BaseFragment {
                         Utils.toast(getString(R.string.file_system_access_error_toast), activity).show();
                         return;
                     }
-                    mTitle.setText(mTitles.get(mTitles.size() - 1));
                     mFoldersAdapter = new FoldersAdapter(folders);
                     mFilesAdapter = new FilesAdapter(files);
                     mTitleAdapter = new TitleAdapter(mTitles);

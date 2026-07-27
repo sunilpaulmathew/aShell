@@ -1,23 +1,16 @@
 package in.sunilpaulmathew.ashell.utils;
 
-import static android.view.View.GONE;
-import static android.view.View.VISIBLE;
-
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.content.res.Configuration;
 import android.content.res.Resources;
 import android.content.res.TypedArray;
-import android.os.Handler;
-import android.os.Looper;
 import android.util.DisplayMetrics;
 import android.view.View;
 import android.view.animation.DecelerateInterpolator;
 
-import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatDelegate;
-import androidx.recyclerview.widget.RecyclerView;
 
 import com.google.android.material.color.DynamicColors;
 
@@ -261,24 +254,6 @@ public class Settings {
         } else {
             return new Locale(getLanguage(context));
         }
-    }
-
-    public static void hideNavLayout(RecyclerView view, Activity activity) {
-        Handler handler = new Handler(Looper.getMainLooper());
-        View navView = activity.findViewById(R.id.bottom_menu_card);
-        Runnable runnable = () -> navView.setVisibility(VISIBLE);
-
-        view.addOnScrollListener(new RecyclerView.OnScrollListener() {
-            @Override
-            public void onScrollStateChanged(@NonNull RecyclerView recyclerView, int newState) {
-                super.onScrollStateChanged(recyclerView, newState);
-                if (newState != RecyclerView.SCROLL_STATE_IDLE) {
-                    navView.setVisibility(GONE);
-                    handler.removeCallbacks(runnable);
-                    handler.postDelayed(runnable, 500);
-                }
-            }
-        });
     }
 
     public static void initializeAppLanguage(Context context) {

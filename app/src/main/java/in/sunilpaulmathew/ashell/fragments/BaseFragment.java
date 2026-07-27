@@ -96,4 +96,22 @@ public abstract class BaseFragment extends Fragment {
         }
     }
 
+    @Override
+    public void onPause() {
+        super.onPause();
+
+        if (mOnBackPressedCallback != null) {
+            mOnBackPressedCallback.setEnabled(false);
+        }
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+
+        if (mOnBackPressedCallback != null) {
+            mOnBackPressedCallback.setEnabled(true);
+        }
+    }
+
 }
