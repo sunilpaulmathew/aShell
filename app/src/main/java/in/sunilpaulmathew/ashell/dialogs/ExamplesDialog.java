@@ -7,7 +7,6 @@ import android.text.TextWatcher;
 import android.view.View;
 
 import androidx.recyclerview.widget.GridLayoutManager;
-import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.google.android.material.bottomsheet.BottomSheetDialog;
@@ -31,7 +30,6 @@ public abstract class ExamplesDialog extends BottomSheetDialog {
         MaterialAutoCompleteTextView mSearchWord = root.findViewById(R.id.search_word);
         RecyclerView mRecyclerView = root.findViewById(R.id.recycler_view);
 
-        mRecyclerView.setLayoutManager(new LinearLayoutManager(activity));
         GridLayoutManager mLayoutManager = new GridLayoutManager(activity, activity.getResources().getConfiguration()
                 .orientation == Configuration.ORIENTATION_LANDSCAPE ? 2 : 1);
         mRecyclerView.setItemAnimator(null);

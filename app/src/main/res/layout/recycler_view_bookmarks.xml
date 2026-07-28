@@ -1,0 +1,42 @@
+<com.google.android.material.card.MaterialCardView
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_marginHorizontal="10dp"
+    android:layout_marginVertical="5dp"
+    android:layout_gravity="center"
+    app:cardCornerRadius="15dp" >
+
+    <androidx.appcompat.widget.LinearLayoutCompat
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginHorizontal="10dp"
+        android:layout_marginVertical="5dp"
+        android:orientation="horizontal"
+        android:layout_gravity="center"
+        android:gravity="center">
+
+        <androidx.appcompat.widget.AppCompatImageButton
+            android:layout_width="30dp"
+            android:layout_height="30dp"
+            android:layout_gravity="center"
+            android:tint="?attr/colorPrimary"
+            android:importantForAccessibility="no"
+            android:layout_marginHorizontal="5dp"
+            android:src="@drawable/ic_command"
+            android:scaleType="fitCenter"
+            android:background="@null"
+            android:clickable="false" />
+
+        <com.google.android.material.textview.MaterialTextView
+            android:id="@+id/textview"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textColor="?attr/colorPrimary"
+            android:layout_gravity="center|start"
+            android:gravity="center|start"
+            android:textStyle="bold"
+            android:textSize="17sp" />
+    </androidx.appcompat.widget.LinearLayoutCompat>
+</com.google.android.material.card.MaterialCardView>

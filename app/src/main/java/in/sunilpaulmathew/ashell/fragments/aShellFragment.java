@@ -17,7 +17,6 @@ import android.provider.MediaStore;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.view.LayoutInflater;
-import android.view.Menu;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.inputmethod.InputMethodManager;
@@ -25,7 +24,6 @@ import android.view.inputmethod.InputMethodManager;
 import androidx.activity.OnBackPressedCallback;
 import androidx.annotation.Nullable;
 import androidx.appcompat.widget.AppCompatImageButton;
-import androidx.appcompat.widget.PopupMenu;
 import androidx.core.app.ActivityCompat;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -51,6 +49,7 @@ import in.sunilpaulmathew.ashell.R;
 import in.sunilpaulmathew.ashell.adapters.CommandsAdapter;
 import in.sunilpaulmathew.ashell.adapters.ShellOutputAdapter;
 import in.sunilpaulmathew.ashell.dialogs.AccessUnavilableDialog;
+import in.sunilpaulmathew.ashell.dialogs.BookMarkDialog;
 import in.sunilpaulmathew.ashell.dialogs.ExamplesDialog;
 import in.sunilpaulmathew.ashell.utils.Async;
 import in.sunilpaulmathew.ashell.utils.ButtonAnimator;
@@ -267,35 +266,26 @@ public class aShellFragment extends BaseFragment {
         mBookMarksButton.setOnClickListener(v -> new ButtonAnimator(mBookMarksButton, getString(R.string.bookmarks)) {
             @Override
             public void onItemClicked() {
-
-                PopupMenu popupMenu = new PopupMenu(requireContext(), mCommand);
-                Menu menu = popupMenu.getMenu();
-                for (int i = 0; i < Utils.getBookmarks(requireActivity()).size(); i++) {
-                    menu.add(Menu.NONE, i, Menu.NONE, Utils.getBookmarks(requireActivity()).get(i));
-                }
-                popupMenu.setOnMenuItemClickListener(item -> {
-                    mCommand.setText(Utils.getBookmarks(requireActivity()).get(item.getItemId()));
-                    mCommand.setSelection(Objects.requireNonNull(mCommand.getText()).length());
-                    return false;
-                });
-                popupMenu.show();
+                new BookMarkDialog(Utils.getBookmarks(requireActivity()), R.drawable.ic_bookmarks, getString(R.string.bookmarks), requireActivity()) {
+                    @Override
+                    public void onCommandSelected(String command) {
+                        mCommand.setText(command);
+                        mCommand.setSelection(command.length());
+                    }
+                };
             }
         });
 
         mHistoryButton.setOnClickListener(v -> new ButtonAnimator(mHistoryButton, getString(R.string.history)) {
             @Override
             public void onItemClicked() {
-                PopupMenu popupMenu = new PopupMenu(requireContext(), mCommand);
-                Menu menu = popupMenu.getMenu();
-                for (int i = 0; i < getRecentCommands().size(); i++) {
-                    menu.add(Menu.NONE, i, Menu.NONE, getRecentCommands().get(i));
-                }
-                popupMenu.setOnMenuItemClickListener(item -> {
-                    mCommand.setText(getRecentCommands().get(item.getItemId()));
-                    mCommand.setSelection(Objects.requireNonNull(mCommand.getText()).length());
-                    return false;
-                });
-                popupMenu.show();
+                new BookMarkDialog(getRecentCommands(), R.drawable.ic_history, getString(R.string.history), requireActivity()) {
+                    @Override
+                    public void onCommandSelected(String command) {
+                        mCommand.setText(command);
+                        mCommand.setSelection(command.length());
+                    }
+                };
             }
         });
 
