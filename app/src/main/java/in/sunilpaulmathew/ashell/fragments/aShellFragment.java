@@ -248,16 +248,18 @@ public class aShellFragment extends BaseFragment {
             }
             @Override
             public void afterTextChanged(Editable s) {
-                if (s == null || s.toString().trim().isEmpty()) {
-                    updateUI(mResult).execute();
+                String query = s.toString().trim().toLowerCase();
+
+                if (query.isEmpty()) {
+                    updateUI(mResult, null);
                 } else {
                     List<String> mResultSorted = new CopyOnWriteArrayList<>();
                     for (int i = mPosition; i < mResult.size(); i++) {
-                        if (mResult.get(i).toLowerCase().contains(s.toString().toLowerCase())) {
+                        if (mResult.get(i).toLowerCase().contains(query)) {
                             mResultSorted.add(mResult.get(i));
                         }
                     }
-                    updateUI(mResultSorted).execute();
+                    updateUI(mResult, mResultSorted);
                 }
             }
         });
@@ -358,7 +360,7 @@ public class aShellFragment extends BaseFragment {
         executor.scheduleWithFixedDelay(() -> {
             if (mResult != null && mResult.size() != lastShownSize.get()) {
                 lastShownSize.set(mResult.size());
-                new Handler(Looper.getMainLooper()).post(() -> updateUI(mResult).execute());
+                new Handler(Looper.getMainLooper()).post(() -> updateUI(mResult, null));
             }
         }, 0, 250, TimeUnit.MILLISECONDS);
         mOnBackPressedCallback = new OnBackPressedCallback(true) {
@@ -489,8 +491,7 @@ public class aShellFragment extends BaseFragment {
         mCommand.setHint(null);
         mCommand.clearFocus();
         if (mSearchWord.getVisibility() == VISIBLE) {
-            mSearchWord.setText(null);
-            mSearchWord.setVisibility(GONE);
+            hideSearchBar();
         }
 
         String finalCommand;
@@ -645,29 +646,11 @@ public class aShellFragment extends BaseFragment {
         }
     }
 
-    private Async updateUI(List<String> data) {
-        return new Async() {
-            private ShellOutputAdapter mShellOutputAdapter;
-            @Override
-            public void onPreExecute() {
-            }
-
-            @Override
-            public void doInBackground() {
-                if (data == null || data.isEmpty()) return;
-                mShellOutputAdapter = new ShellOutputAdapter(mResult);
-            }
-
-            @Override
-            public void onPostExecute() {
-                if (isAdded()) {
-                    if (data != null && !data.isEmpty()) {
-                        mRecyclerViewOutput.setAdapter(mShellOutputAdapter);
-                        mRecyclerViewOutput.scrollToPosition(mResult.size() - 1);
-                    }
-                }
-            }
-        };
+    private void updateUI(List<String> data, List<String> dataFiltered) {
+        if (data == null && dataFiltered == null || !isAdded()) return;
+        ShellOutputAdapter mShellOutputAdapter = new ShellOutputAdapter(data, dataFiltered);
+        mRecyclerViewOutput.setAdapter(mShellOutputAdapter);
+        mRecyclerViewOutput.scrollToPosition(dataFiltered != null ? dataFiltered.size() - 1 : data.size() - 1);
     }
 
     @Override

@@ -16,7 +16,6 @@ import java.util.List;
 
 import in.sunilpaulmathew.ashell.BuildConfig;
 import in.sunilpaulmathew.ashell.R;
-import in.sunilpaulmathew.ashell.activities.aShellActivity;
 import in.sunilpaulmathew.ashell.adapters.SettingsAdapter;
 import in.sunilpaulmathew.ashell.serializable.SettingsEntry;
 import in.sunilpaulmathew.ashell.utils.Settings;
@@ -41,7 +40,7 @@ public class SettingsFragment extends BaseFragment {
         mOnBackPressedCallback = new OnBackPressedCallback(true) {
             @Override
             public void handleOnBackPressed() {
-                ((aShellActivity) requireActivity()).navigateToFragment(1, null);
+                Settings.navigateToFragment(1, null, requireActivity());
             }
         };
 

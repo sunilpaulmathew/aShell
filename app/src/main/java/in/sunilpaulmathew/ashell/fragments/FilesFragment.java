@@ -23,7 +23,6 @@ import java.util.Objects;
 import java.util.concurrent.CopyOnWriteArrayList;
 
 import in.sunilpaulmathew.ashell.R;
-import in.sunilpaulmathew.ashell.activities.aShellActivity;
 import in.sunilpaulmathew.ashell.adapters.FilesAdapter;
 import in.sunilpaulmathew.ashell.adapters.FoldersAdapter;
 import in.sunilpaulmathew.ashell.adapters.TitleAdapter;
@@ -31,6 +30,7 @@ import in.sunilpaulmathew.ashell.dialogs.AccessUnavilableDialog;
 import in.sunilpaulmathew.ashell.dialogs.ProgressDialog;
 import in.sunilpaulmathew.ashell.serializable.FilesEntry;
 import in.sunilpaulmathew.ashell.utils.Async;
+import in.sunilpaulmathew.ashell.utils.Settings;
 import in.sunilpaulmathew.ashell.utils.ShizukuShell;
 import in.sunilpaulmathew.ashell.utils.Utils;
 import rikka.shizuku.Shizuku;
@@ -70,7 +70,7 @@ public class FilesFragment extends BaseFragment {
             @Override
             public void handleOnBackPressed() {
                 if (Objects.equals(mPath, "/")) {
-                    ((aShellActivity) requireActivity()).navigateToFragment(0, null);
+                    Settings.navigateToFragment(0, null, requireActivity());
                 } else {
                     loadUI(String.join("/", mTitles.subList(1, mTitles.size() - 1))).execute();
                 }

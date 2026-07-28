@@ -263,6 +263,10 @@ public class Settings {
         conf.setLocale(getLocale(context));
         res.updateConfiguration(conf, dm);
     }
+    
+    public static void navigateToFragment(int position, String command, Activity activity) {
+        ((aShellActivity) activity).navigateToFragment(position, command);
+    }
 
     public static void restartApp(Activity activity) {
         Intent mainActivity = new Intent(activity, aShellActivity.class);

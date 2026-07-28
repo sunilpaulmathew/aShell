@@ -21,7 +21,6 @@ import java.util.List;
 
 import in.sunilpaulmathew.ashell.BuildConfig;
 import in.sunilpaulmathew.ashell.R;
-import in.sunilpaulmathew.ashell.activities.aShellActivity;
 import in.sunilpaulmathew.ashell.dialogs.ExamplesDialog;
 import in.sunilpaulmathew.ashell.dialogs.PolicyDialog;
 import in.sunilpaulmathew.ashell.dialogs.SingleChoiceDialog;
@@ -161,7 +160,7 @@ public class SettingsAdapter extends RecyclerView.Adapter<SettingsAdapter.ViewHo
                 new ExamplesDialog(activity) {
                     @Override
                     public void onCommandSelected(String command) {
-                        ((aShellActivity) activity).navigateToFragment(0, command);
+                        Settings.navigateToFragment(0, command, activity);
                     }
                 };
             } else if (position == 6) {

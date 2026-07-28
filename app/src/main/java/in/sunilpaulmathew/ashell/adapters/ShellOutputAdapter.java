@@ -20,10 +20,11 @@ import in.sunilpaulmathew.ashell.utils.Settings;
  */
 public class ShellOutputAdapter extends RecyclerView.Adapter<ShellOutputAdapter.ViewHolder> {
 
-    private final List<String> data;
+    private final List<String> data, dataFiltered;
 
-    public ShellOutputAdapter(List<String> data) {
+    public ShellOutputAdapter(List<String> data, List<String> dataFiltered) {
         this.data = data;
+        this.dataFiltered = dataFiltered;
     }
 
     @NonNull
@@ -35,14 +36,15 @@ public class ShellOutputAdapter extends RecyclerView.Adapter<ShellOutputAdapter.
 
     @Override
     public void onBindViewHolder(@NonNull ShellOutputAdapter.ViewHolder holder, int position) {
-        holder.mOutput.setText(Html.fromHtml(this.data.get(position), Html.FROM_HTML_MODE_LEGACY));
+        String line = dataFiltered != null ? this.dataFiltered.get(position) : this.data.get(position);
+        holder.mOutput.setText(Html.fromHtml(line, Html.FROM_HTML_MODE_LEGACY));
 
         Settings.setSlideInAnimation(holder.itemView, position);
     }
 
     @Override
     public int getItemCount() {
-        return this.data.size();
+        return this.dataFiltered != null ? this.dataFiltered.size() : this.data.size();
     }
 
     public static class ViewHolder extends RecyclerView.ViewHolder {
