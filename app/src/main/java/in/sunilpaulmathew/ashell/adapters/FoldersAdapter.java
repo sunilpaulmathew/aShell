@@ -20,10 +20,11 @@ import in.sunilpaulmathew.ashell.serializable.FilesEntry;
 public class FoldersAdapter extends RecyclerView.Adapter<FoldersAdapter.ViewHolder> {
 
     private final List<FilesEntry> data;
-    private static ClickListener mClickListener;
+    private final OnItemClickListener clickListener;
 
-    public FoldersAdapter(List<FilesEntry> data) {
+    public FoldersAdapter(List<FilesEntry> data, OnItemClickListener clickListener) {
         this.data = data;
+        this.clickListener = clickListener;
     }
 
     @NonNull
@@ -50,15 +51,11 @@ public class FoldersAdapter extends RecyclerView.Adapter<FoldersAdapter.ViewHold
             super(view);
             this.fileName = view.findViewById(R.id.name);
 
-            view.setOnClickListener(v -> mClickListener.onItemClick(data.get(getBindingAdapterPosition()).getAbsolutePath()));
+            view.setOnClickListener(v -> clickListener.onItemClick(data.get(getBindingAdapterPosition()).getAbsolutePath()));
         }
     }
 
-    public void setOnItemClickListener(ClickListener clickListener) {
-        FoldersAdapter.mClickListener = clickListener;
-    }
-
-    public interface ClickListener {
+    public interface OnItemClickListener {
         void onItemClick(String filePath);
     }
 

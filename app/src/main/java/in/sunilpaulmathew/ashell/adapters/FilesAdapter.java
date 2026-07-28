@@ -34,10 +34,11 @@ import in.sunilpaulmathew.ashell.utils.Utils;
 public class FilesAdapter extends RecyclerView.Adapter<FilesAdapter.ViewHolder> {
 
     private final List<FilesEntry> data;
-    private static ClickListener mClickListener;
+    private final OnItemClickListener clickListener;
 
-    public FilesAdapter(List<FilesEntry> data) {
+    public FilesAdapter(List<FilesEntry> data, OnItemClickListener clickListener) {
         this.data = data;
+        this.clickListener = clickListener;
     }
 
     @NonNull
@@ -76,7 +77,7 @@ public class FilesAdapter extends RecyclerView.Adapter<FilesAdapter.ViewHolder> 
                 int position = getBindingAdapterPosition();
                 FilesEntry filesEntry = data.get(position);
                 if (filesEntry.isSymbolicLink()) {
-                    mClickListener.onItemClick(filesEntry.decodeSymLink());
+                    clickListener.onItemClick(filesEntry.decodeSymLink());
                 } else {
                     List<MenuEntry> menuEntry = new CopyOnWriteArrayList<>();
                     if (!filesEntry.hasExtension() || filesEntry.isTextFile()) {
@@ -183,12 +184,8 @@ public class FilesAdapter extends RecyclerView.Adapter<FilesAdapter.ViewHolder> 
         }
     }
 
-    public void setOnItemClickListener(ClickListener clickListener) {
-        FilesAdapter.mClickListener = clickListener;
-    }
-
-    public interface ClickListener {
-        void onItemClick(String string);
+    public interface OnItemClickListener {
+        void onItemClick(String newPath);
     }
 
 }

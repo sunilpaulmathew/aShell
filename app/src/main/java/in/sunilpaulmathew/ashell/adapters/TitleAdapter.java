@@ -23,10 +23,11 @@ import in.sunilpaulmathew.ashell.R;
 public class TitleAdapter extends RecyclerView.Adapter<TitleAdapter.ViewHolder> {
 
     private final List<String> data;
-    private static ClickListener mClickListener;
+    private final OnItemClickListener clickListener;
 
-    public TitleAdapter(List<String> data) {
+    public TitleAdapter(List<String> data, OnItemClickListener clickListener) {
         this.data = data;
+        this.clickListener = clickListener;
     }
 
     @NonNull
@@ -64,17 +65,13 @@ public class TitleAdapter extends RecyclerView.Adapter<TitleAdapter.ViewHolder> 
 
             view.setOnClickListener(v -> {
                 if (getBindingAdapterPosition() != getItemCount() - 1) {
-                    mClickListener.onItemClick(getBindingAdapterPosition());
+                    clickListener.onItemClick(getBindingAdapterPosition());
                 }
             });
         }
     }
 
-    public void setOnItemClickListener(ClickListener clickListener) {
-        TitleAdapter.mClickListener = clickListener;
-    }
-
-    public interface ClickListener {
+    public interface OnItemClickListener {
         void onItemClick(int position);
     }
 

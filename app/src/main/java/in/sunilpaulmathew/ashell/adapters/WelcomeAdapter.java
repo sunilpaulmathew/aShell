@@ -25,10 +25,11 @@ import rikka.shizuku.Shizuku;
 public class WelcomeAdapter extends RecyclerView.Adapter<WelcomeAdapter.ViewHolder> {
 
     private final List<CommandEntry> data;
-    private static ClickListener mClickListener;
+    private final OnItemClickListener clickListener;
 
-    public WelcomeAdapter(List<CommandEntry> data) {
+    public WelcomeAdapter(List<CommandEntry> data, OnItemClickListener clickListener) {
         this.data = data;
+        this.clickListener = clickListener;
     }
 
     @NonNull
@@ -54,7 +55,7 @@ public class WelcomeAdapter extends RecyclerView.Adapter<WelcomeAdapter.ViewHold
 
         holder.mPermission.setOnClickListener(v -> {
             if (Shizuku.pingBinder() && Shizuku.checkSelfPermission() != PackageManager.PERMISSION_GRANTED) {
-                mClickListener.onItemClick();
+                clickListener.onItemClick();
             }
         });
 
@@ -68,7 +69,7 @@ public class WelcomeAdapter extends RecyclerView.Adapter<WelcomeAdapter.ViewHold
         return data.size();
     }
 
-    public static class ViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
+    public class ViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
         private final AppCompatImageButton mButton;
         private final MaterialButton mPermission;
         private final MaterialTextView mText, mTitle;
@@ -86,7 +87,7 @@ public class WelcomeAdapter extends RecyclerView.Adapter<WelcomeAdapter.ViewHold
         @Override
         public void onClick(View view) {
             if (getBindingAdapterPosition() == 1 && Shizuku.pingBinder() && Shizuku.checkSelfPermission() != PackageManager.PERMISSION_GRANTED) {
-                mClickListener.onItemClick();
+                clickListener.onItemClick();
             } else {
                 if (mText.getMaxLines() == 1) {
                     mText.setSingleLine(false);
@@ -101,11 +102,7 @@ public class WelcomeAdapter extends RecyclerView.Adapter<WelcomeAdapter.ViewHold
         }
     }
 
-    public void setOnItemClickListener(ClickListener clickListener) {
-        mClickListener = clickListener;
-    }
-
-    public interface ClickListener {
+    public interface OnItemClickListener {
         void onItemClick();
     }
 

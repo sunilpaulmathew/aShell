@@ -148,24 +148,18 @@ public class aShellFragment extends BaseFragment {
                                 }
 
                                 if (Shizuku.pingBinder() && Shizuku.getVersion() >= 11 && Shizuku.checkSelfPermission() == PackageManager.PERMISSION_GRANTED) {
-                                    mCommandsAdapter = new CommandsAdapter(Commands.getPackageInfo(packageNamePrefix + "."));
-                                    mRecyclerViewCommands.setItemAnimator(null);
-                                    mRecyclerViewCommands.setLayoutManager(new LinearLayoutManager(requireActivity()));
-                                    mRecyclerViewCommands.setAdapter(mCommandsAdapter);
-                                    mRecyclerViewCommands.setVisibility(VISIBLE);
-                                    mCommandsAdapter.setOnItemClickListener((command, v) -> {
+                                    mCommandsAdapter = new CommandsAdapter(Commands.getPackageInfo(packageNamePrefix + "."), command -> {
                                         mCommand.setText(splitCommands[0].contains(" ") ? splitPrefix(splitCommands[0], 0) + " " + command : command);
                                         mCommand.setSelection(Objects.requireNonNull(mCommand.getText()).length());
                                         mRecyclerViewCommands.setVisibility(GONE);
                                     });
+                                    mRecyclerViewCommands.setItemAnimator(null);
+                                    mRecyclerViewCommands.setLayoutManager(new LinearLayoutManager(requireActivity()));
+                                    mRecyclerViewCommands.setAdapter(mCommandsAdapter);
+                                    mRecyclerViewCommands.setVisibility(VISIBLE);
                                 }
                             } else {
-                                mCommandsAdapter = new CommandsAdapter(Commands.getCommand(s.toString()));
-                                mRecyclerViewCommands.setItemAnimator(null);
-                                mRecyclerViewCommands.setLayoutManager(new LinearLayoutManager(requireActivity()));
-                                mRecyclerViewCommands.setAdapter(mCommandsAdapter);
-                                mRecyclerViewCommands.setVisibility(VISIBLE);
-                                mCommandsAdapter.setOnItemClickListener((command, v) -> {
+                                mCommandsAdapter = new CommandsAdapter(Commands.getCommand(s.toString()), command -> {
                                     if (command.contains(" <")) {
                                         mCommand.setText(command.split("<")[0]);
                                     } else {
@@ -173,6 +167,10 @@ public class aShellFragment extends BaseFragment {
                                     }
                                     mCommand.setSelection(Objects.requireNonNull(mCommand.getText()).length());
                                 });
+                                mRecyclerViewCommands.setItemAnimator(null);
+                                mRecyclerViewCommands.setLayoutManager(new LinearLayoutManager(requireActivity()));
+                                mRecyclerViewCommands.setAdapter(mCommandsAdapter);
+                                mRecyclerViewCommands.setVisibility(VISIBLE);
                             }
                         });
                         mSendButton.setIconTint(ColorStateList.valueOf(Settings.getColorAccent(requireActivity())));

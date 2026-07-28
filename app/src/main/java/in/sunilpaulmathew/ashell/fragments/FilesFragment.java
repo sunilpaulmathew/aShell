@@ -161,12 +161,9 @@ public class FilesFragment extends BaseFragment {
                         Utils.toast(getString(R.string.file_system_access_error_toast), activity).show();
                         return;
                     }
-                    mFoldersAdapter = new FoldersAdapter(folders);
-                    mFilesAdapter = new FilesAdapter(files);
-                    mTitleAdapter = new TitleAdapter(mTitles);
-                    mFoldersAdapter.setOnItemClickListener((String newPath) -> loadUI(newPath).execute());
-                    mFilesAdapter.setOnItemClickListener((String newPath) -> loadUI(newPath).execute());
-                    mTitleAdapter.setOnItemClickListener((int position) -> loadUI(position == 0 ? "/" : "/" + String.join("/", mTitles.subList(1, position + 1))).execute());
+                    mFoldersAdapter = new FoldersAdapter(folders, filePath -> loadUI(filePath).execute());
+                    mFilesAdapter = new FilesAdapter(files, newPath -> loadUI(newPath).execute());
+                    mTitleAdapter = new TitleAdapter(mTitles, position -> loadUI(position == 0 ? "/" : "/" + String.join("/", mTitles.subList(1, position + 1))).execute());
                     mRecyclerViewTitle.setLayoutManager(new LinearLayoutManager(activity, LinearLayoutManager.HORIZONTAL, false));
                     mRecyclerViewTitle.setAdapter(mTitleAdapter);
                     mRecyclerViewTitle.scrollToPosition(mTitles.size() - 1);

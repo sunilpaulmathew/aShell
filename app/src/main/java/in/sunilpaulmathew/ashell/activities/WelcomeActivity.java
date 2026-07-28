@@ -49,7 +49,7 @@ public class WelcomeActivity extends BaseActivity {
         RecyclerView mRecyclerView = findViewById(R.id.recycler_view);
         mRecyclerView.setItemAnimator(null);
         mRecyclerView.setLayoutManager(new LinearLayoutManager(this));
-        WelcomeAdapter mAdapter = new WelcomeAdapter(getData());
+        WelcomeAdapter mAdapter = new WelcomeAdapter(getData(), this::checkPermission);
         mRecyclerView.setAdapter(mAdapter);
 
         mRecyclerView.addOnScrollListener(new RecyclerView.OnScrollListener() {
@@ -74,8 +74,6 @@ public class WelcomeActivity extends BaseActivity {
             new AccessUnavilableDialog(this).show();
             mStart.setText(R.string.quit);
         }
-
-        mAdapter.setOnItemClickListener(this::checkPermission);
 
         mStart.setOnClickListener(v-> {
             if (Shizuku.pingBinder() && Shizuku.checkSelfPermission() == PackageManager.PERMISSION_GRANTED) {

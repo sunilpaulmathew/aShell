@@ -24,10 +24,11 @@ public class CommandsAdapter extends RecyclerView.Adapter<CommandsAdapter.ViewHo
 
     private final List<CommandEntry> data;
 
-    private static ClickListener mClickListener;
+    private final OnItemClickListener clickListener;
 
-    public CommandsAdapter(List<CommandEntry> data) {
+    public CommandsAdapter(List<CommandEntry> data, OnItemClickListener clickListener) {
         this.data = data;
+        this.clickListener = clickListener;
     }
 
     @NonNull
@@ -56,7 +57,7 @@ public class CommandsAdapter extends RecyclerView.Adapter<CommandsAdapter.ViewHo
         return this.data.size();
     }
 
-    public static class ViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
+    public class ViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
         private final MaterialTextView mTitle, mSummary;
 
         public ViewHolder(View view) {
@@ -68,16 +69,12 @@ public class CommandsAdapter extends RecyclerView.Adapter<CommandsAdapter.ViewHo
 
         @Override
         public void onClick(View view) {
-            mClickListener.onItemClick(this.mTitle.getText().toString(), view);
+            clickListener.onItemClick(data.get(getBindingAdapterPosition()).getTitle());
         }
     }
 
-    public void setOnItemClickListener(ClickListener clickListener) {
-        CommandsAdapter.mClickListener = clickListener;
-    }
-
-    public interface ClickListener {
-        void onItemClick(String command, View v);
+    public interface OnItemClickListener {
+        void onItemClick(String command);
     }
 
 }
