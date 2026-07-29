@@ -1,6 +1,6 @@
 # aShell - Effortlessly execute ADB commands on your Shizuku-enabled Android device.
 
-<p style="text-align: center"><img src="https://gitlab.com/sunilpaulmathew/ashell/-/raw/master/fastlane/metadata/android/en-US/images/phoneScreenshots/4.png" alt="" width="250" height="450" /> <img src="https://gitlab.com/sunilpaulmathew/ashell/-/raw/master/fastlane/metadata/android/en-US/images/phoneScreenshots/1.png" alt="" width="250" height="450" /> <img src="https://gitlab.com/sunilpaulmathew/ashell/-/raw/master/fastlane/metadata/android/en-US/images/phoneScreenshots/2.png" alt="" width="250" height="450" /></p>
+<p style="text-align: center"><img src="https://gitlab.com/sunilpaulmathew/ashell/-/raw/master/fastlane/metadata/android/en-US/images/phoneScreenshots/2.png" alt="" width="250" height="450" /> <img src="https://gitlab.com/sunilpaulmathew/ashell/-/raw/master/fastlane/metadata/android/en-US/images/phoneScreenshots/1.png" alt="" width="250" height="450" /> <img src="https://gitlab.com/sunilpaulmathew/ashell/-/raw/master/fastlane/metadata/android/en-US/images/phoneScreenshots/5.png" alt="" width="250" height="450" /></p>
 
 [![](https://img.shields.io/badge/aShell-v0.27-green)](https://play.google.com/store/apps/details?id=in.sunilpaulmathew.ashell)
 
