@@ -1,0 +1,4 @@
+* Main Interface: Introduced custom top navigation bar instead of previous bottom navigation (thanks to user for feedback).
+* Bookmarks: Added editing functionality and migrated to Bottom Sheet dialogs.
+* History: Converted options to Bottom Sheet UI.
+* Fixes: Search functionality bug fixes, adapter click response optimizations, and theme layout updates.

@@ -6,6 +6,12 @@ include_in_header: true
 
 <h2 style="color: blue">🆕 What's New</h2>
 
+### ✨ 21. [v0.28](https://gitlab.com/sunilpaulmathew/ashell/-/releases/v0.27) *(July 29 2026)*
+- Main Interface: Introduced custom top navigation bar instead of previous bottom navigation (thanks to user for feedback).
+- Bookmarks: Added editing functionality and migrated to Bottom Sheet dialogs.
+- History: Converted options to Bottom Sheet UI.
+* Fixes: Search functionality bug fixes, adapter click response optimizations, and theme layout updates.
+
 ### ✨ 20. [v0.27](https://gitlab.com/sunilpaulmathew/ashell/-/releases/v0.27) *(July 03 2026)*
 - Main UI: Switched the main interface to a custom bottom navigation view for improved navigation and a more tailored user experience.
 - Localization: Added support for Ukrainian and Spanish (Argentina) languages.
