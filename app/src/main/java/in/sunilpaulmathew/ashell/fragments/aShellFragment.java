@@ -50,7 +50,9 @@ import in.sunilpaulmathew.ashell.adapters.CommandsAdapter;
 import in.sunilpaulmathew.ashell.adapters.ShellOutputAdapter;
 import in.sunilpaulmathew.ashell.dialogs.AccessUnavilableDialog;
 import in.sunilpaulmathew.ashell.dialogs.BookMarkDialog;
+import in.sunilpaulmathew.ashell.dialogs.BookMarkEditorDialog;
 import in.sunilpaulmathew.ashell.dialogs.ExamplesDialog;
+import in.sunilpaulmathew.ashell.serializable.CommandEntry;
 import in.sunilpaulmathew.ashell.utils.Async;
 import in.sunilpaulmathew.ashell.utils.ButtonAnimator;
 import in.sunilpaulmathew.ashell.utils.Commands;
@@ -264,9 +266,20 @@ public class aShellFragment extends BaseFragment {
         mBookMarksButton.setOnClickListener(v -> new ButtonAnimator(mBookMarksButton, getString(R.string.bookmarks)) {
             @Override
             public void onItemClicked() {
-                new BookMarkDialog(Utils.getBookmarks(requireActivity()), R.drawable.ic_bookmarks, getString(R.string.bookmarks), requireActivity()) {
+                new BookMarkDialog(stringToCommandsEntry(Utils.getBookmarks(requireActivity())), R.drawable.ic_bookmarks, getString(R.string.bookmarks), true, requireActivity()) {
                     @Override
-                    public void onCommandSelected(String command) {
+                    public void onCommandSelected(String command, boolean toEdit) {
+                        if (toEdit) {
+                            new BookMarkEditorDialog(command, requireActivity()) {
+                                @Override
+                                public void editBookMark(String newCommand) {
+                                    Utils.deleteFromBookmark(command, requireActivity());
+                                    Utils.addToBookmark(newCommand, requireActivity());
+                                    requireActivity().runOnUiThread(() -> mCommand.setText(newCommand));
+                                }
+                            };
+                            return;
+                        }
                         mCommand.setText(command);
                         mCommand.setSelection(command.length());
                     }
@@ -277,9 +290,9 @@ public class aShellFragment extends BaseFragment {
         mHistoryButton.setOnClickListener(v -> new ButtonAnimator(mHistoryButton, getString(R.string.history)) {
             @Override
             public void onItemClicked() {
-                new BookMarkDialog(getRecentCommands(), R.drawable.ic_history, getString(R.string.history), requireActivity()) {
+                new BookMarkDialog(stringToCommandsEntry(getRecentCommands()), R.drawable.ic_history, getString(R.string.history), false, requireActivity()) {
                     @Override
-                    public void onCommandSelected(String command) {
+                    public void onCommandSelected(String command, boolean toEdit) {
                         mCommand.setText(command);
                         mCommand.setSelection(command.length());
                     }
@@ -379,6 +392,39 @@ public class aShellFragment extends BaseFragment {
 
     private int lastIndexOf(String s, String splitTxt) {
         return s.lastIndexOf(splitTxt);
+    }
+
+    private List<CommandEntry> stringToCommandsEntry(List<String> strings) {
+        if (strings == null || strings.isEmpty()) {
+            return Collections.emptyList();
+        }
+
+        List<CommandEntry> commandsDB = Commands.commandList();
+
+        List<CommandEntry> cleanDb = new ArrayList<>();
+        for (CommandEntry entry : commandsDB) {
+            String title = entry.getTitle();
+            int index = title.indexOf('<');
+            String prefix = (index != -1) ? title.substring(0, index).trim() : title.trim();
+            cleanDb.add(new CommandEntry(prefix, entry.getSummary()));
+        }
+
+        List<CommandEntry> result = new ArrayList<>(strings.size());
+        for (String inputCommand : strings) {
+            if (inputCommand == null) continue;
+
+            String matchedSummary = null;
+
+            for (CommandEntry pair : cleanDb) {
+                if (!pair.getTitle().isEmpty() && inputCommand.startsWith(pair.getTitle())) {
+                    matchedSummary = pair.getSummary();
+                    break;
+                }
+            }
+
+            result.add(new CommandEntry(inputCommand, matchedSummary));
+        }
+        return result;
     }
 
     private List<String> getRecentCommands() {

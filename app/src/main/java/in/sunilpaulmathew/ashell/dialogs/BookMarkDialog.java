@@ -15,13 +15,14 @@ import java.util.List;
 
 import in.sunilpaulmathew.ashell.R;
 import in.sunilpaulmathew.ashell.adapters.BookmarksAdapter;
+import in.sunilpaulmathew.ashell.serializable.CommandEntry;
 
 /*
  * Created by sunilpaulmathew <sunil.kde@gmail.com> on July 29, 2026
  */
 public abstract class BookMarkDialog extends BottomSheetDialog {
 
-    public BookMarkDialog(List<String> data, int iconRef, String titleTxt, Context context) {
+    public BookMarkDialog(List<CommandEntry> data, int iconRef, String titleTxt, boolean editable, Context context) {
         super(context);
 
         View root = View.inflate(context, R.layout.layout_bookmarks, null);
@@ -35,10 +36,10 @@ public abstract class BookMarkDialog extends BottomSheetDialog {
 
         recyclerView.setLayoutManager(new LinearLayoutManager(context));
         recyclerView.setItemAnimator(null);
-        recyclerView.setAdapter(new BookmarksAdapter(data, command -> {
-            onCommandSelected(command);
+        recyclerView.setAdapter(new BookmarksAdapter(data, (command, toEdit) -> {
+            onCommandSelected(command, toEdit);
             dismiss();
-        }));
+        }, editable));
 
         cancel.setOnClickListener(v -> dismiss());
 
@@ -46,6 +47,6 @@ public abstract class BookMarkDialog extends BottomSheetDialog {
         show();
     }
 
-    public abstract void onCommandSelected(String command);
+    public abstract void onCommandSelected(String command, boolean toEdit);
 
 }

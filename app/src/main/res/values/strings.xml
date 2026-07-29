@@ -35,6 +35,8 @@
     <string name="disclaimer">Disclaimer</string>
     <string name="disclaimer_description">\uD83E\uDDE9 Shizuku Dependency: aShell requires a fully working Shizuku environment to function. Please ensure Shizuku is set up before using this app.\n\uD83D\uDC68\u200D\uD83D\uDCBB Basic Knowledge Required: Familiarity with ADB and Linux command-line basics is recommended for effective use.\n\uD83C\uDF10 Open Source: aShell is open-source and free to build. Contributions and translations are welcome via GitLab and POEditor.\n⚠️ No Liability: We are not liable for any issues, data loss, or damage that may occur while using this app.</string>
     <string name="dismiss">Dismiss</string>
+    <string name="edit">Edit</string>
+    <string name="edit_title">Edit \"%s\" to:</string>
     <string name="examples">Examples</string>
     <string name="examples_description">Explore popular ADB commands</string>
     <string name="features_description">\uD83D\uDCDC Run ADB commands with ease—includes built-in examples and bookmarking.\n\uD83D\uDCCA Handles continuous commands like logcat or top, with search and save options for output.\n\uD83C\uDFA8 Sleek UI with auto dark/light theme for a smooth, modern experience.</string>
