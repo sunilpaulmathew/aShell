@@ -65,6 +65,8 @@ import rikka.shizuku.Shizuku;
  */
 public class aShellFragment extends BaseFragment {
 
+    private static final int MAX_OUTPUT_LINES = 50000, TRIM_CHUNK = 10000;
+
     private AppCompatImageButton mBookMark;
     private MaterialButton mBookMarksButton, mBottomArrow, mClearButton, mHistoryButton, mSaveButton, mSearchButton, mSendButton, mTopArrow;
     private TextInputEditText mCommand, mSearchWord;
@@ -368,7 +370,10 @@ public class aShellFragment extends BaseFragment {
         mExecutor.scheduleWithFixedDelay(() -> {
             if (mResult != null && mResult.size() != lastShownSize.get()) {
                 lastShownSize.set(mResult.size());
-                new Handler(Looper.getMainLooper()).post(() -> updateUI(mResult, null));
+                new Handler(Looper.getMainLooper()).post(() -> {
+                    trimOutput();
+                    updateUI(mResult, null);
+                });
             }
         }, 0, 250, TimeUnit.MILLISECONDS);
         mOnBackPressedCallback = new OnBackPressedCallback(true) {
@@ -686,6 +691,26 @@ public class aShellFragment extends BaseFragment {
         if (getView() != null) {
             setCommand(this.mCommandShared);
         }
+    }
+
+    /*
+     * A command like logcat appends until it is stopped. Without a ceiling the list
+     * grows until the app is killed for running out of memory, so drop the oldest
+     * lines in chunks once it gets too long. mPosition indexes into the same list,
+     * so it has to move down by whatever was dropped.
+     */
+    private void trimOutput() {
+        if (mResult == null || mResult.size() <= MAX_OUTPUT_LINES + TRIM_CHUNK) return;
+
+        int mTrimmed = mResult.size() - MAX_OUTPUT_LINES;
+        synchronized (mResult) {
+            mResult.subList(0, mTrimmed).clear();
+        }
+        mPosition = Math.max(0, mPosition - mTrimmed);
+
+        // Indices shifted, so the list has to be rebound rather than range notified
+        mShellOutputAdapter = null;
+        mShownCount = 0;
     }
 
     private void updateUI(List<String> data, List<String> dataFiltered) {
