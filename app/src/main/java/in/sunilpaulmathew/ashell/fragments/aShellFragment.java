@@ -3,6 +3,7 @@ package in.sunilpaulmathew.ashell.fragments;
 import static android.view.View.GONE;
 import static android.view.View.VISIBLE;
 
+import android.content.ContentResolver;
 import android.content.ContentValues;
 import android.content.Context;
 import android.content.pm.PackageManager;
@@ -303,41 +304,66 @@ public class aShellFragment extends BaseFragment {
         mSaveButton.setOnClickListener(v -> new ButtonAnimator(mSaveButton, null) {
             @Override
             public void onItemClicked() {
-                StringBuilder sb = new StringBuilder();
-                for (int i = mPosition; i < mResult.size(); i++) {
-                    if (!mResult.get(i).equals("aShell: Finish") && !mResult.get(i).equals("<i></i>")) {
-                        sb.append(mResult.get(i)).append("\n");
-                    }
+                if (Build.VERSION.SDK_INT < Build.VERSION_CODES.Q && requireActivity()
+                        .checkCallingOrSelfPermission(android.Manifest.permission.WRITE_EXTERNAL_STORAGE) !=
+                        PackageManager.PERMISSION_GRANTED) {
+                    ActivityCompat.requestPermissions(requireActivity(), new String[] {
+                            android.Manifest.permission.WRITE_EXTERNAL_STORAGE
+                    }, 0);
+                    return;
                 }
-                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q) {
-                    try {
-                        ContentValues values = new ContentValues();
-                        values.put(MediaStore.MediaColumns.DISPLAY_NAME, mHistory.get(mHistory.size() - 1)
-                                .replace("/", "-").replace(" ", "") + ".txt");
-                        values.put(MediaStore.MediaColumns.MIME_TYPE, "text/plain");
-                        values.put(MediaStore.MediaColumns.RELATIVE_PATH, Environment.DIRECTORY_DOWNLOADS);
-                        Uri uri = requireActivity().getContentResolver().insert(MediaStore.Files.getContentUri("external"), values);
-                        OutputStream outputStream = requireActivity().getContentResolver().openOutputStream(Objects.requireNonNull(uri));
-                        Objects.requireNonNull(outputStream).write(sb.toString().getBytes());
-                        outputStream.close();
-                    } catch (IOException ignored) {
+
+                ContentResolver mResolver = requireActivity().getContentResolver();
+
+                /*
+                 * Joining the output and writing it out both happen off the main thread:
+                 * this walks up to the whole backlog and then does a file write.
+                 */
+                new Async() {
+                    @Override
+                    public void onPreExecute() {
                     }
-                } else {
-                    if (requireActivity().checkCallingOrSelfPermission(android.Manifest.permission.WRITE_EXTERNAL_STORAGE) !=
-                            PackageManager.PERMISSION_GRANTED) {
-                        ActivityCompat.requestPermissions(requireActivity(), new String[] {
-                                android.Manifest.permission.WRITE_EXTERNAL_STORAGE
-                        }, 0);
-                        return;
+
+                    @Override
+                    public void doInBackground() {
+                        StringBuilder sb = new StringBuilder();
+                        for (int i = mPosition; i < mResult.size(); i++) {
+                            String mLine = mResult.get(i);
+                            if (!mLine.equals("aShell: Finish") && !mLine.equals("<i></i>")) {
+                                sb.append(mLine).append("\n");
+                            }
+                        }
+
+                        String mFileName = mHistory.get(mHistory.size() - 1)
+                                .replace("/", "-").replace(" ", "") + ".txt";
+
+                        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q) {
+                            try {
+                                ContentValues values = new ContentValues();
+                                values.put(MediaStore.MediaColumns.DISPLAY_NAME, mFileName);
+                                values.put(MediaStore.MediaColumns.MIME_TYPE, "text/plain");
+                                values.put(MediaStore.MediaColumns.RELATIVE_PATH, Environment.DIRECTORY_DOWNLOADS);
+                                Uri uri = mResolver.insert(MediaStore.Files.getContentUri("external"), values);
+                                OutputStream outputStream = mResolver.openOutputStream(Objects.requireNonNull(uri));
+                                Objects.requireNonNull(outputStream).write(sb.toString().getBytes());
+                                outputStream.close();
+                            } catch (IOException ignored) {
+                            }
+                        } else {
+                            Utils.create(sb.toString(), new File(Environment.DIRECTORY_DOWNLOADS, mFileName));
+                        }
                     }
-                    Utils.create(sb.toString(), new File(Environment.DIRECTORY_DOWNLOADS, mHistory.get(mHistory.size() - 1)
-                            .replace("/", "-").replace(" ", "") + ".txt"));
-                }
-                new MaterialAlertDialogBuilder(requireActivity())
-                        .setIcon(R.mipmap.ic_launcher)
-                        .setTitle(getString(R.string.shell_output_saved_message, Environment.DIRECTORY_DOWNLOADS))
-                        .setPositiveButton(getString(R.string.cancel), (dialogInterface, i) -> {
-                        }).show();
+
+                    @Override
+                    public void onPostExecute() {
+                        if (!isAdded()) return;
+                        new MaterialAlertDialogBuilder(requireActivity())
+                                .setIcon(R.mipmap.ic_launcher)
+                                .setTitle(getString(R.string.shell_output_saved_message, Environment.DIRECTORY_DOWNLOADS))
+                                .setPositiveButton(getString(R.string.cancel), (dialogInterface, i) -> {
+                                }).show();
+                    }
+                }.execute();
             }
         });
 
