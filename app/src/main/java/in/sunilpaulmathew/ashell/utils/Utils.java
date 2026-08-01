@@ -77,6 +77,18 @@ public class Utils {
                 && !s.contains("\\") && !s.contains("|");
     }
 
+    /*
+     * Shell output is rendered as HTML so that errors and logcat levels can be
+     * coloured, which means anything that is not markup has to be escaped first or
+     * it gets swallowed by the parser.
+     */
+    public static String escapeHtml(String text) {
+        if (text.indexOf('&') < 0 && text.indexOf('<') < 0 && text.indexOf('>') < 0) {
+            return text;
+        }
+        return text.replace("&", "&amp;").replace("<", "&lt;").replace(">", "&gt;");
+    }
+
     public static Drawable getDrawable(int drawable, Context context) {
         return ContextCompat.getDrawable(context, drawable);
     }

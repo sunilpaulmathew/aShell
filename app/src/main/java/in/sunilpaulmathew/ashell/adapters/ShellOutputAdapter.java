@@ -48,7 +48,17 @@ public class ShellOutputAdapter extends RecyclerView.Adapter<ShellOutputAdapter.
     @Override
     public void onBindViewHolder(@NonNull ShellOutputAdapter.ViewHolder holder, int position) {
         String line = dataFiltered != null ? this.dataFiltered.get(position) : this.data.get(position);
-        holder.mOutput.setText(Html.fromHtml(line, Html.FROM_HTML_MODE_LEGACY));
+
+        /*
+         * Only the coloured lines -- errors, logcat levels, the command header -- carry
+         * markup, and escaping leaves an entity behind for the rest. Parsing the plain
+         * ones anyway costs a full HTML parse per bind, on every scroll frame.
+         */
+        if (line.indexOf('<') < 0 && line.indexOf('&') < 0) {
+            holder.mOutput.setText(line);
+        } else {
+            holder.mOutput.setText(Html.fromHtml(line, Html.FROM_HTML_MODE_LEGACY));
+        }
 
         Settings.setSlideInAnimation(holder.itemView, position);
     }

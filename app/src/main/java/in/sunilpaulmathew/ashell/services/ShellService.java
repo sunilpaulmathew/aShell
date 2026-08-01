@@ -9,6 +9,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.atomic.AtomicBoolean;
 
+import in.sunilpaulmathew.ashell.utils.Utils;
 import sunilpaulmathew.ashell.IShellCallback;
 import sunilpaulmathew.ashell.IShellService;
 
@@ -101,7 +102,7 @@ public class ShellService extends IShellService.Stub {
                         String errorLine;
                         while ((errorLine = error.readLine()) != null) {
                             hasError.set(true);
-                            errorBatch.add("<font color=#FF0000>" + errorLine + "</font>");
+                            errorBatch.add("<font color=#FF0000>" + Utils.escapeHtml(errorLine) + "</font>");
                             lastFlush = flushBatch(errorBatch, lastFlush, callback);
                         }
                         flushBatch(errorBatch, callback);
@@ -114,7 +115,7 @@ public class ShellService extends IShellService.Stub {
                 long lastFlush = System.currentTimeMillis();
                 String line;
                 while ((line = reader.readLine()) != null) {
-                    batch.add(command.startsWith("logcat") ? getLogcatLines(line) : line);
+                    batch.add(command.startsWith("logcat") ? getLogcatLines(line) : Utils.escapeHtml(line));
                     lastFlush = flushBatch(batch, lastFlush, callback);
                 }
                 flushBatch(batch, callback);
@@ -169,10 +170,7 @@ public class ShellService extends IShellService.Stub {
     private static String getLogcatLines(String outputLine) {
         if (outputLine == null) return "";
 
-        // Escape HTML special characters
-        String safe = outputLine.replace("&", "&amp;")
-                .replace("<", "&lt;")
-                .replace(">", "&gt;");
+        String safe = Utils.escapeHtml(outputLine);
 
         if (safe.contains(" E ")) {
             return "<font color='#F44336'>" + safe + "</font>";

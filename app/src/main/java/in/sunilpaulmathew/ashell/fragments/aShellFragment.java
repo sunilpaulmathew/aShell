@@ -584,7 +584,7 @@ public class aShellFragment extends BaseFragment {
         mClearButton.setEnabled(false);
         mSearchButton.setEnabled(false);
 
-        String mTitleText = "<font color=\"" + Settings.getColorAccent(requireActivity()) + "\">shell@" + Utils.getDeviceName() + "</font># <i>" + finalCommand + "</i>";
+        String mTitleText = "<font color=\"" + Settings.getColorAccent(requireActivity()) + "\">shell@" + Utils.getDeviceName() + "</font># <i>" + Utils.escapeHtml(finalCommand) + "</i>";
 
         if (mResult == null) {
             // Appended from a binder thread, read on the main one
