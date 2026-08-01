@@ -39,7 +39,6 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 import java.util.Objects;
-import java.util.concurrent.CopyOnWriteArrayList;
 import java.util.concurrent.Executors;
 import java.util.concurrent.ScheduledExecutorService;
 import java.util.concurrent.TimeUnit;
@@ -254,10 +253,16 @@ public class aShellFragment extends BaseFragment {
                 if (query.isEmpty()) {
                     updateUI(mResult, null);
                 } else {
-                    List<String> mResultSorted = new CopyOnWriteArrayList<>();
+                    /*
+                     * Plain ArrayList: this is built and read on the main thread only.
+                     * Copy-on-write duplicated the whole array per match, which turned
+                     * one keystroke into quadratic work over the entire output.
+                     */
+                    List<String> mResultSorted = new ArrayList<>();
                     for (int i = mPosition; i < mResult.size(); i++) {
-                        if (mResult.get(i).toLowerCase().contains(query)) {
-                            mResultSorted.add(mResult.get(i));
+                        String mLine = mResult.get(i);
+                        if (mLine.toLowerCase().contains(query)) {
+                            mResultSorted.add(mLine);
                         }
                     }
                     updateUI(mResult, mResultSorted);
