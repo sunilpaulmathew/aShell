@@ -70,6 +70,7 @@ public class aShellFragment extends BaseFragment {
     private MaterialButton mBookMarksButton, mBottomArrow, mClearButton, mHistoryButton, mSaveButton, mSearchButton, mSendButton, mTopArrow;
     private TextInputEditText mCommand, mSearchWord;
     private RecyclerView mRecyclerViewOutput;
+    private ScheduledExecutorService mExecutor = null;
     private ShellOutputAdapter mShellOutputAdapter = null;
     private ShizukuShell mShizukuShell = null;
     private int mPosition = 1, mShownCount = 0;
@@ -357,9 +358,9 @@ public class aShellFragment extends BaseFragment {
             }
         });
 
-        ScheduledExecutorService executor = Executors.newSingleThreadScheduledExecutor();
+        mExecutor = Executors.newSingleThreadScheduledExecutor();
         AtomicInteger lastShownSize = new AtomicInteger(0);
-        executor.scheduleWithFixedDelay(() -> {
+        mExecutor.scheduleWithFixedDelay(() -> {
             if (mResult != null && mResult.size() != lastShownSize.get()) {
                 lastShownSize.set(mResult.size());
                 new Handler(Looper.getMainLooper()).post(() -> updateUI(mResult, null));
@@ -721,6 +722,18 @@ public class aShellFragment extends BaseFragment {
     @Override
     protected void onSuccess() {
         Commands.loadPackageInfo();
+    }
+
+    @Override
+    public void onDestroyView() {
+        super.onDestroyView();
+
+        if (mExecutor != null) {
+            mExecutor.shutdownNow();
+            mExecutor = null;
+        }
+        mShellOutputAdapter = null;
+        mShownCount = 0;
     }
 
     @Override
