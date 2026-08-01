@@ -21,7 +21,7 @@ import in.sunilpaulmathew.ashell.utils.Settings;
 public class ShellOutputAdapter extends RecyclerView.Adapter<ShellOutputAdapter.ViewHolder> {
 
     private final List<String> data, dataFiltered;
-    private int count;
+    private int count, animatedUpTo = -1;
 
     public ShellOutputAdapter(List<String> data, List<String> dataFiltered) {
         this.data = data;
@@ -60,7 +60,17 @@ public class ShellOutputAdapter extends RecyclerView.Adapter<ShellOutputAdapter.
             holder.mOutput.setText(Html.fromHtml(line, Html.FROM_HTML_MODE_LEGACY));
         }
 
-        Settings.setSlideInAnimation(holder.itemView, position);
+        /*
+         * Animate a row only the first time it comes into view. Passing the position
+         * unconditionally re-ran the slide on every rebind, so the whole visible list
+         * animated continuously while output streamed in. -1 resets the view instead.
+         */
+        if (position > this.animatedUpTo) {
+            this.animatedUpTo = position;
+            Settings.setSlideInAnimation(holder.itemView, position);
+        } else {
+            Settings.setSlideInAnimation(holder.itemView, -1);
+        }
     }
 
     @Override
