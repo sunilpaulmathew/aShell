@@ -577,7 +577,8 @@ public class aShellFragment extends BaseFragment {
         String mTitleText = "<font color=\"" + Settings.getColorAccent(requireActivity()) + "\">shell@" + Utils.getDeviceName() + "</font># <i>" + finalCommand + "</i>";
 
         if (mResult == null) {
-            mResult = new CopyOnWriteArrayList<>();
+            // Appended from a binder thread, read on the main one
+            mResult = Collections.synchronizedList(new ArrayList<>());
         } else {
             mResult.add("<i></i>");
         }
