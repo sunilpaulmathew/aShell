@@ -70,8 +70,9 @@ public class aShellFragment extends BaseFragment {
     private MaterialButton mBookMarksButton, mBottomArrow, mClearButton, mHistoryButton, mSaveButton, mSearchButton, mSendButton, mTopArrow;
     private TextInputEditText mCommand, mSearchWord;
     private RecyclerView mRecyclerViewOutput;
+    private ShellOutputAdapter mShellOutputAdapter = null;
     private ShizukuShell mShizukuShell = null;
-    private int mPosition = 1;
+    private int mPosition = 1, mShownCount = 0;
     private List<String> mHistory = null, mResult = null;
     private String mCommandShared = null;
 
@@ -682,9 +683,28 @@ public class aShellFragment extends BaseFragment {
 
     private void updateUI(List<String> data, List<String> dataFiltered) {
         if (data == null && dataFiltered == null || !isAdded()) return;
-        ShellOutputAdapter mShellOutputAdapter = new ShellOutputAdapter(data, dataFiltered);
-        mRecyclerViewOutput.setAdapter(mShellOutputAdapter);
-        mRecyclerViewOutput.scrollToPosition(dataFiltered != null ? dataFiltered.size() - 1 : data.size() - 1);
+
+        int mCount = dataFiltered != null ? dataFiltered.size() : data.size();
+
+        /*
+         * Output only ever gets appended, and swapping in a fresh adapter for that
+         * discards every recycled view and relayouts the whole list. Only rebuild
+         * when the backing list actually changed, such as when a filter is applied.
+         */
+        if (dataFiltered == null && mShellOutputAdapter != null
+                && mRecyclerViewOutput.getAdapter() == mShellOutputAdapter && mCount > mShownCount) {
+            int mInserted = mCount - mShownCount;
+            mShellOutputAdapter.setItemCount(mCount);
+            mShellOutputAdapter.notifyItemRangeInserted(mShownCount, mInserted);
+        } else {
+            mShellOutputAdapter = new ShellOutputAdapter(data, dataFiltered);
+            mRecyclerViewOutput.setAdapter(mShellOutputAdapter);
+        }
+        mShownCount = mCount;
+
+        if (mCount > 0) {
+            mRecyclerViewOutput.scrollToPosition(mCount - 1);
+        }
     }
 
     @Override

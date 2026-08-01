@@ -21,10 +21,21 @@ import in.sunilpaulmathew.ashell.utils.Settings;
 public class ShellOutputAdapter extends RecyclerView.Adapter<ShellOutputAdapter.ViewHolder> {
 
     private final List<String> data, dataFiltered;
+    private int count;
 
     public ShellOutputAdapter(List<String> data, List<String> dataFiltered) {
         this.data = data;
         this.dataFiltered = dataFiltered;
+        this.count = dataFiltered != null ? dataFiltered.size() : data.size();
+    }
+
+    /*
+     * The item count is pinned rather than read from the list on every call: output
+     * is appended from a binder thread, and a count that grows between a layout pass
+     * and the notify that announces it makes RecyclerView throw.
+     */
+    public void setItemCount(int count) {
+        this.count = count;
     }
 
     @NonNull
@@ -44,7 +55,7 @@ public class ShellOutputAdapter extends RecyclerView.Adapter<ShellOutputAdapter.
 
     @Override
     public int getItemCount() {
-        return this.dataFiltered != null ? this.dataFiltered.size() : this.data.size();
+        return this.count;
     }
 
     public static class ViewHolder extends RecyclerView.ViewHolder {
