@@ -428,6 +428,10 @@ public class aShellFragment extends BaseFragment {
     }
 
     private List<String> getRecentCommands() {
+        if (mHistory == null) {
+            return Collections.emptyList();
+        }
+
         List<String> mRecentCommands = new ArrayList<>(mHistory);
         Collections.reverse(mRecentCommands);
         return mRecentCommands;
