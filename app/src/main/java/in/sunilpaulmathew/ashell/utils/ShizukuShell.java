@@ -26,8 +26,9 @@ public class ShizukuShell {
     }
 
     private static IShellService mShellService;
-    private static List<String> mOutput;
-    private static String mCommand;
+    // Per command, not shared: a second instance used to redirect the first one's output
+    private final List<String> mOutput;
+    private final String mCommand;
     private volatile ShellStatus mCurrentStatus = ShellStatus.IDLE;
     private StatusListener mStatusListener;
 
@@ -36,8 +37,8 @@ public class ShizukuShell {
     }
 
     public ShizukuShell(List<String> output, String command) {
-        mOutput = output;
-        mCommand = command;
+        this.mOutput = output;
+        this.mCommand = command;
     }
 
     public boolean isBusy() {
@@ -96,7 +97,8 @@ public class ShizukuShell {
 
     public void exec() {
         if (mShellService == null) {
-            ensureUserService(null);
+            // Run once the binding is up rather than dropping the command on the floor
+            ensureUserService(this::exec);
             return;
         }
 
