@@ -1,6 +1,7 @@
 package in.sunilpaulmathew.ashell.utils;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 import in.sunilpaulmathew.ashell.serializable.CommandEntry;
@@ -10,7 +11,8 @@ import in.sunilpaulmathew.ashell.serializable.CommandEntry;
  */
 public class Commands {
 
-    private static volatile List<CommandEntry> mPackages = null;
+    // Empty until the background load finishes; suggestions are read before that
+    private static volatile List<CommandEntry> mPackages = Collections.emptyList();
 
     public static List<CommandEntry> commandList() {
         List<CommandEntry> mCommands = new ArrayList<>();
