@@ -31,16 +31,32 @@ public class ShellService extends IShellService.Stub {
             BufferedReader mInput = new BufferedReader(new InputStreamReader(mProcess.getInputStream()));
             BufferedReader mError = new BufferedReader(new InputStreamReader(mProcess.getErrorStream()));
 
-            mProcess.waitFor();
+            /*
+             * Both pipes have to be emptied before waiting for the process. They hold
+             * 64 KB each, and a process blocked writing to a full pipe never exits, so
+             * waiting first hangs on any command with sizeable output.
+             */
+            StringBuilder errorOutput = new StringBuilder();
+            Thread errorThread = new Thread(() -> {
+                try {
+                    String errorLine;
+                    while ((errorLine = mError.readLine()) != null) {
+                        errorOutput.append(errorLine).append("\n");
+                    }
+                } catch (Exception ignored) {
+                }
+            });
+            errorThread.start();
 
             String line;
             while ((line = mInput.readLine()) != null) {
                 output.append(line).append("\n");
             }
-            while ((line = mError.readLine()) != null) {
-                output.append(line).append("\n");
-            }
 
+            errorThread.join();
+            output.append(errorOutput);
+
+            mProcess.waitFor();
         }
         catch (Exception ignored) {
         }
