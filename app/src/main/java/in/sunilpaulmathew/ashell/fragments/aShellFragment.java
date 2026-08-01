@@ -105,6 +105,8 @@ public class aShellFragment extends BaseFragment {
         mRecyclerViewOutput = mRootView.findViewById(R.id.recycler_view_output);
         mRecyclerViewOutput.setItemAnimator(null);
         mRecyclerViewOutput.setLayoutManager(new LinearLayoutManager(requireActivity()));
+        mRecyclerViewCommands.setItemAnimator(null);
+        mRecyclerViewCommands.setLayoutManager(new LinearLayoutManager(requireActivity()));
 
         if (mCommandShared != null) {
             setCommand(mCommandShared);
@@ -156,8 +158,6 @@ public class aShellFragment extends BaseFragment {
                                         mCommand.setSelection(Objects.requireNonNull(mCommand.getText()).length());
                                         mRecyclerViewCommands.setVisibility(GONE);
                                     });
-                                    mRecyclerViewCommands.setItemAnimator(null);
-                                    mRecyclerViewCommands.setLayoutManager(new LinearLayoutManager(requireActivity()));
                                     mRecyclerViewCommands.setAdapter(mCommandsAdapter);
                                     mRecyclerViewCommands.setVisibility(VISIBLE);
                                 }
@@ -170,8 +170,6 @@ public class aShellFragment extends BaseFragment {
                                     }
                                     mCommand.setSelection(Objects.requireNonNull(mCommand.getText()).length());
                                 });
-                                mRecyclerViewCommands.setItemAnimator(null);
-                                mRecyclerViewCommands.setLayoutManager(new LinearLayoutManager(requireActivity()));
                                 mRecyclerViewCommands.setAdapter(mCommandsAdapter);
                                 mRecyclerViewCommands.setVisibility(VISIBLE);
                             }
