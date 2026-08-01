@@ -10,7 +10,7 @@ import in.sunilpaulmathew.ashell.serializable.CommandEntry;
  */
 public class Commands {
 
-    private static List<CommandEntry> mPackages = null;
+    private static volatile List<CommandEntry> mPackages = null;
 
     public static List<CommandEntry> commandList() {
         List<CommandEntry> mCommands = new ArrayList<>();
@@ -159,18 +159,37 @@ public class Commands {
         return mCommands;
     }
 
+    /*
+     * Runs off the main thread: this shells out to pm and blocks until the whole
+     * package list comes back, and every caller reaches it from the main looper.
+     */
     public static void loadPackageInfo() {
-        mPackages = new ArrayList<>();
-
-        try {
-            String packages = ShizukuShell.runCommand("pm list packages");
-            for (String line : packages.trim().split("\\r?\\n")) {
-                if (line != null && !line.trim().isEmpty() && line.trim().startsWith("package:")) {
-                    String[] parts = line.split(":", 2);
-                    mPackages.add(new CommandEntry(parts[1], null));
-                }
+        new Async() {
+            @Override
+            public void onPreExecute() {
             }
-        } catch (Exception ignored) {}
+
+            @Override
+            public void doInBackground() {
+                List<CommandEntry> packages = new ArrayList<>();
+
+                try {
+                    String output = ShizukuShell.runCommand("pm list packages");
+                    for (String line : output.trim().split("\\r?\\n")) {
+                        if (line != null && !line.trim().isEmpty() && line.trim().startsWith("package:")) {
+                            String[] parts = line.split(":", 2);
+                            packages.add(new CommandEntry(parts[1], null));
+                        }
+                    }
+                } catch (Exception ignored) {}
+
+                mPackages = packages;
+            }
+
+            @Override
+            public void onPostExecute() {
+            }
+        }.execute();
     }
 
 }
