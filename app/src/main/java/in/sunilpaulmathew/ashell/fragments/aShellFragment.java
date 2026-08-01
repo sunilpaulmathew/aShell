@@ -110,7 +110,7 @@ public class aShellFragment extends BaseFragment {
             setCommand(mCommandShared);
         }
 
-        mBookMarksButton.setEnabled(!Utils.getBookmarks(requireActivity()).isEmpty());
+        updateBookmarksButton();
 
         mCommand.addTextChangedListener(new TextWatcher() {
             @Override
@@ -495,6 +495,30 @@ public class aShellFragment extends BaseFragment {
         mBookMark.setOnClickListener(v -> bookMark(command));
     }
 
+    // Listing the bookmarks directory is disk work; flip the button once it answers
+    private void updateBookmarksButton() {
+        Context mContext = requireActivity();
+
+        new Async() {
+            private boolean mHasBookmarks;
+
+            @Override
+            public void onPreExecute() {
+            }
+
+            @Override
+            public void doInBackground() {
+                mHasBookmarks = !Utils.getBookmarks(mContext).isEmpty();
+            }
+
+            @Override
+            public void onPostExecute() {
+                if (!isAdded()) return;
+                mBookMarksButton.setEnabled(mHasBookmarks);
+            }
+        }.execute();
+    }
+
     private void bookMark(String string) {
         if (Utils.isBookmarked(string, requireActivity())) {
             Utils.deleteFromBookmark(string, requireActivity());
@@ -506,7 +530,7 @@ public class aShellFragment extends BaseFragment {
             mBookMark.setContentDescription(getString(R.string.bookmark_removed_message, string));
         }
         mBookMark.setImageDrawable(Utils.getDrawable(Utils.isBookmarked(string, requireActivity()) ? R.drawable.ic_starred : R.drawable.ic_star, requireActivity()));
-        mBookMarksButton.setEnabled(!Utils.getBookmarks(requireActivity()).isEmpty());
+        updateBookmarksButton();
     }
 
     private void clearAll() {
@@ -652,7 +676,7 @@ public class aShellFragment extends BaseFragment {
                     if (mHistory != null && !mHistory.isEmpty() && !mHistoryButton.isEnabled()) {
                         mHistoryButton.setEnabled(true);
                     }
-                    mBookMarksButton.setEnabled(!Utils.getBookmarks(requireActivity()).isEmpty());
+                    updateBookmarksButton();
                     if (mResult != null && !mResult.isEmpty()) {
                         mClearButton.setEnabled(true);
                         mSearchButton.setEnabled(true);
