@@ -105,8 +105,8 @@ public class ShizukuShell {
         try {
             mShellService.runCommand(mCommand, new IShellCallback.Stub() {
                 @Override
-                public void onLine(String line) {
-                    mOutput.add(line);
+                public void onLines(List<String> lines) {
+                    mOutput.addAll(lines);
                 }
 
                 @Override

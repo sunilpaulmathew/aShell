@@ -5,6 +5,8 @@ import android.os.RemoteException;
 import java.io.BufferedReader;
 import java.io.File;
 import java.io.InputStreamReader;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.concurrent.atomic.AtomicBoolean;
 
 import sunilpaulmathew.ashell.IShellCallback;
@@ -14,6 +16,9 @@ import sunilpaulmathew.ashell.IShellService;
  * Created by sunilpaulmathew <sunil.kde@gmail.com> on Sept. 18, 2025
  */
 public class ShellService extends IShellService.Stub {
+
+    private static final int BATCH_SIZE = 500;
+    private static final long BATCH_INTERVAL_MS = 50;
 
     private static Process mProcess = null;
     private static String mDir = "/";
@@ -85,28 +90,34 @@ public class ShellService extends IShellService.Stub {
                  * buffer only holds 64 KB, so a process blocked writing to a full stderr
                  * never closes stdout, and reading the streams one after the other hangs
                  * forever on anything that logs to stderr (dumpsys, pm, ...).
+                 *
+                 * Each reader keeps its own batch, so the two never share state.
                  */
                 AtomicBoolean hasError = new AtomicBoolean(false);
                 Thread errorThread = new Thread(() -> {
                     try {
+                        List<String> errorBatch = new ArrayList<>();
+                        long lastFlush = System.currentTimeMillis();
                         String errorLine;
                         while ((errorLine = error.readLine()) != null) {
                             hasError.set(true);
-                            callback.onLine("<font color=#FF0000>" + errorLine + "</font>");
+                            errorBatch.add("<font color=#FF0000>" + errorLine + "</font>");
+                            lastFlush = flushBatch(errorBatch, lastFlush, callback);
                         }
+                        flushBatch(errorBatch, callback);
                     } catch (Exception ignored) {
                     }
                 });
                 errorThread.start();
 
+                List<String> batch = new ArrayList<>();
+                long lastFlush = System.currentTimeMillis();
                 String line;
                 while ((line = reader.readLine()) != null) {
-                    if (command.startsWith("logcat")) {
-                        callback.onLine(getLogcatLines(line));
-                    } else {
-                        callback.onLine(line);
-                    }
+                    batch.add(command.startsWith("logcat") ? getLogcatLines(line) : line);
+                    lastFlush = flushBatch(batch, lastFlush, callback);
                 }
+                flushBatch(batch, callback);
 
                 errorThread.join();
 
@@ -124,6 +135,35 @@ public class ShellService extends IShellService.Stub {
                 } catch (RemoteException ignored) {}
             }
         }).start();
+    }
+
+    /*
+     * Lines go over binder in batches. One transaction per line overruns the 1 MB
+     * per-process transaction buffer on anything chatty (logcat produces thousands
+     * of lines a second) and the callback dies with DeadObjectException.
+     */
+    private static long flushBatch(List<String> batch, long lastFlush, IShellCallback callback) {
+        long now = System.currentTimeMillis();
+        if (batch.size() < BATCH_SIZE && now - lastFlush < BATCH_INTERVAL_MS) {
+            return lastFlush;
+        }
+        flushBatch(batch, callback);
+        return now;
+    }
+
+    /*
+     * Delivery is best effort and never throws at the caller. A reader that stops
+     * on a failed callback stops emptying its pipe, and the process then blocks on
+     * a full buffer and never exits -- the very hang this batching sits on top of.
+     * Dropping a batch loses output; failing to drain loses the whole shell.
+     */
+    private static void flushBatch(List<String> batch, IShellCallback callback) {
+        if (batch.isEmpty()) return;
+        try {
+            callback.onLines(new ArrayList<>(batch));
+        } catch (Exception ignored) {
+        }
+        batch.clear();
     }
 
     private static String getLogcatLines(String outputLine) {
