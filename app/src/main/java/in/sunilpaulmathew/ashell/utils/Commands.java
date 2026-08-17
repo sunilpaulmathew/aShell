@@ -11,10 +11,20 @@ import in.sunilpaulmathew.ashell.serializable.CommandEntry;
  */
 public class Commands {
 
+    private static volatile List<CommandEntry> mCommandList = null;
+
     // Empty until the background load finishes; suggestions are read before that
     private static volatile List<CommandEntry> mPackages = Collections.emptyList();
 
+    /*
+     * Built once and kept: the contents are constant, and this is called for every
+     * keystroke to rebuild the suggestion list.
+     */
     public static List<CommandEntry> commandList() {
+        if (mCommandList != null) {
+            return mCommandList;
+        }
+
         List<CommandEntry> mCommands = new ArrayList<>();
         mCommands.add(new CommandEntry("am force-stop <package>", "Completely stop a given package", "am force-stop com.android.package"));
         mCommands.add(new CommandEntry("am kill <package>", "Kill all background processes associated with a given package", "am kill com.android.package"));
@@ -138,7 +148,9 @@ public class Commands {
         mCommands.add(new CommandEntry("wm density reset", "Reset screen density to default"));
         mCommands.add(new CommandEntry("wm size", "Displays the current screen resolution"));
         mCommands.add(new CommandEntry("wm size reset", "Reset screen resolution to default"));
-        return mCommands;
+
+        mCommandList = Collections.unmodifiableList(mCommands);
+        return mCommandList;
     }
 
     public static List<CommandEntry> getCommand(String command) {
