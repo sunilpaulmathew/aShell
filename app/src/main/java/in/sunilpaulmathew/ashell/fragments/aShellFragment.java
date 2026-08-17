@@ -40,7 +40,6 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 import java.util.Objects;
-import java.util.concurrent.CopyOnWriteArrayList;
 import java.util.concurrent.Executors;
 import java.util.concurrent.ScheduledExecutorService;
 import java.util.concurrent.TimeUnit;
@@ -67,12 +66,16 @@ import rikka.shizuku.Shizuku;
  */
 public class aShellFragment extends BaseFragment {
 
+    private static final int MAX_OUTPUT_LINES = 50000, TRIM_CHUNK = 10000;
+
     private AppCompatImageButton mBookMark;
     private MaterialButton mBookMarksButton, mBottomArrow, mClearButton, mHistoryButton, mSaveButton, mSearchButton, mSendButton, mTopArrow;
     private TextInputEditText mCommand, mSearchWord;
     private RecyclerView mRecyclerViewOutput;
+    private ScheduledExecutorService mExecutor = null;
+    private ShellOutputAdapter mShellOutputAdapter = null;
     private ShizukuShell mShizukuShell = null;
-    private int mPosition = 1;
+    private int mPosition = 1, mShownCount = 0;
     private List<String> mHistory = null, mResult = null;
     private String mCommandShared = null;
 
@@ -251,10 +254,16 @@ public class aShellFragment extends BaseFragment {
                 if (query.isEmpty()) {
                     updateUI(mResult, null);
                 } else {
-                    List<String> mResultSorted = new CopyOnWriteArrayList<>();
+                    /*
+                     * Plain ArrayList: this is built and read on the main thread only.
+                     * Copy-on-write duplicated the whole array per match, which turned
+                     * one keystroke into quadratic work over the entire output.
+                     */
+                    List<String> mResultSorted = new ArrayList<>();
                     for (int i = mPosition; i < mResult.size(); i++) {
-                        if (mResult.get(i).toLowerCase().contains(query)) {
-                            mResultSorted.add(mResult.get(i));
+                        String mLine = mResult.get(i);
+                        if (mLine.toLowerCase().contains(query)) {
+                            mResultSorted.add(mLine);
                         }
                     }
                     updateUI(mResult, mResultSorted);
@@ -380,12 +389,15 @@ public class aShellFragment extends BaseFragment {
             }
         });
 
-        ScheduledExecutorService executor = Executors.newSingleThreadScheduledExecutor();
+        mExecutor = Executors.newSingleThreadScheduledExecutor();
         AtomicInteger lastShownSize = new AtomicInteger(0);
-        executor.scheduleWithFixedDelay(() -> {
+        mExecutor.scheduleWithFixedDelay(() -> {
             if (mResult != null && mResult.size() != lastShownSize.get()) {
                 lastShownSize.set(mResult.size());
-                new Handler(Looper.getMainLooper()).post(() -> updateUI(mResult, null));
+                new Handler(Looper.getMainLooper()).post(() -> {
+                    trimOutput();
+                    updateUI(mResult, null);
+                });
             }
         }, 0, 250, TimeUnit.MILLISECONDS);
         mOnBackPressedCallback = new OnBackPressedCallback(true) {
@@ -624,10 +636,11 @@ public class aShellFragment extends BaseFragment {
         mClearButton.setEnabled(false);
         mSearchButton.setEnabled(false);
 
-        String mTitleText = "<font color=\"" + Settings.getColorAccent(requireActivity()) + "\">shell@" + Utils.getDeviceName() + "</font># <i>" + finalCommand + "</i>";
+        String mTitleText = "<font color=\"" + Settings.getColorAccent(requireActivity()) + "\">shell@" + Utils.getDeviceName() + "</font># <i>" + Utils.escapeHtml(finalCommand) + "</i>";
 
         if (mResult == null) {
-            mResult = new CopyOnWriteArrayList<>();
+            // Appended from a binder thread, read on the main one
+            mResult = Collections.synchronizedList(new ArrayList<>());
         } else {
             mResult.add("<i></i>");
         }
@@ -732,11 +745,50 @@ public class aShellFragment extends BaseFragment {
         }
     }
 
+    /*
+     * A command like logcat appends until it is stopped. Without a ceiling the list
+     * grows until the app is killed for running out of memory, so drop the oldest
+     * lines in chunks once it gets too long. mPosition indexes into the same list,
+     * so it has to move down by whatever was dropped.
+     */
+    private void trimOutput() {
+        if (mResult == null || mResult.size() <= MAX_OUTPUT_LINES + TRIM_CHUNK) return;
+
+        int mTrimmed = mResult.size() - MAX_OUTPUT_LINES;
+        synchronized (mResult) {
+            mResult.subList(0, mTrimmed).clear();
+        }
+        mPosition = Math.max(0, mPosition - mTrimmed);
+
+        // Indices shifted, so the list has to be rebound rather than range notified
+        mShellOutputAdapter = null;
+        mShownCount = 0;
+    }
+
     private void updateUI(List<String> data, List<String> dataFiltered) {
         if (data == null && dataFiltered == null || !isAdded()) return;
-        ShellOutputAdapter mShellOutputAdapter = new ShellOutputAdapter(data, dataFiltered);
-        mRecyclerViewOutput.setAdapter(mShellOutputAdapter);
-        mRecyclerViewOutput.scrollToPosition(dataFiltered != null ? dataFiltered.size() - 1 : data.size() - 1);
+
+        int mCount = dataFiltered != null ? dataFiltered.size() : data.size();
+
+        /*
+         * Output only ever gets appended, and swapping in a fresh adapter for that
+         * discards every recycled view and relayouts the whole list. Only rebuild
+         * when the backing list actually changed, such as when a filter is applied.
+         */
+        if (dataFiltered == null && mShellOutputAdapter != null
+                && mRecyclerViewOutput.getAdapter() == mShellOutputAdapter && mCount > mShownCount) {
+            int mInserted = mCount - mShownCount;
+            mShellOutputAdapter.setItemCount(mCount);
+            mShellOutputAdapter.notifyItemRangeInserted(mShownCount, mInserted);
+        } else {
+            mShellOutputAdapter = new ShellOutputAdapter(data, dataFiltered);
+            mRecyclerViewOutput.setAdapter(mShellOutputAdapter);
+        }
+        mShownCount = mCount;
+
+        if (mCount > 0) {
+            mRecyclerViewOutput.scrollToPosition(mCount - 1);
+        }
     }
 
     @Override
@@ -753,6 +805,18 @@ public class aShellFragment extends BaseFragment {
     @Override
     protected void onSuccess() {
         Commands.loadPackageInfo();
+    }
+
+    @Override
+    public void onDestroyView() {
+        super.onDestroyView();
+
+        if (mExecutor != null) {
+            mExecutor.shutdownNow();
+            mExecutor = null;
+        }
+        mShellOutputAdapter = null;
+        mShownCount = 0;
     }
 
     @Override

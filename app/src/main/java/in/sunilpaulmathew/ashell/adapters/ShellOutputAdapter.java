@@ -21,10 +21,21 @@ import in.sunilpaulmathew.ashell.utils.Settings;
 public class ShellOutputAdapter extends RecyclerView.Adapter<ShellOutputAdapter.ViewHolder> {
 
     private final List<String> data, dataFiltered;
+    private int count, animatedUpTo = -1;
 
     public ShellOutputAdapter(List<String> data, List<String> dataFiltered) {
         this.data = data;
         this.dataFiltered = dataFiltered;
+        this.count = dataFiltered != null ? dataFiltered.size() : data.size();
+    }
+
+    /*
+     * The item count is pinned rather than read from the list on every call: output
+     * is appended from a binder thread, and a count that grows between a layout pass
+     * and the notify that announces it makes RecyclerView throw.
+     */
+    public void setItemCount(int count) {
+        this.count = count;
     }
 
     @NonNull
@@ -37,14 +48,34 @@ public class ShellOutputAdapter extends RecyclerView.Adapter<ShellOutputAdapter.
     @Override
     public void onBindViewHolder(@NonNull ShellOutputAdapter.ViewHolder holder, int position) {
         String line = dataFiltered != null ? this.dataFiltered.get(position) : this.data.get(position);
-        holder.mOutput.setText(Html.fromHtml(line, Html.FROM_HTML_MODE_LEGACY));
 
-        Settings.setSlideInAnimation(holder.itemView, position);
+        /*
+         * Only the coloured lines -- errors, logcat levels, the command header -- carry
+         * markup, and escaping leaves an entity behind for the rest. Parsing the plain
+         * ones anyway costs a full HTML parse per bind, on every scroll frame.
+         */
+        if (line.indexOf('<') < 0 && line.indexOf('&') < 0) {
+            holder.mOutput.setText(line);
+        } else {
+            holder.mOutput.setText(Html.fromHtml(line, Html.FROM_HTML_MODE_LEGACY));
+        }
+
+        /*
+         * Animate a row only the first time it comes into view. Passing the position
+         * unconditionally re-ran the slide on every rebind, so the whole visible list
+         * animated continuously while output streamed in. -1 resets the view instead.
+         */
+        if (position > this.animatedUpTo) {
+            this.animatedUpTo = position;
+            Settings.setSlideInAnimation(holder.itemView, position);
+        } else {
+            Settings.setSlideInAnimation(holder.itemView, -1);
+        }
     }
 
     @Override
     public int getItemCount() {
-        return this.dataFiltered != null ? this.dataFiltered.size() : this.data.size();
+        return this.count;
     }
 
     public static class ViewHolder extends RecyclerView.ViewHolder {
