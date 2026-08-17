@@ -5,6 +5,7 @@ import android.os.RemoteException;
 import java.io.BufferedReader;
 import java.io.File;
 import java.io.InputStreamReader;
+import java.util.concurrent.atomic.AtomicBoolean;
 
 import sunilpaulmathew.ashell.IShellCallback;
 import sunilpaulmathew.ashell.IShellService;
@@ -30,16 +31,32 @@ public class ShellService extends IShellService.Stub {
             BufferedReader mInput = new BufferedReader(new InputStreamReader(mProcess.getInputStream()));
             BufferedReader mError = new BufferedReader(new InputStreamReader(mProcess.getErrorStream()));
 
-            mProcess.waitFor();
+            /*
+             * Both pipes have to be emptied before waiting for the process. They hold
+             * 64 KB each, and a process blocked writing to a full pipe never exits, so
+             * waiting first hangs on any command with sizeable output.
+             */
+            StringBuilder errorOutput = new StringBuilder();
+            Thread errorThread = new Thread(() -> {
+                try {
+                    String errorLine;
+                    while ((errorLine = mError.readLine()) != null) {
+                        errorOutput.append(errorLine).append("\n");
+                    }
+                } catch (Exception ignored) {
+                }
+            });
+            errorThread.start();
 
             String line;
             while ((line = mInput.readLine()) != null) {
                 output.append(line).append("\n");
             }
-            while ((line = mError.readLine()) != null) {
-                output.append(line).append("\n");
-            }
 
+            errorThread.join();
+            output.append(errorOutput);
+
+            mProcess.waitFor();
         }
         catch (Exception ignored) {
         }
@@ -63,8 +80,26 @@ public class ShellService extends IShellService.Stub {
                         new InputStreamReader(mProcess.getErrorStream())
                 );
 
+                /*
+                 * stderr has to be drained while stdout is still being read. The pipe
+                 * buffer only holds 64 KB, so a process blocked writing to a full stderr
+                 * never closes stdout, and reading the streams one after the other hangs
+                 * forever on anything that logs to stderr (dumpsys, pm, ...).
+                 */
+                AtomicBoolean hasError = new AtomicBoolean(false);
+                Thread errorThread = new Thread(() -> {
+                    try {
+                        String errorLine;
+                        while ((errorLine = error.readLine()) != null) {
+                            hasError.set(true);
+                            callback.onLine("<font color=#FF0000>" + errorLine + "</font>");
+                        }
+                    } catch (Exception ignored) {
+                    }
+                });
+                errorThread.start();
+
                 String line;
-                boolean hasError = false;
                 while ((line = reader.readLine()) != null) {
                     if (command.startsWith("logcat")) {
                         callback.onLine(getLogcatLines(line));
@@ -73,15 +108,12 @@ public class ShellService extends IShellService.Stub {
                     }
                 }
 
-                while ((line = error.readLine()) != null) {
-                    hasError = true;
-                    callback.onLine("<font color=#FF0000>" + line + "</font>");
-                }
+                errorThread.join();
 
                 int exit = mProcess.waitFor();
 
                 // Handle current directory
-                if (command.startsWith("cd ") && !hasError) {
+                if (command.startsWith("cd ") && !hasError.get()) {
                     mDir = getDir(command);
                 }
 
