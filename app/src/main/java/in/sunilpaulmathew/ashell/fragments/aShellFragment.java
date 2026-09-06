@@ -3,6 +3,7 @@ package in.sunilpaulmathew.ashell.fragments;
 import static android.view.View.GONE;
 import static android.view.View.VISIBLE;
 
+import android.app.Activity;
 import android.content.ContentResolver;
 import android.content.ContentValues;
 import android.content.Context;
@@ -77,7 +78,7 @@ public class aShellFragment extends BaseFragment {
     private ShellOutputAdapter mShellOutputAdapter = null;
     private ShizukuShell mShizukuShell = null;
     private int mPosition = 1, mShownCount = 0;
-    private List<String> mHistory = null, mResult = null;
+    private final List<String> mHistory = new ArrayList<>(), mResult = Collections.synchronizedList(new ArrayList<>());
     private String mCommandShared = null;
 
     @Override
@@ -208,26 +209,23 @@ public class aShellFragment extends BaseFragment {
             }
         });
 
-        mClearButton.setOnClickListener(v -> {
-            if (mResult == null) return;
-            new ButtonAnimator(mClearButton, getString(R.string.clear_all)) {
-                @Override
-                public void onItemClicked() {
-                    if (Utils.getBoolean("clearAllMessage", true, requireActivity())) {
-                        new MaterialAlertDialogBuilder(requireActivity())
-                                .setIcon(R.mipmap.ic_launcher)
-                                .setTitle(getString(R.string.clear_all_message))
-                                .setNegativeButton(getString(R.string.cancel), (dialogInterface, i) -> {
-                                })
-                                .setPositiveButton(getString(R.string.yes), (dialogInterface, i) -> {
-                                    Utils.saveBoolean("clearAllMessage", false, requireActivity());
-                                    clearAll();
-                                }).show();
-                    } else {
-                        clearAll();
-                    }
+        mClearButton.setOnClickListener(v -> new ButtonAnimator(mClearButton, getString(R.string.clear_all)) {
+            @Override
+            public void onItemClicked() {
+                if (Utils.getBoolean("clearAllMessage", true, requireActivity())) {
+                    new MaterialAlertDialogBuilder(requireActivity())
+                            .setIcon(R.mipmap.ic_launcher)
+                            .setTitle(getString(R.string.clear_all_message))
+                            .setNegativeButton(getString(R.string.cancel), (dialogInterface, i) -> {
+                            })
+                            .setPositiveButton(getString(R.string.yes), (dialogInterface, i) -> {
+                                Utils.saveBoolean("clearAllMessage", false, requireActivity());
+                                clearAll();
+                            }).show();
+                } else {
+                    clearAll();
                 }
-            };
+            }
         });
 
         mSearchButton.setOnClickListener(v -> {
@@ -321,13 +319,12 @@ public class aShellFragment extends BaseFragment {
                     return;
                 }
 
-                ContentResolver mResolver = requireActivity().getContentResolver();
-
                 /*
                  * Joining the output and writing it out both happen off the main thread:
                  * this walks up to the whole backlog and then does a file write.
                  */
                 new Async() {
+                    private final ContentResolver mResolver = requireActivity().getContentResolver();
                     @Override
                     public void onPreExecute() {
                     }
@@ -393,7 +390,7 @@ public class aShellFragment extends BaseFragment {
         mExecutor = Executors.newSingleThreadScheduledExecutor();
         AtomicInteger lastShownSize = new AtomicInteger(0);
         mExecutor.scheduleWithFixedDelay(() -> {
-            if (mResult != null && mResult.size() != lastShownSize.get()) {
+            if (mResult.size() != lastShownSize.get()) {
                 lastShownSize.set(mResult.size());
                 new Handler(Looper.getMainLooper()).post(() -> {
                     trimOutput();
@@ -486,10 +483,6 @@ public class aShellFragment extends BaseFragment {
     }
 
     private List<String> getRecentCommands() {
-        if (mHistory == null) {
-            return Collections.emptyList();
-        }
-
         List<String> mRecentCommands = new ArrayList<>(mHistory);
         Collections.reverse(mRecentCommands);
         return mRecentCommands;
@@ -509,7 +502,7 @@ public class aShellFragment extends BaseFragment {
     }
 
     private void showButtons() {
-        if (mResult != null && !mResult.isEmpty()) {
+        if (!mResult.isEmpty()) {
             mSaveButton.setVisibility(VISIBLE);
             if (mResult.size() > 25) {
                 mTopArrow.setVisibility(VISIBLE);
@@ -529,9 +522,9 @@ public class aShellFragment extends BaseFragment {
 
     // Listing the bookmarks directory is disk work; flip the button once it answers
     private void updateBookmarksButton() {
-        Context mContext = requireActivity();
 
         new Async() {
+            private final Activity activity = requireActivity();
             private boolean mHasBookmarks;
 
             @Override
@@ -540,12 +533,12 @@ public class aShellFragment extends BaseFragment {
 
             @Override
             public void doInBackground() {
-                mHasBookmarks = !Utils.getBookmarks(mContext).isEmpty();
+                mHasBookmarks = !Utils.getBookmarks(activity).isEmpty();
             }
 
             @Override
             public void onPostExecute() {
-                if (!isAdded()) return;
+                if (!isAdded() || activity.isFinishing() || activity.isDestroyed()) return;
                 mBookMarksButton.setEnabled(mHasBookmarks);
             }
         }.execute();
@@ -624,9 +617,7 @@ public class aShellFragment extends BaseFragment {
         }
 
         if (finalCommand.equals("clear")) {
-            if (mResult != null) {
-                clearAll();
-            }
+            clearAll();
             return;
         }
 
@@ -646,9 +637,6 @@ public class aShellFragment extends BaseFragment {
             return;
         }
 
-        if (mHistory == null) {
-            mHistory = new ArrayList<>();
-        }
         mHistory.add(finalCommand);
 
         mSaveButton.setVisibility(GONE);
@@ -660,15 +648,13 @@ public class aShellFragment extends BaseFragment {
 
         String mTitleText = "<font color=\"" + Settings.getColorAccent(requireActivity()) + "\">shell@" + Utils.getDeviceName() + "</font># <i>" + Utils.escapeHtml(finalCommand) + "</i>";
 
-        if (mResult == null) {
-            // Appended from a binder thread, read on the main one
-            mResult = Collections.synchronizedList(new ArrayList<>());
-        } else {
+        if (!mResult.isEmpty()) {
             mResult.add("<i></i>");
         }
         mResult.add(mTitleText);
 
         new Async() {
+            private final Activity activity = requireActivity();
             private boolean permissionGranted;
             @Override
             public void onPreExecute() {
@@ -685,15 +671,15 @@ public class aShellFragment extends BaseFragment {
                         switch (status) {
                             case IDLE:
                                 if (mCommand != null && !Objects.requireNonNull(mCommand.getText()).toString().trim().isEmpty()) {
-                                    mSendButton.setIcon(Utils.getDrawable(R.drawable.ic_send, requireActivity()));
+                                    mSendButton.setIcon(Utils.getDrawable(R.drawable.ic_send, activity));
                                 } else {
-                                    mSendButton.setIcon(Utils.getDrawable(R.drawable.ic_help, requireActivity()));
+                                    mSendButton.setIcon(Utils.getDrawable(R.drawable.ic_help, activity));
                                 }
-                                mSendButton.setIconTint(ColorStateList.valueOf(Settings.getColorAccent(requireActivity())));
+                                mSendButton.setIconTint(ColorStateList.valueOf(Settings.getColorAccent(activity)));
                                 break;
                             case RUNNING:
-                                mSendButton.setIcon(Utils.getDrawable(R.drawable.ic_stop, requireActivity()));
-                                mSendButton.setIconTint(ColorStateList.valueOf(Utils.getColor(R.color.colorRed, requireActivity())));
+                                mSendButton.setIcon(Utils.getDrawable(R.drawable.ic_stop, activity));
+                                mSendButton.setIconTint(ColorStateList.valueOf(Utils.getColor(R.color.colorRed, activity)));
                                 break;
                         }
                     }));
@@ -705,12 +691,14 @@ public class aShellFragment extends BaseFragment {
 
             @Override
             public void onPostExecute() {
+                if (!isAdded() || activity.isFinishing() || activity.isDestroyed()) return;
+
                 if (permissionGranted) {
-                    if (mHistory != null && !mHistory.isEmpty() && !mHistoryButton.isEnabled()) {
+                    if (!mHistory.isEmpty() && !mHistoryButton.isEnabled()) {
                         mHistoryButton.setEnabled(true);
                     }
                     updateBookmarksButton();
-                    if (mResult != null && !mResult.isEmpty()) {
+                    if (!mResult.isEmpty()) {
                         mClearButton.setEnabled(true);
                         mSearchButton.setEnabled(true);
                         showButtons();
@@ -774,7 +762,7 @@ public class aShellFragment extends BaseFragment {
      * so it has to move down by whatever was dropped.
      */
     private void trimOutput() {
-        if (mResult == null || mResult.size() <= MAX_OUTPUT_LINES + TRIM_CHUNK) return;
+        if (mResult.size() <= MAX_OUTPUT_LINES + TRIM_CHUNK) return;
 
         int mTrimmed = mResult.size() - MAX_OUTPUT_LINES;
         synchronized (mResult) {
