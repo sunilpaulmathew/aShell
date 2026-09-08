@@ -134,6 +134,12 @@ public class aShellActivity extends BaseActivity {
         return ColorUtils.setAlphaComponent(baseColor, Math.round(255 * 0.76f));
     }
 
+    public void enableViewPagerSwiping(boolean enabled) {
+        if (viewPager != null) {
+            viewPager.setUserInputEnabled(enabled);
+        }
+    }
+
     public void navigateToFragment(int position, String command) {
         if (command != null) {
             Fragment existingShell = getSupportFragmentManager().findFragmentByTag("f0");

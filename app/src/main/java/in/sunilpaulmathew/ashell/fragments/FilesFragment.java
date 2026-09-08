@@ -8,10 +8,12 @@ import android.app.Activity;
 import android.content.res.Configuration;
 import android.os.Bundle;
 import android.view.LayoutInflater;
+import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 
 import androidx.activity.OnBackPressedCallback;
+import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
@@ -77,6 +79,23 @@ public class FilesFragment extends BaseFragment {
         } else {
             new AccessUnavilableDialog(requireActivity()).show();
         }
+
+        mRecyclerViewTitle.addOnItemTouchListener(new RecyclerView.SimpleOnItemTouchListener() {
+            @Override
+            public boolean onInterceptTouchEvent(@NonNull RecyclerView rv, @NonNull MotionEvent e) {
+                switch (e.getAction()) {
+                    case MotionEvent.ACTION_DOWN:
+                    case MotionEvent.ACTION_MOVE:
+                        Settings.enableViewPagerSwiping(false, requireActivity());
+                        break;
+                    case MotionEvent.ACTION_UP:
+                    case MotionEvent.ACTION_CANCEL:
+                        Settings.enableViewPagerSwiping(true, requireActivity());
+                        break;
+                }
+                return false;
+            }
+        });
 
         mOnBackPressedCallback = new OnBackPressedCallback(false) {
             @Override

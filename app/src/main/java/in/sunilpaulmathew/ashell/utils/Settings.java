@@ -256,6 +256,12 @@ public class Settings {
         }
     }
 
+    public static void enableViewPagerSwiping(boolean enabled, Activity activity) {
+        if (activity instanceof aShellActivity) {
+            ((aShellActivity) activity).enableViewPagerSwiping(enabled);
+        }
+    }
+
     public static void initializeAppLanguage(Context context) {
         Resources res = context.getResources();
         DisplayMetrics dm = res.getDisplayMetrics();
@@ -265,7 +271,9 @@ public class Settings {
     }
     
     public static void navigateToFragment(int position, String command, Activity activity) {
-        ((aShellActivity) activity).navigateToFragment(position, command);
+        if (activity instanceof aShellActivity) {
+            ((aShellActivity) activity).navigateToFragment(position, command);
+        }
     }
 
     public static void restartApp(Activity activity) {
