@@ -9,11 +9,15 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import androidx.annotation.NonNull;
+import androidx.recyclerview.widget.DiffUtil;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.google.android.material.button.MaterialButton;
 
+import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
+import java.util.Objects;
 
 import in.sunilpaulmathew.ashell.R;
 
@@ -47,6 +51,38 @@ public class TitleAdapter extends RecyclerView.Adapter<TitleAdapter.ViewHolder> 
             holder.mTitle.setTypeface(null, Typeface.BOLD);
             holder.mButton.setVisibility(GONE);
         }
+    }
+
+    public void updateData(List<String> newData) {
+        final List<String> oldList = new ArrayList<>(this.data);
+        final List<String> newList = (newData != null) ? new ArrayList<>(newData) : Collections.emptyList();
+
+        DiffUtil.DiffResult diffResult = DiffUtil.calculateDiff(new DiffUtil.Callback() {
+            @Override
+            public int getOldListSize() {
+                return oldList.size();
+            }
+
+            @Override
+            public int getNewListSize() {
+                return newList.size();
+            }
+
+            @Override
+            public boolean areItemsTheSame(int oldItemPosition, int newItemPosition) {
+                return Objects.equals(oldList.get(oldItemPosition), newList.get(newItemPosition));
+            }
+
+            @Override
+            public boolean areContentsTheSame(int oldItemPosition, int newItemPosition) {
+                return Objects.equals(oldList.get(oldItemPosition), newList.get(newItemPosition));
+            }
+        });
+
+        this.data.clear();
+        this.data.addAll(newList);
+
+        diffResult.dispatchUpdatesTo(this);
     }
 
     @Override

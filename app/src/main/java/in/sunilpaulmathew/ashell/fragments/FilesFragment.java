@@ -42,7 +42,7 @@ public class FilesFragment extends BaseFragment {
 
     private FilesAdapter mFilesAdapter;
     private FoldersAdapter mFoldersAdapter;
-    private RecyclerView mRecyclerViewFiles, mRecyclerViewFolders, mRecyclerViewTitle;
+    private RecyclerView mRecyclerViewTitle;
     private TitleAdapter mTitleAdapter;
     private final List<String> mTitles = new CopyOnWriteArrayList<>();
     private static String mPath = "/";
@@ -53,8 +53,20 @@ public class FilesFragment extends BaseFragment {
         View mRootView = inflater.inflate(R.layout.fragment_files, container, false);
 
         mRecyclerViewTitle = mRootView.findViewById(R.id.recycler_view_title);
-        mRecyclerViewFiles = mRootView.findViewById(R.id.recycler_view_files);
-        mRecyclerViewFolders = mRootView.findViewById(R.id.recycler_view_folders);
+        RecyclerView mRecyclerViewFiles = mRootView.findViewById(R.id.recycler_view_files);
+        RecyclerView mRecyclerViewFolders = mRootView.findViewById(R.id.recycler_view_folders);
+
+        mFoldersAdapter = new FoldersAdapter(new CopyOnWriteArrayList<>(), filePath -> loadUI(filePath).execute());
+        mFilesAdapter = new FilesAdapter(new CopyOnWriteArrayList<>(), newPath -> loadUI(newPath).execute());
+        mTitleAdapter = new TitleAdapter(new CopyOnWriteArrayList<>(), position -> loadUI(position == 0 ? "/" : "/" + String.join("/", mTitles.subList(1, position + 1))).execute());
+
+        mRecyclerViewTitle.setLayoutManager(new LinearLayoutManager(requireActivity(), LinearLayoutManager.HORIZONTAL, false));
+        mRecyclerViewFolders.setLayoutManager(new GridLayoutManager(requireActivity(), getSpanSize()));
+        mRecyclerViewFiles.setLayoutManager(new GridLayoutManager(requireActivity(), getSpanSize()));
+
+        mRecyclerViewTitle.setAdapter(mTitleAdapter);
+        mRecyclerViewFolders.setAdapter(mFoldersAdapter);
+        mRecyclerViewFiles.setAdapter(mFilesAdapter);
 
         if (Shizuku.pingBinder()) {
             if (isPermissionGranted()) {
@@ -88,8 +100,6 @@ public class FilesFragment extends BaseFragment {
             private ProgressDialog progressDialog = null;
             @Override
             public void onPreExecute() {
-                mRecyclerViewFolders.setVisibility(GONE);
-                mRecyclerViewFiles.setVisibility(GONE);
                 progressDialog = new ProgressDialog(activity);
                 progressDialog.setProgressIcon(R.drawable.ic_folder);
                 progressDialog.setProgressStatus(R.string.loading);
@@ -161,19 +171,13 @@ public class FilesFragment extends BaseFragment {
                         Utils.toast(getString(R.string.file_system_access_error_toast), activity).show();
                         return;
                     }
-                    mFoldersAdapter = new FoldersAdapter(folders, filePath -> loadUI(filePath).execute());
-                    mFilesAdapter = new FilesAdapter(files, newPath -> loadUI(newPath).execute());
-                    mTitleAdapter = new TitleAdapter(mTitles, position -> loadUI(position == 0 ? "/" : "/" + String.join("/", mTitles.subList(1, position + 1))).execute());
-                    mRecyclerViewTitle.setLayoutManager(new LinearLayoutManager(activity, LinearLayoutManager.HORIZONTAL, false));
-                    mRecyclerViewTitle.setAdapter(mTitleAdapter);
+
+                    mFilesAdapter.updateData(files);
+                    mFoldersAdapter.updateData(folders);
+                    mTitleAdapter.updateData(mTitles);
+
                     mRecyclerViewTitle.scrollToPosition(mTitles.size() - 1);
-                    mRecyclerViewFolders.setLayoutManager(new GridLayoutManager(activity, getSpanSize()));
-                    mRecyclerViewFolders.setAdapter(mFoldersAdapter);
-                    mRecyclerViewFiles.setLayoutManager(new GridLayoutManager(activity, getSpanSize()));
-                    mRecyclerViewFiles.setAdapter(mFilesAdapter);
                     mRecyclerViewTitle.setVisibility(mTitleAdapter.getItemCount() > 1 ? VISIBLE : GONE);
-                    mRecyclerViewFolders.setVisibility(VISIBLE);
-                    mRecyclerViewFiles.setVisibility(VISIBLE);
                 } else {
                     requestPermission();
                 }
