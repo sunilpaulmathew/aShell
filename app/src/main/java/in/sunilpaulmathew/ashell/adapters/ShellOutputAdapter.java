@@ -6,11 +6,15 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import androidx.annotation.NonNull;
+import androidx.recyclerview.widget.DiffUtil;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.google.android.material.textview.MaterialTextView;
 
+import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
+import java.util.Objects;
 
 import in.sunilpaulmathew.ashell.R;
 import in.sunilpaulmathew.ashell.utils.Settings;
@@ -20,22 +24,11 @@ import in.sunilpaulmathew.ashell.utils.Settings;
  */
 public class ShellOutputAdapter extends RecyclerView.Adapter<ShellOutputAdapter.ViewHolder> {
 
-    private final List<String> data, dataFiltered;
-    private int count, animatedUpTo = -1;
+    private final List<String> data;
+    private int animatedUpTo = -1;
 
-    public ShellOutputAdapter(List<String> data, List<String> dataFiltered) {
+    public ShellOutputAdapter(List<String> data) {
         this.data = data;
-        this.dataFiltered = dataFiltered;
-        this.count = dataFiltered != null ? dataFiltered.size() : data.size();
-    }
-
-    /*
-     * The item count is pinned rather than read from the list on every call: output
-     * is appended from a binder thread, and a count that grows between a layout pass
-     * and the notify that announces it makes RecyclerView throw.
-     */
-    public void setItemCount(int count) {
-        this.count = count;
     }
 
     @NonNull
@@ -47,7 +40,7 @@ public class ShellOutputAdapter extends RecyclerView.Adapter<ShellOutputAdapter.
 
     @Override
     public void onBindViewHolder(@NonNull ShellOutputAdapter.ViewHolder holder, int position) {
-        String line = dataFiltered != null ? this.dataFiltered.get(position) : this.data.get(position);
+        String line = this.data.get(position);
 
         /*
          * Only the coloured lines -- errors, logcat levels, the command header -- carry
@@ -73,9 +66,41 @@ public class ShellOutputAdapter extends RecyclerView.Adapter<ShellOutputAdapter.
         }
     }
 
+    public void updateData(List<String> newData) {
+        final List<String> oldList = new ArrayList<>(this.data);
+        final List<String> newList = (newData != null) ? new ArrayList<>(newData) : Collections.emptyList();
+
+        DiffUtil.DiffResult diffResult = DiffUtil.calculateDiff(new DiffUtil.Callback() {
+            @Override
+            public int getOldListSize() {
+                return oldList.size();
+            }
+
+            @Override
+            public int getNewListSize() {
+                return newList.size();
+            }
+
+            @Override
+            public boolean areItemsTheSame(int oldItemPosition, int newItemPosition) {
+                return Objects.equals(oldList.get(oldItemPosition), newList.get(newItemPosition));
+            }
+
+            @Override
+            public boolean areContentsTheSame(int oldItemPosition, int newItemPosition) {
+                return Objects.equals(oldList.get(oldItemPosition), newList.get(newItemPosition));
+            }
+        });
+
+        this.data.clear();
+        this.data.addAll(newList);
+
+        diffResult.dispatchUpdatesTo(this);
+    }
+
     @Override
     public int getItemCount() {
-        return this.count;
+        return this.data.size();
     }
 
     public static class ViewHolder extends RecyclerView.ViewHolder {

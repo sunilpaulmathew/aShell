@@ -42,6 +42,7 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 import java.util.Objects;
+import java.util.concurrent.CopyOnWriteArrayList;
 import java.util.concurrent.Executors;
 import java.util.concurrent.ScheduledExecutorService;
 import java.util.concurrent.TimeUnit;
@@ -68,17 +69,18 @@ import rikka.shizuku.Shizuku;
  */
 public class aShellFragment extends BaseFragment {
 
-    private static final int MAX_OUTPUT_LINES = 50000, TRIM_CHUNK = 10000;
-
     private AppCompatImageButton mBookMark;
     private MaterialButton mBookMarksButton, mBottomArrow, mClearButton, mHistoryButton, mSaveButton, mSearchButton, mSendButton, mTopArrow;
     private TextInputEditText mCommand, mSearchWord;
     private RecyclerView mRecyclerViewOutput;
     private ScheduledExecutorService mExecutor = null;
-    private ShellOutputAdapter mShellOutputAdapter = null;
+    private final ShellOutputAdapter mShellOutputAdapter = new ShellOutputAdapter(new CopyOnWriteArrayList<>());
     private ShizukuShell mShizukuShell = null;
-    private int mPosition = 1, mShownCount = 0;
+    private int mPosition = 1;
     private final List<String> mHistory = new ArrayList<>(), mResult = Collections.synchronizedList(new ArrayList<>());
+
+    private static final int MAX_OUTPUT_LINES = 50000, TRIM_CHUNK = 10000;
+
     private String mCommandShared = null;
 
     @Override
@@ -108,10 +110,13 @@ public class aShellFragment extends BaseFragment {
         mTopArrow = mRootView.findViewById(R.id.top);
         RecyclerView mRecyclerViewCommands = mRootView.findViewById(R.id.recycler_view_commands);
         mRecyclerViewOutput = mRootView.findViewById(R.id.recycler_view_output);
+
         mRecyclerViewOutput.setItemAnimator(null);
-        mRecyclerViewOutput.setLayoutManager(new LinearLayoutManager(requireActivity()));
         mRecyclerViewCommands.setItemAnimator(null);
+        mRecyclerViewOutput.setLayoutManager(new LinearLayoutManager(requireActivity()));
         mRecyclerViewCommands.setLayoutManager(new LinearLayoutManager(requireActivity()));
+
+        mRecyclerViewOutput.setAdapter(mShellOutputAdapter);
 
         if (mCommandShared != null) {
             setCommand(mCommandShared);
@@ -251,7 +256,7 @@ public class aShellFragment extends BaseFragment {
                 String query = s.toString().trim().toLowerCase();
 
                 if (query.isEmpty()) {
-                    updateUI(mResult, null);
+                    updateUI(mResult);
                 } else {
                     /*
                      * Plain ArrayList: this is built and read on the main thread only.
@@ -265,7 +270,7 @@ public class aShellFragment extends BaseFragment {
                             mResultSorted.add(mLine);
                         }
                     }
-                    updateUI(mResult, mResultSorted);
+                    updateUI(mResultSorted);
                 }
             }
         });
@@ -394,7 +399,7 @@ public class aShellFragment extends BaseFragment {
                 lastShownSize.set(mResult.size());
                 new Handler(Looper.getMainLooper()).post(() -> {
                     trimOutput();
-                    updateUI(mResult, null);
+                    updateUI(mResult);
                 });
             }
         }, 0, 250, TimeUnit.MILLISECONDS);
@@ -560,7 +565,6 @@ public class aShellFragment extends BaseFragment {
 
     private void clearAll() {
         mResult.clear();
-        mRecyclerViewOutput.setAdapter(null);
         mSearchButton.setEnabled(false);
         mClearButton.setEnabled(false);
         mCommand.setHint(getString(R.string.command_hint));
@@ -769,36 +773,12 @@ public class aShellFragment extends BaseFragment {
             mResult.subList(0, mTrimmed).clear();
         }
         mPosition = Math.max(0, mPosition - mTrimmed);
-
-        // Indices shifted, so the list has to be rebound rather than range notified
-        mShellOutputAdapter = null;
-        mShownCount = 0;
     }
 
-    private void updateUI(List<String> data, List<String> dataFiltered) {
-        if (data == null && dataFiltered == null || !isAdded()) return;
-
-        int mCount = dataFiltered != null ? dataFiltered.size() : data.size();
-
-        /*
-         * Output only ever gets appended, and swapping in a fresh adapter for that
-         * discards every recycled view and relayouts the whole list. Only rebuild
-         * when the backing list actually changed, such as when a filter is applied.
-         */
-        if (dataFiltered == null && mShellOutputAdapter != null
-                && mRecyclerViewOutput.getAdapter() == mShellOutputAdapter && mCount > mShownCount) {
-            int mInserted = mCount - mShownCount;
-            mShellOutputAdapter.setItemCount(mCount);
-            mShellOutputAdapter.notifyItemRangeInserted(mShownCount, mInserted);
-        } else {
-            mShellOutputAdapter = new ShellOutputAdapter(data, dataFiltered);
-            mRecyclerViewOutput.setAdapter(mShellOutputAdapter);
-        }
-        mShownCount = mCount;
-
-        if (mCount > 0) {
-            mRecyclerViewOutput.scrollToPosition(mCount - 1);
-        }
+    private void updateUI(List<String> data) {
+        if (data == null || !isAdded()) return;
+        mShellOutputAdapter.updateData(data);
+        mRecyclerViewOutput.scrollToPosition(data.size() - 1);
     }
 
     @Override
@@ -825,8 +805,6 @@ public class aShellFragment extends BaseFragment {
             mExecutor.shutdownNow();
             mExecutor = null;
         }
-        mShellOutputAdapter = null;
-        mShownCount = 0;
     }
 
     @Override
