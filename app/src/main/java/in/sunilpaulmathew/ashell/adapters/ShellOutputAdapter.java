@@ -52,17 +52,20 @@ public class ShellOutputAdapter extends RecyclerView.Adapter<ShellOutputAdapter.
         } else {
             holder.mOutput.setText(Html.fromHtml(line, Html.FROM_HTML_MODE_LEGACY));
         }
+        animateView(holder.itemView, position);
+    }
 
-        /*
-         * Animate a row only the first time it comes into view. Passing the position
-         * unconditionally re-ran the slide on every rebind, so the whole visible list
-         * animated continuously while output streamed in. -1 resets the view instead.
-         */
+    /*
+     * Animate a row only the first time it comes into view. Passing the position
+     * unconditionally re-ran the slide on every rebind, so the whole visible list
+     * animated continuously while output streamed in. -1 resets the view instead.
+     */
+    private void animateView(View view, int position) {
         if (position > this.animatedUpTo) {
             this.animatedUpTo = position;
-            Settings.setSlideInAnimation(holder.itemView, position);
+            Settings.setSlideInAnimation(view, position);
         } else {
-            Settings.setSlideInAnimation(holder.itemView, -1);
+            Settings.setSlideInAnimation(view, -1);
         }
     }
 
