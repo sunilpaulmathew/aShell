@@ -794,7 +794,6 @@ public class aShellFragment extends BaseFragment {
 
     @Override
     protected void onSuccess() {
-        Commands.loadPackageInfo();
     }
 
     @Override

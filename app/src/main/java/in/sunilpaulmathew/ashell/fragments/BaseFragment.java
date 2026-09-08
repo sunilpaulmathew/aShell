@@ -3,6 +3,7 @@ package in.sunilpaulmathew.ashell.fragments;
 import android.content.pm.PackageManager;
 import android.os.Bundle;
 import android.os.Handler;
+import android.os.Looper;
 import android.view.View;
 
 import androidx.activity.OnBackPressedCallback;
@@ -12,7 +13,6 @@ import androidx.fragment.app.Fragment;
 
 import in.sunilpaulmathew.ashell.R;
 import in.sunilpaulmathew.ashell.utils.ShizukuPermissionChecker;
-import in.sunilpaulmathew.ashell.utils.ShizukuShell;
 import in.sunilpaulmathew.ashell.utils.Utils;
 import rikka.shizuku.Shizuku;
 
@@ -23,7 +23,6 @@ public abstract class BaseFragment extends Fragment {
 
     private boolean mExit;
     protected OnBackPressedCallback mOnBackPressedCallback;
-    private final Handler mHandler = new Handler();
     private final Shizuku.OnRequestPermissionResultListener REQUEST_PERMISSION_RESULT_LISTENER = this::onRequestPermissionsResult;
 
     @Override
@@ -53,7 +52,7 @@ public abstract class BaseFragment extends Fragment {
         }
         Utils.toast(getString(R.string.press_back), requireActivity()).show();
         mExit = true;
-        mHandler.postDelayed(() -> mExit = false, 2000);
+        new Handler(Looper.getMainLooper()).postDelayed(() -> mExit = false, 2000);
     }
 
     protected void addPermissionListener() {
@@ -70,7 +69,7 @@ public abstract class BaseFragment extends Fragment {
 
             @Override
             public void onFinished() {
-                ShizukuShell.ensureUserService(() -> onSuccess());
+                onSuccess();
             }
         };
     }

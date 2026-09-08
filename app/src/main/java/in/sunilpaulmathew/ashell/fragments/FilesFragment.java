@@ -144,6 +144,7 @@ public class FilesFragment extends BaseFragment {
 
                 if (isPermissionGranted()) {
                     permissionGranted = true;
+
                     final String result = ShizukuShell.runCommand("ls -l " + mPath);
                     if (!result.trim().isEmpty()) {
                         failed = false;
@@ -224,7 +225,7 @@ public class FilesFragment extends BaseFragment {
 
     @Override
     protected void onSuccess() {
-        loadUI(mPath).execute();
+        ShizukuShell.ensureUserService(() -> loadUI(mPath).execute());
     }
 
 }
