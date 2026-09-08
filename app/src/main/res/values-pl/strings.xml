@@ -1,7 +1,7 @@
 <resources xmlns:tools="http://schemas.android.com/tools" tools:ignore="MissingTranslation" >
 
     <string name="app_summary">"Wygodnie uruchamiaj polecenia ADB na swoim urządzeniu z Shizuku"</string>
-    <string name="app_working_message">"aShell wciąż pracuje. Zaczekaj, aż skończy lub ręcznie zatrzymaj (naciskając przycisk stop), aby uruchomić nowe polecenie"</string>
+    <string name="app_working_message">"aShell Możesz poczekać, aż skończy lub ręcznie zatrzymaj (naciskając przycisk stop), aby uruchomić nowe polecenie"</string>
     <string name="bookmark_added_message">"'%s' został dodany do zakładek"</string>
     <string name="bookmark_removed_message">"'%s' został usunięty z zakładek"</string>
     <string name="cancel">"Anuluj"</string>

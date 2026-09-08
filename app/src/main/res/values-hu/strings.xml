@@ -21,7 +21,7 @@
     <string name="shizuku_unavailable_message">"A Shizuku nincs telepítve, vagy nincs megfelelően beállítva az eszközön. Megfelelő Shizuku környezet nélkül az aShell nem fog működni."</string>
     <string name="su_warning_message">"Az aShell nem root alapú felhasználásra készült. Megszakítás."</string>
     <string name="yes">"Igen"</string>
-    <string name="copyright_text">"Szerzői jog: © 2024–2025, sunilpaulmathew"</string>
+    <string name="copyright_text">"Szerzői jog: © 2022–2026, sunilpaulmathew"</string>
     <string name="save">"Mentés"</string>
     <string name="app_theme">"Az alkalmazás témája"</string>
     <string name="app_theme_amoled">"Amoled fekete"</string>

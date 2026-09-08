@@ -21,7 +21,7 @@
     <string name="shizuku_unavailable_message">"Shizuku не встановлено або неправильно налаштовано на вашому пристрої. aShell не працюватиме без належного середовища Shizuku."</string>
     <string name="su_warning_message">"aShell не призначений для використання з root-правами. Переривання."</string>
     <string name="yes">"Так"</string>
-    <string name="copyright_text">"Авторське право: © 2022–2025, sunilpaulmathew"</string>
+    <string name="copyright_text">"Авторське право: © 2022–2026, sunilpaulmathew"</string>
     <string name="save">"Зберегти"</string>
     <string name="app_theme">"Тема програми"</string>
     <string name="app_theme_amoled">"Чорний амолед"</string>

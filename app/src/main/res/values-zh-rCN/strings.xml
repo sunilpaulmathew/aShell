@@ -22,7 +22,7 @@
     <string name="shizuku_unavailable_message">"您的设备上未安装或未正确配置 Shizuku。如果没有合适的 Shizuku 环境 aShell 将无法工作。单击此处了解有关 Shizuku 的更多信息。"</string>
     <string name="su_warning_message">"aShell 不是为与 root 相关的用途而设计的。中止。"</string>
     <string name="yes">"是"</string>
-    <string name="copyright_text">"版权: © 2024–2026, sunilpaulmathew"</string>
+    <string name="copyright_text">"版权: © 2022–2026, sunilpaulmathew"</string>
     <string name="save">"保存"</string>
     <string name="app_theme">"应用主题"</string>
     <string name="app_theme_amoled">"AMOLED 黑"</string>

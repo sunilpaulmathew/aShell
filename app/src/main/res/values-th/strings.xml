@@ -21,7 +21,7 @@
     <string name="shizuku_unavailable_message">"Shizuku ไม่ได้ติดตั้งหรือไม่ได้ตั้งค่าอย่างถูกต้องบนอุปกรณ์ของคุณ aShell จะไม่ทำงานหากไม่มีสภาพแวดล้อม Shizuku ที่เหมาะสม"</string>
     <string name="su_warning_message">"aShell ไม่ได้ออกแบบมาสำหรับการใช้งานที่เกี่ยวข้องกับสิทธิ์ระดับรูท ยกเลิกการทำงาน"</string>
     <string name="yes">"ใช่"</string>
-    <string name="copyright_text">"ลิขสิทธิ์: © 2022–2025, sunilpaulmathew"</string>
+    <string name="copyright_text">"ลิขสิทธิ์: © 2022–2026, sunilpaulmathew"</string>
     <string name="save">"บันทึก"</string>
     <string name="app_theme">"ธีมแอป"</string>
     <string name="app_theme_amoled">"อาโมเล่สีดำ"</string>

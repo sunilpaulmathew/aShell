@@ -21,7 +21,7 @@
     <string name="shizuku_unavailable_message">"Shizuku chưa được cài đặt hoặc chưa được cấu hình đúng trên thiết bị của bạn. aShell sẽ không hoạt động nếu không có môi trường Shizuku phù hợp."</string>
     <string name="su_warning_message">"aShell không được thiết kế cho mục đích sử dụng liên quan đến root. Đang hủy bỏ."</string>
     <string name="yes">"Đúng"</string>
-    <string name="copyright_text">"Bản quyền: © 2022–2025, sunilpaulmathew"</string>
+    <string name="copyright_text">"Bản quyền: © 2022–2026, sunilpaulmathew"</string>
     <string name="save">"Lưu"</string>
     <string name="app_theme">"Chủ đề ứng dụng"</string>
     <string name="app_theme_amoled">"Nền tối AMOLED"</string>

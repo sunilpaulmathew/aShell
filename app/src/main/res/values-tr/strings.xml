@@ -21,7 +21,7 @@
     <string name="shizuku_unavailable_message">"Shizuku, cihazınızda kurulu değil veya doğru bir şekilde konfigüre edilmedi. aShell düzgün bir Shizuku ortamı olmadan çalışamaz."</string>
     <string name="su_warning_message">"aShell root ile ilgili kullanım için tasarlanmadı. Eylem iptal ediliyor."</string>
     <string name="yes">"Evet"</string>
-    <string name="copyright_text">"Telif hakkı: © 2022–2025, sunilpaulmathew"</string>
+    <string name="copyright_text">"Telif hakkı: © 2022–2026, sunilpaulmathew"</string>
     <string name="save">"Kaydet"</string>
     <string name="app_theme">"Uygulama teması"</string>
     <string name="app_theme_amoled">"Amoled siyah"</string>
