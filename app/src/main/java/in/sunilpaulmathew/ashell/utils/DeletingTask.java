@@ -20,7 +20,7 @@ public abstract class DeletingTask extends Async {
     public DeletingTask(String name, String path, Context context) {
         this.name = name;
         this.path = path;
-        this.context = context.getApplicationContext();
+        this.context = context;
         this.progressDialog = new ProgressDialog(context);
     }
 
@@ -33,7 +33,7 @@ public abstract class DeletingTask extends Async {
 
     @Override
     public void doInBackground() {
-        result = ShizukuShell.runCommand("rm -r '" + path + "'");
+        result = ShizukuShell.runCommand("rm -r " + path);
     }
 
     @Override
