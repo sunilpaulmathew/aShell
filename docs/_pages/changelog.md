@@ -6,7 +6,16 @@ include_in_header: true
 
 <h2 style="color: blue">🆕 What's New</h2>
 
-### ✨ 21. [v0.28](https://gitlab.com/sunilpaulmathew/ashell/-/releases/v0.27) *(July 29 2026)*
+### ✨ 22. [v0.29](https://gitlab.com/sunilpaulmathew/ashell/-/releases/v0.29) *(Sept 09 2026)*
+- Substantial performance improvements and memory optimizations across shell execution, output rendering, and background tasks (thanks to @yoyicue).
+- Smoother list animations and faster updates in files and folders via DiffUtil.
+- Auto-hide keyboard on scroll in the terminal view.
+- Shizuku permission status messages now display in a cleaner bottom sheet.
+- Improved tab navigation behavior in the file explorer.
+- Resolved an issue causing the app to crash when deleting files.
+- Updated translations.
+
+### ✨ 21. [v0.28](https://gitlab.com/sunilpaulmathew/ashell/-/releases/v0.28) *(July 29 2026)*
 - Main Interface: Introduced custom top navigation bar instead of previous bottom navigation (thanks to user for feedback).
 - Bookmarks: Added editing functionality and migrated to Bottom Sheet dialogs.
 - History: Converted options to Bottom Sheet UI.

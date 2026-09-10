@@ -1,0 +1,6 @@
+* Substantial performance improvements and memory optimizations across shell execution, output rendering, and background tasks (thanks to @yoyicue).
+* Smoother list animations and faster updates in files and folders via DiffUtil.
+* Auto-hide keyboard on scroll in the terminal view.
+* Shizuku permission status messages now display in a cleaner bottom sheet.
+* Resolved an issue causing the app to crash when deleting files.
+* Updated translations.
