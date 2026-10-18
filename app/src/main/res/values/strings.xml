@@ -64,6 +64,7 @@
     <string name="language_el" translatable="false">Ελληνικά</string>
     <string name="language_en" translatable="false">English (%s)</string>
     <string name="language_es" translatable="false">Español (%s)</string>
+    <string name="language_fa" translatable="false">فارسی</string>
     <string name="language_fr" translatable="false">français (%s)</string>
     <string name="language_hu" translatable="false">Magyar</string>
     <string name="language_in" translatable="false">bahasa Indonesia</string>

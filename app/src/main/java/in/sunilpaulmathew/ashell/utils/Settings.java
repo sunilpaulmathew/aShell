@@ -66,6 +66,8 @@ public class Settings {
     private static int getLanguagePosition(Context context) {
         String country = getCountry(context);
         switch (getLanguage(context)) {
+            case "fa":
+                return 26;
             case "uk":
                 return 24;
             case "tr":
@@ -157,6 +159,8 @@ public class Settings {
             case "es":
                 return context.getString(R.string.language_es, country.equalsIgnoreCase("AR") ? "AR"
                         : country.equalsIgnoreCase("MX") ? "MX" : "ES");
+            case "fa":
+                return context.getString(R.string.language_fa);
             case "fr":
                 return context.getString(R.string.language_fr, "FR");
             case "pl":
@@ -228,7 +232,8 @@ public class Settings {
                 context.getString(R.string.language_th),
                 context.getString(R.string.language_tr),
                 context.getString(R.string.language_uk),
-                context.getString(R.string.language_es, "AR")
+                context.getString(R.string.language_es, "AR"),
+                context.getString(R.string.language_fa)
         };
     }
 
@@ -471,6 +476,13 @@ public class Settings {
                         }
                         Utils.saveString("appLanguage", "es", activity);
                         Utils.saveString("country", "AR", activity);
+                        break;
+                    case 26:
+                        if (Objects.equals(getLanguage(activity), "fa") && Objects.equals(getCountry(activity), null)) {
+                            return;
+                        }
+                        Utils.saveString("appLanguage", "fa", activity);
+                        Utils.saveString("country", null, activity);
                         break;
                 }
                 restartApp(activity);
