@@ -2,6 +2,7 @@ package in.sunilpaulmathew.ashell.adapters;
 
 import android.annotation.SuppressLint;
 import android.app.Activity;
+import android.content.Context;
 import android.content.Intent;
 import android.net.Uri;
 import android.view.LayoutInflater;
@@ -50,22 +51,25 @@ public class SettingsAdapter extends RecyclerView.Adapter<SettingsAdapter.ViewHo
 
     @Override
     public void onBindViewHolder(@NonNull SettingsAdapter.ViewHolder holder, int position) {
-        holder.mTitle.setText(data.get(position).geTitle());
-        if (data.get(position).getDescription() != null) {
-            holder.mDescription.setText(data.get(position).getDescription());
+        SettingsEntry entry = this.data.get(position);
+        Context context = holder.itemView.getContext();
+
+        holder.mTitle.setText(entry.geTitle());
+        if (entry.getDescription() != null) {
+            holder.mDescription.setText(entry.getDescription());
             holder.mDescription.setVisibility(View.VISIBLE);
         } else {
             holder.mDescription.setVisibility(View.GONE);
         }
 
-        if (data.get(position).getIcon() != Integer.MIN_VALUE) {
-            holder.mIcon.setImageDrawable(Utils.getDrawable(data.get(position).getIcon(), holder.mIcon.getContext()));
+        if (entry.getIcon() != Integer.MIN_VALUE) {
+            holder.mIcon.setImageResource(entry.getIcon());
             holder.mIcon.setVisibility(View.VISIBLE);
-            holder.mIcon.setContentDescription(data.get(position).geTitle());
+            holder.mIcon.setContentDescription(entry.geTitle());
             holder.mIcon.setImportantForAccessibility(View.IMPORTANT_FOR_ACCESSIBILITY_YES);
-            int color = data.get(position).getIconColor(holder.mIcon.getContext());
+            int color = entry.getIconColor(context);
             if (color != Integer.MIN_VALUE) {
-                holder.mIcon.setColorFilter(data.get(position).getIconColor(holder.mIcon.getContext()));
+                holder.mIcon.setColorFilter(entry.getIconColor(context));
             } else {
                 holder.mIcon.clearColorFilter();
             }
@@ -84,15 +88,16 @@ public class SettingsAdapter extends RecyclerView.Adapter<SettingsAdapter.ViewHo
             holder.mTitle.setLayoutParams(new LinearLayoutCompat.LayoutParams(LinearLayoutCompat.LayoutParams.MATCH_PARENT,
                     ViewGroup.LayoutParams.WRAP_CONTENT));
             holder.mTitle.setTextAlignment(View.TEXT_ALIGNMENT_CENTER);
-            holder.mTitle.setTextColor(Settings.getColorAccent(holder.mTitle.getContext()));
+            holder.mTitle.setTextColor(Settings.getColorAccent(context));
         } else {
             holder.mTitle.setTextAlignment(View.TEXT_ALIGNMENT_TEXT_START);
-            holder.mTitle.setTextColor(Settings.getColorText(holder.mTitle.getContext()));
+            holder.mTitle.setTextColor(Settings.getColorText(context));
         }
 
         holder.mCheckBox.setOnClickListener(v -> {
-            if (data.get(position).getPosition() == 3) {
-                Utils.saveBoolean("amoledTheme", !Utils.getBoolean("amoledTheme", false, holder.mCheckBox.getContext()), holder.mCheckBox.getContext());
+            int currentPosition = this.data.get(holder.getBindingAdapterPosition()).getPosition();
+            if (currentPosition == 3) {
+                Utils.saveBoolean("amoledTheme", !Utils.getBoolean("amoledTheme", false, context), context);
                 Settings.restartApp(activity);
             }
         });
@@ -124,41 +129,42 @@ public class SettingsAdapter extends RecyclerView.Adapter<SettingsAdapter.ViewHo
         @Override
         public void onClick(View view) {
             int position = data.get(getBindingAdapterPosition()).getPosition();
+            Context context = view.getContext();
             if (position == 1) {
                 Intent settings = new Intent(android.provider.Settings.ACTION_APPLICATION_DETAILS_SETTINGS);
                 settings.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
                 Uri uri = Uri.fromParts("package", BuildConfig.APPLICATION_ID, null);
                 settings.setData(uri);
-                view.getContext().startActivity(settings);
+                context.startActivity(settings);
             } else if (position == 2) {
-                new SingleChoiceDialog(R.drawable.ic_theme, view.getContext().getString(R.string.app_theme),
-                        Settings.getAppThemeMenu(view.getContext()), Settings.getAppThemePosition(view.getContext()), view.getContext()) {
+                new SingleChoiceDialog(R.drawable.ic_theme, context.getString(R.string.app_theme),
+                        Settings.getAppThemeMenu(context), Settings.getAppThemePosition(context), context) {
 
                     @Override
                     public void onItemSelected(int itemPosition) {
-                        if (itemPosition == Settings.getAppThemePosition(view.getContext())) {
+                        if (itemPosition == Settings.getAppThemePosition(context)) {
                             return;
                         }
                         switch (itemPosition) {
                             case 2:
-                                Utils.saveInt("appTheme", 2, view.getContext());
+                                Utils.saveInt("appTheme", 2, context);
                                 AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO);
                                 break;
                             case 1:
-                                Utils.saveInt("appTheme", 1, view.getContext());
+                                Utils.saveInt("appTheme", 1, context);
                                 AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_YES);
                                 break;
                             default:
-                                Utils.saveInt("appTheme", 0, view.getContext());
+                                Utils.saveInt("appTheme", 0, context);
                                 AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_FOLLOW_SYSTEM);
                                 break;
                         }
-                        data.get(getBindingAdapterPosition()).setDescription(Settings.getAppTheme(view.getContext()));
+                        data.get(getBindingAdapterPosition()).setDescription(Settings.getAppTheme(context));
                         notifyItemChanged(getBindingAdapterPosition());
                     }
                 }.show();
             } else if (position == 3) {
-                Utils.saveBoolean("amoledTheme", !Utils.getBoolean("amoledTheme", false, view.getContext()), view.getContext());
+                Utils.saveBoolean("amoledTheme", !Utils.getBoolean("amoledTheme", false, context), context);
                 Settings.restartApp(activity);
             } else if (position == 4) {
                 Settings.setAppLanguage(activity);
@@ -170,13 +176,13 @@ public class SettingsAdapter extends RecyclerView.Adapter<SettingsAdapter.ViewHo
                     }
                 };
             } else if (position == 6) {
-                Utils.loadUrl("https://shizuku.rikka.app/", view.getContext());
+                Utils.loadUrl("https://shizuku.rikka.app/", context);
             } else if (position == 7) {
-                Utils.loadUrl("https://poeditor.com/join/project/20PSoEAgfX", view.getContext());
+                Utils.loadUrl("https://poeditor.com/join/project/20PSoEAgfX", context);
             } else if (position == 8) {
-                new PolicyDialog(view.getContext());
+                new PolicyDialog(context);
             } else if (position == 9) {
-                Utils.loadUrl("mailto:smartpack.org@gmail.com", view.getContext());
+                Utils.loadUrl("mailto:smartpack.org@gmail.com", context);
             }
         }
     }
