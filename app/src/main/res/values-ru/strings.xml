@@ -1,5 +1,5 @@
 <resources xmlns:tools="http://schemas.android.com/tools" tools:ignore="MissingTranslation">
-    
+
     <string name="app_summary">"Добро пожаловать в aShell: локальную оболочку ADB для устройств Android на платформе Shizuku."</string>
     <string name="app_working_message">"aShell все еще выполняется. Подождите, пока он завершится, или остановите его вручную (нажав кнопку остановки), чтобы запустить новую команду."</string>
     <string name="bookmark_added_message">"'%s' добавлено в закладки"</string>
@@ -21,7 +21,7 @@
     <string name="shizuku_unavailable_message">"Приложение Shizuku не установлено или неправильно настроено на вашем устройстве. aShell не может работать без среды Shizuku. Нажмите здесь, чтобы узнать больше о Shizuku."</string>
     <string name="su_warning_message">"aShell не предназначен для использования с правами root. Остановка."</string>
     <string name="yes">"Да"</string>
-    <string name="copyright_text">"Copyright: © 2022–2026, sunilpaulmathew"</string>
+    <string name="copyright_text">"Copyright: © 2022–2025, sunilpaulmathew"</string>
     <string name="save">"Сохранить"</string>
     <string name="app_theme">"Тема приложения"</string>
     <string name="app_theme_amoled">"AMOLED тема"</string>
@@ -29,6 +29,7 @@
     <string name="app_theme_auto">"Авто"</string>
     <string name="app_theme_dark">"Тёмная"</string>
     <string name="app_theme_light">"Светлая"</string>
+    <string name="app_version">"aShell %s"</string>
     <string name="authorize_click_message">"Нажми для авторизации"</string>
     <string name="copy_clipboard">"Скопировать"</string>
     <string name="developer_contact">"Связь с разработчиком"</string>
