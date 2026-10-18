@@ -63,6 +63,12 @@ public class SettingsAdapter extends RecyclerView.Adapter<SettingsAdapter.ViewHo
             holder.mIcon.setVisibility(View.VISIBLE);
             holder.mIcon.setContentDescription(data.get(position).geTitle());
             holder.mIcon.setImportantForAccessibility(View.IMPORTANT_FOR_ACCESSIBILITY_YES);
+            int color = data.get(position).getIconColor(holder.mIcon.getContext());
+            if (color != Integer.MIN_VALUE) {
+                holder.mIcon.setColorFilter(data.get(position).getIconColor(holder.mIcon.getContext()));
+            } else {
+                holder.mIcon.clearColorFilter();
+            }
         } else {
             holder.mIcon.setVisibility(View.GONE);
         }
