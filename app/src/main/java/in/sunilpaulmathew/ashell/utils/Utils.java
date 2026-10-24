@@ -77,6 +77,11 @@ public class Utils {
                 && !s.contains("\\") && !s.contains("|");
     }
 
+    public static int getUserID() {
+        int uid = android.os.Process.myUid();
+        return  uid / 100000;
+    }
+
     /*
      * Shell output is rendered as HTML so that errors and logcat levels can be
      * coloured, which means anything that is not markup has to be escaped first or

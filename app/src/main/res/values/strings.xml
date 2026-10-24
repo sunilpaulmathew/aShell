@@ -1,6 +1,14 @@
 <resources xmlns:tools="http://schemas.android.com/tools" tools:ignore="MissingTranslation" >
     <string name="app_name" translatable="false">aShell</string>
 
+    <string name="app_manager">App Manager</string>
+    <string name="app_manager_description">Inspect, uninstall, backup, and manage installed packages remotely over ADB.</string>
+    <string name="app_manager_clear_data">Clear data</string>
+    <string name="app_manager_disable">Disable for current user</string>
+    <string name="app_manager_enable">Enable for current user</string>
+    <string name="app_manager_export">Export to Downloads -> aShell</string>
+    <string name="app_manager_force_close">Force close</string>
+    <string name="app_manager_uninstall">Uninstall for current user</string>
     <string name="app_summary">Effortlessly execute ADB commands on your Shizuku-enabled Android device.</string>
     <string name="app_theme">App theme</string>
     <string name="app_theme_amoled">Amoled black</string>
@@ -8,10 +16,18 @@
     <string name="app_theme_auto">Auto</string>
     <string name="app_theme_dark">Dark</string>
     <string name="app_theme_light">Light</string>
+    <string name="app_type_all">All</string>
+    <string name="app_type_disabled">Disabled</string>
+    <string name="app_type_show">Show apps</string>
+    <string name="app_type_system">System</string>
+    <string name="app_type_user">User</string>
     <string name="app_version">aShell %s</string>
     <string name="app_working_message">aShell is still working. Please wait for it to finish or manually stop (by clicking the stop button) to run a new command</string>
     <string name="apply">Apply</string>
+    <string name="applying">Applying</string>
     <string name="authorize_click_message">Click to authorize</string>
+    <string name="battery_monitor">Battery monitor</string>
+    <string name="battery_monitor_description">Live battery capacity percentage, thermal state, voltage telemetry, and charging status inspection via ADB.</string>
     <string name="bookmark_added_message">\'%s\' is bookmarked</string>
     <string name="bookmark_removed_message">\'%s\' has been removed from bookmark</string>
     <string name="bookmarks">Bookmarks</string>
@@ -27,6 +43,9 @@
     <string name="copying_failed_toast">"Copying %s is failed…"</string>
     <string name="copying_succeed_toast">"%s is copied to Downloads -> aShell…"</string>
     <string name="copyright_text">Copyright: © 2022–2026, sunilpaulmathew</string>
+    <string name="cpu_monitor">CPU monitor</string>
+    <string name="cpu_monitor_description">Real-time processor utilization, historical load averages, and process-level resource tracking via ADB.</string>
+    <string name="cpu_monitor_load">Load: %s</string>
     <string name="delete">Delete</string>
     <string name="delete_success_toast">%s is successfully deleted…</string>
     <string name="deleting_message">Deleting %s…</string>
@@ -39,10 +58,15 @@
     <string name="edit_title">Edit \"%s\" to:</string>
     <string name="examples">Examples</string>
     <string name="examples_description">Explore popular ADB commands</string>
+    <string name="extras">Extras</string>
+    <string name="extras_description">Unlock extra system utilities powered by ADB</string>
+    <string name="extras_dialog_title">aShell now includes extra features! Choose which ones you\'d like to display on the main UI. You can change this at any time in Settings -> Extras</string>
     <string name="features_description">\uD83D\uDCDC Run ADB commands with ease—includes built-in examples and bookmarking.\n\uD83D\uDCCA Handles continuous commands like logcat or top, with search and save options for output.\n\uD83C\uDFA8 Sleek UI with auto dark/light theme for a smooth, modern experience.</string>
     <string name="features_title">Features</string>
     <string name="file_group">Belongs to: %s</string>
     <string name="file_owner">Owned by: %s</string>
+    <string name="file_manager">File manager</string>
+    <string name="file_manager_description">Browse device storage with privileged access</string>
     <string name="file_manager_error_toast">Failed to get data from external file manager… Aborting.</string>
     <string name="file_modified"><b>Modified</b>: %s</string>
     <string name="file_path">Path: %s</string>
@@ -79,6 +103,8 @@
     <string name="language_uk" translatable="false">Українська</string>
     <string name="language_zh" translatable="false">中文 (%s)</string>
     <string name="loading">Loading…</string>
+    <string name="logcat">Live device logs</string>
+    <string name="logcat_description">Stream live system logs, monitor app outputs, and debug crashes instantly over ADB.</string>
     <string name="miscellaneous">Miscellaneous</string>
     <string name="open">Open</string>
     <string name="opening_message">Opening %s</string>
@@ -92,10 +118,15 @@
     <string name="quit">Quit</string>
     <string name="quit_app_message">Do you want to quit aShell?</string>
     <string name="request_permission">Request Permission</string>
+    <string name="reverse_order">Reverse order</string>
     <string name="root">Root</string>
     <string name="save">Save</string>
     <string name="settings">Settings</string>
+    <string name="sdk_version_min">Min SDK</string>
+    <string name="sdk_version_target">Target SDK</string>
     <string name="shell">Shell</string>
+    <string name="shell_adb">ADB shell</string>
+    <string name="shell_adb_description">The primary ADB command-line interface powering aShell. This core feature cannot be disabled.</string>
     <string name="shell_output_saved_message">The output of last command is exported to \'%s\' folder</string>
     <string name="shizuku_access_denied_message">Access to Shizuku service is denied for aShell. aShell won\'t work without a proper Shizuku environment.</string>
     <string name="shizuku_access_denied_title">Shizuku access denied for aShell</string>
@@ -106,10 +137,16 @@
     <string name="shizuku_open">Open Shizuku</string>
     <string name="shizuku_unavailable_message">Shizuku is not installed or not properly configured on your device. aShell won\'t work without a proper Shizuku environment.</string>
     <string name="shizuku_unavailable_title">Shizuku support not found</string>
+    <string name="size_apk">APK size</string>
+    <string name="size_bundle">Bundle size</string>
+    <string name="split_apks">Split APKs</string>
+    <string name="split_apks_count">"%d found (tap to learn more)</string>
     <string name="start">Start</string>
     <string name="su_warning_message">aShell is not designed for root-related uses. Aborting.</string>
     <string name="translations">Translations</string>
     <string name="translations_description">Contribute to the app\'s translation</string>
     <string name="user_interface">User interface</string>
+    <string name="version">Version</string>
+    <string name="version_code">Version code</string>
     <string name="yes">Yes</string>
 </resources>

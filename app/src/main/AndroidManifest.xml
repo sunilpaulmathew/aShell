@@ -37,6 +37,9 @@
             </intent-filter>
         </activity>
 
+        <activity android:name=".activities.ExtrasActivity"
+            android:exported="false" />
+
         <activity android:name=".activities.WelcomeActivity"
             android:exported="false" />
 

@@ -50,6 +50,7 @@ import java.util.concurrent.atomic.AtomicInteger;
 
 import in.sunilpaulmathew.ashell.R;
 import in.sunilpaulmathew.ashell.adapters.CommandsAdapter;
+import in.sunilpaulmathew.ashell.adapters.PackageSearchingAdapter;
 import in.sunilpaulmathew.ashell.adapters.ShellOutputAdapter;
 import in.sunilpaulmathew.ashell.dialogs.AccessUnavilableDialog;
 import in.sunilpaulmathew.ashell.dialogs.BookMarkDialog;
@@ -59,6 +60,7 @@ import in.sunilpaulmathew.ashell.serializable.CommandEntry;
 import in.sunilpaulmathew.ashell.utils.Async;
 import in.sunilpaulmathew.ashell.utils.ButtonAnimator;
 import in.sunilpaulmathew.ashell.utils.Commands;
+import in.sunilpaulmathew.ashell.utils.Packages;
 import in.sunilpaulmathew.ashell.utils.Settings;
 import in.sunilpaulmathew.ashell.utils.ShizukuShell;
 import in.sunilpaulmathew.ashell.utils.Utils;
@@ -149,7 +151,6 @@ public class aShellFragment extends BaseFragment {
                         mBookMark.setOnClickListener(v -> bookMark(s.toString().trim()));
 
                         new Handler(Looper.getMainLooper()).post(() -> {
-                            CommandsAdapter mCommandsAdapter;
                             if (s.toString().matches(".*\\b(pm|am|appops|cmd)\\b.*") && s.toString().contains(".")) {
                                 String[] splitCommands =  {
                                         s.toString().substring(0, lastIndexOf(s.toString(), ".")), s.toString().substring(lastIndexOf(s.toString(), "."))
@@ -163,16 +164,16 @@ public class aShellFragment extends BaseFragment {
                                 }
 
                                 if (Shizuku.pingBinder() && Shizuku.getVersion() >= 11 && Shizuku.checkSelfPermission() == PackageManager.PERMISSION_GRANTED) {
-                                    mCommandsAdapter = new CommandsAdapter(Commands.getPackageInfo(packageNamePrefix + "."), command -> {
+                                    PackageSearchingAdapter packageSearchingAdapter = new PackageSearchingAdapter(Packages.getMatchingPackages(packageNamePrefix + "."), command -> {
                                         mCommand.setText(splitCommands[0].contains(" ") ? splitPrefix(splitCommands[0], 0) + " " + command : command);
                                         mCommand.setSelection(Objects.requireNonNull(mCommand.getText()).length());
                                         mRecyclerViewCommands.setVisibility(GONE);
                                     });
-                                    mRecyclerViewCommands.setAdapter(mCommandsAdapter);
+                                    mRecyclerViewCommands.setAdapter(packageSearchingAdapter);
                                     mRecyclerViewCommands.setVisibility(VISIBLE);
                                 }
                             } else {
-                                mCommandsAdapter = new CommandsAdapter(Commands.getCommand(s.toString()), command -> {
+                                CommandsAdapter mCommandsAdapter = new CommandsAdapter(Commands.getCommand(s.toString()), command -> {
                                     if (command.contains(" <")) {
                                         mCommand.setText(command.split("<")[0]);
                                     } else {
@@ -714,7 +715,7 @@ public class aShellFragment extends BaseFragment {
         }.execute();
     }
 
-    private void requestFocus() {
+    public void requestFocus() {
         if (mCommand != null) {
             mCommand.post(() -> {
                 if (isAdded() && isVisible()) {
@@ -730,7 +731,7 @@ public class aShellFragment extends BaseFragment {
         }
     }
 
-    private void clearFocus() {
+    public void clearFocus() {
         if (mCommand != null) {
             mCommand.clearFocus();
         }
@@ -784,7 +785,7 @@ public class aShellFragment extends BaseFragment {
     @Override
     protected void onPermissionGranted() {
         mResult.add("aShell got access to Shizuku service");
-        ShizukuShell.ensureUserService(Commands::loadPackageInfo);
+        ShizukuShell.ensureUserService(Packages::acquireData);
     }
 
     @Override
@@ -811,7 +812,6 @@ public class aShellFragment extends BaseFragment {
         super.onDestroy();
 
         if (mShizukuShell != null) mShizukuShell.destroy();
-
     }
 
     @Override

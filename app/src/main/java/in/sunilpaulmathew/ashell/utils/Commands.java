@@ -13,9 +13,6 @@ public class Commands {
 
     private static volatile List<CommandEntry> mCommandList = null;
 
-    // Empty until the background load finishes; suggestions are read before that
-    private static volatile List<CommandEntry> mPackages = Collections.emptyList();
-
     /*
      * Built once and kept: the contents are constant, and this is called for every
      * keystroke to rebuild the suggestion list.
@@ -161,49 +158,6 @@ public class Commands {
             }
         }
         return mCommands;
-    }
-
-    public static List<CommandEntry> getPackageInfo(String command) {
-        List<CommandEntry> mCommands = new ArrayList<>();
-        for (CommandEntry packages: mPackages) {
-            if (packages.getTitle().startsWith(command)) {
-                mCommands.add(packages);
-            }
-        }
-        return mCommands;
-    }
-
-    /*
-     * Runs off the main thread: this shells out to pm and blocks until the whole
-     * package list comes back, and every caller reaches it from the main looper.
-     */
-    public static void loadPackageInfo() {
-        new Async() {
-            @Override
-            public void onPreExecute() {
-            }
-
-            @Override
-            public void doInBackground() {
-                List<CommandEntry> packages = new ArrayList<>();
-
-                try {
-                    String output = ShizukuShell.runCommand("pm list packages");
-                    for (String line : output.trim().split("\\r?\\n")) {
-                        if (line != null && !line.trim().isEmpty() && line.trim().startsWith("package:")) {
-                            String[] parts = line.split(":", 2);
-                            packages.add(new CommandEntry(parts[1], null));
-                        }
-                    }
-                } catch (Exception ignored) {}
-
-                mPackages = packages;
-            }
-
-            @Override
-            public void onPostExecute() {
-            }
-        }.execute();
     }
 
 }

@@ -15,9 +15,12 @@ import android.view.ViewGroup;
 import androidx.activity.OnBackPressedCallback;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
+
+import com.google.android.material.button.MaterialButton;
 
 import java.util.Collections;
 import java.util.List;
@@ -44,6 +47,7 @@ public class FilesFragment extends BaseFragment {
 
     private FilesAdapter mFilesAdapter;
     private FoldersAdapter mFoldersAdapter;
+    private MaterialButton mBack;
     private RecyclerView mRecyclerViewTitle;
     private TitleAdapter mTitleAdapter;
     private final List<String> mTitles = new CopyOnWriteArrayList<>();
@@ -54,6 +58,7 @@ public class FilesFragment extends BaseFragment {
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View mRootView = inflater.inflate(R.layout.fragment_files, container, false);
 
+        mBack = mRootView.findViewById(R.id.back);
         mRecyclerViewTitle = mRootView.findViewById(R.id.recycler_view_title);
         RecyclerView mRecyclerViewFiles = mRootView.findViewById(R.id.recycler_view_files);
         RecyclerView mRecyclerViewFolders = mRootView.findViewById(R.id.recycler_view_folders);
@@ -97,11 +102,13 @@ public class FilesFragment extends BaseFragment {
             }
         });
 
+        mBack.setOnClickListener(v -> backToMain());
+
         mOnBackPressedCallback = new OnBackPressedCallback(false) {
             @Override
             public void handleOnBackPressed() {
                 if (Objects.equals(mPath, "/")) {
-                    Settings.navigateToFragment(0, null, requireActivity());
+                    backToMain();
                 } else {
                     loadUI(String.join("/", mTitles.subList(1, mTitles.size() - 1))).execute();
                 }
@@ -198,6 +205,7 @@ public class FilesFragment extends BaseFragment {
 
                     mRecyclerViewTitle.scrollToPosition(mTitles.size() - 1);
                     mRecyclerViewTitle.setVisibility(mTitleAdapter.getItemCount() > 1 ? VISIBLE : GONE);
+                    mBack.setVisibility(mTitleAdapter.getItemCount() > 1 ? VISIBLE : GONE);
                 } else {
                     requestPermission();
                 }
@@ -210,6 +218,13 @@ public class FilesFragment extends BaseFragment {
             return 4;
         } else {
             return 2;
+        }
+    }
+
+    private void backToMain() {
+        Fragment parent = getParentFragment();
+        if (parent instanceof ExtrasFragment) {
+            ((ExtrasFragment) parent).showExtrasGrid();
         }
     }
 

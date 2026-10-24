@@ -1,0 +1,40 @@
+<androidx.appcompat.widget.LinearLayoutCompat
+    android:id="@+id/layout_main"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:background="@drawable/ic_background_gradient"
+    android:layout_gravity="center"
+    android:orientation="vertical" >
+
+    <androidx.appcompat.widget.LinearLayoutCompat
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginHorizontal="10dp"
+        android:layout_marginVertical="10dp"
+        android:orientation="horizontal"
+        android:layout_gravity="center"
+        android:gravity="center" >
+
+        <androidx.appcompat.widget.AppCompatImageButton
+            android:layout_width="24dp"
+            android:layout_height="24dp"
+            android:importantForAccessibility="no"
+            android:src="@mipmap/ic_launcher"
+            android:scaleType="fitCenter"
+            android:background="@null"
+            android:clickable="false" />
+
+        <com.google.android.material.textview.MaterialTextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/extras_dialog_title"
+            android:layout_marginHorizontal="10dp"
+            android:layout_gravity="start|center"
+            android:gravity="start|center"
+            android:textStyle="bold"
+            android:textSize="15sp" />
+    </androidx.appcompat.widget.LinearLayoutCompat>
+
+    <include layout="@layout/layout_extras" />
+</androidx.appcompat.widget.LinearLayoutCompat>

@@ -7,9 +7,55 @@
     android:orientation="vertical" >
 
     <androidx.appcompat.widget.LinearLayoutCompat
+        android:id="@+id/title_layout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginHorizontal="10dp"
+        android:layout_gravity="center|start"
+        android:orientation="horizontal"
+        android:gravity="center|start">
+
+        <androidx.appcompat.widget.AppCompatImageButton
+            android:id="@+id/icon"
+            android:layout_width="32dp"
+            android:layout_height="32dp"
+            android:layout_gravity="center"
+            android:importantForAccessibility="no"
+            android:src="@mipmap/ic_launcher"
+            android:scaleType="fitCenter"
+            android:background="@null"
+            android:clickable="false" />
+
+        <com.google.android.material.textview.MaterialTextView
+            android:id="@+id/title"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textColor="?attr/colorPrimary"
+            android:layout_gravity="center"
+            android:text="@string/app_name"
+            style="@style/AppTheme.Title"
+            android:gravity="center" />
+
+        <View
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:layout_weight="1" />
+
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/settings_button"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            style="?attr/materialIconButtonFilledTonalStyle"
+            android:layout_gravity="center|end"
+            app:iconTint="?attr/colorPrimary"
+            app:icon="@drawable/ic_settings"
+            android:gravity="center" />
+    </androidx.appcompat.widget.LinearLayoutCompat>
+
+    <androidx.appcompat.widget.LinearLayoutCompat
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginHorizontal="5dp"
         android:orientation="horizontal"
         android:layout_gravity="center"
         android:gravity="center"
@@ -30,13 +76,13 @@
             app:iconSize="24dp" />
 
         <com.google.android.material.button.MaterialButton
-            android:id="@+id/files"
+            android:id="@+id/extras"
             android:layout_height="wrap_content"
             android:layout_width="wrap_content"
             style="@style/Widget.Material3.Button.TextButton"
             app:iconTint="?attr/colorOnSurface"
-            app:icon="@drawable/ic_folder"
-            android:text="@string/files"
+            app:icon="@drawable/ic_extras"
+            android:text="@string/extras"
             android:layout_weight="0.34"
             app:iconGravity="textStart"
             android:textStyle="bold"
@@ -62,4 +108,10 @@
         android:id="@+id/view_pager"
         android:layout_width="match_parent"
         android:layout_height="match_parent" />
+
+    <FrameLayout
+        android:id="@+id/fragment_container"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:visibility="gone" />
 </androidx.appcompat.widget.LinearLayoutCompat>

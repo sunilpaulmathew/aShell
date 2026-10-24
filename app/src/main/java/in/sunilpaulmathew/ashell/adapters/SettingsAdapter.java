@@ -23,8 +23,10 @@ import java.util.List;
 import in.sunilpaulmathew.ashell.BuildConfig;
 import in.sunilpaulmathew.ashell.R;
 import in.sunilpaulmathew.ashell.dialogs.ExamplesDialog;
+import in.sunilpaulmathew.ashell.dialogs.ExtrasDialog;
 import in.sunilpaulmathew.ashell.dialogs.PolicyDialog;
 import in.sunilpaulmathew.ashell.dialogs.SingleChoiceDialog;
+import in.sunilpaulmathew.ashell.serializable.ExtrasChooserEntry;
 import in.sunilpaulmathew.ashell.serializable.SettingsEntry;
 import in.sunilpaulmathew.ashell.utils.Settings;
 import in.sunilpaulmathew.ashell.utils.Utils;
@@ -94,14 +96,6 @@ public class SettingsAdapter extends RecyclerView.Adapter<SettingsAdapter.ViewHo
             holder.mTitle.setTextColor(Settings.getColorText(context));
         }
 
-        holder.mCheckBox.setOnClickListener(v -> {
-            int currentPosition = this.data.get(holder.getBindingAdapterPosition()).getPosition();
-            if (currentPosition == 3) {
-                Utils.saveBoolean("amoledTheme", !Utils.getBoolean("amoledTheme", false, context), context);
-                Settings.restartApp(activity);
-            }
-        });
-
         Settings.setSlideInAnimation(holder.itemView, position);
     }
 
@@ -169,19 +163,51 @@ public class SettingsAdapter extends RecyclerView.Adapter<SettingsAdapter.ViewHo
             } else if (position == 4) {
                 Settings.setAppLanguage(activity);
             } else if (position == 5) {
-                new ExamplesDialog(activity) {
+                new ExtrasDialog(activity) {
                     @Override
-                    public void onCommandSelected(String command) {
-                        Settings.navigateToFragment(0, command, activity);
+                    public void onApplied(List<ExtrasChooserEntry> entries) {
+                        new Thread(() -> {
+                            boolean extrasEnabled = Settings.isExtrasEnabled(activity);
+                            for (ExtrasChooserEntry entry : entries) {
+                                Utils.saveBoolean("extras_" + entry.getId(), entry.isEnabled(), activity);
+                            }
+                            activity.runOnUiThread(() -> {
+                                if (extrasEnabled) {
+                                    if (!Settings.isExtrasEnabled(activity)) {
+                                        Settings.loadUI(activity);
+                                    } else {
+                                        Settings.reloadExtras(activity);
+                                    }
+                                } else {
+                                    if (!Settings.isExtrasEnabled(activity)) {
+                                        Settings.showShell(null, activity);
+                                    } else {
+                                        Settings.loadUI(activity);
+                                        Settings.showShell(null, activity);
+                                    }
+                                }
+                            });
+                        }).start();
                     }
                 };
             } else if (position == 6) {
-                Utils.loadUrl("https://shizuku.rikka.app/", context);
+                new ExamplesDialog(activity) {
+                    @Override
+                    public void onCommandSelected(String command) {
+                        if (Settings.isExtrasEnabled(activity)) {
+                            Settings.navigateToFragment(0, command, activity);
+                        } else {
+                            Settings.showShell(command, activity);
+                        }
+                    }
+                };
             } else if (position == 7) {
-                Utils.loadUrl("https://poeditor.com/join/project/20PSoEAgfX", context);
+                Utils.loadUrl("https://shizuku.rikka.app/", context);
             } else if (position == 8) {
-                new PolicyDialog(context);
+                Utils.loadUrl("https://poeditor.com/join/project/20PSoEAgfX", context);
             } else if (position == 9) {
+                new PolicyDialog(context);
+            } else if (position == 10) {
                 Utils.loadUrl("mailto:smartpack.org@gmail.com", context);
             }
         }

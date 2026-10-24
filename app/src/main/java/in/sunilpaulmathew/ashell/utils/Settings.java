@@ -6,6 +6,12 @@ import android.content.Intent;
 import android.content.res.Configuration;
 import android.content.res.Resources;
 import android.content.res.TypedArray;
+import android.graphics.Bitmap;
+import android.graphics.Canvas;
+import android.graphics.Color;
+import android.graphics.Paint;
+import android.graphics.RectF;
+import android.graphics.Typeface;
 import android.util.DisplayMetrics;
 import android.view.View;
 import android.view.animation.DecelerateInterpolator;
@@ -23,11 +29,50 @@ import in.sunilpaulmathew.ashell.R;
 import in.sunilpaulmathew.ashell.activities.aShellActivity;
 import in.sunilpaulmathew.ashell.dialogs.SingleChoiceDialog;
 import in.sunilpaulmathew.ashell.serializable.CommandEntry;
+import in.sunilpaulmathew.ashell.serializable.ExtrasEntry;
 
 /*
  * Created by sunilpaulmathew <sunil.kde@gmail.com> on April 21, 2022
  */
 public class Settings {
+
+    public static Bitmap generateAlphabetIcon(String alphabet, int sizeDp, Context context) {
+        float scale = context.getResources().getDisplayMetrics().density;
+        int sizePx = (int) (sizeDp * scale + 0.5f);
+
+        Bitmap bitmap = Bitmap.createBitmap(sizePx, sizePx, Bitmap.Config.ARGB_8888);
+        Canvas canvas = new Canvas(bitmap);
+
+        boolean isDarkMode = isDarkTheme(context);
+
+        Paint bgPaint = new Paint(Paint.ANTI_ALIAS_FLAG);
+        if (isDarkMode) {
+            bgPaint.setColor(Color.parseColor("#3A3A3C"));
+        } else {
+            bgPaint.setColor(Color.parseColor("#E4E4E6"));
+        }
+
+        RectF rect = new RectF(0, 0, sizePx, sizePx);
+        canvas.drawRoundRect(rect, sizePx * 0.25f, sizePx * 0.25f, bgPaint);
+
+        Paint textPaint = new Paint(Paint.ANTI_ALIAS_FLAG);
+        if (isDarkMode) {
+            textPaint.setColor(Color.parseColor("#FFFFFF"));
+        } else {
+            textPaint.setColor(Color.parseColor("#1C1C1E"));
+        }
+
+        textPaint.setTextSize(sizePx * 0.45f);
+        textPaint.setTypeface(Typeface.DEFAULT_BOLD);
+        textPaint.setTextAlign(Paint.Align.CENTER);
+
+        float xPos = sizePx / 2f;
+        float yPos = (sizePx / 2f) - ((textPaint.descent() + textPaint.ascent()) / 2f);
+
+        canvas.drawText(alphabet, xPos, yPos, textPaint);
+
+        return bitmap;
+    }
 
     public static boolean isAmoledBlackEnabled(Context context) {
         return isDarkTheme(context) && Utils.getBoolean("amoledTheme", false, context);
@@ -36,6 +81,20 @@ public class Settings {
     public static boolean isDarkTheme(Context context) {
         int currentNightMode = context.getResources().getConfiguration().uiMode & Configuration.UI_MODE_NIGHT_MASK;
         return currentNightMode == Configuration.UI_MODE_NIGHT_YES;
+    }
+
+    public static boolean isExtrasEnabled(Context context) {
+        return extrasSize(context) != 0;
+    }
+
+    public static int extrasSize(Context context) {
+        int size = 0;
+        for (int i=0; i<5; i++) {
+            if (Utils.getBoolean("extras_" + i, false, context)) {
+                size += 1;
+            }
+        }
+        return size;
     }
 
     public static int getColorAccent(Context context) {
@@ -61,6 +120,44 @@ public class Settings {
 
     public static int getAppThemePosition(Context context) {
         return Utils.getInt("appTheme", 0, context);
+    }
+
+    public static int getCardBackgroundColor(int icon, Context context) {
+        boolean dark = Settings.isDarkTheme(context);
+        String hexColor = dark ? "#1E1E23" : "#FFFFFF";
+        if (icon == R.drawable.ic_shell) {
+            hexColor = dark ? "#1E293B" : "#F1F5F9";
+        } else if (icon == R.drawable.ic_technology) {
+            hexColor = dark ? "#064E3B" : "#D1FAE5";
+        } else if (icon == R.drawable.ic_charging_high) {
+            hexColor = dark ? "#78350F" : "#FEF3C7";
+        } else if (icon == R.drawable.ic_folder) {
+            hexColor = dark ? "#4C1D95" : "#EDE9FE";
+        } else if (icon == R.drawable.ic_apps) {
+            hexColor = dark ? "#0C4A6E" : "#E0F2FE";
+        } else if (icon == R.drawable.ic_logcat) {
+            hexColor = dark ? "#881337" : "#FFE4E6";
+        }
+        return Color.parseColor(hexColor);
+    }
+
+    public static int getIconColor(int icon, Context context) {
+        boolean dark = Settings.isDarkTheme(context);
+        String hexColor = dark ? "#FFFFFF" : "#000000";
+        if (icon == R.drawable.ic_shell) {
+            hexColor = dark ? "#475569" : "#94A3B8";
+        } else if (icon == R.drawable.ic_technology) {
+            hexColor = dark ? "#34D399" : "#10B981";
+        } else if (icon == R.drawable.ic_charging_high) {
+            hexColor = dark ? "#FFF3E0" : "#E65100";
+        } else if (icon == R.drawable.ic_folder) {
+            hexColor = dark ? "#A78BFA" : "#7C3AED";
+        } else if (icon == R.drawable.ic_apps) {
+            hexColor = dark ? "#38BDF8" : "#0284C7";
+        } else if (icon == R.drawable.ic_logcat) {
+            hexColor = dark ? "#E1F5FE" : "#01579B";
+        }
+        return Color.parseColor(hexColor);
     }
 
     private static int getLanguagePosition(Context context) {
@@ -122,6 +219,16 @@ public class Settings {
         mData.add(new CommandEntry("Contact Us", "If you have questions or concerns about this Privacy Policy, please contact us at: smartpack.org@gmail.com"));
         mData.add(new CommandEntry("Changes to This Policy", "We may update this policy from time to time. Changes will be posted here."));
         return mData;
+    }
+
+    public static List<ExtrasEntry> getExtras() {
+        List<ExtrasEntry> data = new ArrayList<>();
+        data.add(new ExtrasEntry(R.drawable.ic_folder, R.string.file_manager, R.string.file_manager_description, 0));
+        data.add(new ExtrasEntry(R.drawable.ic_apps, R.string.app_manager, R.string.app_manager_description, 1));
+        data.add(new ExtrasEntry(R.drawable.ic_technology, R.string.cpu_monitor, R.string.cpu_monitor_description, 2));
+        data.add(new ExtrasEntry(R.drawable.ic_charging_high, R.string.battery_monitor, R.string.battery_monitor_description, 3));
+        data.add(new ExtrasEntry(R.drawable.ic_logcat, R.string.logcat, R.string.logcat_description, 4));
+        return data;
     }
 
     public static String getAppTheme(Context context) {
@@ -274,10 +381,22 @@ public class Settings {
         conf.setLocale(getLocale(context));
         res.updateConfiguration(conf, dm);
     }
-    
+
+    public static void loadUI(Activity activity) {
+        if (activity instanceof aShellActivity) {
+            ((aShellActivity) activity).loadUI();
+        }
+    }
+
     public static void navigateToFragment(int position, String command, Activity activity) {
         if (activity instanceof aShellActivity) {
             ((aShellActivity) activity).navigateToFragment(position, command);
+        }
+    }
+
+    public static void reloadExtras(Activity activity) {
+        if (activity instanceof aShellActivity) {
+            ((aShellActivity) activity).reloadExtras();
         }
     }
 
@@ -506,6 +625,12 @@ public class Settings {
             // Reset properties to ensure recycled views are displayed correctly
             viewToAnimate.setTranslationY(0f);
             viewToAnimate.setAlpha(1f);
+        }
+    }
+
+    public static void showShell(String command, Activity activity) {
+        if (activity instanceof aShellActivity) {
+            ((aShellActivity) activity).showShell(command);
         }
     }
 

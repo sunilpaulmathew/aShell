@@ -1,0 +1,70 @@
+<com.google.android.material.card.MaterialCardView
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_marginHorizontal="8dp"
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:background="@android:color/white"
+    android:layout_marginVertical="4dp"
+    android:layout_gravity="center"
+    android:elevation="2dp">
+
+        <androidx.appcompat.widget.LinearLayoutCompat
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:padding="12dp" >
+
+                <androidx.appcompat.widget.LinearLayoutCompat
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:layout_gravity="center"
+                    android:gravity="center" >
+
+                        <androidx.appcompat.widget.AppCompatImageButton
+                            android:id="@+id/icon"
+                            android:layout_width="24dp"
+                            android:layout_height="24dp"
+                            android:layout_gravity="center"
+                            android:importantForAccessibility="no"
+                            android:scaleType="fitCenter"
+                            android:background="@null"
+                            android:clickable="false" />
+
+                        <com.google.android.material.textview.MaterialTextView
+                            android:id="@+id/textPackageName"
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_marginHorizontal="5dp"
+                            android:layout_gravity="center|start"
+                            android:gravity="center|start"
+                            android:layout_weight="1"
+                            android:textStyle="bold"
+                            android:textSize="17sp"
+                            android:ellipsize="end"
+                            android:maxLines="1" />
+
+                        <com.google.android.material.textview.MaterialTextView
+                            android:id="@+id/textCpuPercent"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:textStyle="bold"
+                            android:textSize="15sp" />
+                </androidx.appcompat.widget.LinearLayoutCompat>
+
+                <ProgressBar
+                    android:id="@+id/progressProcessCpu"
+                    android:layout_width="match_parent"
+                    android:layout_marginVertical="5dp"
+                    style="?android:attr/progressBarStyleHorizontal"
+                    android:layout_height="wrap_content"
+                    android:max="100"/>
+
+                <com.google.android.material.textview.MaterialTextView
+                    android:id="@+id/textPidDetails"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="2dp"
+                    android:textSize="13sp" />
+        </androidx.appcompat.widget.LinearLayoutCompat>
+</com.google.android.material.card.MaterialCardView>

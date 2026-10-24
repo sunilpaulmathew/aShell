@@ -33,7 +33,9 @@ public class ShellService extends IShellService.Stub {
     public String runShellCommand(String command) {
         StringBuilder output = new StringBuilder();
         try {
-            mProcess = Runtime.getRuntime().exec(command, null, null);
+            mProcess = Runtime.getRuntime().exec(new String[] {
+                    "sh", "-c", command
+            }, null, null);
             BufferedReader mInput = new BufferedReader(new InputStreamReader(mProcess.getInputStream()));
             BufferedReader mError = new BufferedReader(new InputStreamReader(mProcess.getErrorStream()));
 

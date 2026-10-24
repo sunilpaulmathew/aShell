@@ -30,7 +30,6 @@
                     android:id="@+id/title"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:textColor="?attr/colorPrimary"
                     android:layout_weight="1"
                     android:textStyle="bold"
                     android:textSize="17sp" />
