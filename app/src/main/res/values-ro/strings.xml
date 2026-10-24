@@ -1,0 +1,97 @@
+<resources xmlns:tools="http://schemas.android.com/tools" tools:ignore="MissingTranslation">
+
+    <string name="app_summary">"Execută fără efort comenzile ADB pe telefonul tău Android cu Shizuku."</string>
+    <string name="app_working_message">"aShell încă lucrează. Așteptați să termine sau opriți aplicația manual (prin buton) pentru a rula o comandă nouă."</string>
+    <string name="bookmark_added_message">"'%s' este deja evidențiat"</string>
+    <string name="bookmark_removed_message">"'%s' a fost scos din evidență"</string>
+    <string name="cancel">"Anulează"</string>
+    <string name="clear_all_message">"Șterge/curăță tot ecranul?"</string>
+    <string name="command_hint">"Introduce comanda ADB aici"</string>
+    <string name="command_title">"aShell comenzi"</string>
+    <string name="dismiss">"Ascunde"</string>
+    <string name="examples">"Exemple"</string>
+    <string name="press_back">"Apasă din now pentru a ieși"</string>
+    <string name="process_destroy_message">"aShell încă mai lucrează. Dorești să oprești procesul actual?"</string>
+    <string name="quit">"Ieșire"</string>
+    <string name="quit_app_message">"Vrei să ieși din aShell?"</string>
+    <string name="request_permission">"Cere permisiune"</string>
+    <string name="start">"Începe"</string>
+    <string name="shell_output_saved_message">"Ieșirea ultimei comenzi a fost exportată în folderul '%s'"</string>
+    <string name="shizuku_access_denied_message">"Accesul la serviciul Shizuku nu este permis pentru aplicație. aShell nu va lucra fără un mediu Shizuku funcțional."</string>
+    <string name="shizuku_unavailable_message">"Shizuku nu este instalat sau nu este configurat corect pe dispozitivul dumneavoastră. aShell nu v-a lucra fără un mediu Shizuku funcțional."</string>
+    <string name="su_warning_message">"aShell nu este făcut pentru folosire root. Se abordează."</string>
+    <string name="yes">"Da"</string>
+    <string name="save">"Salvare"</string>
+    <string name="app_theme">"Tematica aplicației"</string>
+    <string name="app_theme_amoled">"Negru amoled"</string>
+    <string name="app_theme_amoled_description">"Salvează baterie și oferă o aparență modernă, curată"</string>
+    <string name="app_theme_auto">"Automatic"</string>
+    <string name="app_theme_dark">"Închis "</string>
+    <string name="app_theme_light">"Deschis"</string>
+    <string name="app_version">"aShell %s"</string>
+    <string name="authorize_click_message">"Apasă pentru a autoriza"</string>
+    <string name="copy_clipboard">"Copiază în clipboard"</string>
+    <string name="developer_contact">"Contactează developerul"</string>
+    <string name="developer_contact_description">"Aveți nevoie de ajutor sau aveți idei noi?contactați developer-ul"</string>
+    <string name="disclaimer">"Întâmpinare"</string>
+    <string name="disclaimer_description">"\uD83E\uDDE9 Dependența Shizuku: aShell necesită un mediu și sucul funcționabil pentru a funcționat corect.
+        \uD83D\uDC68\u200D\uD83D\uDCBB Cunoștințe de bază: Familiaritatea cu ADB și cu Linux și linia ei de comandă este recomandată pentru uz eficient.
+        \uD83C\uDF10 Sursă deschisă: aShell este o aplicație cu sursă deschisă și gratuită. Contribuitorii și translatorii sunt bineveniți pe GitLab și POEditor.
+        ⚠️ aShell nu este responsabilă pentru orice dificultăți sau pierdere de date care vor apărea în timpul utilizării acestei aplicații."</string>
+    <string name="examples_description">"Explora comenzi ADB populare"</string>
+    <string name="features_title">"Funcții"</string>
+    <string name="general">"General"</string>
+    <string name="granted">"Permis"</string>
+    <string name="language">"Limbă"</string>
+    <string name="miscellaneous">"Misc"</string>
+    <string name="permissions_storage_description">"📂 WRITE_EXTERNAL_STORAGE: A trebuit să salveze ieșirea comenzii pe dispozitivul dumneavoastră (Opțional)"</string>
+    <string name="permissions_title">"Necesită permisiune"</string>
+    <string name="privacy_policy">"Politică de confidențialitate"</string>
+    <string name="privacy_policy_description">"Confidențialitatea ta contează: Vezi mai mult"</string>
+    <string name="settings">"Setări"</string>
+    <string name="shizuku_access_denied_title">"Accesul Shizuku a fost respins pentru aShell"</string>
+    <string name="shizuku_access_granted_message">"aShell a căpătat acces la serviciile Shizuku. Apasă \"Start\" pentru a continua"</string>
+    <string name="shizuku_learn">"Învață Shizuku"</string>
+    <string name="shizuku_learn_description">"Învață mai mult despre Shizuku la: shizuku.rikka.app"</string>
+    <string name="shizuku_unavailable_title">"Suportul Shizuku nu a fost găsit"</string>
+    <string name="translations">"Translații"</string>
+    <string name="translations_description">"Contribuie la translația aplicației"</string>
+    <string name="user_interface">"Interfață user-ului"</string>
+    <string name="shizuku_app_open_message">"Pentru a activa Shizuku pe acest dispozitiv pentru aShell:
+
+        1. Deschide aplicația Shizuku
+        2. Navighează la aplicații autorizate
+        3. Pornește accesul pentru aShell"</string>
+    <string name="shizuku_open">"Deschide Shizuku"</string>
+    <string name="apply">"Aplică"</string>
+    <string name="bookmarks">"Însemnări"</string>
+    <string name="clear_all">"Șterge tot"</string>
+    <string name="copy_path">"Copiază locația"</string>
+    <string name="copy_storage">"Copiază în Downloads -> aShell"</string>
+    <string name="copying_message">"Se copie %s…"</string>
+    <string name="copying_failed_toast">"Copierea %s a eșuat…"</string>
+    <string name="copying_succeed_toast">"%s a fost copiat în Downloads -> aShell…"</string>
+    <string name="delete">"Șterge"</string>
+    <string name="delete_success_toast">"%s a fost șters cu succes…"</string>
+    <string name="deleting_message">"Se șterge %s…"</string>
+    <string name="edit">"Editează"</string>
+    <string name="edit_title">"Editează \"%s\" la:"</string>
+    <string name="file_group">"Are loc la: %s"</string>
+    <string name="file_owner">"Este deținut de: %s"</string>
+    <string name="file_modified">"<b>Modificat</b>: %s"</string>
+    <string name="file_path">"Locul: %s"</string>
+    <string name="file_permissions">"Permisiuni: %s"</string>
+    <string name="file_size">"Mărime: %s"</string>
+    <string name="file_system_access_error_toast">"A eșuat accesul la sistemul de file"</string>
+    <string name="file_type">"Tipul: %s"</string>
+    <string name="file_type_directory">"Locația "</string>
+    <string name="file_type_unknown">"Tip de filă necunoscută"</string>
+    <string name="files">"File"</string>
+    <string name="get_info">"Ia informația"</string>
+    <string name="history">"Istoric"</string>
+    <string name="loading">"Se încarcă…"</string>
+    <string name="open">"Deschide"</string>
+    <string name="opening_message">"Se deschide %s"</string>
+    <string name="root">"Root"</string>
+    <string name="shell">"Shell"</string>
+</resources>
