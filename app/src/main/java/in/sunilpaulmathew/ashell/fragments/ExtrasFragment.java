@@ -22,9 +22,12 @@ import java.util.concurrent.CopyOnWriteArrayList;
 
 import in.sunilpaulmathew.ashell.R;
 import in.sunilpaulmathew.ashell.adapters.ExtrasAdapter;
+import in.sunilpaulmathew.ashell.dialogs.AccessUnavilableDialog;
 import in.sunilpaulmathew.ashell.serializable.ExtrasEntry;
 import in.sunilpaulmathew.ashell.utils.Settings;
+import in.sunilpaulmathew.ashell.utils.ShizukuShell;
 import in.sunilpaulmathew.ashell.utils.Utils;
+import rikka.shizuku.Shizuku;
 
 /*
  * Created by sunilpaulmathew <sunil.kde@gmail.com> on October 18, 2026
@@ -90,7 +93,15 @@ public class ExtrasFragment extends BaseFragment {
 
         recyclerView.setAdapter(adapter);
 
-        loadUI();
+        if (Shizuku.pingBinder()) {
+            if (isPermissionGranted()) {
+                onSuccess();
+            } else {
+                requestPermission();
+            }
+        } else {
+            new AccessUnavilableDialog(requireActivity()).show();
+        }
 
         mOnBackPressedCallback = new OnBackPressedCallback(true) {
             @Override
@@ -196,10 +207,12 @@ public class ExtrasFragment extends BaseFragment {
 
     @Override
     protected void onPermissionGranted() {
+        ShizukuShell.ensureUserService(this::loadUI);
     }
 
     @Override
     protected void onPermissionDenied() {
+        Utils.toast(getString(R.string.shizuku_access_denied_title), requireActivity()).show();
     }
 
     @Override
@@ -212,6 +225,7 @@ public class ExtrasFragment extends BaseFragment {
 
     @Override
     protected void onSuccess() {
+        ShizukuShell.ensureUserService(this::loadUI);
     }
 
 }
