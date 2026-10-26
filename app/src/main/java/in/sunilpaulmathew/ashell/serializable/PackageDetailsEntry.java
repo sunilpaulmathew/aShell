@@ -17,7 +17,7 @@ public class PackageDetailsEntry implements Serializable {
     public PackageDetailsEntry(String title, String text) {
         this.title = title;
         this.text = text;
-        splits = null;
+        this.splits = null;
     }
 
     public PackageDetailsEntry(String title, String text, List<File> splits) {
@@ -27,7 +27,7 @@ public class PackageDetailsEntry implements Serializable {
     }
 
     public String getTitle() {
-        return title;
+        return this.title;
     }
 
     public List<File> getSplits() {

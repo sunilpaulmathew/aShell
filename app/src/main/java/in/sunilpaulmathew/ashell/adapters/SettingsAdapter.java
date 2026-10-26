@@ -25,7 +25,7 @@ import in.sunilpaulmathew.ashell.R;
 import in.sunilpaulmathew.ashell.dialogs.ExamplesDialog;
 import in.sunilpaulmathew.ashell.dialogs.ExtrasDialog;
 import in.sunilpaulmathew.ashell.dialogs.PolicyDialog;
-import in.sunilpaulmathew.ashell.dialogs.SingleChoiceDialog;
+import in.sunilpaulmathew.ashell.dialogs.SingleChoiceAlertDialog;
 import in.sunilpaulmathew.ashell.serializable.ExtrasChooserEntry;
 import in.sunilpaulmathew.ashell.serializable.SettingsEntry;
 import in.sunilpaulmathew.ashell.utils.Settings;
@@ -131,7 +131,7 @@ public class SettingsAdapter extends RecyclerView.Adapter<SettingsAdapter.ViewHo
                 settings.setData(uri);
                 context.startActivity(settings);
             } else if (position == 2) {
-                new SingleChoiceDialog(R.drawable.ic_theme, context.getString(R.string.app_theme),
+                new SingleChoiceAlertDialog(R.drawable.ic_theme, context.getString(R.string.app_theme),
                         Settings.getAppThemeMenu(context), Settings.getAppThemePosition(context), context) {
 
                     @Override

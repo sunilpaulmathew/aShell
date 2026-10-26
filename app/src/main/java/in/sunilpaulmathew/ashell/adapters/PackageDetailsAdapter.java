@@ -63,13 +63,13 @@ public class PackageDetailsAdapter extends RecyclerView.Adapter<PackageDetailsAd
 
             view.setOnClickListener(v -> {
                 int position = getBindingAdapterPosition();
-                List<File> permissions = data.get(position).getSplits();
-                if (position != RecyclerView.NO_POSITION && permissions != null) {
+                List<File> splits = data.get(position).getSplits();
+                if (position != RecyclerView.NO_POSITION && splits != null) {
                     View rootView = View.inflate(v.getContext(), R.layout.layout_recycler_view, null);
                     RecyclerView recyclerView = rootView.findViewById(R.id.recycler_view);
                     recyclerView.setLayoutManager(new LinearLayoutManager(v.getContext()));
                     recyclerView.addItemDecoration(new DividerItemDecoration(v.getContext(), DividerItemDecoration.VERTICAL));
-                    recyclerView.setAdapter(new SplitsAdapter(permissions));
+                    recyclerView.setAdapter(new SplitsAdapter(splits));
 
                     new MaterialAlertDialogBuilder(v.getContext())
                             .setIcon(appIcon)

@@ -1,13 +1,14 @@
 <androidx.appcompat.widget.LinearLayoutCompat
-    xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:layout_marginHorizontal="10dp"
-    android:gravity="center_vertical"
+    xmlns:android="http://schemas.android.com/apk/res/android"
     android:orientation="horizontal"
     android:paddingHorizontal="8dp"
+    android:layout_gravity="center"
     android:baselineAligned="true"
-    android:paddingVertical="5dp" >
+    android:paddingVertical="5dp"
+    android:gravity="center" >
 
     <androidx.appcompat.widget.AppCompatImageButton
         android:id="@+id/icon"
@@ -21,7 +22,7 @@
 
     <com.google.android.material.textview.MaterialTextView
         android:id="@+id/text"
-        android:layout_width="wrap_content"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:textStyle="bold|italic"
         android:ellipsize="end"

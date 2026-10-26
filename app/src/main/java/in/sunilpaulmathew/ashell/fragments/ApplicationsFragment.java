@@ -31,17 +31,23 @@ import java.util.Collections;
 import java.util.List;
 import java.util.Locale;
 import java.util.concurrent.CopyOnWriteArrayList;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 import in.sunilpaulmathew.ashell.R;
 import in.sunilpaulmathew.ashell.adapters.ApplicationsAdapter;
 import in.sunilpaulmathew.ashell.dialogs.APKDetailsDialog;
+import in.sunilpaulmathew.ashell.dialogs.AppOpsDialog;
 import in.sunilpaulmathew.ashell.dialogs.BottomMenuDialog;
+import in.sunilpaulmathew.ashell.dialogs.PermissionsDialog;
 import in.sunilpaulmathew.ashell.dialogs.ProgressDialog;
 import in.sunilpaulmathew.ashell.dialogs.SortOptionsDialog;
+import in.sunilpaulmathew.ashell.serializable.AppOpsEntry;
 import in.sunilpaulmathew.ashell.serializable.MenuEntry;
 import in.sunilpaulmathew.ashell.serializable.PackageDetailsEntry;
 import in.sunilpaulmathew.ashell.serializable.PackageEntry;
 import in.sunilpaulmathew.ashell.serializable.PackageHeaderEntry;
+import in.sunilpaulmathew.ashell.serializable.PermissionsEntry;
 import in.sunilpaulmathew.ashell.utils.Async;
 import in.sunilpaulmathew.ashell.utils.Packages;
 import in.sunilpaulmathew.ashell.utils.ShizukuShell;
@@ -70,38 +76,46 @@ public class ApplicationsFragment extends Fragment {
 
         adapter = new ApplicationsAdapter(new CopyOnWriteArrayList<>(), packageEntry -> {
             List<MenuEntry> menuEntries = new ArrayList<>();
-            menuEntries.add(new MenuEntry(getString(R.string.get_info), R.drawable.ic_info, 0));
+            menuEntries.add(new MenuEntry(getString(R.string.get_info), R.drawable.ic_info_outlined, 0));
             menuEntries.add(new MenuEntry(getString(R.string.app_manager_clear_data), R.drawable.ic_refresh, 1));
             menuEntries.add(new MenuEntry(getString(R.string.app_manager_force_close), R.drawable.ic_close, 2));
-            menuEntries.add(new MenuEntry(getString(packageEntry.isDisabled() ? R.string.app_manager_enable : R.string.app_manager_disable), packageEntry.isDisabled() ? R.drawable.ic_enable : R.drawable.ic_cancel, 3));
-            menuEntries.add(new MenuEntry(getString(R.string.app_manager_export), R.drawable.ic_download, 4));
+            menuEntries.add(new MenuEntry(getString(R.string.app_ops_manage), R.drawable.ic_appops, 3));
+            menuEntries.add(new MenuEntry(getString(R.string.permissions_manage), R.drawable.ic_permissions, 4));
+            menuEntries.add(new MenuEntry(getString(packageEntry.isDisabled() ? R.string.app_manager_enable : R.string.app_manager_disable), packageEntry.isDisabled() ? R.drawable.ic_enable : R.drawable.ic_cancel, 5));
+            menuEntries.add(new MenuEntry(getString(R.string.app_manager_export), R.drawable.ic_download, 6));
             if (packageEntry.isSystemApp()) {
-                menuEntries.add(new MenuEntry(getString(R.string.app_manager_uninstall), R.drawable.ic_delete, 5));
+                menuEntries.add(new MenuEntry(getString(R.string.app_manager_uninstall), R.drawable.ic_delete, 7));
             }
-            menuEntries.add(new MenuEntry(getString(R.string.settings), R.drawable.ic_settings, 6));
+            menuEntries.add(new MenuEntry(getString(R.string.settings), R.drawable.ic_settings, 8));
 
             new BottomMenuDialog(menuEntries, packageEntry.getAppIcon(), packageEntry.getAppLabel(), packageEntry.getPackageName(), requireActivity()) {
                 @Override
                 public void onMenuItemClicked(int menuID) {
                     switch (menuID) {
-                        case 6:
+                        case 8:
                             Intent settings = new Intent(android.provider.Settings.ACTION_APPLICATION_DETAILS_SETTINGS);
                             settings.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
                             Uri uri = Uri.fromParts("package", packageEntry.getPackageName(), null);
                             settings.setData(uri);
                             startActivity(settings);
                             break;
-                        case 5:
+                        case 7:
                             if (Shizuku.pingBinder() && Shizuku.getVersion() >= 11 &&
                                     Shizuku.checkSelfPermission() == PackageManager.PERMISSION_GRANTED) {
                                 uninstallApp(packageEntry);
                             }
                             break;
-                        case 4:
+                        case 6:
                             exportApp(packageEntry);
                             break;
-                        case 3:
+                        case 5:
                             changeAppState(packageEntry);
+                            break;
+                        case 4:
+                            managePermissions(packageEntry);
+                            break;
+                        case 3:
+                            manageAppOps(packageEntry);
                             break;
                         case 2:
                             forceCloseApp(packageEntry);
@@ -360,6 +374,9 @@ public class ApplicationsFragment extends Fragment {
                 if (packageEntry.getVersionCode() != null) {
                     details.add(new PackageDetailsEntry(getString(R.string.version_code), packageEntry.getVersionCode()));
                 }
+                if (packageEntry.getCompileSDK() != -1) {
+                    details.add(new PackageDetailsEntry(getString(R.string.sdk_version_compiled), Packages.sdkToAndroidVersion(packageEntry.getCompileSDK())));
+                }
                 if (packageEntry.getMinSDK() != -1) {
                     details.add(new PackageDetailsEntry(getString(R.string.sdk_version_min), Packages.sdkToAndroidVersion(packageEntry.getMinSDK())));
                 }
@@ -446,6 +463,163 @@ public class ApplicationsFragment extends Fragment {
                 } catch (Exception ignored) {
                 }
                 adapter.updateData(data);
+            }
+        }.execute();
+    }
+
+    private void manageAppOps(PackageEntry packageEntry)  {
+        new Async() {
+            private final Activity activity = requireActivity();
+            private final List<AppOpsEntry> appOps = new CopyOnWriteArrayList<>();
+            private ProgressDialog progressDialog;
+
+            @Override
+            public void onPreExecute() {
+                progressDialog = new ProgressDialog(activity);
+                progressDialog.setProgressStatus(R.string.loading);
+                progressDialog.startDialog();
+            }
+
+            @Override
+            public void doInBackground() {
+                String[] appOpsList = ShizukuShell.runCommand("cmd appops get " + packageEntry.getPackageName()).trim().split("\\r?\\n");
+                for (String line : appOpsList) {
+                    if (line.contains(":")) {
+                        String[] splitOp = line.split(":");
+                        String name = splitOp[0].trim();
+                        String status = splitOp[1].trim();
+
+                        if (line.contains("time=") && !line.equals("No operations.") && !name.equals("Uid mode")) {
+                            appOps.add(new AppOpsEntry(name, status));
+                        }
+                    }
+                }
+            }
+
+            @Override
+            public void onPostExecute() {
+                if (!isAdded() || isDetached() || activity.isDestroyed() || activity.isFinishing()) return;
+                progressDialog.dismissDialog();
+                if (!appOps.isEmpty()) {
+                    new AppOpsDialog(packageEntry, appOps, activity);
+                } else {
+                    Utils.toast(getString(R.string.app_ops_empty_toast), activity).show();
+                }
+            }
+        }.execute();
+    }
+
+    private void managePermissions(PackageEntry packageEntry) {
+        new Async() {
+            private final Activity activity = requireActivity();
+            private List<PermissionsEntry> permissions;
+            private ProgressDialog progressDialog;
+            private String result;
+
+            @Override
+            public void onPreExecute() {
+                progressDialog = new ProgressDialog(activity);
+                progressDialog.setProgressStatus(R.string.loading);
+                progressDialog.startDialog();
+            }
+
+            private List<PermissionsEntry> getPermissions(String dumpsysOutput) {
+                List<PermissionsEntry> permissionsList = new ArrayList<>();
+                boolean insideRuntime = false;
+                boolean insideInstall = false;
+                boolean insideRequested = false;
+
+                Pattern statePattern = Pattern.compile("^\\s*([a-zA-Z0-9._]+):\\s*granted=(true|false)");
+                Pattern nameOnlyPattern = Pattern.compile("^\\s*([a-zA-Z0-9._]+)$");
+
+                String[] lines = dumpsysOutput.split("\\r?\\n");
+                for (String line : lines) {
+                    if (line.contains("runtime permissions:")) {
+                        insideRuntime = true;
+                        insideInstall = false;
+                        insideRequested = false;
+                        continue;
+                    } else if (line.contains("install permissions:")) {
+                        insideRuntime = false;
+                        insideInstall = true;
+                        insideRequested = false;
+                        continue;
+                    } else if (line.contains("requested permissions:")) {
+                        insideRuntime = false;
+                        insideInstall = false;
+                        insideRequested = true;
+                        continue;
+                    } else if (line.contains("declared permissions:") || line.contains("permissions:")) {
+                        if (!line.contains("install permissions") && !line.contains("runtime permissions")) {
+                            insideRuntime = false;
+                            insideInstall = false;
+                            insideRequested = false;
+                        }
+                    }
+
+                    if (insideRuntime) {
+                        Matcher matcher = statePattern.matcher(line);
+                        if (matcher.find()) {
+                            String name = matcher.group(1);
+                            boolean granted = Boolean.parseBoolean(matcher.group(2));
+                            addOrUpdatePermission(permissionsList, name, granted, 0);
+                        }
+                    } else if (insideInstall) {
+                        Matcher matcher = statePattern.matcher(line);
+                        if (matcher.find()) {
+                            String name = matcher.group(1);
+                            boolean granted = Boolean.parseBoolean(matcher.group(2));
+                            addOrUpdatePermission(permissionsList, name, granted, 1);
+                        }
+                    } else if (insideRequested) {
+                        Matcher matcher = nameOnlyPattern.matcher(line);
+                        if (matcher.find()) {
+                            String name = matcher.group(1);
+                            if (!existsInList(permissionsList, name)) {
+                                permissionsList.add(new PermissionsEntry(name, false, 2));
+                            }
+                        }
+                    }
+                }
+
+                return permissionsList;
+            }
+
+            private void addOrUpdatePermission(List<PermissionsEntry> list, String name, boolean granted, int type) {
+                for (int i = 0; i < list.size(); i++) {
+                    PermissionsEntry entry = list.get(i);
+                    if (entry.getPermissionName().equals(name)) {
+                        list.set(i, new PermissionsEntry(name, granted, type));
+                        return;
+                    }
+                }
+                list.add(new PermissionsEntry(name, granted, type));
+            }
+
+            private boolean existsInList(List<PermissionsEntry> list, String name) {
+                for (PermissionsEntry entry : list) {
+                    if (entry.getPermissionName().equals(name)) {
+                        return true;
+                    }
+                }
+                return false;
+            }
+
+            @Override
+            public void doInBackground() {
+                result = ShizukuShell.runCommand("dumpsys package " + packageEntry.getPackageName() + " | grep -E \"permission\"");
+                permissions = getPermissions(result);
+            }
+
+            @Override
+            public void onPostExecute() {
+                if (!isAdded() || isDetached() || activity.isDestroyed() || activity.isFinishing()) return;
+                progressDialog.dismissDialog();
+                if (result != null && permissions != null && !permissions.isEmpty()) {
+                    new PermissionsDialog(packageEntry, permissions, activity);
+                } else {
+                    Utils.toast(R.string.app_ops_empty_toast, activity).show();
+                }
             }
         }.execute();
     }

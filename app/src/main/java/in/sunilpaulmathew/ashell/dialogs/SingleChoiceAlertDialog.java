@@ -7,7 +7,7 @@ import com.google.android.material.dialog.MaterialAlertDialogBuilder;
 /*
  * Created by sunilpaulmathew <sunil.kde@gmail.com> on April 21, 2025
  */
-public abstract class SingleChoiceDialog {
+public abstract class SingleChoiceAlertDialog {
 
     private final int mIcon;
     private final int mPosition;
@@ -15,8 +15,8 @@ public abstract class SingleChoiceDialog {
     private final String mTitle;
     private final String[] mSingleChoiceItems;
 
-    public SingleChoiceDialog(int icon, String title, String[] singleChoiceItems,
-                              int position, Context context) {
+    public SingleChoiceAlertDialog(int icon, String title, String[] singleChoiceItems,
+                                   int position, Context context) {
         this.mIcon = icon;
         this.mTitle = title;
         this.mSingleChoiceItems = singleChoiceItems;

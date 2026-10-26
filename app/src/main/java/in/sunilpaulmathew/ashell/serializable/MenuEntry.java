@@ -10,6 +10,13 @@ public class MenuEntry implements Serializable {
     private final String titleText, descriptionText;
     private final int id, drawable;
 
+    public MenuEntry(String titleText, String descriptionText, int id) {
+        this.titleText = titleText;
+        this.descriptionText = descriptionText;
+        this.drawable = -1;
+        this.id = id;
+    }
+
     public MenuEntry(String titleText, int drawable, int id) {
         this.titleText = titleText;
         this.descriptionText = null;

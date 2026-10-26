@@ -20,7 +20,6 @@ import androidx.cardview.widget.CardView;
 import java.io.File;
 import java.io.Serializable;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 import java.util.Objects;
 import java.util.concurrent.ExecutorService;
@@ -34,13 +33,11 @@ import in.sunilpaulmathew.ashell.utils.Settings;
  */
 public class PackageEntry implements Serializable {
 
-    private boolean enabled;
     private CharSequence appLabel;
     private Drawable appIcon;
     private final String appType;
     private final String apkPath, packageName;
     private int compileSDK = -1, minSDK = -1, targetSDK = -1;
-    private List<String> permissions;
     private String versionName, versionCode = null;
 
     public PackageEntry(String packageName, String apkPath, String appType) {
@@ -121,20 +118,12 @@ public class PackageEntry implements Serializable {
         return null;
     }
 
-    public List<String> getPermissions() {
-        return this.permissions;
-    }
-
     public String getApkPath() {
         return this.apkPath;
     }
 
     public String getAppLabel() {
         return this.appLabel.toString();
-    }
-
-    public String getAppTypeString() {
-        return this.appType;
     }
 
     public String getPackageName() {
@@ -154,7 +143,7 @@ public class PackageEntry implements Serializable {
             Handler handler = new Handler(Looper.getMainLooper());
             executor.execute(() -> {
                 PackageManager pm = icon.getContext().getPackageManager();
-                PackageInfo pi = pm.getPackageArchiveInfo(apkPath, PackageManager.GET_PERMISSIONS);
+                PackageInfo pi = pm.getPackageArchiveInfo(apkPath, 0);
                 if (pi != null) {
                     ApplicationInfo ai = pi.applicationInfo;
                     Objects.requireNonNull(ai).sourceDir = apkPath;
@@ -174,9 +163,6 @@ public class PackageEntry implements Serializable {
                         }
                         targetSDK = ai.targetSdkVersion;
                     } catch (NumberFormatException ignored) {
-                    }
-                    if (pi.requestedPermissions != null) {
-                        permissions = new ArrayList<>(Arrays.asList(pi.requestedPermissions));
                     }
                 }
 

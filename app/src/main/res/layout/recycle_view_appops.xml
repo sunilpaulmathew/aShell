@@ -1,0 +1,59 @@
+<androidx.appcompat.widget.LinearLayoutCompat
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_marginHorizontal="5dp"
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="horizontal"
+    android:layout_gravity="center"
+    android:paddingHorizontal="8dp"
+    android:baselineAligned="true"
+    android:paddingVertical="5dp"
+    android:gravity="center" >
+
+    <androidx.appcompat.widget.AppCompatImageButton
+        android:id="@+id/icon"
+        android:layout_width="24sp"
+        android:layout_height="24sp"
+        android:layout_gravity="center"
+        android:layout_marginEnd="10dp"
+        android:scaleType="fitCenter"
+        android:background="@null"
+        android:clickable="false"  />
+
+    <androidx.appcompat.widget.LinearLayoutCompat
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginHorizontal="5dp"
+        android:layout_gravity="center"
+        android:orientation="vertical"
+        android:gravity="center" >
+
+        <com.google.android.material.textview.MaterialTextView
+            android:id="@+id/name"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textColor="?attr/colorPrimary"
+            android:clickable="false"
+            android:textStyle="bold"
+            android:textSize="15sp"
+            android:maxLines="1" />
+
+        <com.google.android.material.textview.MaterialTextView
+            android:id="@+id/status"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textColor="?attr/colorPrimary"
+            android:clickable="false"
+            android:visibility="gone"
+            android:textStyle="bold"
+            android:alpha="0.85" />
+
+        <com.google.android.material.textview.MaterialTextView
+            android:id="@+id/description"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textStyle="bold|italic"
+            android:clickable="false"
+            android:textSize="11sp" />
+    </androidx.appcompat.widget.LinearLayoutCompat>
+</androidx.appcompat.widget.LinearLayoutCompat>

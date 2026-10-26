@@ -27,7 +27,7 @@ import java.util.Objects;
 
 import in.sunilpaulmathew.ashell.R;
 import in.sunilpaulmathew.ashell.activities.aShellActivity;
-import in.sunilpaulmathew.ashell.dialogs.SingleChoiceDialog;
+import in.sunilpaulmathew.ashell.dialogs.SingleChoiceAlertDialog;
 import in.sunilpaulmathew.ashell.serializable.CommandEntry;
 import in.sunilpaulmathew.ashell.serializable.ExtrasEntry;
 
@@ -413,7 +413,7 @@ public class Settings {
     }
 
     public static void setAppLanguage(Activity activity) {
-        new SingleChoiceDialog(R.drawable.ic_language, activity.getString(R.string.language),
+        new SingleChoiceAlertDialog(R.drawable.ic_language, activity.getString(R.string.language),
                 getLanguageMenu(activity), getLanguagePosition(activity), activity) {
 
             @Override
