@@ -2,6 +2,9 @@ package in.sunilpaulmathew.ashell.serializable;
 
 import static android.view.View.VISIBLE;
 
+import android.content.pm.ApplicationInfo;
+import android.content.pm.PackageInfo;
+import android.content.pm.PackageManager;
 import android.graphics.Typeface;
 import android.graphics.drawable.Drawable;
 import android.os.Handler;
@@ -27,9 +30,11 @@ import in.sunilpaulmathew.ashell.utils.Utils;
  */
 public class FilesEntry implements Serializable {
 
+    private Drawable appIcon = null;
     private final boolean empty;
     private final long size;
     private final String name, owner, group, lastModified, parentPath, permission;
+    private String appName = null, packageName = null;
     private static final Set<String> CAN_WRITE_PATHS = new HashSet<>(Arrays.asList(
             "/tmp", "/storage/emulated/0"
     ));
@@ -110,12 +115,20 @@ public class FilesEntry implements Serializable {
         return permission.charAt(0);
     }
 
+    public Drawable getAppIcon() {
+        return appIcon;
+    }
+
     public String decodeSymLink() {
         return name.trim().split(" -> ")[1];
     }
 
     public String getAbsolutePath() {
         return Objects.equals(parentPath, "/") ? parentPath + name : parentPath + "/" + name;
+    }
+
+    public String getAppName() {
+        return appName;
     }
 
     public String getGroup() {
@@ -128,6 +141,10 @@ public class FilesEntry implements Serializable {
 
     public String getName() {
         return name;
+    }
+
+    public String getPackageName() {
+        return packageName;
     }
 
     public String getParentPath() {
@@ -222,9 +239,22 @@ public class FilesEntry implements Serializable {
             Handler handler = new Handler(Looper.getMainLooper());
             executor.execute(() -> {
                 Drawable drawable = Utils.getDrawable(getIcon(), icon.getContext());
+                if (getExtension() != null && getExtension().equalsIgnoreCase("apk")) {
+                    PackageManager pm = icon.getContext().getPackageManager();
+                    PackageInfo pi = pm.getPackageArchiveInfo(getAbsolutePath(), 0);
+                    if (pi != null) {
+                        ApplicationInfo ai = pi.applicationInfo;
+                        Objects.requireNonNull(ai).sourceDir = getAbsolutePath();
+                        ai.publicSourceDir = getAbsolutePath();
+
+                        appName = pm.getApplicationLabel(ai).toString();
+                        packageName = pi.packageName;
+                        appIcon = pm.getApplicationIcon(ai);
+                    }
+                }
                 handler.post(() -> {
                     textView.setText(name);
-                    icon.setImageDrawable(drawable);
+                    icon.setImageDrawable(appIcon != null ? appIcon: drawable);
                     textView.setTypeface(textView.getTypeface(), Typeface.BOLD_ITALIC);
                     sizeText.setVisibility(VISIBLE);
                     sizeText.setText(getSize());

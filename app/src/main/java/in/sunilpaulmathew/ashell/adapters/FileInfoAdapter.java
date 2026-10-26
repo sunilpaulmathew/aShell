@@ -34,7 +34,7 @@ public class FileInfoAdapter extends RecyclerView.Adapter<FileInfoAdapter.ViewHo
 
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
-        holder.mTetx.setText(this.data.get(position));
+        holder.text.setText(this.data.get(position));
 
         Settings.setSlideInAnimation(holder.itemView, position);
     }
@@ -45,11 +45,11 @@ public class FileInfoAdapter extends RecyclerView.Adapter<FileInfoAdapter.ViewHo
     }
 
     public static class ViewHolder extends RecyclerView.ViewHolder {
-        private final MaterialTextView mTetx;
+        private final MaterialTextView text;
 
         public ViewHolder(View view) {
             super(view);
-            this.mTetx = view.findViewById(R.id.text);
+            this.text = view.findViewById(R.id.text);
         }
     }
 

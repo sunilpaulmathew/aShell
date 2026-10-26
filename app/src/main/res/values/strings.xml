@@ -125,6 +125,8 @@
     <string name="logcat">Live device logs</string>
     <string name="logcat_description">Stream live system logs, monitor app outputs, and debug crashes instantly over ADB.</string>
     <string name="miscellaneous">Miscellaneous</string>
+    <string name="name_application">Application name: %s</string>
+    <string name="name_package">Package name: %s</string>
     <string name="never">Never</string>
     <string name="open">Open</string>
     <string name="opening_message">Opening %s</string>

@@ -16,7 +16,6 @@ import java.util.concurrent.CopyOnWriteArrayList;
 import in.sunilpaulmathew.ashell.R;
 import in.sunilpaulmathew.ashell.adapters.FileInfoAdapter;
 import in.sunilpaulmathew.ashell.serializable.FilesEntry;
-import in.sunilpaulmathew.ashell.utils.Utils;
 
 /*
  * Created by sunilpaulmathew <sunil.kde@gmail.com> on June 24, 2026
@@ -31,7 +30,16 @@ public class FileInfoDialog extends BottomSheetDialog {
         MaterialTextView title = root.findViewById(R.id.title);
         RecyclerView recyclerView = root.findViewById(R.id.recycler_view);
 
-        image.setImageDrawable(Utils.getDrawable(filesEntry.isDirectory() ? R.drawable.ic_folder : filesEntry.getIcon(), context));
+        if (filesEntry.isDirectory()) {
+            image.setImageResource(R.drawable.ic_folder);
+        } else {
+            if (filesEntry.getAppIcon() != null) {
+                image.setImageDrawable(filesEntry.getAppIcon());
+            } else {
+                image.setImageResource(filesEntry.getIcon());
+            }
+        }
+
         title.setText(filesEntry.getName());
 
         recyclerView.setLayoutManager(new LinearLayoutManager(context));
@@ -44,6 +52,12 @@ public class FileInfoDialog extends BottomSheetDialog {
 
     private List<String> getData(FilesEntry filesEntry, Context context) {
         List<String> data = new CopyOnWriteArrayList<>();
+        if (filesEntry.getAppName() != null) {
+            data.add(context.getString(R.string.name_application, filesEntry.getAppName()));
+        }
+        if (filesEntry.getPackageName() != null) {
+            data.add(context.getString(R.string.name_package, filesEntry.getPackageName()));
+        }
         data.add(context.getString(R.string.file_type, filesEntry.isDirectory() ? context.getString(R.string.file_type_directory) : filesEntry.getExtension() == null ? context.getString(R.string.file_type_unknown) : getFileExtDescription(filesEntry.getExtension(), context)));
         data.add(context.getString(R.string.file_path, filesEntry.getAbsolutePath()));
         data.add(context.getString(R.string.file_modified, filesEntry.lastModified()));

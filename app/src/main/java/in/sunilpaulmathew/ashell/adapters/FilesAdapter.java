@@ -123,7 +123,7 @@ public class FilesAdapter extends RecyclerView.Adapter<FilesAdapter.ViewHolder> 
                     }
                     menuEntry.add(new MenuEntry(v.getContext().getString(R.string.copy_storage), R.drawable.ic_copy, 1));
                     menuEntry.add(new MenuEntry(v.getContext().getString(R.string.copy_path), R.drawable.ic_clipboard, 2));
-                    menuEntry.add(new MenuEntry(v.getContext().getString(R.string.get_info), R.drawable.ic_info, 3));
+                    menuEntry.add(new MenuEntry(v.getContext().getString(R.string.get_info), R.drawable.ic_info_outlined, 3));
                     if (filesEntry.canWrite()) {
                         menuEntry.add(new MenuEntry(v.getContext().getString(R.string.delete), R.drawable.ic_delete, 4));
                     }
