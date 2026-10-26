@@ -22,8 +22,8 @@ import java.util.Objects;
 import java.util.concurrent.CopyOnWriteArrayList;
 
 import in.sunilpaulmathew.ashell.R;
-import in.sunilpaulmathew.ashell.dialogs.BottomMenuDialog;
 import in.sunilpaulmathew.ashell.dialogs.FileInfoDialog;
+import in.sunilpaulmathew.ashell.dialogs.FileOptionsDialog;
 import in.sunilpaulmathew.ashell.dialogs.ProgressDialog;
 import in.sunilpaulmathew.ashell.serializable.FilesEntry;
 import in.sunilpaulmathew.ashell.serializable.MenuEntry;
@@ -127,13 +127,13 @@ public class FilesAdapter extends RecyclerView.Adapter<FilesAdapter.ViewHolder> 
                     if (filesEntry.canWrite()) {
                         menuEntry.add(new MenuEntry(v.getContext().getString(R.string.delete), R.drawable.ic_delete, 4));
                     }
-                    new BottomMenuDialog(menuEntry,
+                    new FileOptionsDialog(menuEntry,
                             imageIcon.getDrawable(),
                             filesEntry.getName(),
                             filesEntry.getAbsolutePath(),
                             v.getContext()) {
                         @Override
-                        public void onMenuItemClicked(int menuID) {
+                        public void onItemSelected(int menuID) {
                             if (menuID == 0) {
                                 new Async() {
                                     private ProgressDialog progressDialog;

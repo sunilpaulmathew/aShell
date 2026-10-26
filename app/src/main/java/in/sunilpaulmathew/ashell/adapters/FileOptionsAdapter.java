@@ -22,12 +22,12 @@ import in.sunilpaulmathew.ashell.utils.Utils;
 /*
  * Created by sunilpaulmathew <sunil.kde@gmail.com> on June 24, 2026
  */
-public class BottomMenuAdapter extends RecyclerView.Adapter<BottomMenuAdapter.ViewHolder> {
+public class FileOptionsAdapter extends RecyclerView.Adapter<FileOptionsAdapter.ViewHolder> {
 
     private final List<MenuEntry> data;
     private final OnItemClickListener listener;
 
-    public BottomMenuAdapter(List<MenuEntry> items, OnItemClickListener listener) {
+    public FileOptionsAdapter(List<MenuEntry> items, OnItemClickListener listener) {
         this.data = items;
         this.listener = listener;
     }
@@ -35,7 +35,7 @@ public class BottomMenuAdapter extends RecyclerView.Adapter<BottomMenuAdapter.Vi
     @NonNull
     @Override
     public ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-        View rowItem = LayoutInflater.from(parent.getContext()).inflate(R.layout.recycle_view_bottom_menu, parent, false);
+        View rowItem = LayoutInflater.from(parent.getContext()).inflate(R.layout.recycle_view_file_options, parent, false);
         return new ViewHolder(rowItem);
     }
 

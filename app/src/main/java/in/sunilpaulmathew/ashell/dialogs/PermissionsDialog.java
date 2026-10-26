@@ -28,7 +28,7 @@ public class PermissionsDialog extends BottomSheetDialog {
     public PermissionsDialog(PackageEntry packageEntry, List<PermissionsEntry> permissions, Context context) {
         super(context);
 
-        View rootView = View.inflate(context, R.layout.layout_bottom_menu, null);
+        View rootView = View.inflate(context, R.layout.layout_app_options, null);
         AppCompatImageButton icon = rootView.findViewById(R.id.icon);
         MaterialButton cancel = rootView.findViewById(R.id.cancel);
         MaterialTextView title = rootView.findViewById(R.id.title);

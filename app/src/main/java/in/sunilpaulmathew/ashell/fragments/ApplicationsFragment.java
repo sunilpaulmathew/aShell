@@ -1,5 +1,8 @@
 package in.sunilpaulmathew.ashell.fragments;
 
+import static android.view.View.GONE;
+import static android.view.View.VISIBLE;
+
 import android.app.Activity;
 import android.content.Intent;
 import android.content.pm.PackageManager;
@@ -15,6 +18,7 @@ import android.view.ViewGroup;
 import androidx.activity.OnBackPressedCallback;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.core.widget.ContentLoadingProgressBar;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -38,7 +42,7 @@ import in.sunilpaulmathew.ashell.R;
 import in.sunilpaulmathew.ashell.adapters.ApplicationsAdapter;
 import in.sunilpaulmathew.ashell.dialogs.APKDetailsDialog;
 import in.sunilpaulmathew.ashell.dialogs.AppOpsDialog;
-import in.sunilpaulmathew.ashell.dialogs.BottomMenuDialog;
+import in.sunilpaulmathew.ashell.dialogs.AppOptionsDialog;
 import in.sunilpaulmathew.ashell.dialogs.PermissionsDialog;
 import in.sunilpaulmathew.ashell.dialogs.ProgressDialog;
 import in.sunilpaulmathew.ashell.dialogs.SortOptionsDialog;
@@ -60,6 +64,7 @@ import rikka.shizuku.Shizuku;
 public class ApplicationsFragment extends Fragment {
 
     private ApplicationsAdapter adapter;
+    private ContentLoadingProgressBar progressBar;
     private String searchTxt = null;
 
     @Nullable
@@ -69,6 +74,7 @@ public class ApplicationsFragment extends Fragment {
 
         MaterialButton back = rootView.findViewById(R.id.back);
         MaterialButton sort = rootView.findViewById(R.id.sort);
+        progressBar = rootView.findViewById(R.id.progress);
         RecyclerView recyclerView = rootView.findViewById(R.id.recycler_view);
         TextInputEditText searchWord = rootView.findViewById(R.id.search_word);
 
@@ -88,9 +94,9 @@ public class ApplicationsFragment extends Fragment {
             }
             menuEntries.add(new MenuEntry(getString(R.string.settings), R.drawable.ic_settings, 8));
 
-            new BottomMenuDialog(menuEntries, packageEntry.getAppIcon(), packageEntry.getAppLabel(), packageEntry.getPackageName(), requireActivity()) {
+            new AppOptionsDialog(menuEntries, packageEntry, requireActivity()) {
                 @Override
-                public void onMenuItemClicked(int menuID) {
+                public void onItemSelected(int menuID) {
                     switch (menuID) {
                         case 8:
                             Intent settings = new Intent(android.provider.Settings.ACTION_APPLICATION_DETAILS_SETTINGS);
@@ -179,6 +185,7 @@ public class ApplicationsFragment extends Fragment {
     }
 
     private void backToMain() {
+        if (progressBar.getVisibility() == VISIBLE) return;
         Fragment parent = getParentFragment();
         if (parent instanceof ExtrasFragment) {
             ((ExtrasFragment) parent).showExtrasGrid();
@@ -370,7 +377,7 @@ public class ApplicationsFragment extends Fragment {
                 header.add(new PackageHeaderEntry(apkSize, R.drawable.ic_storage));
                 header.add(new PackageHeaderEntry(Packages.sdkToAndroidVersion(packageEntry.getMinSDK()) + " +", R.drawable.ic_device));
 
-                details.add(new PackageDetailsEntry(getString(R.string.app_version), packageEntry.getVersionName()));
+                details.add(new PackageDetailsEntry(getString(R.string.version), packageEntry.getVersionName()));
                 if (packageEntry.getVersionCode() != null) {
                     details.add(new PackageDetailsEntry(getString(R.string.version_code), packageEntry.getVersionCode()));
                 }
@@ -410,13 +417,9 @@ public class ApplicationsFragment extends Fragment {
         new Async() {
             private final Activity activity = requireActivity();
             private List<PackageEntry> data;
-            private ProgressDialog progressDialog;
             @Override
             public void onPreExecute() {
-                progressDialog = new ProgressDialog(activity);
-                progressDialog.setProgressIcon(R.drawable.ic_apps);
-                progressDialog.setProgressStatus(R.string.loading);
-                progressDialog.startDialog();
+                progressBar.setVisibility(VISIBLE);
             }
 
             @Override
@@ -458,10 +461,7 @@ public class ApplicationsFragment extends Fragment {
             @Override
             public void onPostExecute() {
                 if (!isAdded() || isDetached() || activity.isDestroyed() || activity.isFinishing()) return;
-                try {
-                    if (progressDialog != null) progressDialog.dismissDialog();
-                } catch (Exception ignored) {
-                }
+                progressBar.setVisibility(GONE);
                 adapter.updateData(data);
             }
         }.execute();
@@ -588,7 +588,7 @@ public class ApplicationsFragment extends Fragment {
             private void addOrUpdatePermission(List<PermissionsEntry> list, String name, boolean granted, int type) {
                 for (int i = 0; i < list.size(); i++) {
                     PermissionsEntry entry = list.get(i);
-                    if (entry.getPermissionName().equals(name)) {
+                    if (entry.getPermissionDescription().equalsIgnoreCase(name)) {
                         list.set(i, new PermissionsEntry(name, granted, type));
                         return;
                     }
@@ -598,7 +598,7 @@ public class ApplicationsFragment extends Fragment {
 
             private boolean existsInList(List<PermissionsEntry> list, String name) {
                 for (PermissionsEntry entry : list) {
-                    if (entry.getPermissionName().equals(name)) {
+                    if (entry.getPermissionDescription().equalsIgnoreCase(name)) {
                         return true;
                     }
                 }

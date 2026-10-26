@@ -58,6 +58,18 @@
             android:gravity="center" />
     </androidx.appcompat.widget.LinearLayoutCompat>
 
+    <androidx.core.widget.ContentLoadingProgressBar
+        android:id="@+id/progress"
+        android:layout_width="match_parent"
+        android:layout_height="20dp"
+        style="?android:attr/progressBarStyleHorizontal"
+        android:progressTint="?attr/colorPrimary"
+        android:layout_gravity="center"
+        android:indeterminate="true"
+        android:paddingStart="15dp"
+        android:paddingEnd="15dp"
+        android:visibility="gone" />
+
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/recycler_view"
         android:layout_width="match_parent"
