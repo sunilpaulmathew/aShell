@@ -148,7 +148,7 @@ public class FilesAdapter extends RecyclerView.Adapter<FilesAdapter.ViewHolder> 
 
                                     @Override
                                     public void doInBackground() {
-                                        result = ShizukuShell.runCommand("cat " + filesEntry.getAbsolutePath());
+                                        result = ShizukuShell.runCommand("cat \"" + filesEntry.getAbsolutePath() + "\"");
                                     }
 
                                     @Override
