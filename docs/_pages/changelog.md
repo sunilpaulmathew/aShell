@@ -6,6 +6,14 @@ include_in_header: true
 
 <h2 style="color: blue">🆕 What's New</h2>
 
+### ✨ 23. [v0.30](https://gitlab.com/sunilpaulmathew/ashell/-/releases/v0.30) *(Oct 27 2026)*
+- Introduced aShell Extras, such as ADB-based Battery and CPU Monitors, Live device logs, and App Management (including AppOps and permissions management).
+- File Manager now loads app icon, app name, and package names of APK files under /system directory.
+- Added colorized icons in the Settings menu for better visual hierarchy.
+- Added Persian (Farsi) and Romanian languages (imported via POEditor).
+- Updated Spanish (Spain & Mexico), Russian, and Vietnamese translations.
+- Updated build tools and dependencies.
+
 ### ✨ 22. [v0.29](https://gitlab.com/sunilpaulmathew/ashell/-/releases/v0.29) *(Sept 09 2026)*
 - Substantial performance improvements and memory optimizations across shell execution, output rendering, and background tasks (thanks to @yoyicue).
 - Smoother list animations and faster updates in files and folders via DiffUtil.

@@ -1,0 +1,6 @@
+* Introduced aShell Extras, such as ADB-based Battery and CPU Monitors, Live device logs, and App Management (including AppOps and permissions management).
+* File Manager now loads app icon, app name, and package names of APK files under /system directory.
+* Added colorized icons in the Settings menu for better visual hierarchy.
+* Added Persian (Farsi) and Romanian languages (imported via POEditor).
+* Updated Spanish (Spain & Mexico), Russian, and Vietnamese translations.
+* Updated build tools and dependencies.
