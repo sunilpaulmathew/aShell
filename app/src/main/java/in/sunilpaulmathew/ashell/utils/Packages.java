@@ -112,7 +112,7 @@ public class Packages {
         List<PackageEntry> packages = new ArrayList<>();
 
         try {
-            String output = ShizukuShell.runCommand("echo === ENABLED USER APPS === && pm list packages -f -e -3 && echo === DISABLED USER APPS === && pm list packages -f -d -3 && echo === ENABLED SYSTEM APPS === && pm list packages -f -e -s && echo === DISABLED SYSTEM APPS === && pm list packages -f -d -s");
+            String output = ShizukuShell.runCommand("echo === ENABLED USER APPS === && pm list packages --user " + Utils.getUserID() + " -f -e -3 && echo === DISABLED USER APPS === && pm list packages --user " + Utils.getUserID() + " -f -d -3 && echo === ENABLED SYSTEM APPS === && pm list packages --user " + Utils.getUserID() + " -f -e -s && echo === DISABLED SYSTEM APPS === && pm list packages --user " + Utils.getUserID() + " -f -d -s");
             String currentCategory = "";
 
             for (String rawLine : output.split("\\r?\\n")) {
