@@ -42,7 +42,10 @@ public class APKDetailsDialog extends BottomSheetDialog {
         recyclerView_Header.setAdapter(new PackageHeaderAdapter(headers));
 
         recyclerView_Details.setLayoutManager(new LinearLayoutManager(context, LinearLayoutManager.VERTICAL, false));
-        recyclerView_Details.setAdapter(new PackageDetailsAdapter(details, appIcon, appName));
+        recyclerView_Details.setAdapter(new PackageDetailsAdapter(details, splits -> {
+            new SplitsDialog(appName, appIcon, splits, context);
+            dismiss();
+        }));
 
         app_Name.setText(appName);
         package_Name.setText(packageName);

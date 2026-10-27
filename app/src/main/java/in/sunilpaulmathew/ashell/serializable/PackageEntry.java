@@ -20,6 +20,7 @@ import androidx.cardview.widget.CardView;
 import java.io.File;
 import java.io.Serializable;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 import java.util.Objects;
 import java.util.concurrent.ExecutorService;
@@ -113,6 +114,7 @@ public class PackageEntry implements Serializable {
                     apkFiles.add(file);
                 }
             }
+            Collections.sort(apkFiles);
             return apkFiles;
         }
         return null;

@@ -1,16 +1,12 @@
 package in.sunilpaulmathew.ashell.adapters;
 
-import android.graphics.drawable.Drawable;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
 import androidx.annotation.NonNull;
-import androidx.recyclerview.widget.DividerItemDecoration;
-import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.google.android.material.dialog.MaterialAlertDialogBuilder;
 import com.google.android.material.textview.MaterialTextView;
 
 import java.io.File;
@@ -25,14 +21,12 @@ import in.sunilpaulmathew.ashell.utils.Settings;
  */
 public class PackageDetailsAdapter extends RecyclerView.Adapter<PackageDetailsAdapter.ViewHolder> {
 
-    private final Drawable appIcon;
     private final List<PackageDetailsEntry> data;
-    private final String appName;
+    private final OnItemClickListener clickListener;
 
-    public PackageDetailsAdapter(List<PackageDetailsEntry> data, Drawable appIcon, String appName) {
+    public PackageDetailsAdapter(List<PackageDetailsEntry> data, OnItemClickListener clickListener) {
         this.data = data;
-        this.appIcon = appIcon;
-        this.appName = appName;
+        this.clickListener = clickListener;
     }
 
     @NonNull
@@ -65,21 +59,14 @@ public class PackageDetailsAdapter extends RecyclerView.Adapter<PackageDetailsAd
                 int position = getBindingAdapterPosition();
                 List<File> splits = data.get(position).getSplits();
                 if (position != RecyclerView.NO_POSITION && splits != null) {
-                    View rootView = View.inflate(v.getContext(), R.layout.layout_recycler_view, null);
-                    RecyclerView recyclerView = rootView.findViewById(R.id.recycler_view);
-                    recyclerView.setLayoutManager(new LinearLayoutManager(v.getContext()));
-                    recyclerView.addItemDecoration(new DividerItemDecoration(v.getContext(), DividerItemDecoration.VERTICAL));
-                    recyclerView.setAdapter(new SplitsAdapter(splits));
-
-                    new MaterialAlertDialogBuilder(v.getContext())
-                            .setIcon(appIcon)
-                            .setTitle(appName)
-                            .setView(rootView)
-                            .setPositiveButton(R.string.cancel, (dialogInterface, i) -> {
-                            }).show();
+                    clickListener.onItemClick(splits);
                 }
             });
         }
+    }
+
+    public interface OnItemClickListener {
+        void onItemClick(List<File> splits);
     }
 
 }

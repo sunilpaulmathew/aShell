@@ -1,5 +1,6 @@
 package in.sunilpaulmathew.ashell.adapters;
 
+import android.graphics.drawable.Drawable;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -21,10 +22,12 @@ import in.sunilpaulmathew.ashell.utils.Settings;
  */
 public class SplitsAdapter extends RecyclerView.Adapter<SplitsAdapter.ViewHolder> {
 
+    private final Drawable appIcon;
     private final List<File> data;
 
-    public SplitsAdapter(List<File> data) {
+    public SplitsAdapter(List<File> data, Drawable appIcon) {
         this.data = data;
+        this.appIcon = appIcon;
     }
 
     @NonNull
@@ -36,8 +39,13 @@ public class SplitsAdapter extends RecyclerView.Adapter<SplitsAdapter.ViewHolder
 
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
-        holder.icon.setImageResource(R.drawable.ic_apks);
-        holder.text.setText(this.data.get(position).getName());
+        File file = this.data.get(position);
+        if (file.getName().equalsIgnoreCase("base.apk")) {
+            holder.icon.setImageDrawable(appIcon);
+        } else {
+            holder.icon.setImageResource(R.drawable.ic_apks);
+        }
+        holder.text.setText(file.getName());
         Settings.setSlideInAnimation(holder.text, position);
     }
 
