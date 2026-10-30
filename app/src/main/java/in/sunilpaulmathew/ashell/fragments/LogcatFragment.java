@@ -34,7 +34,7 @@ import in.sunilpaulmathew.ashell.utils.ShizukuShell;
 /*
  * Created by sunilpaulmathew <sunil.kde@gmail.com> on October 18, 2026
  */
-public class LogcatFragment extends Fragment {
+public class LogcatFragment extends BaseFragment {
 
     private final Handler uiHandler = new Handler(Looper.getMainLooper());
     private final List<String> results = new CopyOnWriteArrayList<>();
@@ -98,12 +98,12 @@ public class LogcatFragment extends Fragment {
 
         back.setOnClickListener(v -> backToMain());
 
-        requireActivity().getOnBackPressedDispatcher().addCallback(getViewLifecycleOwner(), new OnBackPressedCallback(true) {
+        mOnBackPressedCallback = new OnBackPressedCallback(true) {
             @Override
             public void handleOnBackPressed() {
                 backToMain();
             }
-        });
+        };
 
         return rootView;
     }
@@ -126,6 +126,12 @@ public class LogcatFragment extends Fragment {
         Fragment parent = getParentFragment();
         if (parent instanceof ExtrasFragment) {
             ((ExtrasFragment) parent).showExtrasGrid();
+        }
+    }
+
+    public void setBackEnabled(boolean enabled) {
+        if (mOnBackPressedCallback != null) {
+            mOnBackPressedCallback.setEnabled(enabled);
         }
     }
 
@@ -185,8 +191,21 @@ public class LogcatFragment extends Fragment {
     }
 
     @Override
+    protected void onPermissionGranted() {
+    }
+
+    @Override
+    protected void onPermissionDenied() {
+    }
+
+    @Override
     public void onResume() {
         super.onResume();
         startLogcatStream();
     }
+
+    @Override
+    protected void onSuccess() {
+    }
+
 }

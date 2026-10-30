@@ -6,7 +6,6 @@ import static android.view.View.VISIBLE;
 import android.app.Activity;
 import android.content.Intent;
 import android.content.pm.PackageManager;
-import android.content.res.Configuration;
 import android.net.Uri;
 import android.os.Bundle;
 import android.text.Editable;
@@ -61,7 +60,7 @@ import rikka.shizuku.Shizuku;
 /*
  * Created by sunilpaulmathew <sunil.kde@gmail.com> on October 18, 2026
  */
-public class ApplicationsFragment extends Fragment {
+public class ApplicationsFragment extends BaseFragment {
 
     private ApplicationsAdapter adapter;
     private ContentLoadingProgressBar progressBar;
@@ -166,18 +165,20 @@ public class ApplicationsFragment extends Fragment {
             }
         });
 
-        requireActivity().getOnBackPressedDispatcher().addCallback(getViewLifecycleOwner(), new OnBackPressedCallback(true) {
+        mOnBackPressedCallback = new OnBackPressedCallback(true) {
             @Override
             public void handleOnBackPressed() {
                 backToMain();
             }
-        });
+        };
 
         return rootView;
     }
 
     private int getSpanSize() {
-        if (getResources().getConfiguration().orientation == Configuration.ORIENTATION_LANDSCAPE) {
+        if (Utils.isTablet(requireActivity())) {
+            return 8;
+        } else if (!Utils.isPortraitMode(requireActivity())) {
             return 6;
         } else {
             return 3;
@@ -624,6 +625,12 @@ public class ApplicationsFragment extends Fragment {
         }.execute();
     }
 
+    public void setBackEnabled(boolean enabled) {
+        if (mOnBackPressedCallback != null) {
+            mOnBackPressedCallback.setEnabled(enabled);
+        }
+    }
+
     private void uninstallApp(PackageEntry packageEntry) {
         new Async() {
             private final Activity activity = requireActivity();
@@ -660,4 +667,15 @@ public class ApplicationsFragment extends Fragment {
         }.execute();
     }
 
+    @Override
+    protected void onPermissionGranted() {
+    }
+
+    @Override
+    protected void onPermissionDenied() {
+    }
+
+    @Override
+    protected void onSuccess() {
+    }
 }

@@ -1,6 +1,5 @@
 package in.sunilpaulmathew.ashell.fragments;
 
-import android.content.res.Configuration;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -38,6 +37,7 @@ public class ExtrasFragment extends BaseFragment {
     private Fragment activeFragment;
     private FragmentManager childManager;
     private FragmentContainerView subContainerView;
+    private GridLayoutManager gridLayoutManager;
     private RecyclerView recyclerView;
     private static final String TAG_APPS = "apps_fragment";
     private static final String TAG_BATTERY = "battery_fragment";
@@ -88,8 +88,10 @@ public class ExtrasFragment extends BaseFragment {
             }
         });
 
+        gridLayoutManager = new GridLayoutManager(requireActivity(), getSpanSize());
+
         recyclerView.setItemAnimator(null);
-        recyclerView.setLayoutManager(new GridLayoutManager(requireActivity(), getSpanSize()));
+        recyclerView.setLayoutManager(gridLayoutManager);
 
         recyclerView.setAdapter(adapter);
 
@@ -114,7 +116,9 @@ public class ExtrasFragment extends BaseFragment {
     }
 
     private int getSpanSize() {
-        if (getResources().getConfiguration().orientation == Configuration.ORIENTATION_LANDSCAPE) {
+        if (Utils.isTablet(requireActivity())) {
+            return 4;
+        } else if (!Utils.isPortraitMode(requireActivity())) {
             return 3;
         } else {
             return 2;
@@ -131,17 +135,42 @@ public class ExtrasFragment extends BaseFragment {
         return data;
     }
 
+    public void handleOrientationChange() {
+        gridLayoutManager.setSpanCount(getSpanSize());
+
+        if (activeFragment != null) {
+            requireActivity().recreate();
+        }
+    }
+
     public void loadUI() {
-        adapter.updateData(getData());
+        if (adapter != null) {
+            adapter.updateData(getData());
+        }
     }
 
     void showExtrasGrid() {
         if (activeFragment != null) {
             childManager.beginTransaction().hide(activeFragment).commit();
+            setSubFragmentBackEnabled(activeFragment);
             activeFragment = null;
         }
         subContainerView.setVisibility(View.GONE);
         recyclerView.setVisibility(View.VISIBLE);
+    }
+
+    private void setSubFragmentBackEnabled(Fragment fragment) {
+        if (fragment instanceof FilesFragment) {
+            ((FilesFragment) fragment).setBackEnabled(false);
+        } else if (fragment instanceof CPUMonitorFragment) {
+            ((CPUMonitorFragment) fragment).setBackEnabled(false);
+        } else if (fragment instanceof LogcatFragment) {
+            ((LogcatFragment) fragment).setBackEnabled(false);
+        } else if (fragment instanceof ApplicationsFragment) {
+            ((ApplicationsFragment) fragment).setBackEnabled(false);
+        } else if (fragment instanceof BatteryMonitorFragment) {
+            ((BatteryMonitorFragment) fragment).setBackEnabled(false);
+        }
     }
 
     private void openAppsFragment() {

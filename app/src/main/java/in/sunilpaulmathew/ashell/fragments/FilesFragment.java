@@ -5,7 +5,6 @@ import static android.view.View.VISIBLE;
 
 import android.annotation.SuppressLint;
 import android.app.Activity;
-import android.content.res.Configuration;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.MotionEvent;
@@ -214,7 +213,7 @@ public class FilesFragment extends BaseFragment {
     }
 
     private int getSpanSize() {
-        if (getResources().getConfiguration().orientation == Configuration.ORIENTATION_LANDSCAPE) {
+        if (Utils.isTablet(requireActivity())) {
             return 4;
         } else {
             return 2;
@@ -225,6 +224,12 @@ public class FilesFragment extends BaseFragment {
         Fragment parent = getParentFragment();
         if (parent instanceof ExtrasFragment) {
             ((ExtrasFragment) parent).showExtrasGrid();
+        }
+    }
+
+    public void setBackEnabled(boolean enabled) {
+        if (mOnBackPressedCallback != null) {
+            mOnBackPressedCallback.setEnabled(enabled);
         }
     }
 

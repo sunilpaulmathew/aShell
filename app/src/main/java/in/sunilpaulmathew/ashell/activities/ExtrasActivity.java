@@ -2,7 +2,6 @@ package in.sunilpaulmathew.ashell.activities;
 
 import android.app.Activity;
 import android.content.Intent;
-import android.content.res.Configuration;
 import android.os.Bundle;
 
 import androidx.activity.OnBackPressedCallback;
@@ -82,7 +81,9 @@ public class ExtrasActivity extends BaseActivity {
     }
 
     private int getSpanSize() {
-        if (getResources().getConfiguration().orientation == Configuration.ORIENTATION_LANDSCAPE) {
+        if (Utils.isTablet(this)) {
+            return 3;
+        } else if (!Utils.isPortraitMode(this)) {
             return 2;
         } else {
             return 1;

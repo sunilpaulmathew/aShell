@@ -2,7 +2,6 @@ package in.sunilpaulmathew.ashell.fragments;
 
 import static android.view.View.GONE;
 
-import android.content.res.Configuration;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Looper;
@@ -37,11 +36,12 @@ import in.sunilpaulmathew.ashell.adapters.BatteryMonitorAdapter;
 import in.sunilpaulmathew.ashell.serializable.BatteryEntry;
 import in.sunilpaulmathew.ashell.serializable.BatteryInfoEntry;
 import in.sunilpaulmathew.ashell.utils.ShizukuShell;
+import in.sunilpaulmathew.ashell.utils.Utils;
 
 /*
  * Created by sunilpaulmathew <sunil.kde@gmail.com> on October 18, 2026
  */
-public class BatteryMonitorFragment extends Fragment {
+public class BatteryMonitorFragment extends BaseFragment {
 
     private CircularProgressIndicator progressBar;
     private final BatteryMonitorAdapter adapter = new BatteryMonitorAdapter(new CopyOnWriteArrayList<>());
@@ -70,15 +70,12 @@ public class BatteryMonitorFragment extends Fragment {
 
         recyclerView.setAdapter(adapter);
 
-        requireActivity().getOnBackPressedDispatcher().addCallback(getViewLifecycleOwner(), new OnBackPressedCallback(true) {
+        mOnBackPressedCallback = new OnBackPressedCallback(true) {
             @Override
             public void handleOnBackPressed() {
-                Fragment parent = getParentFragment();
-                if (parent instanceof ExtrasFragment) {
-                    ((ExtrasFragment) parent).showExtrasGrid();
-                }
+                backToMain();
             }
-        });
+        };
 
         return rootView;
     }
@@ -139,8 +136,8 @@ public class BatteryMonitorFragment extends Fragment {
     }
 
     private int getSpanSize() {
-        if (getResources().getConfiguration().orientation == Configuration.ORIENTATION_LANDSCAPE) {
-            return 3;
+        if (Utils.isTablet(requireActivity())) {
+            return 4;
         } else {
             return 2;
         }
@@ -171,6 +168,19 @@ public class BatteryMonitorFragment extends Fragment {
 
     private String fetchStats() {
         return ShizukuShell.runCommand("dumpsys battery");
+    }
+
+    private void backToMain() {
+        Fragment parent = getParentFragment();
+        if (parent instanceof ExtrasFragment) {
+            ((ExtrasFragment) parent).showExtrasGrid();
+        }
+    }
+
+    public void setBackEnabled(boolean enabled) {
+        if (mOnBackPressedCallback != null) {
+            mOnBackPressedCallback.setEnabled(enabled);
+        }
     }
 
     private void startPolling() {
@@ -217,6 +227,18 @@ public class BatteryMonitorFragment extends Fragment {
     public void onPause() {
         super.onPause();
         stopPolling();
+    }
+
+    @Override
+    protected void onPermissionGranted() {
+    }
+
+    @Override
+    protected void onPermissionDenied() {
+    }
+
+    @Override
+    protected void onSuccess() {
     }
 
 }

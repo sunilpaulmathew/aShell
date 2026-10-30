@@ -7,12 +7,14 @@ import android.app.Activity;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.content.res.ColorStateList;
+import android.content.res.Configuration;
 import android.os.Bundle;
 import android.util.TypedValue;
 import android.widget.FrameLayout;
 
 import androidx.activity.result.ActivityResultLauncher;
 import androidx.activity.result.contract.ActivityResultContracts;
+import androidx.annotation.NonNull;
 import androidx.appcompat.widget.AppCompatImageButton;
 import androidx.appcompat.widget.LinearLayoutCompat;
 import androidx.core.graphics.ColorUtils;
@@ -301,6 +303,18 @@ public class aShellActivity extends BaseActivity {
         settings.setChecked(position == 2);
         settings.setIconTint(position == 2 ? activeTint : inactiveTint);
         settings.setTextColor(position == 2 ? activeColor : inactiveColor);
+    }
+
+    @Override
+    public void onConfigurationChanged(@NonNull Configuration configuration) {
+        super.onConfigurationChanged(configuration);
+
+        Fragment existingExtras = getSupportFragmentManager().findFragmentByTag("f1");
+        if (existingExtras != null) {
+            if (existingExtras instanceof ExtrasFragment) {
+                ((ExtrasFragment) existingExtras).handleOrientationChange();
+            }
+        }
     }
 
 }

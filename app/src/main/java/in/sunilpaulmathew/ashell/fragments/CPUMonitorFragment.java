@@ -2,7 +2,6 @@ package in.sunilpaulmathew.ashell.fragments;
 
 import static android.view.View.VISIBLE;
 
-import android.content.res.Configuration;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Looper;
@@ -16,7 +15,7 @@ import androidx.annotation.Nullable;
 import androidx.appcompat.widget.AppCompatImageButton;
 import androidx.core.content.ContextCompat;
 import androidx.fragment.app.Fragment;
-import androidx.recyclerview.widget.GridLayoutManager;
+import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.google.android.material.progressindicator.CircularProgressIndicator;
@@ -40,7 +39,7 @@ import in.sunilpaulmathew.ashell.utils.ShizukuShell;
 /*
  * Created by sunilpaulmathew <sunil.kde@gmail.com> on October 18, 2026
  */
-public class CPUMonitorFragment extends Fragment {
+public class CPUMonitorFragment extends BaseFragment {
 
     private CircularProgressIndicator progressBar;
     private final CPUMonitorAdapter adapter = new CPUMonitorAdapter(new CopyOnWriteArrayList<>());
@@ -65,19 +64,16 @@ public class CPUMonitorFragment extends Fragment {
         title.setText(R.string.cpu_monitor);
         load.setVisibility(VISIBLE);
 
-        recyclerView.setLayoutManager(new GridLayoutManager(requireActivity(), getSpanSize()));
+        recyclerView.setLayoutManager(new LinearLayoutManager(requireActivity()));
 
         recyclerView.setAdapter(adapter);
 
-        requireActivity().getOnBackPressedDispatcher().addCallback(getViewLifecycleOwner(), new OnBackPressedCallback(true) {
+        mOnBackPressedCallback = new OnBackPressedCallback(true) {
             @Override
             public void handleOnBackPressed() {
-                Fragment parent = getParentFragment();
-                if (parent instanceof ExtrasFragment) {
-                    ((ExtrasFragment) parent).showExtrasGrid();
-                }
+                backToMain();
             }
-        });
+        };
 
         return rootView;
     }
@@ -116,14 +112,6 @@ public class CPUMonitorFragment extends Fragment {
             colorRes = android.R.color.holo_green_dark;
         }
         return ContextCompat.getColor(requireActivity(), colorRes);
-    }
-
-    private int getSpanSize() {
-        if (getResources().getConfiguration().orientation == Configuration.ORIENTATION_LANDSCAPE) {
-            return 2;
-        } else {
-            return 1;
-        }
     }
 
     private String fetchStats() {
@@ -169,6 +157,19 @@ public class CPUMonitorFragment extends Fragment {
         return 0.0f;
     }
 
+    private void backToMain() {
+        Fragment parent = getParentFragment();
+        if (parent instanceof ExtrasFragment) {
+            ((ExtrasFragment) parent).showExtrasGrid();
+        }
+    }
+
+    public void setBackEnabled(boolean enabled) {
+        if (mOnBackPressedCallback != null) {
+            mOnBackPressedCallback.setEnabled(enabled);
+        }
+    }
+
     private void startPolling() {
         if (scheduler != null && !scheduler.isShutdown()) return;
 
@@ -207,15 +208,27 @@ public class CPUMonitorFragment extends Fragment {
     }
 
     @Override
+    public void onPause() {
+        super.onPause();
+        stopPolling();
+    }
+
+    @Override
+    protected void onPermissionGranted() {
+    }
+
+    @Override
     public void onResume() {
         super.onResume();
         startPolling();
     }
 
     @Override
-    public void onPause() {
-        super.onPause();
-        stopPolling();
+    protected void onPermissionDenied() {
+    }
+
+    @Override
+    protected void onSuccess() {
     }
 
 }
