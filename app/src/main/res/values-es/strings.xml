@@ -29,7 +29,6 @@
     <string name="app_theme_auto">"Auto"</string>
     <string name="app_theme_dark">"Oscuro"</string>
     <string name="app_theme_light">"Luz"</string>
-    <string name="app_version">"un Shell %s"</string>
     <string name="authorize_click_message">"Haz clic para autorizar"</string>
     <string name="copy_clipboard">"Copiar al portapapeles"</string>
     <string name="developer_contact">"Contactar al desarrollador"</string>
@@ -63,22 +62,16 @@
     <string name="translations">"Traducciones"</string>
     <string name="translations_description">"Contribuir a la traducción de la aplicación"</string>
     <string name="user_interface">"Interfaz de usuario"</string>
-    <string name="shizuku_app_open_message">"shizuku_app_open_message"</string>
-    <string name="shizuku_open">"shizuku_abierto"</string>
     <string name="apply">"aplicar"</string>
     <string name="bookmarks">"marcadores"</string>
     <string name="clear_all">"borrar todo"</string>
-    <string name="copy_storage">"almacenamiento de copias"</string>
-    <string name="copying_message">"copiando_mensaje"</string>
-    <string name="copying_failed_toast">"Error al copiar (notificación)"</string>
     <string name="delete">"borrar"</string>
     <string name="edit">"editar"</string>
     <string name="file_permissions">"permisos de archivo %s"</string>
     <string name="files">"archivos"</string>
     <string name="history">"historia"</string>
-    <string name="loading">"cargando"</string>
+    <string name="loading">"cargando…"</string>
     <string name="open">"abierto"</string>
-    <string name="opening_message">"mensaje de apertura"</string>
     <string name="root">"raíz"</string>
     <string name="shell">"caparazón"</string>
 </resources>

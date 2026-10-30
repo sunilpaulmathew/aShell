@@ -29,7 +29,6 @@
     <string name="app_theme_auto">"Auto"</string>
     <string name="app_theme_dark">"Oscuro"</string>
     <string name="app_theme_light">"Blanco"</string>
-    <string name="app_version">"aShell %s"</string>
     <string name="authorize_click_message">"Hace clic para autorizar"</string>
     <string name="copy_clipboard">"Copiar al portapapeles"</string>
     <string name="developer_contact">"Contactar al desarrollador"</string>

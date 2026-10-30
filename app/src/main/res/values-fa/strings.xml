@@ -2,8 +2,6 @@
 
     <string name="app_summary">"خلاصه برنامه"</string>
     <string name="app_working_message">"برنامه در حال اجرا است…"</string>
-    <string name="bookmark_added_message">"نشانک اضافه شد"</string>
-    <string name="bookmark_removed_message">"نشانک حذف شد"</string>
     <string name="cancel">"لغو"</string>
     <string name="clear_all_message">"همه موارد پاک شوند؟"</string>
     <string name="command_hint">"دستور را وارد کنید"</string>
@@ -16,12 +14,10 @@
     <string name="quit_app_message">"آیا می‌خواهید از برنامه خارج شوید؟"</string>
     <string name="request_permission">"درخواست مجوز"</string>
     <string name="start">"شروع"</string>
-    <string name="shell_output_saved_message">"خروجی شِل ذخیره شد"</string>
     <string name="shizuku_access_denied_message">"دسترسی به Shizuku رد شد"</string>
     <string name="shizuku_unavailable_message">"Shizuku در دسترس نیست"</string>
     <string name="su_warning_message">"هشدار: استفاده از دسترسی روت می‌تواند خطرناک باشد."</string>
     <string name="yes">"بله"</string>
-    <string name="copyright_text">"حق نشر"</string>
     <string name="save">"ذخیره"</string>
     <string name="app_theme">"پوسته برنامه"</string>
     <string name="app_theme_amoled">"AMOLED"</string>
@@ -29,7 +25,6 @@
     <string name="app_theme_auto">"خودکار"</string>
     <string name="app_theme_dark">"تیره"</string>
     <string name="app_theme_light">"روشن"</string>
-    <string name="app_version">"نسخه برنامه"</string>
     <string name="authorize_click_message">"برای مجوز دادن ضربه بزنید"</string>
     <string name="copy_clipboard">"کپی در کلیپ‌بورد"</string>
     <string name="developer_contact">"تماس با توسعه‌دهنده"</string>
