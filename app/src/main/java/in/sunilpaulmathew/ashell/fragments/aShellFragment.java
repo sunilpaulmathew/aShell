@@ -607,7 +607,7 @@ public class aShellFragment extends BaseFragment {
     private void runShellCommand(String command) {
         mCommand.setText(null);
         mCommand.setHint(null);
-        mCommand.clearFocus();
+        clearFocus();
         if (mSearchWord.getVisibility() == VISIBLE) {
             hideSearchBar();
         }
