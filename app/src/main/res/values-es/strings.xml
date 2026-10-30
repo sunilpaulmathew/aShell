@@ -73,7 +73,7 @@
     <string name="copying_failed_toast">"Error al copiar (notificación)"</string>
     <string name="delete">"borrar"</string>
     <string name="edit">"editar"</string>
-    <string name="file_permissions">"permisos de archivo"</string>
+    <string name="file_permissions">"permisos de archivo %s"</string>
     <string name="files">"archivos"</string>
     <string name="history">"historia"</string>
     <string name="loading">"cargando"</string>
