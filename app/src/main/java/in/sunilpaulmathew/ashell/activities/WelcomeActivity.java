@@ -24,7 +24,7 @@ import in.sunilpaulmathew.ashell.R;
 import in.sunilpaulmathew.ashell.adapters.WelcomeAdapter;
 import in.sunilpaulmathew.ashell.dialogs.AccessDeniedDialog;
 import in.sunilpaulmathew.ashell.dialogs.AccessUnavilableDialog;
-import in.sunilpaulmathew.ashell.serializable.CommandEntry;
+import in.sunilpaulmathew.ashell.serializables.CommandEntry;
 import in.sunilpaulmathew.ashell.utils.Utils;
 import rikka.shizuku.Shizuku;
 

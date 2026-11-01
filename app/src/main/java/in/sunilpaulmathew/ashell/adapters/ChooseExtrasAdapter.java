@@ -15,7 +15,7 @@ import com.google.android.material.textview.MaterialTextView;
 import java.util.List;
 
 import in.sunilpaulmathew.ashell.R;
-import in.sunilpaulmathew.ashell.serializable.ExtrasChooserEntry;
+import in.sunilpaulmathew.ashell.serializables.ExtrasChooserEntry;
 import in.sunilpaulmathew.ashell.utils.Settings;
 
 /*

@@ -15,7 +15,7 @@ import java.util.concurrent.CopyOnWriteArrayList;
 
 import in.sunilpaulmathew.ashell.R;
 import in.sunilpaulmathew.ashell.adapters.FileInfoAdapter;
-import in.sunilpaulmathew.ashell.serializable.FilesEntry;
+import in.sunilpaulmathew.ashell.serializables.FilesEntry;
 
 /*
  * Created by sunilpaulmathew <sunil.kde@gmail.com> on June 24, 2026

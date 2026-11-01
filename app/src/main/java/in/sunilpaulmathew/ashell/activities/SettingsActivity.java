@@ -13,7 +13,7 @@ import java.util.List;
 import in.sunilpaulmathew.ashell.BuildConfig;
 import in.sunilpaulmathew.ashell.R;
 import in.sunilpaulmathew.ashell.adapters.SettingsAdapter;
-import in.sunilpaulmathew.ashell.serializable.SettingsEntry;
+import in.sunilpaulmathew.ashell.serializables.SettingsEntry;
 import in.sunilpaulmathew.ashell.utils.Settings;
 import in.sunilpaulmathew.ashell.utils.Utils;
 

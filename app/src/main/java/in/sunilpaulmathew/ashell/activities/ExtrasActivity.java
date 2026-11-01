@@ -16,8 +16,8 @@ import java.util.List;
 
 import in.sunilpaulmathew.ashell.R;
 import in.sunilpaulmathew.ashell.adapters.ChooseExtrasAdapter;
-import in.sunilpaulmathew.ashell.serializable.ExtrasChooserEntry;
-import in.sunilpaulmathew.ashell.serializable.ExtrasEntry;
+import in.sunilpaulmathew.ashell.serializables.ExtrasChooserEntry;
+import in.sunilpaulmathew.ashell.serializables.ExtrasEntry;
 import in.sunilpaulmathew.ashell.utils.Settings;
 import in.sunilpaulmathew.ashell.utils.Utils;
 

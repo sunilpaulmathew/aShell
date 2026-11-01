@@ -13,7 +13,7 @@ import java.util.List;
 import java.util.Locale;
 
 import in.sunilpaulmathew.ashell.R;
-import in.sunilpaulmathew.ashell.serializable.LogcatEntry;
+import in.sunilpaulmathew.ashell.serializables.LogcatEntry;
 import in.sunilpaulmathew.ashell.utils.Settings;
 
 /*

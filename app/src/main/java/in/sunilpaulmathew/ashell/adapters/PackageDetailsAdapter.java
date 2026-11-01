@@ -13,7 +13,7 @@ import java.io.File;
 import java.util.List;
 
 import in.sunilpaulmathew.ashell.R;
-import in.sunilpaulmathew.ashell.serializable.PackageDetailsEntry;
+import in.sunilpaulmathew.ashell.serializables.PackageDetailsEntry;
 import in.sunilpaulmathew.ashell.utils.Settings;
 
 /*

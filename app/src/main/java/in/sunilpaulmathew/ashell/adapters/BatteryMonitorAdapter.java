@@ -19,7 +19,7 @@ import java.util.List;
 import java.util.Objects;
 
 import in.sunilpaulmathew.ashell.R;
-import in.sunilpaulmathew.ashell.serializable.BatteryEntry;
+import in.sunilpaulmathew.ashell.serializables.BatteryEntry;
 import in.sunilpaulmathew.ashell.utils.Settings;
 
 /*

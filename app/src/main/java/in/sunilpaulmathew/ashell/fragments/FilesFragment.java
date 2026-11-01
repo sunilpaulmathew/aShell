@@ -32,7 +32,7 @@ import in.sunilpaulmathew.ashell.adapters.FoldersAdapter;
 import in.sunilpaulmathew.ashell.adapters.TitleAdapter;
 import in.sunilpaulmathew.ashell.dialogs.AccessUnavilableDialog;
 import in.sunilpaulmathew.ashell.dialogs.ProgressDialog;
-import in.sunilpaulmathew.ashell.serializable.FilesEntry;
+import in.sunilpaulmathew.ashell.serializables.FilesEntry;
 import in.sunilpaulmathew.ashell.utils.Async;
 import in.sunilpaulmathew.ashell.utils.Settings;
 import in.sunilpaulmathew.ashell.utils.ShizukuShell;

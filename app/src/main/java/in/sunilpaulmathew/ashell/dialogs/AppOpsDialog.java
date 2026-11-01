@@ -17,8 +17,8 @@ import java.util.List;
 
 import in.sunilpaulmathew.ashell.R;
 import in.sunilpaulmathew.ashell.adapters.AppOpsAdapter;
-import in.sunilpaulmathew.ashell.serializable.AppOpsEntry;
-import in.sunilpaulmathew.ashell.serializable.PackageEntry;
+import in.sunilpaulmathew.ashell.serializables.AppOpsEntry;
+import in.sunilpaulmathew.ashell.serializables.PackageEntry;
 import in.sunilpaulmathew.ashell.utils.Utils;
 
 /*

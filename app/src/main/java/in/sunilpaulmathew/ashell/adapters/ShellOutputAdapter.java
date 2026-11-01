@@ -25,7 +25,7 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 import in.sunilpaulmathew.ashell.R;
-import in.sunilpaulmathew.ashell.serializable.LogcatEntry;
+import in.sunilpaulmathew.ashell.serializables.LogcatEntry;
 import in.sunilpaulmathew.ashell.utils.Settings;
 
 /*

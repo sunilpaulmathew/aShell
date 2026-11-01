@@ -12,7 +12,7 @@ import com.google.android.material.button.MaterialButton;
 import java.util.List;
 
 import in.sunilpaulmathew.ashell.R;
-import in.sunilpaulmathew.ashell.serializable.PackageHeaderEntry;
+import in.sunilpaulmathew.ashell.serializables.PackageHeaderEntry;
 import in.sunilpaulmathew.ashell.utils.Settings;
 
 /*

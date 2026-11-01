@@ -14,7 +14,7 @@ import java.util.List;
 
 import in.sunilpaulmathew.ashell.R;
 import in.sunilpaulmathew.ashell.adapters.SingleChoiceAdapter;
-import in.sunilpaulmathew.ashell.serializable.MenuEntry;
+import in.sunilpaulmathew.ashell.serializables.MenuEntry;
 
 /*
  * Created by sunilpaulmathew <sunil.kde@gmail.com> on October 25, 2026

@@ -33,8 +33,8 @@ import java.util.regex.Pattern;
 
 import in.sunilpaulmathew.ashell.R;
 import in.sunilpaulmathew.ashell.adapters.BatteryMonitorAdapter;
-import in.sunilpaulmathew.ashell.serializable.BatteryEntry;
-import in.sunilpaulmathew.ashell.serializable.BatteryInfoEntry;
+import in.sunilpaulmathew.ashell.serializables.BatteryEntry;
+import in.sunilpaulmathew.ashell.serializables.BatteryInfoEntry;
 import in.sunilpaulmathew.ashell.utils.ShizukuShell;
 import in.sunilpaulmathew.ashell.utils.Utils;
 

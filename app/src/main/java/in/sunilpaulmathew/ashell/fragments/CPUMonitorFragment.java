@@ -33,7 +33,7 @@ import java.util.regex.Pattern;
 
 import in.sunilpaulmathew.ashell.R;
 import in.sunilpaulmathew.ashell.adapters.CPUMonitorAdapter;
-import in.sunilpaulmathew.ashell.serializable.CPUEntry;
+import in.sunilpaulmathew.ashell.serializables.CPUEntry;
 import in.sunilpaulmathew.ashell.utils.ShizukuShell;
 import in.sunilpaulmathew.ashell.utils.Utils;
 

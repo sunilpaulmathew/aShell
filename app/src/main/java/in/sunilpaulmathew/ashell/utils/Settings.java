@@ -28,8 +28,8 @@ import java.util.Objects;
 import in.sunilpaulmathew.ashell.R;
 import in.sunilpaulmathew.ashell.activities.aShellActivity;
 import in.sunilpaulmathew.ashell.dialogs.SingleChoiceAlertDialog;
-import in.sunilpaulmathew.ashell.serializable.CommandEntry;
-import in.sunilpaulmathew.ashell.serializable.ExtrasEntry;
+import in.sunilpaulmathew.ashell.serializables.CommandEntry;
+import in.sunilpaulmathew.ashell.serializables.ExtrasEntry;
 
 /*
  * Created by sunilpaulmathew <sunil.kde@gmail.com> on April 21, 2022

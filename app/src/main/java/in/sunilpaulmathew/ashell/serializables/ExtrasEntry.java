@@ -1,15 +1,12 @@
-package in.sunilpaulmathew.ashell.serializable;
-
-import static android.view.View.VISIBLE;
+package in.sunilpaulmathew.ashell.serializables;
 
 import android.content.Context;
 import android.os.Handler;
 import android.os.Looper;
-import android.widget.CheckBox;
 import android.widget.ImageButton;
 import android.widget.TextView;
 
-import androidx.cardview.widget.CardView;
+import com.google.android.material.card.MaterialCardView;
 
 import java.io.Serializable;
 import java.util.concurrent.ExecutorService;
@@ -20,32 +17,34 @@ import in.sunilpaulmathew.ashell.utils.Settings;
 /*
  * Created by sunilpaulmathew <sunil.kde@gmail.com> on October 18, 2026
  */
-public class ExtrasChooserEntry implements Serializable {
+public class ExtrasEntry implements Serializable {
 
-    private boolean enabled;
     private final int description, icon, id, title;
 
-    public ExtrasChooserEntry(ExtrasEntry extrasEntry, boolean enabled) {
-        this.icon = extrasEntry.getIcon();
-        this.title = extrasEntry.getTitle();
-        this.description = extrasEntry.getDescription();
-        this.id = extrasEntry.getId();
-        this.enabled = enabled;
+    public ExtrasEntry(int icon, int title, int description, int id) {
+        this.icon = icon;
+        this.title = title;
+        this.description = description;
+        this.id = id;
     }
 
-    public boolean isEnabled() {
-        return this.enabled;
+    public int getDescription() {
+        return this.description;
+    }
+
+    public int getIcon() {
+        return this.icon;
     }
 
     public int getId() {
         return this.id;
     }
 
-    public void setEnabled(boolean enabled) {
-        this.enabled = enabled;
+    public int getTitle() {
+        return this.title;
     }
 
-    public void load(CardView cardView, CheckBox checkBox, ImageButton icon, TextView title, TextView description) {
+    public void load(MaterialCardView cardView, ImageButton icon, TextView title, TextView description) {
         try (ExecutorService executor = Executors.newSingleThreadExecutor()) {
             Handler handler = new Handler(Looper.getMainLooper());
             executor.execute(() -> {
@@ -54,8 +53,6 @@ public class ExtrasChooserEntry implements Serializable {
                     icon.setImageResource(this.icon);
                     title.setText(this.title);
                     description.setText(this.description);
-                    description.setVisibility(VISIBLE);
-                    checkBox.setChecked(this.enabled);
                     cardView.setCardBackgroundColor(Settings.getCardBackgroundColor(this.icon, context));
                     title.setTextColor(Settings.getIconColor(this.icon, context));
                     icon.setColorFilter(Settings.getIconColor(this.icon, context));

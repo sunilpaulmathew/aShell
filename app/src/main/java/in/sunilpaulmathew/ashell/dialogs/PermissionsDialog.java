@@ -17,8 +17,8 @@ import java.util.List;
 
 import in.sunilpaulmathew.ashell.R;
 import in.sunilpaulmathew.ashell.adapters.PermissionsAdapter;
-import in.sunilpaulmathew.ashell.serializable.PackageEntry;
-import in.sunilpaulmathew.ashell.serializable.PermissionsEntry;
+import in.sunilpaulmathew.ashell.serializables.PackageEntry;
+import in.sunilpaulmathew.ashell.serializables.PermissionsEntry;
 import in.sunilpaulmathew.ashell.utils.Utils;
 
 /*

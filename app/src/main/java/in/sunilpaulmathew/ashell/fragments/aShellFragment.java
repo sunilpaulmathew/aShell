@@ -56,7 +56,7 @@ import in.sunilpaulmathew.ashell.dialogs.AccessUnavilableDialog;
 import in.sunilpaulmathew.ashell.dialogs.BookMarkDialog;
 import in.sunilpaulmathew.ashell.dialogs.BookMarkEditorDialog;
 import in.sunilpaulmathew.ashell.dialogs.ExamplesDialog;
-import in.sunilpaulmathew.ashell.serializable.CommandEntry;
+import in.sunilpaulmathew.ashell.serializables.CommandEntry;
 import in.sunilpaulmathew.ashell.utils.Async;
 import in.sunilpaulmathew.ashell.utils.ButtonAnimator;
 import in.sunilpaulmathew.ashell.utils.Commands;

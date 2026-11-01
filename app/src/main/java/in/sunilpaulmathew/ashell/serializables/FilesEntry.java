@@ -1,4 +1,4 @@
-package in.sunilpaulmathew.ashell.serializable;
+package in.sunilpaulmathew.ashell.serializables;
 
 import static android.view.View.VISIBLE;
 

@@ -4,7 +4,7 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
-import in.sunilpaulmathew.ashell.serializable.CommandEntry;
+import in.sunilpaulmathew.ashell.serializables.CommandEntry;
 
 /*
  * Created by sunilpaulmathew <sunil.kde@gmail.com> on November 05, 2022

@@ -12,7 +12,7 @@ import com.google.android.material.textview.MaterialTextView;
 import java.util.List;
 
 import in.sunilpaulmathew.ashell.R;
-import in.sunilpaulmathew.ashell.serializable.CommandEntry;
+import in.sunilpaulmathew.ashell.serializables.CommandEntry;
 import in.sunilpaulmathew.ashell.utils.Settings;
 
 /*

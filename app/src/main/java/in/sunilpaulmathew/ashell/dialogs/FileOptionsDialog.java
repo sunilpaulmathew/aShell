@@ -21,7 +21,7 @@ import java.util.List;
 
 import in.sunilpaulmathew.ashell.R;
 import in.sunilpaulmathew.ashell.adapters.FileOptionsAdapter;
-import in.sunilpaulmathew.ashell.serializable.MenuEntry;
+import in.sunilpaulmathew.ashell.serializables.MenuEntry;
 import in.sunilpaulmathew.ashell.utils.Utils;
 
 /*

@@ -19,8 +19,8 @@ import java.util.List;
 import in.sunilpaulmathew.ashell.R;
 import in.sunilpaulmathew.ashell.adapters.PackageDetailsAdapter;
 import in.sunilpaulmathew.ashell.adapters.PackageHeaderAdapter;
-import in.sunilpaulmathew.ashell.serializable.PackageDetailsEntry;
-import in.sunilpaulmathew.ashell.serializable.PackageHeaderEntry;
+import in.sunilpaulmathew.ashell.serializables.PackageDetailsEntry;
+import in.sunilpaulmathew.ashell.serializables.PackageHeaderEntry;
 import in.sunilpaulmathew.ashell.utils.Utils;
 
 /*

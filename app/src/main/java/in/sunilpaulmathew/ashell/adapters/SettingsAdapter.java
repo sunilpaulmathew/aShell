@@ -26,8 +26,8 @@ import in.sunilpaulmathew.ashell.dialogs.ExamplesDialog;
 import in.sunilpaulmathew.ashell.dialogs.ExtrasDialog;
 import in.sunilpaulmathew.ashell.dialogs.PolicyDialog;
 import in.sunilpaulmathew.ashell.dialogs.SingleChoiceAlertDialog;
-import in.sunilpaulmathew.ashell.serializable.ExtrasChooserEntry;
-import in.sunilpaulmathew.ashell.serializable.SettingsEntry;
+import in.sunilpaulmathew.ashell.serializables.ExtrasChooserEntry;
+import in.sunilpaulmathew.ashell.serializables.SettingsEntry;
 import in.sunilpaulmathew.ashell.utils.Settings;
 import in.sunilpaulmathew.ashell.utils.Utils;
 

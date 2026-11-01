@@ -17,8 +17,8 @@ import java.util.Locale;
 
 import in.sunilpaulmathew.ashell.R;
 import in.sunilpaulmathew.ashell.dialogs.SingleChoiceBottomDialog;
-import in.sunilpaulmathew.ashell.serializable.AppOpsEntry;
-import in.sunilpaulmathew.ashell.serializable.MenuEntry;
+import in.sunilpaulmathew.ashell.serializables.AppOpsEntry;
+import in.sunilpaulmathew.ashell.serializables.MenuEntry;
 import in.sunilpaulmathew.ashell.utils.Async;
 import in.sunilpaulmathew.ashell.utils.Settings;
 import in.sunilpaulmathew.ashell.utils.ShizukuShell;

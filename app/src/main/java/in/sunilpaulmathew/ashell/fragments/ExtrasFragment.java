@@ -22,7 +22,7 @@ import java.util.concurrent.CopyOnWriteArrayList;
 import in.sunilpaulmathew.ashell.R;
 import in.sunilpaulmathew.ashell.adapters.ExtrasAdapter;
 import in.sunilpaulmathew.ashell.dialogs.AccessUnavilableDialog;
-import in.sunilpaulmathew.ashell.serializable.ExtrasEntry;
+import in.sunilpaulmathew.ashell.serializables.ExtrasEntry;
 import in.sunilpaulmathew.ashell.utils.Settings;
 import in.sunilpaulmathew.ashell.utils.ShizukuShell;
 import in.sunilpaulmathew.ashell.utils.Utils;

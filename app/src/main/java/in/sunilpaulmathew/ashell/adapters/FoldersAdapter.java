@@ -16,7 +16,7 @@ import java.util.List;
 import java.util.Objects;
 
 import in.sunilpaulmathew.ashell.R;
-import in.sunilpaulmathew.ashell.serializable.FilesEntry;
+import in.sunilpaulmathew.ashell.serializables.FilesEntry;
 
 /*
  * Created by sunilpaulmathew <sunil.kde@gmail.com> on June 07, 2026

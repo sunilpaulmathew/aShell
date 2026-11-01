@@ -16,7 +16,7 @@ import java.util.List;
 
 import in.sunilpaulmathew.ashell.R;
 import in.sunilpaulmathew.ashell.dialogs.ProgressDialog;
-import in.sunilpaulmathew.ashell.serializable.PermissionsEntry;
+import in.sunilpaulmathew.ashell.serializables.PermissionsEntry;
 import in.sunilpaulmathew.ashell.utils.Async;
 import in.sunilpaulmathew.ashell.utils.Settings;
 import in.sunilpaulmathew.ashell.utils.ShizukuShell;

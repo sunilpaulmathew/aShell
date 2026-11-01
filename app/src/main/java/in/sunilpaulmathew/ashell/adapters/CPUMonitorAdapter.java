@@ -18,7 +18,7 @@ import java.util.List;
 import java.util.Objects;
 
 import in.sunilpaulmathew.ashell.R;
-import in.sunilpaulmathew.ashell.serializable.CPUEntry;
+import in.sunilpaulmathew.ashell.serializables.CPUEntry;
 import in.sunilpaulmathew.ashell.utils.Settings;
 
 /*
