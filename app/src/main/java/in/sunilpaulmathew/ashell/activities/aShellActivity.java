@@ -6,33 +6,26 @@ import static android.view.View.VISIBLE;
 import android.app.Activity;
 import android.content.Intent;
 import android.content.pm.PackageManager;
-import android.content.res.ColorStateList;
 import android.content.res.Configuration;
 import android.os.Bundle;
-import android.util.TypedValue;
-import android.widget.FrameLayout;
+import android.view.View;
 
 import androidx.activity.result.ActivityResultLauncher;
 import androidx.activity.result.contract.ActivityResultContracts;
 import androidx.annotation.NonNull;
-import androidx.appcompat.widget.AppCompatImageButton;
-import androidx.appcompat.widget.LinearLayoutCompat;
-import androidx.core.graphics.ColorUtils;
 import androidx.fragment.app.Fragment;
 import androidx.viewpager2.widget.ViewPager2;
 
 import com.google.android.material.button.MaterialButton;
-import com.google.android.material.color.DynamicColors;
-import com.google.android.material.color.MaterialColors;
+import com.google.android.material.tabs.TabLayout;
+import com.google.android.material.tabs.TabLayoutMediator;
 import com.google.android.material.textview.MaterialTextView;
 
 import in.sunilpaulmathew.ashell.R;
 import in.sunilpaulmathew.ashell.adapters.PagerAdapter;
 import in.sunilpaulmathew.ashell.fragments.ExtrasFragment;
-import in.sunilpaulmathew.ashell.fragments.SettingsFragment;
 import in.sunilpaulmathew.ashell.fragments.aShellFragment;
 import in.sunilpaulmathew.ashell.utils.Async;
-import in.sunilpaulmathew.ashell.utils.ButtonAnimator;
 import in.sunilpaulmathew.ashell.utils.Packages;
 import in.sunilpaulmathew.ashell.utils.Settings;
 import in.sunilpaulmathew.ashell.utils.ShizukuShell;
@@ -44,12 +37,8 @@ import rikka.shizuku.Shizuku;
  */
 public class aShellActivity extends BaseActivity {
 
-    private AppCompatImageButton icon;
-    private FrameLayout frameLayout;
-    private int FRAGMENT_POSITION = 0;
-    private LinearLayoutCompat titleLayout;
-    private MaterialButton extras, settings, settingsButton, shell;
     private MaterialTextView title;
+    private TabLayout tabLayout;
     private ViewPager2 viewPager;
 
     @Override
@@ -62,14 +51,9 @@ public class aShellActivity extends BaseActivity {
 
         setContentView(R.layout.activity_ashell, R.id.layout_main);
 
-        icon = findViewById(R.id.icon);
-        frameLayout = findViewById(R.id.fragment_container);
-        titleLayout = findViewById(R.id.title_layout);
-        shell = findViewById(R.id.shell);
-        extras = findViewById(R.id.extras);
-        settings = findViewById(R.id.settings);
-        settingsButton = findViewById(R.id.settings_button);
+        MaterialButton settings = findViewById(R.id.settings_button);
         title = findViewById(R.id.title);
+        tabLayout = findViewById(R.id.tab_layout);
         viewPager = findViewById(R.id.view_pager);
 
         if (!Utils.getBoolean("welcome_screen_viewed", false, this)) {
@@ -80,17 +64,13 @@ public class aShellActivity extends BaseActivity {
             activityResultLauncher.launch(new Intent(this, ExtrasActivity.class));
         }
 
-        loadUI();
+        loadUI(savedInstanceState);
 
         if (Settings.isExtrasEnabled(this)) {
             viewPager.registerOnPageChangeCallback(new ViewPager2.OnPageChangeCallback() {
                 @Override
                 public void onPageSelected(int position) {
                     super.onPageSelected(position);
-
-                    updateIcons(position, activeColor(aShellActivity.this), inactiveColor());
-
-                    FRAGMENT_POSITION = position;
                 }
             });
         }
@@ -111,62 +91,23 @@ public class aShellActivity extends BaseActivity {
             }
         }.execute();
 
-        shell.setOnClickListener(v -> {
-            if (FRAGMENT_POSITION == 0) {
-                shell.setChecked(true);
-                return;
-            }
-            new ButtonAnimator(shell, null) {
-                @Override
-                public void onItemClicked() {
-                    viewPager.setCurrentItem(0, true);
-                }
-            };
-        });
-
-        extras.setOnClickListener(v -> {
-            if (FRAGMENT_POSITION == 1) {
-                extras.setChecked(true);
-                return;
-            }
-            new ButtonAnimator(extras, null) {
-                @Override
-                public void onItemClicked() {
-                    viewPager.setCurrentItem(1, true);
-                }
-            };
-        });
-
-        settings.setOnClickListener(v -> {
-            if (FRAGMENT_POSITION == 2) {
-                settings.setChecked(true);
-                return;
-            }
-            new ButtonAnimator(settings, null) {
-                @Override
-                public void onItemClicked() {
-                    viewPager.setCurrentItem(3, true);
-                }
-            };
-        });
-
-        settingsButton.setOnClickListener(v -> {
-            requestFocus(false);
-            viewPager.setVisibility(GONE);
-            settingsButton.setVisibility(GONE);
-            getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container, new SettingsFragment()).commit();
-            frameLayout.setVisibility(VISIBLE);
-            title.setText(R.string.settings);
-            icon.setVisibility(GONE);
-        });
+        settings.setOnClickListener(v -> activityResultLauncher.launch(new Intent(this, SettingsActivity.class)));
     }
 
     private final ActivityResultLauncher<Intent> activityResultLauncher = registerForActivityResult(
             new ActivityResultContracts.StartActivityForResult(),
             result -> {
                 if (result.getResultCode() == Activity.RESULT_OK && result.getData() != null) {
-                    if (result.getData().getBooleanExtra("extrasChanged", false)) {
-                        Settings.restartApp(this);
+                    int extrasChanged = result.getData().getIntExtra("extrasChanged", -1);
+                    String selectedCommand = result.getData().getStringExtra("selectedCommand");
+                    if (selectedCommand != null) {
+                        navigateToFragment(0, selectedCommand);
+                    } else if (extrasChanged >= 0) {
+                        if (extrasChanged == 1) {
+                            reloadExtras();
+                        } else {
+                            loadUI(null);
+                        }
                     }
                 }
             }
@@ -204,22 +145,6 @@ public class aShellActivity extends BaseActivity {
         }
     }
 
-    private int activeColor(Activity activity) {
-        return DynamicColors.isDynamicColorAvailable()
-                ? MaterialColors.getColor(DynamicColors.wrapContextIfAvailable(
-                        activity, com.google.android.material.R.style.Theme_Material3_DynamicColors_DayNight), androidx.appcompat.R.attr.colorPrimary,
-                Utils.getColor(R.color.colorBlue, activity))
-                : androidx.core.content.ContextCompat.getColor(activity, R.color.colorBlue);
-    }
-
-    private int inactiveColor() {
-        TypedValue typedValue = new TypedValue();
-        getTheme().resolveAttribute(com.google.android.material.R.attr.colorOnSurface, typedValue, true);
-        int baseColor = typedValue.data;
-
-        return ColorUtils.setAlphaComponent(baseColor, Math.round(255 * 0.76f));
-    }
-
     public void enableViewPagerSwiping(boolean enabled) {
         if (viewPager != null) {
             if (viewPager.isUserInputEnabled() == enabled) return;
@@ -227,23 +152,71 @@ public class aShellActivity extends BaseActivity {
         }
     }
 
-    public void loadUI() {
+    private void loadUI(Bundle savedInstanceState) {
         PagerAdapter adapter = new PagerAdapter(this);
-        adapter.addFragment(getShellFragment(getIntent().getStringExtra("command")), getString(R.string.shell));
+        adapter.addFragment(getShellFragment(getIntent().getStringExtra("command")), getString(R.string.shell), R.drawable.ic_shell);
         if (Settings.isExtrasEnabled(this)) {
-            adapter.addFragment(getExtrasFragment(), getString(R.string.extras));
-            adapter.addFragment(new SettingsFragment(), getString(R.string.settings));
-            titleLayout.setVisibility(GONE);
-            settings.setVisibility(VISIBLE);
-            extras.setVisibility(VISIBLE);
-            shell.setVisibility(VISIBLE);
+            adapter.addFragment(getExtrasFragment(), getString(R.string.extras), R.drawable.ic_extras);
+            title.setVisibility(GONE);
+            tabLayout.setVisibility(VISIBLE);
         } else {
-            titleLayout.setVisibility(VISIBLE);
-            settings.setVisibility(GONE);
-            extras.setVisibility(GONE);
-            shell.setVisibility(GONE);
+            tabLayout.setVisibility(GONE);
+            title.setVisibility(VISIBLE);
         }
         viewPager.setAdapter(adapter);
+
+        new TabLayoutMediator(tabLayout, viewPager,
+                (tab, position) -> {
+                    tab.setText(adapter.getPageTitle(position));
+                    tab.setIcon(adapter.getPageIcon(position));
+                }
+        ).attach();
+
+        for (int i = 0; i < tabLayout.getTabCount(); i++) {
+            TabLayout.Tab tab = tabLayout.getTabAt(i);
+            if (tab != null) {
+                View customView = View.inflate(this, R.layout.recycler_view_tab_button, null);
+                MaterialButton tabButton = customView.findViewById(R.id.button);
+                if (tab.getText() != null) {
+                    tabButton.setText(tab.getText());
+                }
+                tab.setCustomView(customView);
+            }
+        }
+
+        tabLayout.addOnTabSelectedListener(new TabLayout.OnTabSelectedListener() {
+            @Override
+            public void onTabSelected(TabLayout.Tab tab) {
+                if (tab.getCustomView() != null) {
+                    MaterialButton button = tab.getCustomView().findViewById(R.id.button);
+                    button.setChecked(true);
+                }
+            }
+
+            @Override
+            public void onTabUnselected(TabLayout.Tab tab) {
+                if (tab.getCustomView() != null) {
+                    MaterialButton button = tab.getCustomView().findViewById(R.id.button);
+                    button.setChecked(false);
+                }
+            }
+
+            @Override
+            public void onTabReselected(TabLayout.Tab tab) {}
+        });
+
+        if (savedInstanceState == null) {
+            tabLayout.post(() -> {
+                TabLayout.Tab firstTab = tabLayout.getTabAt(0);
+                if (firstTab != null) {
+                    firstTab.select();
+                    if (firstTab.getCustomView() != null) {
+                        MaterialButton button = firstTab.getCustomView().findViewById(R.id.button);
+                        if (button != null) button.setChecked(true);
+                    }
+                }
+            });
+        }
     }
 
     public void navigateToFragment(int position, String command) {
@@ -253,56 +226,13 @@ public class aShellActivity extends BaseActivity {
         viewPager.setCurrentItem(position, true);
     }
 
-    public void reloadExtras() {
+    private void reloadExtras() {
         Fragment existingExtras = getSupportFragmentManager().findFragmentByTag("f1");
         if (existingExtras != null) {
             if (existingExtras instanceof ExtrasFragment) {
                 ((ExtrasFragment) existingExtras).loadUI();
             }
         }
-    }
-
-    private void requestFocus(boolean show) {
-        Fragment existingShell = getSupportFragmentManager().findFragmentByTag("f0");
-        if (existingShell instanceof aShellFragment) {
-            if (show) {
-                ((aShellFragment) existingShell).requestFocus();
-            } else {
-                ((aShellFragment) existingShell).clearFocus();
-            }
-        }
-    }
-
-    public void showShell(String command) {
-        frameLayout.setVisibility(GONE);
-        viewPager.setVisibility(VISIBLE);
-        title.setText(R.string.app_name);
-        settingsButton.setVisibility(VISIBLE);
-        icon.setVisibility(VISIBLE);
-        requestFocus(true);
-        if (command != null) {
-            Fragment existingShell = getSupportFragmentManager().findFragmentByTag("f0");
-            if (existingShell instanceof aShellFragment) {
-                ((aShellFragment) existingShell).updateCommand(command);
-            }
-        }
-    }
-
-    private void updateIcons(int position, int activeColor, int inactiveColor) {
-        ColorStateList activeTint = ColorStateList.valueOf(activeColor);
-        ColorStateList inactiveTint = ColorStateList.valueOf(inactiveColor);
-
-        shell.setChecked(position == 0);
-        shell.setIconTint(position == 0 ? activeTint : inactiveTint);
-        shell.setTextColor(position == 0 ? activeColor : inactiveColor);
-
-        extras.setChecked(position == 1);
-        extras.setIconTint(position == 1 ? activeTint : inactiveTint);
-        extras.setTextColor(position == 1 ? activeColor : inactiveColor);
-
-        settings.setChecked(position == 2);
-        settings.setIconTint(position == 2 ? activeTint : inactiveTint);
-        settings.setTextColor(position == 2 ? activeColor : inactiveColor);
     }
 
     @Override

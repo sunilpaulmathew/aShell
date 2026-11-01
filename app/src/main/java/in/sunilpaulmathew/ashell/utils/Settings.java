@@ -84,17 +84,13 @@ public class Settings {
     }
 
     public static boolean isExtrasEnabled(Context context) {
-        return extrasSize(context) != 0;
-    }
-
-    public static int extrasSize(Context context) {
         int size = 0;
         for (int i=0; i<5; i++) {
             if (Utils.getBoolean("extras_" + i, false, context)) {
                 size += 1;
             }
         }
-        return size;
+        return size != 0;
     }
 
     public static int getColorAccent(Context context) {
@@ -387,21 +383,9 @@ public class Settings {
         res.updateConfiguration(conf, dm);
     }
 
-    public static void loadUI(Activity activity) {
-        if (activity instanceof aShellActivity) {
-            ((aShellActivity) activity).loadUI();
-        }
-    }
-
     public static void navigateToFragment(int position, String command, Activity activity) {
         if (activity instanceof aShellActivity) {
             ((aShellActivity) activity).navigateToFragment(position, command);
-        }
-    }
-
-    public static void reloadExtras(Activity activity) {
-        if (activity instanceof aShellActivity) {
-            ((aShellActivity) activity).reloadExtras();
         }
     }
 
@@ -637,12 +621,6 @@ public class Settings {
             // Reset properties to ensure recycled views are displayed correctly
             viewToAnimate.setTranslationY(0f);
             viewToAnimate.setAlpha(1f);
-        }
-    }
-
-    public static void showShell(String command, Activity activity) {
-        if (activity instanceof aShellActivity) {
-            ((aShellActivity) activity).showShell(command);
         }
     }
 

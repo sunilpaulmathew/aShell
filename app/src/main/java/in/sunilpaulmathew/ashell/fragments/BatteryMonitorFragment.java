@@ -195,6 +195,7 @@ public class BatteryMonitorFragment extends BaseFragment {
             String levelAsPercentage = level + "%";
             List<BatteryEntry> data = getData(batteryInfo);
             mainHandler.post(() -> {
+                if (!isAdded() || isDetached()) return;
                 if (progressBar != null) {
                     progressBar.setProgress(level, true);
                     progressBar.setIndicatorColor(progressColor);

@@ -15,7 +15,7 @@ import androidx.annotation.Nullable;
 import androidx.appcompat.widget.AppCompatImageButton;
 import androidx.core.content.ContextCompat;
 import androidx.fragment.app.Fragment;
-import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.google.android.material.progressindicator.CircularProgressIndicator;
@@ -35,6 +35,7 @@ import in.sunilpaulmathew.ashell.R;
 import in.sunilpaulmathew.ashell.adapters.CPUMonitorAdapter;
 import in.sunilpaulmathew.ashell.serializable.CPUEntry;
 import in.sunilpaulmathew.ashell.utils.ShizukuShell;
+import in.sunilpaulmathew.ashell.utils.Utils;
 
 /*
  * Created by sunilpaulmathew <sunil.kde@gmail.com> on October 18, 2026
@@ -64,7 +65,7 @@ public class CPUMonitorFragment extends BaseFragment {
         title.setText(R.string.cpu_monitor);
         load.setVisibility(VISIBLE);
 
-        recyclerView.setLayoutManager(new LinearLayoutManager(requireActivity()));
+        recyclerView.setLayoutManager(new GridLayoutManager(requireActivity(), getSpanSize()));
 
         recyclerView.setAdapter(adapter);
 
@@ -76,6 +77,14 @@ public class CPUMonitorFragment extends BaseFragment {
         };
 
         return rootView;
+    }
+
+    private int getSpanSize() {
+        if (Utils.isTablet(requireActivity())) {
+            return 2;
+        } else {
+            return 1;
+        }
     }
 
     private static List<CPUEntry> parse(String dumpsysOutput) {
@@ -184,6 +193,7 @@ public class CPUMonitorFragment extends BaseFragment {
             int progressColor = getProgressColor((int)cpuUsage);
             String cpuUsageText = cpuUsage + "%";
             mainHandler.post(() -> {
+                if (!isAdded() || isDetached()) return;
                 load.setText(getString(R.string.cpu_monitor_load, cpuLoad));
                 if (progressBar != null) {
                     progressBar.setProgress((int) cpuUsage, false);

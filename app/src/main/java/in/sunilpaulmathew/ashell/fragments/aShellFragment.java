@@ -64,6 +64,7 @@ import in.sunilpaulmathew.ashell.utils.Packages;
 import in.sunilpaulmathew.ashell.utils.Settings;
 import in.sunilpaulmathew.ashell.utils.ShizukuShell;
 import in.sunilpaulmathew.ashell.utils.Utils;
+import in.sunilpaulmathew.ashell.viewModels.ShellViewModel;
 import rikka.shizuku.Shizuku;
 
 /*
@@ -77,17 +78,17 @@ public class aShellFragment extends BaseFragment {
     private RecyclerView mRecyclerViewOutput;
     private ScheduledExecutorService mExecutor = null;
     private final ShellOutputAdapter mShellOutputAdapter = new ShellOutputAdapter(new CopyOnWriteArrayList<>());
+    private ShellViewModel mViewModel;
     private ShizukuShell mShizukuShell = null;
-    private int mPosition = 1;
-    private final List<String> mHistory = new ArrayList<>(), mResult = Collections.synchronizedList(new ArrayList<>());
-
     private static final int MAX_OUTPUT_LINES = 50000, TRIM_CHUNK = 10000;
-
     private String mCommandShared = null;
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
+        mViewModel = new androidx.lifecycle.ViewModelProvider(this).get(ShellViewModel.class);
+
         Bundle arguments = getArguments();
         if (arguments == null) return;
 
@@ -257,7 +258,7 @@ public class aShellFragment extends BaseFragment {
                 String query = s.toString().trim().toLowerCase();
 
                 if (query.isEmpty()) {
-                    updateUI(mResult);
+                    updateUI(mViewModel.mResult);
                 } else {
                     /*
                      * Plain ArrayList: this is built and read on the main thread only.
@@ -265,8 +266,8 @@ public class aShellFragment extends BaseFragment {
                      * one keystroke into quadratic work over the entire output.
                      */
                     List<String> mResultSorted = new ArrayList<>();
-                    for (int i = mPosition; i < mResult.size(); i++) {
-                        String mLine = mResult.get(i);
+                    for (int i = mViewModel.mPosition; i < mViewModel.mResult.size(); i++) {
+                        String mLine = mViewModel.mResult.get(i);
                         if (mLine.toLowerCase().contains(query)) {
                             mResultSorted.add(mLine);
                         }
@@ -338,14 +339,14 @@ public class aShellFragment extends BaseFragment {
                     @Override
                     public void doInBackground() {
                         StringBuilder sb = new StringBuilder();
-                        for (int i = mPosition; i < mResult.size(); i++) {
-                            String mLine = mResult.get(i);
+                        for (int i = mViewModel.mPosition; i < mViewModel.mResult.size(); i++) {
+                            String mLine = mViewModel.mResult.get(i);
                             if (!mLine.equals("aShell: Finish") && !mLine.equals("<i></i>")) {
                                 sb.append(mLine).append("\n");
                             }
                         }
 
-                        String mFileName = mHistory.get(mHistory.size() - 1)
+                        String mFileName = mViewModel.mHistory.get(mViewModel.mHistory.size() - 1)
                                 .replace("/", "-").replace(" ", "") + ".txt";
 
                         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q) {
@@ -396,11 +397,11 @@ public class aShellFragment extends BaseFragment {
         mExecutor = Executors.newSingleThreadScheduledExecutor();
         AtomicInteger lastShownSize = new AtomicInteger(0);
         mExecutor.scheduleWithFixedDelay(() -> {
-            if (mResult.size() != lastShownSize.get()) {
-                lastShownSize.set(mResult.size());
+            if (mViewModel.mResult.size() != lastShownSize.get()) {
+                lastShownSize.set(mViewModel.mResult.size());
                 new Handler(Looper.getMainLooper()).post(() -> {
                     trimOutput();
-                    updateUI(mResult);
+                    updateUI(mViewModel.mResult);
                 });
             }
         }, 0, 250, TimeUnit.MILLISECONDS);
@@ -489,7 +490,7 @@ public class aShellFragment extends BaseFragment {
     }
 
     private List<String> getRecentCommands() {
-        List<String> mRecentCommands = new ArrayList<>(mHistory);
+        List<String> mRecentCommands = new ArrayList<>(mViewModel.mHistory);
         Collections.reverse(mRecentCommands);
         return mRecentCommands;
     }
@@ -508,9 +509,9 @@ public class aShellFragment extends BaseFragment {
     }
 
     private void showButtons() {
-        if (!mResult.isEmpty()) {
+        if (!mViewModel.mResult.isEmpty()) {
             mSaveButton.setVisibility(VISIBLE);
-            if (mResult.size() > 25) {
+            if (mViewModel.mResult.size() > 25) {
                 mTopArrow.setVisibility(VISIBLE);
                 mBottomArrow.setVisibility(VISIBLE);
             }
@@ -565,7 +566,7 @@ public class aShellFragment extends BaseFragment {
     }
 
     private void clearAll() {
-        mResult.clear();
+        mViewModel.mResult.clear();
         mSearchButton.setEnabled(false);
         mClearButton.setEnabled(false);
         mCommand.setHint(getString(R.string.command_hint));
@@ -642,7 +643,7 @@ public class aShellFragment extends BaseFragment {
             return;
         }
 
-        mHistory.add(finalCommand);
+        mViewModel.mHistory.add(finalCommand);
 
         mSaveButton.setVisibility(GONE);
 
@@ -653,10 +654,10 @@ public class aShellFragment extends BaseFragment {
 
         String mTitleText = "<font color=\"" + Settings.getColorAccent(requireActivity()) + "\">shell@" + Utils.getDeviceName() + "</font># <i>" + Utils.escapeHtml(finalCommand) + "</i>";
 
-        if (!mResult.isEmpty()) {
-            mResult.add("<i></i>");
+        if (!mViewModel.mResult.isEmpty()) {
+            mViewModel.mResult.add("<i></i>");
         }
-        mResult.add(mTitleText);
+        mViewModel.mResult.add(mTitleText);
 
         new Async() {
             private final Activity activity = requireActivity();
@@ -669,8 +670,8 @@ public class aShellFragment extends BaseFragment {
             public void doInBackground() {
                 if (isPermissionGranted()) {
                     permissionGranted = true;
-                    mPosition = mResult.size();
-                    mShizukuShell = new ShizukuShell(mResult, finalCommand);
+                    mViewModel.mPosition = mViewModel.mResult.size();
+                    mShizukuShell = new ShizukuShell(mViewModel.mResult, finalCommand);
                     mShizukuShell.setStatusListener(status -> new Handler(Looper.getMainLooper()).post(() -> {
                         if (!isAdded()) return;
                         switch (status) {
@@ -699,11 +700,11 @@ public class aShellFragment extends BaseFragment {
                 if (!isAdded() || activity.isFinishing() || activity.isDestroyed()) return;
 
                 if (permissionGranted) {
-                    if (!mHistory.isEmpty() && !mHistoryButton.isEnabled()) {
+                    if (!mViewModel.mHistory.isEmpty() && !mHistoryButton.isEnabled()) {
                         mHistoryButton.setEnabled(true);
                     }
                     updateBookmarksButton();
-                    if (!mResult.isEmpty()) {
+                    if (!mViewModel.mResult.isEmpty()) {
                         mClearButton.setEnabled(true);
                         mSearchButton.setEnabled(true);
                         showButtons();
@@ -767,13 +768,13 @@ public class aShellFragment extends BaseFragment {
      * so it has to move down by whatever was dropped.
      */
     private void trimOutput() {
-        if (mResult.size() <= MAX_OUTPUT_LINES + TRIM_CHUNK) return;
+        if (mViewModel.mResult.size() <= MAX_OUTPUT_LINES + TRIM_CHUNK) return;
 
-        int mTrimmed = mResult.size() - MAX_OUTPUT_LINES;
-        synchronized (mResult) {
-            mResult.subList(0, mTrimmed).clear();
+        int mTrimmed = mViewModel.mResult.size() - MAX_OUTPUT_LINES;
+        synchronized (mViewModel.mResult) {
+            mViewModel.mResult.subList(0, mTrimmed).clear();
         }
-        mPosition = Math.max(0, mPosition - mTrimmed);
+        mViewModel.mPosition = Math.max(0, mViewModel.mPosition - mTrimmed);
     }
 
     private void updateUI(List<String> data) {
@@ -784,13 +785,13 @@ public class aShellFragment extends BaseFragment {
 
     @Override
     protected void onPermissionGranted() {
-        mResult.add("aShell got access to Shizuku service");
+        mViewModel.mResult.add("aShell got access to Shizuku service");
         ShizukuShell.ensureUserService(Packages::acquireData);
     }
 
     @Override
     protected void onPermissionDenied() {
-        mResult.add(getString(R.string.shizuku_access_denied_title));
+        mViewModel.mResult.add(getString(R.string.shizuku_access_denied_title));
     }
 
     @Override

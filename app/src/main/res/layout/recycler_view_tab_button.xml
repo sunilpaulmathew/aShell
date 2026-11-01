@@ -1,0 +1,16 @@
+<com.google.android.material.button.MaterialButton
+    android:id="@+id/button"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    style="@style/Widget.Material3.Button.TextButton"
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    app:iconTint="?attr/colorOnSurface"
+    android:layout_gravity="center"
+    app:iconGravity="textStart"
+    android:clickable="false"
+    android:focusable="false"
+    android:textStyle="bold"
+    android:checkable="true"
+    android:gravity="center"
+    app:iconSize="24dp" />

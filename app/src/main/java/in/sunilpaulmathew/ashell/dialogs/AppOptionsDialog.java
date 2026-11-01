@@ -6,7 +6,7 @@ import android.view.View;
 
 import androidx.appcompat.widget.AppCompatImageButton;
 import androidx.recyclerview.widget.DividerItemDecoration;
-import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.google.android.material.bottomsheet.BottomSheetDialog;
@@ -19,6 +19,7 @@ import in.sunilpaulmathew.ashell.R;
 import in.sunilpaulmathew.ashell.adapters.FileOptionsAdapter;
 import in.sunilpaulmathew.ashell.serializable.MenuEntry;
 import in.sunilpaulmathew.ashell.serializable.PackageEntry;
+import in.sunilpaulmathew.ashell.utils.Utils;
 
 /*
  * Created by sunilpaulmathew <sunil.kde@gmail.com> on October 25, 2026
@@ -40,7 +41,7 @@ public abstract class AppOptionsDialog extends BottomSheetDialog {
         icon.setImageDrawable(packageEntry.getAppIcon());
 
         recyclerView.setItemAnimator(null);
-        recyclerView.setLayoutManager(new LinearLayoutManager(context));
+        recyclerView.setLayoutManager(new GridLayoutManager(context, Utils.isPortraitMode(context) ? 1 : Utils.isTablet(context) ? 3 : 2));
         recyclerView.addItemDecoration(new DividerItemDecoration(context, DividerItemDecoration.VERTICAL));
         recyclerView.setAdapter(new FileOptionsAdapter(menuEntries, id -> {
             onItemSelected(id);

@@ -30,21 +30,27 @@ public class PagerAdapter extends FragmentStateAdapter {
         return pages.size();
     }
 
-    public void addFragment(@NonNull Fragment fragment, @NonNull String title) {
-        pages.add(new PageItem(fragment, title));
+    public void addFragment(@NonNull Fragment fragment, @NonNull String title, int icon) {
+        pages.add(new PageItem(fragment, title, icon));
     }
 
     public CharSequence getPageTitle(int position) {
         return pages.get(position).title;
     }
 
+    public int getPageIcon(int position) {
+        return pages.get(position).icon;
+    }
+
     private static class PageItem {
         final Fragment fragment;
+        final int icon;
         final String title;
 
-        PageItem(Fragment fragment, String title) {
+        PageItem(Fragment fragment, String title, int icon) {
             this.fragment = fragment;
             this.title = title;
+            this.icon = icon;
         }
     }
 

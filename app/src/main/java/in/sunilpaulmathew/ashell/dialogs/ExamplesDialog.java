@@ -1,7 +1,6 @@
 package in.sunilpaulmathew.ashell.dialogs;
 
-import android.app.Activity;
-import android.content.res.Configuration;
+import android.content.Context;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.view.View;
@@ -16,24 +15,23 @@ import com.google.android.material.textfield.MaterialAutoCompleteTextView;
 import in.sunilpaulmathew.ashell.R;
 import in.sunilpaulmathew.ashell.adapters.ExamplesAdapter;
 import in.sunilpaulmathew.ashell.utils.Commands;
+import in.sunilpaulmathew.ashell.utils.Utils;
 
 /*
  * Created by sunilpaulmathew <sunil.kde@gmail.com> on November 05, 2022
  */
 public abstract class ExamplesDialog extends BottomSheetDialog {
 
-    public ExamplesDialog(Activity activity) {
-        super(activity);
+    public ExamplesDialog(Context context) {
+        super(context);
 
-        View root = View.inflate(activity, R.layout.layout_examples, null);
+        View root = View.inflate(context, R.layout.layout_examples, null);
         MaterialButton mCancel = root.findViewById(R.id.cancel);
         MaterialAutoCompleteTextView mSearchWord = root.findViewById(R.id.search_word);
         RecyclerView mRecyclerView = root.findViewById(R.id.recycler_view);
 
-        GridLayoutManager mLayoutManager = new GridLayoutManager(activity, activity.getResources().getConfiguration()
-                .orientation == Configuration.ORIENTATION_LANDSCAPE ? 2 : 1);
         mRecyclerView.setItemAnimator(null);
-        mRecyclerView.setLayoutManager(mLayoutManager);
+        mRecyclerView.setLayoutManager(new GridLayoutManager(context, Utils.isPortraitMode(context) ? 1 : Utils.isTablet(context) ? 3 : 2));
         mRecyclerView.setAdapter(new ExamplesAdapter(Commands.getCommand(""), command -> {
             if (command != null) {
                 onCommandSelected(command);

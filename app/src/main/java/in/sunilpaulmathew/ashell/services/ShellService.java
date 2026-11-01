@@ -117,7 +117,7 @@ public class ShellService extends IShellService.Stub {
                 long lastFlush = System.currentTimeMillis();
                 String line;
                 while ((line = reader.readLine()) != null) {
-                    batch.add(command.startsWith("logcat") ? getLogcatLines(line) : Utils.escapeHtml(line));
+                    batch.add(Utils.escapeHtml(line));
                     lastFlush = flushBatch(batch, lastFlush, callback);
                 }
                 flushBatch(batch, callback);
@@ -167,26 +167,6 @@ public class ShellService extends IShellService.Stub {
         } catch (Exception ignored) {
         }
         batch.clear();
-    }
-
-    private static String getLogcatLines(String outputLine) {
-        if (outputLine == null) return "";
-
-        String safe = Utils.escapeHtml(outputLine);
-
-        if (safe.contains(" E ")) {
-            return "<font color='#F44336'>" + safe + "</font>";
-        } else if (safe.contains(" W ")) {
-            return "<font color='#FF9800'>" + safe + "</font>";
-        } else if (safe.contains(" I ")) {
-            return "<font color='#2196F3'>" + safe + "</font>";
-        } else if (safe.contains(" D ")) {
-            return "<font color='#9E9E9E'>" + safe + "</font>";
-        } else if (safe.contains(" V ")) {
-            return "<font color='#BDBDBD'>" + safe + "</font>";
-        } else {
-            return safe; // fallback: use default TextView color
-        }
     }
 
     private static String getDir(String command) {

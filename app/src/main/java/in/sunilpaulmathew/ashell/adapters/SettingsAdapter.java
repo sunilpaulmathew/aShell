@@ -172,20 +172,20 @@ public class SettingsAdapter extends RecyclerView.Adapter<SettingsAdapter.ViewHo
                                 Utils.saveBoolean("extras_" + entry.getId(), entry.isEnabled(), activity);
                             }
                             activity.runOnUiThread(() -> {
+                                Intent resultIntent = new Intent();
                                 if (extrasEnabled) {
                                     if (!Settings.isExtrasEnabled(activity)) {
-                                        Settings.loadUI(activity);
+                                        resultIntent.putExtra("extrasChanged", 0);
                                     } else {
-                                        Settings.reloadExtras(activity);
+                                        resultIntent.putExtra("extrasChanged", 1);
                                     }
                                 } else {
-                                    if (!Settings.isExtrasEnabled(activity)) {
-                                        Settings.showShell(null, activity);
-                                    } else {
-                                        Settings.loadUI(activity);
-                                        Settings.showShell(null, activity);
+                                    if (Settings.isExtrasEnabled(activity)) {
+                                        resultIntent.putExtra("extrasChanged", 0);
                                     }
                                 }
+                                activity.setResult(Activity.RESULT_OK, resultIntent);
+                                activity.finish();
                             });
                         }).start();
                     }
@@ -194,11 +194,10 @@ public class SettingsAdapter extends RecyclerView.Adapter<SettingsAdapter.ViewHo
                 new ExamplesDialog(activity) {
                     @Override
                     public void onCommandSelected(String command) {
-                        if (Settings.isExtrasEnabled(activity)) {
-                            Settings.navigateToFragment(0, command, activity);
-                        } else {
-                            Settings.showShell(command, activity);
-                        }
+                        Intent resultIntent = new Intent();
+                        resultIntent.putExtra("selectedCommand", command);
+                        activity.setResult(Activity.RESULT_OK, resultIntent);
+                        activity.finish();
                     }
                 };
             } else if (position == 7) {

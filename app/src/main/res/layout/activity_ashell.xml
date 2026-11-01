@@ -7,7 +7,6 @@
     android:orientation="vertical" >
 
     <androidx.appcompat.widget.LinearLayoutCompat
-        android:id="@+id/title_layout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginHorizontal="10dp"
@@ -16,9 +15,8 @@
         android:gravity="center|start">
 
         <androidx.appcompat.widget.AppCompatImageButton
-            android:id="@+id/icon"
-            android:layout_width="32dp"
-            android:layout_height="32dp"
+            android:layout_width="36dp"
+            android:layout_height="36dp"
             android:layout_gravity="center"
             android:importantForAccessibility="no"
             android:src="@mipmap/ic_launcher"
@@ -39,7 +37,22 @@
         <View
             android:layout_width="0dp"
             android:layout_height="0dp"
-            android:layout_weight="1" />
+            android:layout_weight="0.1" />
+
+        <com.google.android.material.tabs.TabLayout
+            android:id="@+id/tab_layout"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            app:tabInlineLabel="true"
+            android:layout_weight="1"
+            app:tabGravity="fill"
+            app:tabMaxWidth="0dp"
+            app:tabMode="fixed" />
+
+        <View
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:layout_weight="0.1" />
 
         <com.google.android.material.button.MaterialButton
             android:id="@+id/settings_button"
@@ -52,66 +65,8 @@
             android:gravity="center" />
     </androidx.appcompat.widget.LinearLayoutCompat>
 
-    <androidx.appcompat.widget.LinearLayoutCompat
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginHorizontal="5dp"
-        android:orientation="horizontal"
-        android:layout_gravity="center"
-        android:gravity="center"
-        android:weightSum="1" >
-
-        <com.google.android.material.button.MaterialButton
-            android:id="@+id/shell"
-            android:layout_height="wrap_content"
-            android:layout_width="wrap_content"
-            style="@style/Widget.Material3.Button.TextButton"
-            app:iconTint="?attr/colorOnSurface"
-            app:icon="@drawable/ic_shell"
-            android:layout_weight="0.33"
-            android:text="@string/shell"
-            app:iconGravity="textStart"
-            android:textStyle="bold"
-            android:checkable="true"
-            app:iconSize="24dp" />
-
-        <com.google.android.material.button.MaterialButton
-            android:id="@+id/extras"
-            android:layout_height="wrap_content"
-            android:layout_width="wrap_content"
-            style="@style/Widget.Material3.Button.TextButton"
-            app:iconTint="?attr/colorOnSurface"
-            app:icon="@drawable/ic_extras"
-            android:text="@string/extras"
-            android:layout_weight="0.34"
-            app:iconGravity="textStart"
-            android:textStyle="bold"
-            android:checkable="true"
-            app:iconSize="24dp" />
-
-        <com.google.android.material.button.MaterialButton
-            android:id="@+id/settings"
-            android:layout_height="wrap_content"
-            android:layout_width="wrap_content"
-            style="@style/Widget.Material3.Button.TextButton"
-            app:iconTint="?attr/colorOnSurface"
-            app:icon="@drawable/ic_settings"
-            android:text="@string/settings"
-            android:layout_weight="0.33"
-            app:iconGravity="textStart"
-            android:textStyle="bold"
-            android:checkable="true"
-            app:iconSize="24dp" />
-    </androidx.appcompat.widget.LinearLayoutCompat>
-
     <androidx.viewpager2.widget.ViewPager2
         android:id="@+id/view_pager"
         android:layout_width="match_parent"
         android:layout_height="match_parent" />
-
-    <FrameLayout
-        android:id="@+id/fragment_container"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:visibility="gone" />
 </androidx.appcompat.widget.LinearLayoutCompat>

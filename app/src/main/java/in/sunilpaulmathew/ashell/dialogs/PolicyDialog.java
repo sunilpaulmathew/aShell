@@ -3,6 +3,7 @@ package in.sunilpaulmathew.ashell.dialogs;
 import android.content.Context;
 import android.view.View;
 
+import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -14,6 +15,7 @@ import in.sunilpaulmathew.ashell.BuildConfig;
 import in.sunilpaulmathew.ashell.R;
 import in.sunilpaulmathew.ashell.adapters.PolicyAdapter;
 import in.sunilpaulmathew.ashell.utils.Settings;
+import in.sunilpaulmathew.ashell.utils.Utils;
 
 /*
  * Created by sunilpaulmathew <sunil.kde@gmail.com> on Oct. 18, 2025
@@ -29,7 +31,7 @@ public class PolicyDialog extends BottomSheetDialog {
         RecyclerView recyclerView = root.findViewById(R.id.recycler_view);
         version.setText(context.getString(R.string.app_version, BuildConfig.VERSION_NAME));
         recyclerView.setItemAnimator(null);
-        recyclerView.setLayoutManager(new LinearLayoutManager(context));
+        recyclerView.setLayoutManager(new GridLayoutManager(context, Utils.isPortraitMode(context) ? 1 : Utils.isTablet(context) ? 3 : 2));
         recyclerView.setAdapter(new PolicyAdapter(Settings.getPolicyData()));
 
         cancel.setOnClickListener(v -> dismiss());

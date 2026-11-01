@@ -47,7 +47,7 @@ public class FilesFragment extends BaseFragment {
     private FilesAdapter mFilesAdapter;
     private FoldersAdapter mFoldersAdapter;
     private MaterialButton mBack;
-    private RecyclerView mRecyclerViewTitle;
+    private RecyclerView mRecyclerViewFiles, mRecyclerViewFolders, mRecyclerViewTitle;
     private TitleAdapter mTitleAdapter;
     private final List<String> mTitles = new CopyOnWriteArrayList<>();
     private static String mPath = "/";
@@ -59,8 +59,8 @@ public class FilesFragment extends BaseFragment {
 
         mBack = mRootView.findViewById(R.id.back);
         mRecyclerViewTitle = mRootView.findViewById(R.id.recycler_view_title);
-        RecyclerView mRecyclerViewFiles = mRootView.findViewById(R.id.recycler_view_files);
-        RecyclerView mRecyclerViewFolders = mRootView.findViewById(R.id.recycler_view_folders);
+        mRecyclerViewFiles = mRootView.findViewById(R.id.recycler_view_files);
+        mRecyclerViewFolders = mRootView.findViewById(R.id.recycler_view_folders);
 
         mFoldersAdapter = new FoldersAdapter(new CopyOnWriteArrayList<>(), filePath -> loadUI(filePath).execute());
         mFilesAdapter = new FilesAdapter(new CopyOnWriteArrayList<>(), newPath -> loadUI(newPath).execute());
@@ -119,6 +119,7 @@ public class FilesFragment extends BaseFragment {
 
     private Async loadUI(String parentPath) {
         return new Async() {
+            private boolean emptyFiles, emptyDir;
             private final Activity activity = requireActivity();
             private final List<FilesEntry> files = new CopyOnWriteArrayList<>(), folders = new CopyOnWriteArrayList<>();
             private boolean failed = false, permissionGranted;
@@ -177,6 +178,8 @@ public class FilesFragment extends BaseFragment {
                                 }
                             }
                         }
+                        emptyFiles = files.isEmpty();
+                        emptyDir = folders.isEmpty();
                     } else {
                         failed = true;
                     }
@@ -202,6 +205,26 @@ public class FilesFragment extends BaseFragment {
                     mFoldersAdapter.updateData(folders);
                     mTitleAdapter.updateData(mTitles);
 
+                    if (!emptyFiles) {
+                        GridLayoutManager layoutManager = (GridLayoutManager) mRecyclerViewFiles.getLayoutManager();
+                        if (layoutManager != null) {
+                            layoutManager.setSpanCount(getSpanSize(emptyDir));
+                        }
+                        mRecyclerViewFiles.setVisibility(VISIBLE);
+                    } else {
+                        mRecyclerViewFiles.setVisibility(GONE);
+                    }
+
+                    if (!emptyDir) {
+                        GridLayoutManager layoutManager = (GridLayoutManager) mRecyclerViewFolders.getLayoutManager();
+                        if (layoutManager != null) {
+                            layoutManager.setSpanCount(getSpanSize(emptyFiles));
+                        }
+                        mRecyclerViewFolders.setVisibility(VISIBLE);
+                    } else {
+                        mRecyclerViewFolders.setVisibility(GONE);
+                    }
+
                     mRecyclerViewTitle.scrollToPosition(mTitles.size() - 1);
                     mRecyclerViewTitle.setVisibility(mTitleAdapter.getItemCount() > 1 ? VISIBLE : GONE);
                     mBack.setVisibility(mTitleAdapter.getItemCount() > 1 ? VISIBLE : GONE);
@@ -213,10 +236,15 @@ public class FilesFragment extends BaseFragment {
     }
 
     private int getSpanSize() {
+        return getSpanSize(false);
+    }
+
+    private int getSpanSize(boolean full) {
+        boolean doubleSpan = full && !Utils.isPortraitMode(requireActivity());
         if (Utils.isTablet(requireActivity())) {
-            return 4;
+            return doubleSpan ? 6 : 3;
         } else {
-            return 2;
+            return doubleSpan ? 4 : 2;
         }
     }
 

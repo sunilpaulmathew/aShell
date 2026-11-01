@@ -49,22 +49,18 @@ public class ExtrasActivity extends BaseActivity {
                 Utils.saveBoolean("extras_" + entry.getId(), entry.isEnabled(), this);
             }
             runOnUiThread(() -> {
+                Intent resultIntent = new Intent();
                 if (extrasEnabled) {
                     if (!Settings.isExtrasEnabled(this)) {
-                        Settings.loadUI(this);
+                        resultIntent.putExtra("extrasChanged", 0);
                     } else {
-                        Settings.reloadExtras(this);
+                        resultIntent.putExtra("extrasChanged", 1);
                     }
                 } else {
-                    if (!Settings.isExtrasEnabled(this)) {
-                        Settings.showShell(null, this);
-                    } else {
-                        Settings.loadUI(this);
-                        Settings.showShell(null, this);
+                    if (Settings.isExtrasEnabled(this)) {
+                        resultIntent.putExtra("extrasChanged", 0);
                     }
                 }
-                Intent resultIntent = new Intent();
-                resultIntent.putExtra("extrasChanged", true);
                 setResult(RESULT_OK, resultIntent);
                 exit();
             });

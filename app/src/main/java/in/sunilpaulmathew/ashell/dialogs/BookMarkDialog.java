@@ -4,7 +4,7 @@ import android.content.Context;
 import android.view.View;
 
 import androidx.appcompat.widget.AppCompatImageButton;
-import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.google.android.material.bottomsheet.BottomSheetDialog;
@@ -16,6 +16,7 @@ import java.util.List;
 import in.sunilpaulmathew.ashell.R;
 import in.sunilpaulmathew.ashell.adapters.BookmarksAdapter;
 import in.sunilpaulmathew.ashell.serializable.CommandEntry;
+import in.sunilpaulmathew.ashell.utils.Utils;
 
 /*
  * Created by sunilpaulmathew <sunil.kde@gmail.com> on July 29, 2026
@@ -34,7 +35,7 @@ public abstract class BookMarkDialog extends BottomSheetDialog {
         icon.setImageResource(iconRef);
         title.setText(titleTxt);
 
-        recyclerView.setLayoutManager(new LinearLayoutManager(context));
+        recyclerView.setLayoutManager(new GridLayoutManager(context, Utils.isPortraitMode(context) ? 1 : Utils.isTablet(context) ? 3 : 2));
         recyclerView.setItemAnimator(null);
         recyclerView.setAdapter(new BookmarksAdapter(data, (command, toEdit) -> {
             onCommandSelected(command, toEdit);

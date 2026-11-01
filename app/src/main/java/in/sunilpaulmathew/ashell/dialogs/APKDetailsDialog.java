@@ -6,6 +6,7 @@ import android.graphics.drawable.Drawable;
 import android.view.View;
 
 import androidx.appcompat.widget.AppCompatImageButton;
+import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -20,6 +21,7 @@ import in.sunilpaulmathew.ashell.adapters.PackageDetailsAdapter;
 import in.sunilpaulmathew.ashell.adapters.PackageHeaderAdapter;
 import in.sunilpaulmathew.ashell.serializable.PackageDetailsEntry;
 import in.sunilpaulmathew.ashell.serializable.PackageHeaderEntry;
+import in.sunilpaulmathew.ashell.utils.Utils;
 
 /*
  * Created by sunilpaulmathew <sunil.kde@gmail.com> on October 18, 2026
@@ -38,10 +40,10 @@ public class APKDetailsDialog extends BottomSheetDialog {
         RecyclerView recyclerView_Header = rootView.findViewById(R.id.recycler_view_header);
         RecyclerView recyclerView_Details = rootView.findViewById(R.id.recycler_view_details);
 
-        recyclerView_Header.setLayoutManager(new LinearLayoutManager(context, LinearLayoutManager.HORIZONTAL, false));
+        recyclerView_Header.setLayoutManager(new LinearLayoutManager(context, Utils.isPortraitMode(context) ? LinearLayoutManager.HORIZONTAL : LinearLayoutManager.VERTICAL, false));
         recyclerView_Header.setAdapter(new PackageHeaderAdapter(headers));
 
-        recyclerView_Details.setLayoutManager(new LinearLayoutManager(context, LinearLayoutManager.VERTICAL, false));
+        recyclerView_Details.setLayoutManager(new GridLayoutManager(context, Utils.isPortraitMode(context) ? 1 : 2));
         recyclerView_Details.setAdapter(new PackageDetailsAdapter(details, splits -> {
             new SplitsDialog(appName, appIcon, splits, context);
             dismiss();

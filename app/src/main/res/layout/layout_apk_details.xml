@@ -54,38 +54,19 @@
             android:layout_height="wrap_content"
             android:layout_marginBottom="8dp" />
 
-        <androidx.core.widget.NestedScrollView
+        <com.google.android.material.card.MaterialCardView
             android:layout_width="match_parent"
             android:layout_height="0dp"
-            android:fillViewport="true"
-            android:layout_weight="1" >
+            app:strokeColor="?attr/colorSecondary"
+            android:layout_margin="10dp"
+            android:layout_weight="1"
+            app:strokeWidth="1dp" >
 
-                <androidx.appcompat.widget.LinearLayoutCompat
+                <androidx.recyclerview.widget.RecyclerView
+                    android:id="@+id/recycler_view_details"
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:orientation="vertical">
-
-                        <com.google.android.material.card.MaterialCardView
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            app:strokeColor="?attr/colorSecondary"
-                            android:layout_margin="10dp"
-                            app:strokeWidth="1dp" >
-
-                                <androidx.recyclerview.widget.RecyclerView
-                                    android:id="@+id/recycler_view_details"
-                                    android:layout_width="match_parent"
-                                    android:layout_height="wrap_content" />
-                        </com.google.android.material.card.MaterialCardView>
-
-                        <com.google.android.material.textview.MaterialTextView
-                            android:id="@+id/question"
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:visibility="gone"
-                            android:padding="10sp" />
-                </androidx.appcompat.widget.LinearLayoutCompat>
-        </androidx.core.widget.NestedScrollView>
+                    android:layout_height="wrap_content" />
+        </com.google.android.material.card.MaterialCardView>
 
         <com.google.android.material.button.MaterialButton
             android:id="@+id/cancel"

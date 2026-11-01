@@ -1,10 +1,10 @@
 package in.sunilpaulmathew.ashell.dialogs;
 
-import android.app.Activity;
+import android.content.Context;
 import android.content.DialogInterface;
 import android.view.View;
 
-import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.google.android.material.bottomsheet.BottomSheetDialog;
@@ -27,7 +27,7 @@ public abstract class ExtrasDialog extends BottomSheetDialog {
 
     private final ChooseExtrasAdapter adapter;
 
-    public ExtrasDialog(Activity activity) {
+    public ExtrasDialog(Context activity) {
         super(activity);
 
         View root = View.inflate(activity, R.layout.layout_extras, null);
@@ -38,7 +38,7 @@ public abstract class ExtrasDialog extends BottomSheetDialog {
         adapter = new ChooseExtrasAdapter(getData(activity));
 
         recyclerView.setItemAnimator(null);
-        recyclerView.setLayoutManager(new LinearLayoutManager(activity));
+        recyclerView.setLayoutManager(new GridLayoutManager(activity, Utils.isPortraitMode(activity) ? 1 : Utils.isTablet(activity) ? 3 : 2));
         recyclerView.setAdapter(adapter);
 
         setContentView(root);
@@ -53,11 +53,11 @@ public abstract class ExtrasDialog extends BottomSheetDialog {
         cancel.setOnClickListener(v -> dismiss());
     }
 
-    private List<ExtrasChooserEntry> getData(Activity activity) {
+    private List<ExtrasChooserEntry> getData(Context context) {
         List<ExtrasChooserEntry> data = new ArrayList<>();
         data.add(new ExtrasChooserEntry(new ExtrasEntry(R.drawable.ic_shell, R.string.shell_adb, R.string.shell_adb_description, -1), true));
         for (ExtrasEntry entry : Settings.getExtras()) {
-            data.add(new ExtrasChooserEntry(entry, Utils.getBoolean("extras_" + entry.getId(), false, activity)));
+            data.add(new ExtrasChooserEntry(entry, Utils.getBoolean("extras_" + entry.getId(), false, context)));
         }
         return data;
     }
