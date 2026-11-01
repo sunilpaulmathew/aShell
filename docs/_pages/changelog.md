@@ -6,6 +6,14 @@ include_in_header: true
 
 <h2 style="color: blue">🆕 What's New</h2>
 
+### ✨ 24. [v0.31](https://gitlab.com/sunilpaulmathew/ashell/-/releases/v0.31) *(Nov 02 2026)*
+- Fixed crashes that could occur during screen rotation in landscape mode.
+- Improved UI and layout support for tablets and landscape mode.
+- Enhanced Shell Output UI, especially for long-running commands (like logcat).
+- Updated German translations and cleaned up broken Spanish and Parsi strings to ensure build stability.
+
+<hr>
+
 ### ✨ 23. [v0.30](https://gitlab.com/sunilpaulmathew/ashell/-/releases/v0.30) *(Oct 27 2026)*
 - Introduced aShell Extras, such as ADB-based Battery and CPU Monitors, Live device logs, and App Management (including AppOps and permissions management).
 - File Manager now loads app icon, app name, and package names of APK files under /system directory.
@@ -13,6 +21,8 @@ include_in_header: true
 - Added Persian (Farsi) and Romanian languages (imported via POEditor).
 - Updated Spanish (Spain & Mexico), Russian, and Vietnamese translations.
 - Updated build tools and dependencies.
+
+<hr>
 
 ### ✨ 22. [v0.29](https://gitlab.com/sunilpaulmathew/ashell/-/releases/v0.29) *(Sept 09 2026)*
 - Substantial performance improvements and memory optimizations across shell execution, output rendering, and background tasks (thanks to @yoyicue).
@@ -23,11 +33,15 @@ include_in_header: true
 - Resolved an issue causing the app to crash when deleting files.
 - Updated translations.
 
+<hr>
+
 ### ✨ 21. [v0.28](https://gitlab.com/sunilpaulmathew/ashell/-/releases/v0.28) *(July 29 2026)*
 - Main Interface: Introduced custom top navigation bar instead of previous bottom navigation (thanks to user for feedback).
 - Bookmarks: Added editing functionality and migrated to Bottom Sheet dialogs.
 - History: Converted options to Bottom Sheet UI.
 * Fixes: Search functionality bug fixes, adapter click response optimizations, and theme layout updates.
+
+<hr>
 
 ### ✨ 20. [v0.27](https://gitlab.com/sunilpaulmathew/ashell/-/releases/v0.27) *(July 03 2026)*
 - Main UI: Switched the main interface to a custom bottom navigation view for improved navigation and a more tailored user experience.
@@ -36,21 +50,29 @@ include_in_header: true
 - Build: Updated build tools to target latest SDK.
 - Maintenance: Miscellaneous changes.
 
+<hr>
+
 ### ✨ 19. [v0.26](https://gitlab.com/sunilpaulmathew/ashell/-/releases/v0.26) *(April 15 2026)*
 - Updated build tools to target latest SDK.
 - Updated translations.
 - Miscellaneous changes.
+
+<hr>
 
 ### ✨ 18. [v0.25](https://gitlab.com/sunilpaulmathew/ashell/-/releases/v0.25) *(Mar 30 2026)*
 - Updated build tools.
 - Added Thai and updated other translations.
 - Miscellaneous changes.
 
+<hr>
+
 ### ✨ 17. [v0.24](https://gitlab.com/sunilpaulmathew/ashell/-/releases/v0.24) *(Jan 04 2026)*
 - Fixed crashes on certain cases due to no Shizuku access.
 - Improved accessibility for TalkBack users, thanks to [Aryan Choudhary](https://github.com/aryanchoudharypro).
 - Updated Japanese translations.
 - Miscellaneous changes.
+
+<hr>
 
 ### ✨ 16. [v0.23](https://gitlab.com/sunilpaulmathew/ashell/-/releases/v0.23) *(Oct 21 2025)*
 - Fixed small layout issues on the main screen.
@@ -62,14 +84,20 @@ include_in_header: true
 - Updated Korean and Chinese (TW) translations.
 - Miscellaneous changes.
 
+<hr>
+
 ### ✨ 15. [v0.22](https://gitlab.com/sunilpaulmathew/ashell/-/releases/v0.22) *(Sept 24 2025)*
 - Fixed aShell failed to execute commands in release builds.
+
+<hr>
 
 ### ✨ 14. [v0.21](https://play.google.com/store/apps/details?id=in.sunilpaulmathew.ashell) *(Sept 21, 2025)*
 - Main: Improved and tightened permission checks.
 - Command Input: Show package name suggestions only for relevant commands.
 - Commands: Added support for cmd, dpm, settings, and other new commands.
 - Miscellaneous changes.
+
+<hr>
 
 ### ✨ 13. [v0.20](https://gitlab.com/sunilpaulmathew/ashell/-/releases/v0.20) *(Sept 19, 2025)*
 - Switched to a new background service for shell commands (Shizuku userservice).
@@ -82,21 +110,29 @@ include_in_header: true
 - Improved background workflows in the app.
 - Miscellaneous changes.
 
+<hr>
+
 ### ✨ 12. [v0.17](https://gitlab.com/sunilpaulmathew/ashell/-/releases/v0.17) *(July 08, 2025)*
 - Added French, Polish, and Arabic translations
 - Updated build tools (now targets SDK 35).
 - Miscellaneous changes.
+
+<hr>
 
 ### ✨ 11. [v0.16](https://gitlab.com/sunilpaulmathew/ashell/-/releases/v0.16) *(June 9, 2025)*
 - Added Chinese (Traditional), Japanese, and Spanish (Spain and Mexican) translations
 - Fixed Chinese locals in language switch.
 - Miscellaneous changes.
 
+<hr>
+
 ### ✨ 10. [v0.15](https://gitlab.com/sunilpaulmathew/ashell/-/releases/v0.15) *(May 16, 2025)*
 - Improved Shizuku permission checking.
 - Added Chinese (Simplified) and Korean translations
 - Updated Chinese (Traditional) translations
 - Miscellaneous changes.
+
+<hr>
 
 ### ✨ 9. [v0.14](https://gitlab.com/sunilpaulmathew/ashell/-/releases/v0.14) *(April 21, 2025)*
 - Added settings page with options to tweak app theme, language, etc.
@@ -106,16 +142,22 @@ include_in_header: true
 - Updated Greek translations.
 - Miscellaneous changes.
 
+<hr>
+
 ### ✨ 8. [v0.12](https://gitlab.com/sunilpaulmathew/ashell/-/releases/v0.12) *(Jan 13, 2025)*
 - Allow picking texts shared by other apps.
 - Updated Hungarian translations.
 - Miscellaneous changes.
+
+<hr>
 
 ### ✨ 7. [v0.11](https://gitlab.com/sunilpaulmathew/ashell/-/releases/v0.11) *(Dec 07, 2024)*
 - More elegant app UI.
 - App now uses accent color of android system whenever possible.
 - Updated build tools & dependencies.
 - Miscellaneous changes.
+
+<hr>
 
 ### ✨ 6. [v0.10](https://gitlab.com/sunilpaulmathew/ashell/-/releases/v0.10) *(Sept 20, 2024)*
 - Implemented Amoled black theme.
@@ -125,6 +167,8 @@ include_in_header: true
 - Updated build tools & dependencies.
 - Miscellaneous changes.
 
+<hr>
+
 ### ✨ 5. [v0.9](https://gitlab.com/sunilpaulmathew/ashell/-/releases/v0.9) *(Dec 13, 2023)*
 - App now provides package name suggestions when necessary.
 - Bookmark commands now supports more command types.
@@ -132,12 +176,16 @@ include_in_header: true
 - Updated build tools & dependencies.
 - Miscellaneous changes.
 
+<hr>
+
 ### ✨ 4. [v0.8](https://gitlab.com/sunilpaulmathew/ashell/-/releases/v0.8) *(April 29, 2023)*>
 - Added option to bookmark commands.
 - Added copy to clipboard option in examples page.
 - Fixed possible crashes on certain cases.
 - Updated build tools & dependencies.
 - Miscellaneous changes.
+
+<hr>
 
 ### ✨ 3. [v0.7](https://gitlab.com/sunilpaulmathew/ashell/-/releases/v0.7) *(March 22, 2023)*
 - Switched to Material3 DayNight theme.
