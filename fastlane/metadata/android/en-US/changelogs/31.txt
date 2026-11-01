@@ -1,0 +1,4 @@
+* Bug Fixes: Fixed crashes that could occur during screen rotation in landscape mode.
+* Tablet & Landscape: Improved UI and layout support for tablets and landscape mode.
+* Shell Output: Enhanced the UI, especially for long-running commands (like logcat).
+* Translations: Updated German translations and cleaned up broken Spanish and Parsi strings to ensure build stability.
