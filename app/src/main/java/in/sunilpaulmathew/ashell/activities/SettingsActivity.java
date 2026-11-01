@@ -4,7 +4,7 @@ import android.os.Build;
 import android.os.Bundle;
 
 import androidx.annotation.Nullable;
-import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import java.util.ArrayList;
@@ -15,6 +15,7 @@ import in.sunilpaulmathew.ashell.R;
 import in.sunilpaulmathew.ashell.adapters.SettingsAdapter;
 import in.sunilpaulmathew.ashell.serializable.SettingsEntry;
 import in.sunilpaulmathew.ashell.utils.Settings;
+import in.sunilpaulmathew.ashell.utils.Utils;
 
 /*
  * Created by sunilpaulmathew <sunil.kde@gmail.com> on July 27, 2026
@@ -28,9 +29,25 @@ public class SettingsActivity extends BaseActivity {
 
         RecyclerView mRecyclerView = findViewById(R.id.recycler_view);
 
+        List<SettingsEntry> data = getData();
+
+        int spanCount = Utils.isPortraitMode(this) ? 1 : Utils.isTablet(this) ? 3 : 2;
+
+        GridLayoutManager layoutManager = new GridLayoutManager(this, spanCount);
+        layoutManager.setSpanSizeLookup(new GridLayoutManager.SpanSizeLookup() {
+            @Override
+            public int getSpanSize(int position) {
+                if (data.get(position).getPosition() == 0) {
+                    return spanCount;
+                } else {
+                    return 1;
+                }
+            }
+        });
+
         mRecyclerView.setItemAnimator(null);
-        mRecyclerView.setLayoutManager(new LinearLayoutManager(this));
-        mRecyclerView.setAdapter(new SettingsAdapter(getData(), this));
+        mRecyclerView.setLayoutManager(layoutManager);
+        mRecyclerView.setAdapter(new SettingsAdapter(data, this));
     }
 
     private List<SettingsEntry> getData() {
