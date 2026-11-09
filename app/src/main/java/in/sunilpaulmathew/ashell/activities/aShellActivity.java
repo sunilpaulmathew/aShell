@@ -180,6 +180,9 @@ public class aShellActivity extends BaseActivity {
                 if (tab.getText() != null) {
                     tabButton.setText(tab.getText());
                 }
+                if (tab.getIcon() != null) {
+                    tabButton.setIcon(tab.getIcon());
+                }
                 tab.setCustomView(customView);
             }
         }

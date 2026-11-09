@@ -13,4 +13,4 @@
     android:textStyle="bold"
     android:checkable="true"
     android:gravity="center"
-    app:iconSize="24dp" />
+    app:iconSize="20dp" />
