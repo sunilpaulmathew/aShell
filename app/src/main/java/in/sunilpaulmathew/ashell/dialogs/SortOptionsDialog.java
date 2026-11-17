@@ -1,8 +1,12 @@
 package in.sunilpaulmathew.ashell.dialogs;
 
 import android.content.Context;
+import android.content.DialogInterface;
 import android.view.View;
+import android.view.ViewGroup;
+import android.widget.FrameLayout;
 
+import com.google.android.material.bottomsheet.BottomSheetBehavior;
 import com.google.android.material.bottomsheet.BottomSheetDialog;
 import com.google.android.material.chip.ChipGroup;
 import com.google.android.material.switchmaterial.SwitchMaterial;
@@ -51,6 +55,19 @@ public abstract class SortOptionsDialog extends BottomSheetDialog {
             onItemClicked();
         });
 
+        view.post(() -> {
+            FrameLayout bottomSheet = findViewById(com.google.android.material.R.id.design_bottom_sheet);
+            if (bottomSheet != null) {
+                bottomSheet.getLayoutParams().height = ViewGroup.LayoutParams.WRAP_CONTENT;
+
+                BottomSheetBehavior<FrameLayout> behavior = BottomSheetBehavior.from(bottomSheet);
+                behavior.setState(BottomSheetBehavior.STATE_EXPANDED);
+                behavior.setSkipCollapsed(true);
+                behavior.setFitToContents(true);
+            }
+        });
+
+        setOnDismissListener(DialogInterface::dismiss);
         setContentView(view);
         show();
     }

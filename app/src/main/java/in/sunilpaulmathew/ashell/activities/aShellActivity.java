@@ -256,7 +256,7 @@ public class aShellActivity extends BaseActivity {
         Fragment existingExtras = getSupportFragmentManager().findFragmentByTag("f1");
         if (existingExtras != null) {
             if (existingExtras instanceof ExtrasFragment) {
-                ((ExtrasFragment) existingExtras).handleOrientationChange();
+                ((ExtrasFragment) existingExtras).handleOrientationChange(configuration);
             }
         }
     }

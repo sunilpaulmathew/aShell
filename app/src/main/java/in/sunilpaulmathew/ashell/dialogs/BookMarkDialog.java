@@ -1,12 +1,16 @@
 package in.sunilpaulmathew.ashell.dialogs;
 
 import android.content.Context;
+import android.content.DialogInterface;
 import android.view.View;
+import android.view.ViewGroup;
+import android.widget.FrameLayout;
 
 import androidx.appcompat.widget.AppCompatImageButton;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.google.android.material.bottomsheet.BottomSheetBehavior;
 import com.google.android.material.bottomsheet.BottomSheetDialog;
 import com.google.android.material.button.MaterialButton;
 import com.google.android.material.textview.MaterialTextView;
@@ -16,7 +20,7 @@ import java.util.List;
 import in.sunilpaulmathew.ashell.R;
 import in.sunilpaulmathew.ashell.adapters.BookmarksAdapter;
 import in.sunilpaulmathew.ashell.serializables.CommandEntry;
-import in.sunilpaulmathew.ashell.utils.Utils;
+import in.sunilpaulmathew.ashell.utils.Settings;
 
 /*
  * Created by sunilpaulmathew <sunil.kde@gmail.com> on July 29, 2026
@@ -35,7 +39,7 @@ public abstract class BookMarkDialog extends BottomSheetDialog {
         icon.setImageResource(iconRef);
         title.setText(titleTxt);
 
-        recyclerView.setLayoutManager(new GridLayoutManager(context, Utils.isPortraitMode(context) ? 1 : Utils.isTablet(context) ? 3 : 2));
+        recyclerView.setLayoutManager(new GridLayoutManager(context, Settings.getSpanCount(context.getResources().getConfiguration())));
         recyclerView.setItemAnimator(null);
         recyclerView.setAdapter(new BookmarksAdapter(data, (command, toEdit) -> {
             onCommandSelected(command, toEdit);
@@ -44,6 +48,19 @@ public abstract class BookMarkDialog extends BottomSheetDialog {
 
         cancel.setOnClickListener(v -> dismiss());
 
+        root.post(() -> {
+            FrameLayout bottomSheet = findViewById(com.google.android.material.R.id.design_bottom_sheet);
+            if (bottomSheet != null) {
+                bottomSheet.getLayoutParams().height = ViewGroup.LayoutParams.WRAP_CONTENT;
+
+                BottomSheetBehavior<FrameLayout> behavior = BottomSheetBehavior.from(bottomSheet);
+                behavior.setState(BottomSheetBehavior.STATE_EXPANDED);
+                behavior.setSkipCollapsed(true);
+                behavior.setFitToContents(true);
+            }
+        });
+
+        setOnDismissListener(DialogInterface::dismiss);
         setContentView(root);
         show();
     }

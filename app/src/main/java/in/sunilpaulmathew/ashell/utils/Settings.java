@@ -17,6 +17,8 @@ import android.view.View;
 import android.view.animation.DecelerateInterpolator;
 
 import androidx.appcompat.app.AppCompatDelegate;
+import androidx.recyclerview.widget.GridLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 import com.google.android.material.color.DynamicColors;
 
@@ -204,6 +206,28 @@ public class Settings {
             default:
                 return 0;
         }
+    }
+
+    public static int getSpanCount(boolean extraSpan, Configuration configuration) {
+        boolean landscape = configuration.orientation == Configuration.ORIENTATION_LANDSCAPE;
+        boolean tablet = (configuration.screenLayout & Configuration.SCREENLAYOUT_SIZE_MASK) >= Configuration.SCREENLAYOUT_SIZE_LARGE;
+
+        if (extraSpan) {
+            if (tablet) {
+                return landscape ? 6 : 4;
+            } else {
+                return landscape ? 3 : 2;
+            }
+        }
+        if (tablet) {
+            return landscape ? 3 : 2;
+        } else {
+            return landscape ? 2 : 1;
+        }
+    }
+
+    public static int getSpanCount(Configuration configuration) {
+        return getSpanCount(false, configuration);
     }
 
     public static List<CommandEntry> getPolicyData() {
@@ -622,6 +646,62 @@ public class Settings {
             // Reset properties to ensure recycled views are displayed correctly
             viewToAnimate.setTranslationY(0f);
             viewToAnimate.setAlpha(1f);
+        }
+    }
+
+    public static void updateSpanCount(boolean extraSpan, Configuration configuration, RecyclerView recyclerView) {
+        if (recyclerView == null) return;
+
+        Context context = recyclerView.getContext();
+        if (context == null) return;
+
+        RecyclerView.LayoutManager layoutManager = recyclerView.getLayoutManager();
+        int spanCount = getSpanCount(extraSpan, configuration);
+
+        if (layoutManager instanceof GridLayoutManager) {
+            GridLayoutManager gridLayoutManager = (GridLayoutManager) layoutManager;
+
+            if (gridLayoutManager.getSpanCount() != spanCount) {
+                gridLayoutManager.setSpanCount(spanCount);
+
+                recyclerView.getRecycledViewPool().clear();
+                recyclerView.setItemAnimator(null);
+
+                recyclerView.post(() -> {
+                    RecyclerView.Adapter<?> adapter = recyclerView.getAdapter();
+                    if (adapter != null) {
+                        adapter.notifyItemRangeChanged(0, adapter.getItemCount());
+                    }
+                });
+            }
+        }
+    }
+
+    public static void updateSpanCount(Configuration configuration, RecyclerView recyclerView) {
+        if (recyclerView == null) return;
+
+        Context context = recyclerView.getContext();
+        if (context == null) return;
+
+        RecyclerView.LayoutManager layoutManager = recyclerView.getLayoutManager();
+        int spanCount = getSpanCount(configuration);
+
+        if (layoutManager instanceof GridLayoutManager) {
+            GridLayoutManager gridLayoutManager = (GridLayoutManager) layoutManager;
+
+            if (gridLayoutManager.getSpanCount() != spanCount) {
+                gridLayoutManager.setSpanCount(spanCount);
+
+                recyclerView.getRecycledViewPool().clear();
+                recyclerView.setItemAnimator(null);
+
+                recyclerView.post(() -> {
+                    RecyclerView.Adapter<?> adapter = recyclerView.getAdapter();
+                    if (adapter != null) {
+                        adapter.notifyItemRangeChanged(0, adapter.getItemCount());
+                    }
+                });
+            }
         }
     }
 

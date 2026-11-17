@@ -1,5 +1,6 @@
 package in.sunilpaulmathew.ashell.fragments;
 
+import android.content.res.Configuration;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -37,7 +38,6 @@ public class ExtrasFragment extends BaseFragment {
     private Fragment activeFragment;
     private FragmentManager childManager;
     private FragmentContainerView subContainerView;
-    private GridLayoutManager gridLayoutManager;
     private RecyclerView recyclerView;
     private static final String TAG_APPS = "apps_fragment";
     private static final String TAG_BATTERY = "battery_fragment";
@@ -88,10 +88,8 @@ public class ExtrasFragment extends BaseFragment {
             }
         });
 
-        gridLayoutManager = new GridLayoutManager(requireActivity(), getSpanSize());
-
         recyclerView.setItemAnimator(null);
-        recyclerView.setLayoutManager(gridLayoutManager);
+        recyclerView.setLayoutManager(new GridLayoutManager(requireActivity(), Settings.getSpanCount(true, getResources().getConfiguration())));
 
         recyclerView.setAdapter(adapter);
 
@@ -115,16 +113,6 @@ public class ExtrasFragment extends BaseFragment {
         return rootView;
     }
 
-    private int getSpanSize() {
-        if (Utils.isTablet(requireActivity())) {
-            return 4;
-        } else if (!Utils.isPortraitMode(requireActivity())) {
-            return 3;
-        } else {
-            return 2;
-        }
-    }
-
     private List<ExtrasEntry> getData() {
         List<ExtrasEntry> data = new ArrayList<>();
         for (ExtrasEntry entry : Settings.getExtras()) {
@@ -135,8 +123,8 @@ public class ExtrasFragment extends BaseFragment {
         return data;
     }
 
-    public void handleOrientationChange() {
-        gridLayoutManager.setSpanCount(getSpanSize());
+    public void handleOrientationChange(Configuration configuration) {
+        Settings.updateSpanCount(true, configuration, recyclerView);
 
         if (activeFragment != null) {
             requireActivity().recreate();

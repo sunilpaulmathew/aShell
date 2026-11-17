@@ -2,12 +2,14 @@ package in.sunilpaulmathew.ashell.activities;
 
 import android.app.Activity;
 import android.content.Intent;
+import android.content.res.Configuration;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
 
 import androidx.activity.result.ActivityResultLauncher;
 import androidx.activity.result.contract.ActivityResultContracts;
+import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -37,26 +39,26 @@ import in.sunilpaulmathew.ashell.utils.Utils;
  */
 public class SettingsActivity extends BaseActivity {
 
+    private RecyclerView mRecyclerView;
+
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_settings, R.id.layout_main);
 
-        RecyclerView mRecyclerView = findViewById(R.id.recycler_view);
+        mRecyclerView = findViewById(R.id.recycler_view);
 
         List<SettingsEntry> data = getData();
 
-        int spanCount = Utils.isPortraitMode(this) ? 1 : Utils.isTablet(this) ? 3 : 2;
+        int spanCount = Settings.getSpanCount(getResources().getConfiguration());
 
         GridLayoutManager layoutManager = new GridLayoutManager(this, spanCount);
         layoutManager.setSpanSizeLookup(new GridLayoutManager.SpanSizeLookup() {
             @Override
             public int getSpanSize(int position) {
-                if (data.get(position).getPosition() == 0) {
-                    return spanCount;
-                } else {
-                    return 1;
-                }
+                int currentSpanCount = layoutManager.getSpanCount();
+                int requestedSpan = (data.get(position).getPosition() == 0) ? currentSpanCount : 1;
+                return Math.min(requestedSpan, currentSpanCount);
             }
         });
 
@@ -67,7 +69,7 @@ public class SettingsActivity extends BaseActivity {
 
     private Async restoreBookMarks(Uri uri) {
         return new Async() {
-            private boolean bookMarkEnabled, success;
+            private boolean success;
             private final Activity activity = SettingsActivity.this;
             @Override
             public void onPreExecute() {
@@ -93,7 +95,6 @@ public class SettingsActivity extends BaseActivity {
                         }
                     }
                     success = true;
-                    bookMarkEnabled = !Bookmarks.getBookmarks(activity).isEmpty();
                 } catch (Exception ignored) {
                 }
             }
@@ -156,6 +157,13 @@ public class SettingsActivity extends BaseActivity {
         } else {
             return StandardCharsets.UTF_8.name();
         }
+    }
+
+    @Override
+    public void onConfigurationChanged(@NonNull Configuration configuration) {
+        super.onConfigurationChanged(configuration);
+
+        Settings.updateSpanCount(configuration, mRecyclerView);
     }
 
 }

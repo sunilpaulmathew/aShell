@@ -2,6 +2,7 @@ package in.sunilpaulmathew.ashell.activities;
 
 import android.content.Intent;
 import android.content.pm.PackageManager;
+import android.content.res.Configuration;
 import android.os.Build;
 import android.os.Bundle;
 import android.view.View;
@@ -9,7 +10,7 @@ import android.view.View;
 import androidx.activity.OnBackPressedCallback;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
-import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.google.android.material.button.MaterialButton;
@@ -25,6 +26,7 @@ import in.sunilpaulmathew.ashell.adapters.WelcomeAdapter;
 import in.sunilpaulmathew.ashell.dialogs.AccessDeniedDialog;
 import in.sunilpaulmathew.ashell.dialogs.AccessUnavilableDialog;
 import in.sunilpaulmathew.ashell.serializables.CommandEntry;
+import in.sunilpaulmathew.ashell.utils.Settings;
 import in.sunilpaulmathew.ashell.utils.Utils;
 import rikka.shizuku.Shizuku;
 
@@ -34,6 +36,7 @@ import rikka.shizuku.Shizuku;
 public class WelcomeActivity extends BaseActivity {
 
     private final Shizuku.OnRequestPermissionResultListener REQUEST_PERMISSION_RESULT_LISTENER = this::onRequestPermissionsResult;
+    private RecyclerView mRecyclerView;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -44,11 +47,23 @@ public class WelcomeActivity extends BaseActivity {
 
         MaterialButton mStart = findViewById(R.id.start);
         MaterialTextView mVersionInfo = findViewById(R.id.version_info);
+        mRecyclerView = findViewById(R.id.recycler_view);
+
         mVersionInfo.setText(getString(R.string.app_version, BuildConfig.VERSION_NAME));
 
-        RecyclerView mRecyclerView = findViewById(R.id.recycler_view);
         mRecyclerView.setItemAnimator(null);
-        mRecyclerView.setLayoutManager(new LinearLayoutManager(this));
+        int spanCount = Settings.getSpanCount(getResources().getConfiguration());
+
+        GridLayoutManager layoutManager = new GridLayoutManager(this, spanCount);
+        layoutManager.setSpanSizeLookup(new GridLayoutManager.SpanSizeLookup() {
+            @Override
+            public int getSpanSize(int position) {
+                int currentSpanCount = layoutManager.getSpanCount();
+                int requestedSpan = (position == 2) ? currentSpanCount : 1;
+                return Math.min(requestedSpan, currentSpanCount);
+            }
+        });
+        mRecyclerView.setLayoutManager(layoutManager);
         WelcomeAdapter mAdapter = new WelcomeAdapter(getData(), this::checkPermission);
         mRecyclerView.setAdapter(mAdapter);
 
@@ -147,6 +162,13 @@ public class WelcomeActivity extends BaseActivity {
     protected void onDestroy() {
         super.onDestroy();
         Shizuku.removeRequestPermissionResultListener(REQUEST_PERMISSION_RESULT_LISTENER);
+    }
+
+    @Override
+    public void onConfigurationChanged(@NonNull Configuration configuration) {
+        super.onConfigurationChanged(configuration);
+
+        Settings.updateSpanCount(configuration, mRecyclerView);
     }
 
 }

@@ -2,9 +2,11 @@ package in.sunilpaulmathew.ashell.activities;
 
 import android.app.Activity;
 import android.content.Intent;
+import android.content.res.Configuration;
 import android.os.Bundle;
 
 import androidx.activity.OnBackPressedCallback;
+import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -27,6 +29,7 @@ import in.sunilpaulmathew.ashell.utils.Utils;
 public class ExtrasActivity extends BaseActivity {
 
     private ChooseExtrasAdapter adapter;
+    private RecyclerView recyclerView;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -35,12 +38,12 @@ public class ExtrasActivity extends BaseActivity {
 
         MaterialButton apply = findViewById(R.id.apply);
         MaterialButton cancel = findViewById(R.id.cancel);
-        RecyclerView recyclerView = findViewById(R.id.recycler_view);
+        recyclerView = findViewById(R.id.recycler_view);
 
         adapter = new ChooseExtrasAdapter(getData(this));
 
         recyclerView.setItemAnimator(null);
-        recyclerView.setLayoutManager(new GridLayoutManager(this, getSpanSize()));
+        recyclerView.setLayoutManager(new GridLayoutManager(this, Settings.getSpanCount(getResources().getConfiguration())));
         recyclerView.setAdapter(adapter);
 
         apply.setOnClickListener(v -> new Thread(() -> {
@@ -76,16 +79,6 @@ public class ExtrasActivity extends BaseActivity {
         });
     }
 
-    private int getSpanSize() {
-        if (Utils.isTablet(this)) {
-            return 3;
-        } else if (!Utils.isPortraitMode(this)) {
-            return 2;
-        } else {
-            return 1;
-        }
-    }
-
     private List<ExtrasChooserEntry> getData(Activity activity) {
         List<ExtrasChooserEntry> data = new ArrayList<>();
         data.add(new ExtrasChooserEntry(new ExtrasEntry(R.drawable.ic_shell, R.string.shell_adb, R.string.shell_adb_description, -1), true));
@@ -98,6 +91,13 @@ public class ExtrasActivity extends BaseActivity {
     private void exit() {
         Utils.saveBoolean("extras_activity_viewed", true, this);
         finish();
+    }
+
+    @Override
+    public void onConfigurationChanged(@NonNull Configuration configuration) {
+        super.onConfigurationChanged(configuration);
+
+        Settings.updateSpanCount(configuration, recyclerView);
     }
 
 }

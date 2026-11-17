@@ -38,12 +38,15 @@
         </activity>
 
         <activity android:name=".activities.ExtrasActivity"
+            android:configChanges="keyboardHidden|orientation|screenLayout|screenSize"
             android:exported="false" />
 
         <activity android:name=".activities.SettingsActivity"
+            android:configChanges="keyboardHidden|orientation|screenLayout|screenSize"
             android:exported="false" />
 
         <activity android:name=".activities.WelcomeActivity"
+            android:configChanges="keyboardHidden|orientation|screenLayout|screenSize"
             android:exported="false" />
 
         <provider

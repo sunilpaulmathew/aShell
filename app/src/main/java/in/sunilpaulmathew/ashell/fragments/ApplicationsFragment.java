@@ -6,6 +6,7 @@ import static android.view.View.VISIBLE;
 import android.app.Activity;
 import android.content.Intent;
 import android.content.pm.PackageManager;
+import android.content.res.Configuration;
 import android.net.Uri;
 import android.os.Bundle;
 import android.text.Editable;
@@ -77,7 +78,7 @@ public class ApplicationsFragment extends BaseFragment {
         RecyclerView recyclerView = rootView.findViewById(R.id.recycler_view);
         TextInputEditText searchWord = rootView.findViewById(R.id.search_word);
 
-        recyclerView.setLayoutManager(new GridLayoutManager(requireActivity(), getSpanSize()));
+        recyclerView.setLayoutManager(new GridLayoutManager(requireActivity(), getSpanCount(getResources().getConfiguration())));
 
         adapter = new ApplicationsAdapter(new CopyOnWriteArrayList<>(), packageEntry -> {
             List<MenuEntry> menuEntries = new ArrayList<>();
@@ -175,13 +176,14 @@ public class ApplicationsFragment extends BaseFragment {
         return rootView;
     }
 
-    private int getSpanSize() {
-        if (Utils.isTablet(requireActivity())) {
-            return 8;
-        } else if (!Utils.isPortraitMode(requireActivity())) {
-            return 6;
+    private int getSpanCount(Configuration configuration) {
+        boolean landscape = configuration.orientation == Configuration.ORIENTATION_LANDSCAPE;
+        boolean tablet = (configuration.screenLayout & Configuration.SCREENLAYOUT_SIZE_MASK) >= Configuration.SCREENLAYOUT_SIZE_LARGE;
+
+        if (tablet) {
+            return landscape ? 8 : 4;
         } else {
-            return 3;
+            return landscape ? 6 : 3;
         }
     }
 

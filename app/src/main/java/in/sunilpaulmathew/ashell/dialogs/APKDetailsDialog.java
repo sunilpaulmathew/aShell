@@ -4,12 +4,15 @@ import android.content.Context;
 import android.content.DialogInterface;
 import android.graphics.drawable.Drawable;
 import android.view.View;
+import android.view.ViewGroup;
+import android.widget.FrameLayout;
 
 import androidx.appcompat.widget.AppCompatImageButton;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.google.android.material.bottomsheet.BottomSheetBehavior;
 import com.google.android.material.bottomsheet.BottomSheetDialog;
 import com.google.android.material.button.MaterialButton;
 import com.google.android.material.textview.MaterialTextView;
@@ -21,6 +24,7 @@ import in.sunilpaulmathew.ashell.adapters.PackageDetailsAdapter;
 import in.sunilpaulmathew.ashell.adapters.PackageHeaderAdapter;
 import in.sunilpaulmathew.ashell.serializables.PackageDetailsEntry;
 import in.sunilpaulmathew.ashell.serializables.PackageHeaderEntry;
+import in.sunilpaulmathew.ashell.utils.Settings;
 import in.sunilpaulmathew.ashell.utils.Utils;
 
 /*
@@ -43,7 +47,7 @@ public class APKDetailsDialog extends BottomSheetDialog {
         recyclerView_Header.setLayoutManager(new LinearLayoutManager(context, Utils.isPortraitMode(context) ? LinearLayoutManager.HORIZONTAL : LinearLayoutManager.VERTICAL, false));
         recyclerView_Header.setAdapter(new PackageHeaderAdapter(headers));
 
-        recyclerView_Details.setLayoutManager(new GridLayoutManager(context, Utils.isPortraitMode(context) ? 1 : 2));
+        recyclerView_Details.setLayoutManager(new GridLayoutManager(context, Settings.getSpanCount(context.getResources().getConfiguration())));
         recyclerView_Details.setAdapter(new PackageDetailsAdapter(details, splits -> {
             new SplitsDialog(appName, appIcon, splits, context);
             dismiss();
@@ -55,11 +59,22 @@ public class APKDetailsDialog extends BottomSheetDialog {
 
         cancel_Button.setOnClickListener(v -> dismiss());
 
+        rootView.post(() -> {
+            FrameLayout bottomSheet = findViewById(com.google.android.material.R.id.design_bottom_sheet);
+            if (bottomSheet != null) {
+                bottomSheet.getLayoutParams().height = ViewGroup.LayoutParams.WRAP_CONTENT;
+
+                BottomSheetBehavior<FrameLayout> behavior = BottomSheetBehavior.from(bottomSheet);
+                behavior.setState(BottomSheetBehavior.STATE_EXPANDED);
+                behavior.setSkipCollapsed(true);
+                behavior.setFitToContents(true);
+            }
+        });
+
         setContentView(rootView);
         setCancelable(true);
         setCanceledOnTouchOutside(true);
-        setOnCancelListener(DialogInterface::dismiss);
-        setOnCancelListener(dialog -> dismiss());
+        setOnDismissListener(DialogInterface::dismiss);
         show();
     }
 

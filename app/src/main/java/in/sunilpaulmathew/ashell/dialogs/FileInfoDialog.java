@@ -1,12 +1,16 @@
 package in.sunilpaulmathew.ashell.dialogs;
 
 import android.content.Context;
+import android.content.DialogInterface;
 import android.view.View;
+import android.view.ViewGroup;
+import android.widget.FrameLayout;
 
 import androidx.appcompat.widget.AppCompatImageView;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.google.android.material.bottomsheet.BottomSheetBehavior;
 import com.google.android.material.bottomsheet.BottomSheetDialog;
 import com.google.android.material.textview.MaterialTextView;
 
@@ -46,6 +50,19 @@ public class FileInfoDialog extends BottomSheetDialog {
         recyclerView.setItemAnimator(null);
         recyclerView.setAdapter(new FileInfoAdapter(getData(filesEntry, context)));
 
+        root.post(() -> {
+            FrameLayout bottomSheet = findViewById(com.google.android.material.R.id.design_bottom_sheet);
+            if (bottomSheet != null) {
+                bottomSheet.getLayoutParams().height = ViewGroup.LayoutParams.WRAP_CONTENT;
+
+                BottomSheetBehavior<FrameLayout> behavior = BottomSheetBehavior.from(bottomSheet);
+                behavior.setState(BottomSheetBehavior.STATE_EXPANDED);
+                behavior.setSkipCollapsed(true);
+                behavior.setFitToContents(true);
+            }
+        });
+
+        setOnDismissListener(DialogInterface::dismiss);
         setContentView(root);
         show();
     }
