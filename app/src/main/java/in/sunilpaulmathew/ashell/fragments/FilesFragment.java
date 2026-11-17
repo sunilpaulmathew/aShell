@@ -191,6 +191,7 @@ public class FilesFragment extends BaseFragment {
             @SuppressLint("StringFormatMatches")
             @Override
             public void onPostExecute() {
+                if (!isAdded() || isDetached() || activity.isDestroyed() || activity.isFinishing()) return;
                 try {
                     progressDialog.dismissDialog();
                 } catch (Exception ignored) {
