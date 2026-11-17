@@ -46,10 +46,6 @@ public class aShellActivity extends BaseActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        // Initialize App Theme & language
-        Settings.initializeAppTheme(this);
-        Settings.initializeAppLanguage(this);
-
         setContentView(R.layout.activity_ashell, R.id.layout_main);
 
         MaterialButton settings = findViewById(R.id.settings_button);

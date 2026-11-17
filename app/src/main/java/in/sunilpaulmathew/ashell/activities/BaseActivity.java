@@ -10,6 +10,8 @@ import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowCompat;
 import androidx.core.view.WindowInsetsCompat;
 
+import in.sunilpaulmathew.ashell.utils.Settings;
+
 /*
  * Created by sunilpaulmathew <sunil.kde@gmail.com> on June 07, 2026
  */
@@ -17,6 +19,10 @@ public class BaseActivity extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+        // Initialize App Theme & language
+        Settings.initializeAppTheme(this);
+        Settings.initializeAppLanguage(this);
+
         super.onCreate(savedInstanceState);
         WindowCompat.setDecorFitsSystemWindows(getWindow(), false);
     }

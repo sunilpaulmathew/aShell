@@ -345,8 +345,9 @@ public class Settings {
         };
     }
 
-    public static void initializeAppTheme(Context context) {
-        int appTheme = Utils.getInt("appTheme", 0, context);
+    public static void initializeAppTheme(Activity activity) {
+        DynamicColors.applyToActivityIfAvailable(activity);
+        int appTheme = Utils.getInt("appTheme", 0, activity);
         switch (appTheme) {
             case 1:
                 AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_YES);
@@ -358,7 +359,7 @@ public class Settings {
                 AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_FOLLOW_SYSTEM);
                 break;
         }
-        context.setTheme(Settings.isAmoledBlackEnabled(context) ? R.style.AppTheme_Amoled : R.style.AppTheme);
+        activity.getTheme().applyStyle(Settings.isAmoledBlackEnabled(activity) ? R.style.AppTheme_Amoled : R.style.AppTheme, true);
     }
 
     private static Locale getLocale(Context context) {
