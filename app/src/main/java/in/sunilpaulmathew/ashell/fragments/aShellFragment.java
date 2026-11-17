@@ -74,11 +74,11 @@ import rikka.shizuku.Shizuku;
 public class aShellFragment extends BaseFragment {
 
     private AppCompatImageButton mBookMark;
-    private MaterialButton mBookMarksButton, mBottomArrow, mClearButton, mHistoryButton, mSaveButton, mSearchButton, mSendButton, mTopArrow;
+    private MaterialButton mBookMarksButton, mBottomArrow, mClearButton, mCopyButton, mHistoryButton, mSaveButton, mSearchButton, mSendButton, mTopArrow;
     private TextInputEditText mCommand, mSearchWord;
     private RecyclerView mRecyclerViewOutput;
     private ScheduledExecutorService mExecutor = null;
-    private final ShellOutputAdapter mShellOutputAdapter = new ShellOutputAdapter(new CopyOnWriteArrayList<>());
+    private ShellOutputAdapter mShellOutputAdapter;
     private ShellViewModel mViewModel;
     private ShizukuShell mShizukuShell = null;
     private static final int MAX_OUTPUT_LINES = 50000, TRIM_CHUNK = 10000;
@@ -103,6 +103,7 @@ public class aShellFragment extends BaseFragment {
 
         mCommand = mRootView.findViewById(R.id.shell_command);
         mSearchWord = mRootView.findViewById(R.id.search_word);
+        mCopyButton = mRootView.findViewById(R.id.copy_button);
         mSaveButton = mRootView.findViewById(R.id.save_button);
         mBottomArrow = mRootView.findViewById(R.id.bottom);
         mClearButton = mRootView.findViewById(R.id.clear);
@@ -119,6 +120,8 @@ public class aShellFragment extends BaseFragment {
         mRecyclerViewCommands.setItemAnimator(null);
         mRecyclerViewOutput.setLayoutManager(new LinearLayoutManager(requireActivity()));
         mRecyclerViewCommands.setLayoutManager(new LinearLayoutManager(requireActivity()));
+
+        mShellOutputAdapter = new ShellOutputAdapter(new CopyOnWriteArrayList<>(), selectedCount -> mCopyButton.setVisibility(selectedCount > 0 ? VISIBLE : GONE));
 
         mRecyclerViewOutput.setAdapter(mShellOutputAdapter);
 
@@ -315,6 +318,15 @@ public class aShellFragment extends BaseFragment {
             }
         });
 
+        mCopyButton.setOnClickListener(v -> new ButtonAnimator(mCopyButton, null) {
+            @Override
+            public void onItemClicked() {
+                if (mShellOutputAdapter.getSelectedText() != null) {
+                    Utils.copyToClipboard(mShellOutputAdapter.getSelectedText(), v.getContext());
+                }
+            }
+        });
+
         mSaveButton.setOnClickListener(v -> new ButtonAnimator(mSaveButton, null) {
             @Override
             public void onItemClicked() {
@@ -506,6 +518,7 @@ public class aShellFragment extends BaseFragment {
     private void hideButtons() {
         mTopArrow.setVisibility(GONE);
         mBottomArrow.setVisibility(GONE);
+        mCopyButton.setVisibility(GONE);
         mSaveButton.setVisibility(GONE);
     }
 
@@ -568,6 +581,7 @@ public class aShellFragment extends BaseFragment {
 
     private void clearAll() {
         mViewModel.mResult.clear();
+        mShellOutputAdapter.updateData(null);
         mSearchButton.setEnabled(false);
         mClearButton.setEnabled(false);
         mCommand.setHint(getString(R.string.command_hint));

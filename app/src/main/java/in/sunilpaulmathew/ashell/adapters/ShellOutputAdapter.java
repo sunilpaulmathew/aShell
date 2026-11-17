@@ -19,8 +19,10 @@ import com.google.android.material.textview.MaterialTextView;
 
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Objects;
+import java.util.Set;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -34,6 +36,8 @@ import in.sunilpaulmathew.ashell.utils.Settings;
 public class ShellOutputAdapter extends RecyclerView.Adapter<ShellOutputAdapter.ViewHolder> {
 
     private final List<String> data;
+    private final Set<Integer> selectedLines = new HashSet<>();
+    private final OnSelectionListener selectionListener;
     private int animatedUpTo = -1;
     private static final Pattern BRIEF_PATTERN = Pattern.compile(
             "^([VDIWEF])/([^(:\\s]+)(?:\\s*\\(\\s*\\d+\\s*\\))?:\\s*(.*)$"
@@ -42,8 +46,9 @@ public class ShellOutputAdapter extends RecyclerView.Adapter<ShellOutputAdapter.
             "^\\d{2}-\\d{2}\\s+\\d{2}:\\d{2}:\\d{2}\\.\\d{3}\\s+\\d+\\s+\\d+\\s+([VDIWEF])\\s+(.+?):\\s+(.*)$"
     );
 
-    public ShellOutputAdapter(List<String> data) {
+    public ShellOutputAdapter(List<String> data, OnSelectionListener selectionListener) {
         this.data = data;
+        this.selectionListener = selectionListener;
     }
 
     @NonNull
@@ -56,6 +61,16 @@ public class ShellOutputAdapter extends RecyclerView.Adapter<ShellOutputAdapter.
     @Override
     public void onBindViewHolder(@NonNull ShellOutputAdapter.ViewHolder holder, int position) {
         String line = this.data.get(position);
+
+        boolean isSelected = selectedLines.contains(position);
+        if (isSelected) {
+            int accentColor = Settings.getColorAccent(holder.itemView.getContext());
+            holder.itemView.setBackgroundColor(adjustAlpha(accentColor, 0.25f));
+        } else {
+            holder.itemView.setBackgroundColor(adjustAlpha(Color.TRANSPARENT, 1f));
+        }
+
+        holder.itemView.setOnClickListener(v -> toggleSelection(holder.getBindingAdapterPosition()));
 
         LogcatEntry log = parseLogcatLine(line);
 
@@ -92,18 +107,12 @@ public class ShellOutputAdapter extends RecyclerView.Adapter<ShellOutputAdapter.
         animateView(holder.itemView, position);
     }
 
-    /*
-     * Animate a row only the first time it comes into view. Passing the position
-     * unconditionally re-ran the slide on every rebind, so the whole visible list
-     * animated continuously while output streamed in. -1 resets the view instead.
-     */
-    private void animateView(View view, int position) {
-        if (position > this.animatedUpTo) {
-            this.animatedUpTo = position;
-            Settings.setSlideInAnimation(view, position);
-        } else {
-            Settings.setSlideInAnimation(view, -1);
-        }
+    private int adjustAlpha(int color, float factor) {
+        int alpha = Math.round(Color.alpha(color) * factor);
+        int red = Color.red(color);
+        int green = Color.green(color);
+        int blue = Color.blue(color);
+        return Color.argb(alpha, red, green, blue);
     }
 
     private int getDefaultTextColor(Context context) {
@@ -133,9 +142,56 @@ public class ShellOutputAdapter extends RecyclerView.Adapter<ShellOutputAdapter.
         return null;
     }
 
+    public String getSelectedText() {
+        if (selectedLines.isEmpty()) return null;
+        List<Integer> sortedPositions = new ArrayList<>(selectedLines);
+        Collections.sort(sortedPositions);
+        StringBuilder sb = new StringBuilder();
+        for (int pos : sortedPositions) {
+            if (pos >= 0 && pos < data.size()) {
+                sb.append(Html.fromHtml(data.get(pos), Html.FROM_HTML_MODE_LEGACY)).append("\n");
+            }
+        }
+        return sb.toString().trim();
+    }
+
+    /*
+     * Animate a row only the first time it comes into view. Passing the position
+     * unconditionally re-ran the slide on every rebind, so the whole visible list
+     * animated continuously while output streamed in. -1 resets the view instead.
+     */
+    private void animateView(View view, int position) {
+        if (position > this.animatedUpTo) {
+            this.animatedUpTo = position;
+            Settings.setSlideInAnimation(view, position);
+        } else {
+            Settings.setSlideInAnimation(view, -1);
+        }
+    }
+
+    public void toggleSelection(int position) {
+        if (selectedLines.contains(position)) {
+            selectedLines.remove(position);
+        } else {
+            selectedLines.add(position);
+        }
+        notifyItemChanged(position);
+        if (selectionListener != null) {
+            selectionListener.onSelectionChanged(selectedLines.size());
+        }
+    }
+
     public void updateData(List<String> newData) {
         final List<String> oldList = new ArrayList<>(this.data);
         final List<String> newList = (newData != null) ? new ArrayList<>(newData) : Collections.emptyList();
+
+        if (newData == null) {
+            selectedLines.clear();
+            notifyItemChanged(0, getItemCount());
+            if (selectionListener != null) {
+                selectionListener.onSelectionChanged(0);
+            }
+        }
 
         DiffUtil.DiffResult diffResult = DiffUtil.calculateDiff(new DiffUtil.Callback() {
             @Override
@@ -179,6 +235,10 @@ public class ShellOutputAdapter extends RecyclerView.Adapter<ShellOutputAdapter.
             this.tag = view.findViewById(R.id.tag);
             this.message = view.findViewById(R.id.message);
         }
+    }
+
+    public interface OnSelectionListener {
+        void onSelectionChanged(int selectedCount);
     }
 
 }
