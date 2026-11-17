@@ -26,6 +26,7 @@ import in.sunilpaulmathew.ashell.adapters.PagerAdapter;
 import in.sunilpaulmathew.ashell.fragments.ExtrasFragment;
 import in.sunilpaulmathew.ashell.fragments.aShellFragment;
 import in.sunilpaulmathew.ashell.utils.Async;
+import in.sunilpaulmathew.ashell.utils.Bookmarks;
 import in.sunilpaulmathew.ashell.utils.Packages;
 import in.sunilpaulmathew.ashell.utils.Settings;
 import in.sunilpaulmathew.ashell.utils.ShizukuShell;
@@ -98,9 +99,12 @@ public class aShellActivity extends BaseActivity {
             new ActivityResultContracts.StartActivityForResult(),
             result -> {
                 if (result.getResultCode() == Activity.RESULT_OK && result.getData() != null) {
+                    boolean bookMarksChanged = result.getData().getBooleanExtra("bookMarksChanged", false);
                     int extrasChanged = result.getData().getIntExtra("extrasChanged", -1);
                     String selectedCommand = result.getData().getStringExtra("selectedCommand");
-                    if (selectedCommand != null) {
+                    if (bookMarksChanged) {
+                        enableShellBookMarks(!Bookmarks.getBookmarks(this).isEmpty());
+                    } else if (selectedCommand != null) {
                         navigateToFragment(0, selectedCommand);
                     } else if (extrasChanged >= 0) {
                         if (extrasChanged == 1) {
@@ -153,6 +157,9 @@ public class aShellActivity extends BaseActivity {
     }
 
     private void loadUI(Bundle savedInstanceState) {
+        // Migrate bookmarks
+        Bookmarks.migrateBookmarks(this);
+
         PagerAdapter adapter = new PagerAdapter(this);
         adapter.addFragment(getShellFragment(getIntent().getStringExtra("command")), getString(R.string.shell), R.drawable.ic_shell);
         if (Settings.isExtrasEnabled(this)) {
@@ -219,6 +226,14 @@ public class aShellActivity extends BaseActivity {
                     }
                 }
             });
+        }
+    }
+
+    public void enableShellBookMarks(boolean enabled) {
+        Fragment existingShell = getSupportFragmentManager().findFragmentByTag("f0");
+
+        if (existingShell instanceof aShellFragment) {
+            ((aShellFragment) existingShell).enableBookMarks(enabled);
         }
     }
 

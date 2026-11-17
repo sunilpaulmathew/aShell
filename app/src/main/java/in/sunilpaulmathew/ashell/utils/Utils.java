@@ -22,8 +22,6 @@ import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.io.InputStream;
-import java.util.ArrayList;
-import java.util.List;
 import java.util.Locale;
 import java.util.Objects;
 
@@ -33,36 +31,6 @@ import in.sunilpaulmathew.ashell.R;
  * Created by sunilpaulmathew <sunil.kde@gmail.com> on October 28, 2022
  */
 public class Utils {
-
-    public static boolean isBookmarked(String command, Context context) {
-        if (isValidFilename(command)) {
-            return new File(context.getExternalFilesDir("bookmarks"), command).exists();
-        } else {
-            if (new File(context.getExternalFilesDir("bookmarks"), "specialCommands").exists()) {
-                for (String commands : Objects.requireNonNull(read(new File(context.getExternalFilesDir("bookmarks"), "specialCommands"))).split("\\r?\\n")) {
-                    if (commands.trim().equals(command)) {
-                        return true;
-                    }
-                }
-            }
-        }
-        return false;
-    }
-
-    public static boolean deleteFromBookmark(String command, Context context) {
-        if (isValidFilename(command)) {
-            return new File(context.getExternalFilesDir("bookmarks"), command).delete();
-        } else {
-            StringBuilder sb = new StringBuilder();
-            for (String commands : Objects.requireNonNull(read(new File(context.getExternalFilesDir("bookmarks"), "specialCommands"))).split("\\r?\\n")) {
-                if (!commands.equals(command)) {
-                    sb.append(commands).append("\n");
-                }
-            }
-            create(sb.toString(), new File(context.getExternalFilesDir("bookmarks"), "specialCommands"));
-            return true;
-        }
-    }
 
     public static boolean getBoolean(String name, boolean defaults, Context context) {
         return PreferenceManager.getDefaultSharedPreferences(context).getBoolean(name, defaults);
@@ -83,16 +51,6 @@ public class Utils {
     public static boolean isTablet(Context context) {
         return (context.getResources().getConfiguration().screenLayout & Configuration.SCREENLAYOUT_SIZE_MASK)
                 >= Configuration.SCREENLAYOUT_SIZE_LARGE;
-    }
-
-    /*
-     * Adapted from android.os.FileUtils
-     * Ref: https://cs.android.com/android/platform/superproject/+/master:frameworks/base/core/java/android/os/FileUtils.java;l=972?q=isValidFatFilenameChar
-     */
-    private static boolean isValidFilename(String s) {
-        return !s.contains("*") && !s.contains("/") && !s.contains(":")
-                && !s.contains("<") && !s.contains(">") && !s.contains("?")
-                && !s.contains("\\") && !s.contains("|");
     }
 
     public static int getUserID() {
@@ -133,23 +91,6 @@ public class Utils {
         return PreferenceManager.getDefaultSharedPreferences(context).getInt(name, defaults);
     }
 
-    public static List<String> getBookmarks(Context context) {
-        List<String> mBookmarks = new ArrayList<>();
-        for (File file : Objects.requireNonNull(Objects.requireNonNull(context.getExternalFilesDir("bookmarks")).listFiles())) {
-            if (!file.getName().equalsIgnoreCase("specialCommands")) {
-                mBookmarks.add(file.getName());
-            }
-        }
-        if (new File(context.getExternalFilesDir("bookmarks"), "specialCommands").exists()) {
-            for (String commands : Objects.requireNonNull(read(new File(context.getExternalFilesDir("bookmarks"), "specialCommands"))).split("\\r?\\n")) {
-                if (!commands.trim().isEmpty()) {
-                    mBookmarks.add(commands.trim());
-                }
-            }
-        }
-        return mBookmarks;
-    }
-
     public static String getDeviceName() {
         return Build.MODEL;
     }
@@ -172,7 +113,7 @@ public class Utils {
         return PreferenceManager.getDefaultSharedPreferences(context).getString(name, defaults);
     }
 
-    private static String read(File file) {
+    static String read(File file) {
         try (BufferedReader buf = new BufferedReader(new FileReader(file))) {
 
             StringBuilder stringBuilder = new StringBuilder();
@@ -193,23 +134,6 @@ public class Utils {
 
     public static Toast toast(String message, Context context) {
         return Toast.makeText(context, message, Toast.LENGTH_LONG);
-    }
-
-    public static void addToBookmark(String command, Context context) {
-        if (isValidFilename(command)) {
-            create(command, new File(context.getExternalFilesDir("bookmarks"), command));
-        } else {
-            StringBuilder sb = new StringBuilder();
-            if (new File(context.getExternalFilesDir("bookmarks"), "specialCommands").exists()) {
-                for (String commands : Objects.requireNonNull(read(new File(context.getExternalFilesDir("bookmarks"), "specialCommands"))).split("\\r?\\n")) {
-                    sb.append(commands).append("\n");
-                }
-                sb.append(command).append("\n");
-            } else {
-                sb.append(command).append("\n");
-            }
-            create(sb.toString(), new File(context.getExternalFilesDir("bookmarks"), "specialCommands"));
-        }
     }
 
     public static boolean copy(InputStream inputStream, File dest) {

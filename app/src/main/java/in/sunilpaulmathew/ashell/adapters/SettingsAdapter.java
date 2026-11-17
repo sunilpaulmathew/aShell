@@ -9,6 +9,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import androidx.activity.result.ActivityResultLauncher;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatDelegate;
 import androidx.appcompat.widget.AppCompatImageButton;
@@ -29,6 +30,7 @@ import in.sunilpaulmathew.ashell.dialogs.PolicyDialog;
 import in.sunilpaulmathew.ashell.dialogs.SingleChoiceAlertDialog;
 import in.sunilpaulmathew.ashell.serializables.ExtrasChooserEntry;
 import in.sunilpaulmathew.ashell.serializables.SettingsEntry;
+import in.sunilpaulmathew.ashell.utils.Bookmarks;
 import in.sunilpaulmathew.ashell.utils.Settings;
 import in.sunilpaulmathew.ashell.utils.Utils;
 
@@ -38,10 +40,12 @@ import in.sunilpaulmathew.ashell.utils.Utils;
 public class SettingsAdapter extends RecyclerView.Adapter<SettingsAdapter.ViewHolder> {
 
     private final Activity activity;
+    private final ActivityResultLauncher<Intent> restoreBookMarks;
     private final List<SettingsEntry> data;
 
-    public SettingsAdapter(List<SettingsEntry> data, Activity activity) {
+    public SettingsAdapter(List<SettingsEntry> data, ActivityResultLauncher<Intent> restoreBookMarks, Activity activity) {
         this.data = data;
+        this.restoreBookMarks = restoreBookMarks;
         this.activity = activity;
     }
 
@@ -157,7 +161,7 @@ public class SettingsAdapter extends RecyclerView.Adapter<SettingsAdapter.ViewHo
                         data.get(getBindingAdapterPosition()).setDescription(Settings.getAppTheme(context));
                         notifyItemChanged(getBindingAdapterPosition());
                     }
-                }.show();
+                };
             } else if (position == 3) {
                 Utils.saveBoolean("amoledTheme", !Utils.getBoolean("amoledTheme", false, context), context);
                 Settings.restartApp(activity);
@@ -194,6 +198,33 @@ public class SettingsAdapter extends RecyclerView.Adapter<SettingsAdapter.ViewHo
                     }
                 };
             } else if (position == 7) {
+                new SingleChoiceAlertDialog(R.drawable.ic_bookmarks, context.getString(R.string.bookmarks_manage_description), new String[] {
+                        context.getString(R.string.bookmarks_backup),
+                        context.getString(R.string.bookmarks_restore),
+                        context.getString(R.string.clear_all)
+                }, -1, context) {
+                    @Override
+                    public void onItemSelected(int position) {
+                        switch (position) {
+                            case 2:
+                                Bookmarks.deleteBookMarks(context);
+                                Intent resultIntent = new Intent();
+                                resultIntent.putExtra("bookMarksChanged", true);
+                                activity.setResult(Activity.RESULT_OK, resultIntent);
+                                activity.finish();
+                                break;
+                            case 1:
+                                Intent restore = new Intent(Intent.ACTION_GET_CONTENT);
+                                restore.setType("text/plain");
+                                restoreBookMarks.launch(restore);
+                                break;
+                            default:
+                                Bookmarks.exportBackup(context);
+                                break;
+                        }
+                    }
+                };
+            } else if (position == 8) {
                 new ExamplesDialog(activity) {
                     @Override
                     public void onCommandSelected(String command) {
@@ -203,13 +234,13 @@ public class SettingsAdapter extends RecyclerView.Adapter<SettingsAdapter.ViewHo
                         activity.finish();
                     }
                 };
-            } else if (position == 8) {
-                Utils.loadUrl("https://shizuku.rikka.app/", context);
             } else if (position == 9) {
-                Utils.loadUrl("https://poeditor.com/join/project/20PSoEAgfX", context);
+                Utils.loadUrl("https://shizuku.rikka.app/", context);
             } else if (position == 10) {
-                new PolicyDialog(context);
+                Utils.loadUrl("https://poeditor.com/join/project/20PSoEAgfX", context);
             } else if (position == 11) {
+                new PolicyDialog(context);
+            } else if (position == 12) {
                 Utils.loadUrl("mailto:smartpack.org@gmail.com", context);
             }
         }

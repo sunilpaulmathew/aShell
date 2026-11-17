@@ -1,44 +1,42 @@
 package in.sunilpaulmathew.ashell.dialogs;
 
 import android.content.Context;
+import android.content.DialogInterface;
 
 import com.google.android.material.dialog.MaterialAlertDialogBuilder;
+
+import in.sunilpaulmathew.ashell.R;
 
 /*
  * Created by sunilpaulmathew <sunil.kde@gmail.com> on April 21, 2025
  */
-public abstract class SingleChoiceAlertDialog {
+public abstract class SingleChoiceAlertDialog extends MaterialAlertDialogBuilder {
 
-    private final int mIcon;
-    private final int mPosition;
-    private final MaterialAlertDialogBuilder mDialogBuilder;
-    private final String mTitle;
-    private final String[] mSingleChoiceItems;
+    private int selectedPosition;
 
     public SingleChoiceAlertDialog(int icon, String title, String[] singleChoiceItems,
                                    int position, Context context) {
-        this.mIcon = icon;
-        this.mTitle = title;
-        this.mSingleChoiceItems = singleChoiceItems;
-        this.mPosition = position;
-        this.mDialogBuilder = new MaterialAlertDialogBuilder(context);
-    }
+        super(context);
 
-    private void startDialog() {
-        if (mIcon > Integer.MIN_VALUE) {
-            mDialogBuilder.setIcon(mIcon);
+        if (icon > Integer.MIN_VALUE) {
+            setIcon(icon);
         }
-        if (mTitle != null) {
-            mDialogBuilder.setTitle(mTitle);
+        if (title != null) {
+            setTitle(title);
         }
-        mDialogBuilder.setSingleChoiceItems(mSingleChoiceItems, mPosition, (dialog, itemPosition) -> {
-            onItemSelected(itemPosition);
+
+        setSingleChoiceItems(singleChoiceItems, position, (dialog, itemPosition) -> {
+            selectedPosition = itemPosition;
+        });
+        setNeutralButton(R.string.cancel, (dialog, id) -> {
             dialog.dismiss();
-        }).show();
-    }
-
-    public void show() {
-        startDialog();
+        });
+        setOnDismissListener(DialogInterface::dismiss);
+        setPositiveButton(R.string.apply, (dialog, id) -> {
+            onItemSelected(selectedPosition);
+            dialog.dismiss();
+        });
+        show();
     }
 
     public abstract void onItemSelected(int position);

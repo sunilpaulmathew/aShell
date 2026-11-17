@@ -49,6 +49,12 @@
     <string name="bookmark_added_message">\'%s\' is bookmarked</string>
     <string name="bookmark_removed_message">\'%s\' has been removed from bookmark</string>
     <string name="bookmarks">Bookmarks</string>
+    <string name="bookmarks_backup">Backup to storage</string>
+    <string name="bookmarks_invalid_backup_toast">Invalid or corrupted backup file</string>
+    <string name="bookmarks_manage">Manage bookmarks</string>
+    <string name="bookmarks_manage_description">Backup, restore, or clear saved commands</string>
+    <string name="bookmarks_restore">Restore from backup</string>
+    <string name="bookmarks_restored_toast">Bookmarks restored successfully</string>
     <string name="cancel">Cancel</string>
     <string name="clear_all">Clear all</string>
     <string name="clear_all_message">Clear everything on this screen?</string>

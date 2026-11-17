@@ -58,6 +58,7 @@ import in.sunilpaulmathew.ashell.dialogs.BookMarkEditorDialog;
 import in.sunilpaulmathew.ashell.dialogs.ExamplesDialog;
 import in.sunilpaulmathew.ashell.serializables.CommandEntry;
 import in.sunilpaulmathew.ashell.utils.Async;
+import in.sunilpaulmathew.ashell.utils.Bookmarks;
 import in.sunilpaulmathew.ashell.utils.ButtonAnimator;
 import in.sunilpaulmathew.ashell.utils.Commands;
 import in.sunilpaulmathew.ashell.utils.Packages;
@@ -147,7 +148,7 @@ public class aShellFragment extends BaseFragment {
                             return;
                         }
                         mSendButton.setIcon(Utils.getDrawable(R.drawable.ic_send, requireActivity()));
-                        mBookMark.setImageDrawable(Utils.getDrawable(Utils.isBookmarked(s.toString().trim(), requireActivity()) ? R.drawable.ic_starred : R.drawable.ic_star, requireActivity()));
+                        mBookMark.setImageResource(Bookmarks.isBookmarked(s.toString().trim(), requireActivity()) ? R.drawable.ic_starred : R.drawable.ic_star);
                         mBookMark.setVisibility(VISIBLE);
                         mBookMark.setOnClickListener(v -> bookMark(s.toString().trim()));
 
@@ -280,15 +281,15 @@ public class aShellFragment extends BaseFragment {
         mBookMarksButton.setOnClickListener(v -> new ButtonAnimator(mBookMarksButton, getString(R.string.bookmarks)) {
             @Override
             public void onItemClicked() {
-                new BookMarkDialog(stringToCommandsEntry(Utils.getBookmarks(requireActivity())), R.drawable.ic_bookmarks, getString(R.string.bookmarks), true, requireActivity()) {
+                new BookMarkDialog(stringToCommandsEntry(Bookmarks.getBookmarks(requireActivity())), R.drawable.ic_bookmarks, getString(R.string.bookmarks), true, requireActivity()) {
                     @Override
                     public void onCommandSelected(String command, boolean toEdit) {
                         if (toEdit) {
                             new BookMarkEditorDialog(command, requireActivity()) {
                                 @Override
                                 public void editBookMark(String newCommand) {
-                                    Utils.deleteFromBookmark(command, requireActivity());
-                                    Utils.addToBookmark(newCommand, requireActivity());
+                                    Bookmarks.deleteFromBookmark(command, requireActivity());
+                                    Bookmarks.addToBookmark(newCommand, requireActivity());
                                     requireActivity().runOnUiThread(() -> mCommand.setText(newCommand));
                                 }
                             };
@@ -522,7 +523,7 @@ public class aShellFragment extends BaseFragment {
         mCommand.setText(command);
         mCommand.setSelection(Objects.requireNonNull(mCommand.getText()).length());
         mBookMark.setVisibility(VISIBLE);
-        mBookMark.setImageDrawable(Utils.getDrawable(Utils.isBookmarked(command, requireActivity()) ? R.drawable.ic_starred : R.drawable.ic_star, requireActivity()));
+        mBookMark.setImageResource(Bookmarks.isBookmarked(command, requireActivity()) ? R.drawable.ic_starred : R.drawable.ic_star);
         mSendButton.setIcon(Utils.getDrawable(R.drawable.ic_send, requireActivity()));
         mBookMark.setOnClickListener(v -> bookMark(command));
     }
@@ -540,7 +541,7 @@ public class aShellFragment extends BaseFragment {
 
             @Override
             public void doInBackground() {
-                mHasBookmarks = !Utils.getBookmarks(activity).isEmpty();
+                mHasBookmarks = !Bookmarks.getBookmarks(activity).isEmpty();
             }
 
             @Override
@@ -552,16 +553,16 @@ public class aShellFragment extends BaseFragment {
     }
 
     private void bookMark(String string) {
-        if (Utils.isBookmarked(string, requireActivity())) {
-            Utils.deleteFromBookmark(string, requireActivity());
+        if (Bookmarks.isBookmarked(string, requireActivity())) {
+            Bookmarks.deleteFromBookmark(string, requireActivity());
             Utils.toast(getString(R.string.bookmark_removed_message, string), requireActivity()).show();
             mBookMark.setContentDescription("Bookmark command");
         } else {
-            Utils.addToBookmark(string, requireActivity());
+            Bookmarks.addToBookmark(string, requireActivity());
             Utils.toast(getString(R.string.bookmark_added_message, string), requireActivity()).show();
             mBookMark.setContentDescription(getString(R.string.bookmark_removed_message, string));
         }
-        mBookMark.setImageDrawable(Utils.getDrawable(Utils.isBookmarked(string, requireActivity()) ? R.drawable.ic_starred : R.drawable.ic_star, requireActivity()));
+        mBookMark.setImageResource(Bookmarks.isBookmarked(string, requireActivity()) ? R.drawable.ic_starred : R.drawable.ic_star);
         updateBookmarksButton();
     }
 
@@ -750,6 +751,12 @@ public class aShellFragment extends BaseFragment {
                     imm.hideSoftInputFromWindow(view.getWindowToken(), 0);
                 }
             }
+        }
+    }
+
+    public void enableBookMarks(boolean enabled) {
+        if (getView() != null) {
+            mBookMarksButton.setEnabled(enabled);
         }
     }
 

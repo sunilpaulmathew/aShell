@@ -602,7 +602,7 @@ public class Settings {
                 }
                 restartApp(activity);
             }
-        }.show();
+        };
     }
 
     public static void setSlideInAnimation(final View viewToAnimate, int position) {
