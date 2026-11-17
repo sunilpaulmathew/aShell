@@ -68,6 +68,14 @@ public class Utils {
         return PreferenceManager.getDefaultSharedPreferences(context).getBoolean(name, defaults);
     }
 
+    public static boolean keyboardOnScroll(Context context) {
+        return Utils.getBoolean("keyboardOnScroll", false, context);
+    }
+
+    public static boolean keyboardOnStart(Context context) {
+        return Utils.getBoolean("keyboardOnStart", false, context);
+    }
+
     public static boolean isPortraitMode(Context context) {
         return context.getResources().getConfiguration().orientation == Configuration.ORIENTATION_PORTRAIT;
     }

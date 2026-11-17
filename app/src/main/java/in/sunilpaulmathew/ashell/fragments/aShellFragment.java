@@ -411,7 +411,7 @@ public class aShellFragment extends BaseFragment {
             public void onScrolled(@NonNull RecyclerView rv, int dx, int dy) {
                 super.onScrolled(rv, dx, dy);
 
-                if (dy < -15) {
+                if (dy < -15 && Utils.keyboardOnScroll(requireActivity())) {
                     requestFocus();
                 }
             }
@@ -819,7 +819,7 @@ public class aShellFragment extends BaseFragment {
     public void onHiddenChanged(boolean hidden) {
         super.onHiddenChanged(hidden);
 
-        if (!hidden) {
+        if (!hidden && Utils.keyboardOnStart(requireActivity())) {
             requestFocus();
         } else {
             clearFocus();
@@ -837,7 +837,7 @@ public class aShellFragment extends BaseFragment {
     public void onResume() {
         super.onResume();
 
-        if (isAdded() && isVisible() && isResumed()) {
+        if (isAdded() && isVisible() && isResumed() && Utils.keyboardOnStart(requireActivity())) {
             requestFocus();
         }
     }

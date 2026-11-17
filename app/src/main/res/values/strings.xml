@@ -99,6 +99,10 @@
     <string name="get_info">Get info</string>
     <string name="granted">Granted</string>
     <string name="history">History</string>
+    <string name="keyboard_behavior">Keyboard behavior</string>
+    <string name="keyboard_behavior_description">Choose when the keyboard opens automatically</string>
+    <string name="keyboard_behavior_on_scroll">On scrolling up</string>
+    <string name="keyboard_behavior_on_start">On entering shell</string>
     <string name="language">Language</string>
     <string name="language_ar" translatable="false">العربية (%s)</string>
     <string name="language_cs" translatable="false">čeština</string>

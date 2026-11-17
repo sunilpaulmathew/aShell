@@ -24,6 +24,7 @@ import in.sunilpaulmathew.ashell.BuildConfig;
 import in.sunilpaulmathew.ashell.R;
 import in.sunilpaulmathew.ashell.dialogs.ExamplesDialog;
 import in.sunilpaulmathew.ashell.dialogs.ExtrasDialog;
+import in.sunilpaulmathew.ashell.dialogs.KeyboardBehaviorDialog;
 import in.sunilpaulmathew.ashell.dialogs.PolicyDialog;
 import in.sunilpaulmathew.ashell.dialogs.SingleChoiceAlertDialog;
 import in.sunilpaulmathew.ashell.serializables.ExtrasChooserEntry;
@@ -161,8 +162,10 @@ public class SettingsAdapter extends RecyclerView.Adapter<SettingsAdapter.ViewHo
                 Utils.saveBoolean("amoledTheme", !Utils.getBoolean("amoledTheme", false, context), context);
                 Settings.restartApp(activity);
             } else if (position == 4) {
-                Settings.setAppLanguage(activity);
+                new KeyboardBehaviorDialog(context);
             } else if (position == 5) {
+                Settings.setAppLanguage(activity);
+            } else if (position == 6) {
                 new ExtrasDialog(activity) {
                     @Override
                     public void onApplied(List<ExtrasChooserEntry> entries) {
@@ -190,7 +193,7 @@ public class SettingsAdapter extends RecyclerView.Adapter<SettingsAdapter.ViewHo
                         }).start();
                     }
                 };
-            } else if (position == 6) {
+            } else if (position == 7) {
                 new ExamplesDialog(activity) {
                     @Override
                     public void onCommandSelected(String command) {
@@ -200,13 +203,13 @@ public class SettingsAdapter extends RecyclerView.Adapter<SettingsAdapter.ViewHo
                         activity.finish();
                     }
                 };
-            } else if (position == 7) {
-                Utils.loadUrl("https://shizuku.rikka.app/", context);
             } else if (position == 8) {
-                Utils.loadUrl("https://poeditor.com/join/project/20PSoEAgfX", context);
+                Utils.loadUrl("https://shizuku.rikka.app/", context);
             } else if (position == 9) {
-                new PolicyDialog(context);
+                Utils.loadUrl("https://poeditor.com/join/project/20PSoEAgfX", context);
             } else if (position == 10) {
+                new PolicyDialog(context);
+            } else if (position == 11) {
                 Utils.loadUrl("mailto:smartpack.org@gmail.com", context);
             }
         }
