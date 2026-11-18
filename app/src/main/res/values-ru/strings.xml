@@ -21,7 +21,7 @@
     <string name="shizuku_unavailable_message">"Приложение Shizuku не установлено или неправильно настроено на вашем устройстве. aShell не может работать без среды Shizuku. Нажмите здесь, чтобы узнать больше о Shizuku."</string>
     <string name="su_warning_message">"aShell не предназначен для использования с правами root. Остановка."</string>
     <string name="yes">"Да"</string>
-    <string name="copyright_text">"Copyright: © 2022–2025, sunilpaulmathew"</string>
+    <string name="copyright_text">"Copyright: © 2022–2026, sunilpaulmathew"</string>
     <string name="save">"Сохранить"</string>
     <string name="app_theme">"Тема приложения"</string>
     <string name="app_theme_amoled">"AMOLED тема"</string>
@@ -69,4 +69,6 @@
         2. Зайди в Поддерживаемые приложения
         3. Включи доступ для aShell"</string>
     <string name="shizuku_open">"Открыть Shizuku"</string>
+    <string name="source_code">"Исходный код"</string>
+    <string name="source_code_description">"Узнайте, как работает aShell — с открытым исходным кодом и прозрачно"</string>
 </resources>

@@ -69,4 +69,6 @@
         2. Перейдіть до розділу «Авторизовані програми»
         3. Увімкніть доступ для aShell"</string>
     <string name="shizuku_open">"Відкрити Shizuku"</string>
+    <string name="source_code">"Вихідний код"</string>
+    <string name="source_code_description">"Дізнайтеся, як працює aShell — з відкритим кодом та прозорою архітектурою"</string>
 </resources>

@@ -237,10 +237,12 @@ public class SettingsAdapter extends RecyclerView.Adapter<SettingsAdapter.ViewHo
             } else if (position == 9) {
                 Utils.loadUrl("https://shizuku.rikka.app/", context);
             } else if (position == 10) {
-                Utils.loadUrl("https://poeditor.com/join/project/20PSoEAgfX", context);
+                Utils.loadUrl("https://github.com/sunilpaulmathew/aShell", context);
             } else if (position == 11) {
-                new PolicyDialog(context);
+                Utils.loadUrl("https://poeditor.com/join/project/20PSoEAgfX", context);
             } else if (position == 12) {
+                new PolicyDialog(context);
+            } else if (position == 13) {
                 Utils.loadUrl("mailto:smartpack.org@gmail.com", context);
             }
         }

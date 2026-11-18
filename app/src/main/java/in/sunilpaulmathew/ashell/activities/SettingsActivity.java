@@ -139,9 +139,10 @@ public class SettingsActivity extends BaseActivity {
         mData.add(new SettingsEntry(8, R.drawable.ic_help, getString(R.string.examples), getString(R.string.examples_description)));
         mData.add(new SettingsEntry(9, R.drawable.ic_learn, getString(R.string.shizuku_learn), getString(R.string.shizuku_learn_description)));
         mData.add(new SettingsEntry(getString(R.string.miscellaneous)));
-        mData.add(new SettingsEntry(10, R.drawable.ic_translate, getString(R.string.translations), getString(R.string.translations_description)));
-        mData.add(new SettingsEntry(11, R.drawable.ic_privacy, getString(R.string.privacy_policy), getString(R.string.privacy_policy_description)));
-        mData.add(new SettingsEntry(12, R.drawable.ic_email, getString(R.string.developer_contact), getString(R.string.developer_contact_description)));
+        mData.add(new SettingsEntry(10, R.drawable.ic_github, getString(R.string.source_code), getString(R.string.source_code_description)));
+        mData.add(new SettingsEntry(11, R.drawable.ic_translate, getString(R.string.translations), getString(R.string.translations_description)));
+        mData.add(new SettingsEntry(12, R.drawable.ic_privacy, getString(R.string.privacy_policy), getString(R.string.privacy_policy_description)));
+        mData.add(new SettingsEntry(13, R.drawable.ic_email, getString(R.string.developer_contact), getString(R.string.developer_contact_description)));
         return mData;
     }
 
