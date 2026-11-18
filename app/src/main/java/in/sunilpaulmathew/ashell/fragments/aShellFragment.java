@@ -28,12 +28,15 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.widget.AppCompatImageButton;
 import androidx.core.app.ActivityCompat;
+import androidx.core.view.ViewCompat;
+import androidx.core.view.WindowInsetsCompat;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.google.android.material.button.MaterialButton;
 import com.google.android.material.dialog.MaterialAlertDialogBuilder;
 import com.google.android.material.textfield.TextInputEditText;
+import com.google.android.material.textfield.TextInputLayout;
 
 import java.io.File;
 import java.io.IOException;
@@ -115,6 +118,7 @@ public class aShellFragment extends BaseFragment {
         mTopArrow = mRootView.findViewById(R.id.top);
         RecyclerView mRecyclerViewCommands = mRootView.findViewById(R.id.recycler_view_commands);
         mRecyclerViewOutput = mRootView.findViewById(R.id.recycler_view_output);
+        TextInputLayout mInputLayout = mRootView.findViewById(R.id.shell_input_layout);
 
         mRecyclerViewOutput.setItemAnimator(null);
         mRecyclerViewCommands.setItemAnimator(null);
@@ -130,6 +134,22 @@ public class aShellFragment extends BaseFragment {
         }
 
         updateBookmarksButton();
+
+        mCommand.setOnFocusChangeListener((v, hasFocus) -> {
+            if (hasFocus) {
+                mInputLayout.setPlaceholderText(getString(R.string.command_hint));
+            } else {
+                mInputLayout.setPlaceholderText(null);
+            }
+        });
+
+        ViewCompat.setOnApplyWindowInsetsListener(mRootView, (v, insets) -> {
+            boolean isKeyboardVisible = insets.isVisible(WindowInsetsCompat.Type.ime());
+            if (!isKeyboardVisible && mCommand.hasFocus()) {
+                mCommand.clearFocus();
+            }
+            return ViewCompat.onApplyWindowInsets(v, insets);
+        });
 
         mCommand.addTextChangedListener(new TextWatcher() {
             @Override

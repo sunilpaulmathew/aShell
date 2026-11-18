@@ -93,6 +93,7 @@
                 android:clickable="false" />
 
             <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/shell_input_layout"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 style="@style/Widget.MaterialComponents.CardView"
@@ -106,7 +107,6 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_gravity="start|center"
-                    android:hint="@string/command_hint"
                     android:inputType="textMultiLine"
                     android:gravity="center_vertical"
                     android:imeOptions="actionSend"
