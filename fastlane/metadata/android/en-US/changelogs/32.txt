@@ -1,0 +1,6 @@
+* Added options in Settings to back up and restore your bookmarks.
+* Added new settings to customize keyboard behavior on app launch and when scrolling.
+* Further improved layout and responsiveness in landscape mode and on tablet screens.
+* Fixed an issue where the AMOLED dark theme wasn't applying properly.
+* Added a direct link to the GitHub repository in Settings.
+* Updated Thai translations.

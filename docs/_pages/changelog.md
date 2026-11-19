@@ -6,6 +6,16 @@ include_in_header: true
 
 <h2 style="color: blue">🆕 What's New</h2>
 
+### ✨ 25. [v0.32](https://gitlab.com/sunilpaulmathew/ashell/-/releases/v0.32) *(Nov 18 2026)*
+- Added options in Settings to back up and restore your bookmarks.
+- Added new settings to customize keyboard behavior on app launch and when scrolling.
+- Further improved layout and responsiveness in landscape mode and on tablet screens.
+- Fixed an issue where the AMOLED dark theme wasn't applying properly.
+- Added a direct link to the GitHub repository in Settings.
+- Updated Thai translations.
+
+<hr>
+
 ### ✨ 24. [v0.31](https://gitlab.com/sunilpaulmathew/ashell/-/releases/v0.31) *(Nov 02 2026)*
 - Fixed crashes that could occur during screen rotation in landscape mode.
 - Improved UI and layout support for tablets and landscape mode.
